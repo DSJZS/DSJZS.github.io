@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head>
-	<meta name="generator" content="Hugo 0.153.2"><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="欢迎来到我的个人博客！">
-<title>永远null的成元</title>
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="hugo_blog 脚本介绍 今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就没事找事花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。\n">
+<title>编写了一个用户快速创建Hugo博客的脚本</title>
 
-<link rel='canonical' href='https://DSJZS.github.io/'>
+<link rel='canonical' href='https://DSJZS.github.io/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="永远null的成元">
-<meta property='og:description' content="欢迎来到我的个人博客！">
-<meta property='og:url' content='https://DSJZS.github.io/'>
+<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="编写了一个用户快速创建Hugo博客的脚本">
+<meta property='og:description' content="hugo_blog 脚本介绍 今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就没事找事花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2025-12-24T19:46:26&#43;08:00 '/>
-<meta name="twitter:title" content="永远null的成元">
-<meta name="twitter:description" content="欢迎来到我的个人博客！"><link rel="alternate" type="application/rss&#43;xml" href="https://DSJZS.github.io/index.xml">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-12-24T19:46:26&#43;08:00'/><meta property='article:modified_time' content='2025-12-24T19:46:26&#43;08:00'/>
+<meta name="twitter:title" content="编写了一个用户快速创建Hugo博客的脚本">
+<meta name="twitter:description" content="hugo_blog 脚本介绍 今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就没事找事花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
-    <body class="">
+    <body class="
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -113,7 +114,7 @@
         
         
         
-        <li  class='current' >
+        <li >
             <a href='/' >
                 
                 
@@ -241,60 +242,10 @@
     <aside class="sidebar right-sidebar sticky">
         
             
-                <form action="/search/" class="search-form widget" >
-        <p>
-            <label>搜索</label>
-            <input name="keyword" required placeholder="输入关键词..." />
-        
-            <button title="搜索">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-            </button>
-        </p>
-    </form>
-            
-        
-            
-                <section class="widget archives">
+                
+    <section class="widget archives">
         <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M9.828 9.172a4 4 0 1 0 0 5.656 a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828 a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />
-</svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title">归档</h2>
-
-        
-        
-        
-        
-        <div class="widget-archive--list">
-            <div class="archives-year">
-                    <a href="/archives/#2025">
-                        
-                            <span class="year">2025</span>
-                            <span class="count">2</span>
-                        
-                    </a> 
-                </div>
-            
-        </div>
-    </section>
-            
-        
-            
-                <section class="widget tagCloud">
-    <div class="widget-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <line x1="5" y1="9" x2="19" y2="9" />
   <line x1="5" y1="15" x2="19" y2="15" />
@@ -304,13 +255,23 @@
 
 
 
-    </div>
-    <h2 class="widget-title section-title">分类</h2>
-
-    <div class="tagCloud-tags">
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
         
-    </div>
-</section>
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#脚本介绍">脚本介绍</a></li>
+    <li><a href="#主要功能">主要功能</a></li>
+  </ol>
+
+  <ol>
+    <li><a href="#脚本获取">脚本获取</a></li>
+    <li><a href="#结语">结语</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
 
             
         
@@ -318,14 +279,7 @@
 
 
             <main class="main full-width">
-    
-    
-    
-
-    <section class="article-list">
-        
-            
-<article class="">
+    <article class="main-article">
     <header class="article-header">
 
     <div class="article-details">
@@ -367,54 +321,141 @@
 </div>
 
 </header>
-</article>
-        
-            
-<article class="">
-    <header class="article-header">
 
-    <div class="article-details">
+    <section class="article-content">
+    
+    
+    <h1 id="hugo_blog">hugo_blog
+</h1><h2 id="脚本介绍">脚本介绍
+</h2><p>今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就<del>没事找事</del>花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。</p>
+<h2 id="主要功能">主要功能
+</h2><ol>
+<li>支持对Hugo博客进行增删查改这些基础操作</li>
+<li>支持对Hugo博客用Git推送到仓库(配合Github Action可以丝滑地部署)</li>
+</ol>
+<h1 id="使用方法">使用方法
+</h1><ul>
+<li>新增博客(并且使用 vim 对其进行编辑，可选择只创建不编辑)
+hugo_blog -p ~/my-hugo-site/ -n &ldquo;我的技术分享&rdquo; -e vim</li>
+<li>删除博客
+hugo_blog -p ~/my-hugo-site/ -d &ldquo;过时内容&rdquo;</li>
+<li>查看博客(使用 vscode 进行编辑)
+hugo_blog -p ~/my-hugo-site/ -r &ldquo;我的技术分享&rdquo;</li>
+<li>修改博客
+hugo_blog -p ~/my-hugo-site/ -w &ldquo;旧文章优化&rdquo; -e code</li>
+<li>Git推送
+hugo_blog -p ~/my-hugo-site/ -g</li>
+<li>等功能(具体可以参看脚本文件内容)</li>
+</ul>
+<blockquote>
+<p>建议配合 alias 取别名使用，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">alias new_blog=&#39;hugo_blog -p ~/my-hugo-site/ -e code -n&#39;
+</span></span><span class="line"><span class="cl">alias delete_blog=&#39;hugo_blog -p ~/my-hugo-site/ -e code -d&#39;
+</span></span><span class="line"><span class="cl">alias write_blog=&#39;hugo_blog -p ~/my-hugo-site/ -e code -w&#39;
+</span></span><span class="line"><span class="cl">alias read_blog=&#39;hugo_blog -p ~/my-hugo-site/ -r&#39;
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样增删改查操作都只用输入博客名字就行了</p>
+</blockquote>
+<h2 id="脚本获取">脚本获取
+</h2><p>我已将脚本上传到我的Github仓库，可以通过网址 <a class="link" href="https://github.com/DSJZS/ygtool/tree/main/shell/hugo_blog"  target="_blank" rel="noopener"
+    >https://github.com/DSJZS/ygtool/tree/main/shell/hugo_blog</a> 进行查看<br>
+也可以执行下述命令直接拉取我的脚本工具仓库(在仓库的 ygtool/shell/hugo_blog/ 目录下 )</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">DSJZS</span><span class="o">/</span><span class="n">ygtool</span><span class="o">.</span><span class="n">git</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="结语">结语
+</h2><p><strong>如果你有更好的想法，欢迎交流！</strong></p>
+
+</section>
+
+
+    <footer class="article-footer">
     
 
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/p/hello-world/">Hello World</a>
-        </h2>
     
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
 </svg>
-                <time class="article-time--published" datetime='2025-12-24T16:38:24&#43;08:00'>2025-12-24</time>
-            </div>
-        
 
-        
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
     </footer>
+
+
+    
+</article>
+
     
 
     
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 </div>
 
-</header>
-</article>
-        
-    </section><footer class="site-footer">
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
     <section class="copyright">
         &copy; 
         
@@ -428,6 +469,86 @@
         主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.33.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
     </section>
 </footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+    
 
             </main>
         </div>

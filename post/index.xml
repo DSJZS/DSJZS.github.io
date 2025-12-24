@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on 永远null的成元</title>
+        <link>https://DSJZS.github.io/post/</link>
+        <description>Recent content in Posts on 永远null的成元</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>永远null的成元</copyright>
+        <lastBuildDate>Wed, 24 Dec 2025 16:38:24 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hello World</title>
+        <link>https://DSJZS.github.io/p/hello-world/</link>
+        <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/hello-world/</guid>
+        <description>&lt;p&gt;Hi，这是我的第一篇博客，欢迎你们来到我的网站！&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

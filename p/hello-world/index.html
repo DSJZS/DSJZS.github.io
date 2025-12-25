@@ -297,27 +297,6 @@
         
 
         
-        
-        <div class="article-lastmod">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time>
-                    Dec 25, 2025 13:28 &#43;0800
-                </time>
-            </div>
-        <div id="viewCount">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
-            <time class="article-time--reading">
-                
-                <span id="vercount_value_page_pv">loading... </span>次
-            </time>
-        </div>
     </footer>
     
 
@@ -569,14 +548,63 @@
 <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
 
 <script>
-const ap = new APlayer({
-    container: document.getElementById('aplayer'),
-    audio: [],
-    
-    fixed: true
-});
-</script>
+    const musicDir = "https://DSJZS.github.io/" + 'music/';
+    const songs = [
+        '乖乖报到-MC 张天赋',
+        'Time (ATLUS Kitajoh Remix)-藤田真由美',
+    ];
+    let audios = [];
+    songs.forEach((item) => {
+        const songInfo = item.split('-');
+        audios.push({
+            name: songInfo[0],
+            artist: songInfo[1],
+            url: musicDir + item + '/song.mp3',
+            cover: musicDir + item + '/cover.jpg',
+            lrc: musicDir + item + '/lyric.lrc',
+        })
+    })
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        lrcType: 3,
+        audio: audios,
+        
+        fixed: true
+    });
 
+    window.onbeforeunload = () => {
+        
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.audio.paused,
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    
+
+    window.onload = () => {
+        
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        
+        ap.list.switch(playInfo.index);
+        
+        setTimeout(() => {
+            
+            ap.seek(playInfo.currentTime);
+            
+            if (!playInfo.paused) {
+                
+                ap.play()
+            }
+        }, 500);
+    };
+
+</script>
 
 <script defer src="https://cn.vercount.one/js"></script>
 

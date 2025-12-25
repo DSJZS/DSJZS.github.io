@@ -318,14 +318,63 @@
 <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
 
 <script>
-const ap = new APlayer({
-    container: document.getElementById('aplayer'),
-    audio: [],
-    
-    fixed: true
-});
-</script>
+    const musicDir = "https://DSJZS.github.io/" + 'music/';
+    const songs = [
+        '乖乖报到-MC 张天赋',
+        'Time (ATLUS Kitajoh Remix)-藤田真由美',
+    ];
+    let audios = [];
+    songs.forEach((item) => {
+        const songInfo = item.split('-');
+        audios.push({
+            name: songInfo[0],
+            artist: songInfo[1],
+            url: musicDir + item + '/song.mp3',
+            cover: musicDir + item + '/cover.jpg',
+            lrc: musicDir + item + '/lyric.lrc',
+        })
+    })
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        lrcType: 3,
+        audio: audios,
+        
+        fixed: true
+    });
 
+    window.onbeforeunload = () => {
+        
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.audio.paused,
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    
+
+    window.onload = () => {
+        
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        
+        ap.list.switch(playInfo.index);
+        
+        setTimeout(() => {
+            
+            ap.seek(playInfo.currentTime);
+            
+            if (!playInfo.paused) {
+                
+                ap.play()
+            }
+        }, 500);
+    };
+
+</script>
 
 <script defer src="https://cn.vercount.one/js"></script>
 

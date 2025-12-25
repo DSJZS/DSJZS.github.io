@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://DSJZS.github.io/categories/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="Categories">
+<link rel="stylesheet" href="/scss/style.min.0ee87300fba6e979932c6c9dce819f7c6286fd130e19aa9a6c031dd312fc6ccf.css"><meta property='og:title' content="Categories">
 <meta property='og:description' content="欢迎来到我的个人博客！">
 <meta property='og:url' content='https://DSJZS.github.io/categories/'>
 <meta property='og:site_name' content='永远null的成元'>
@@ -191,7 +191,7 @@
         
         
         <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -204,7 +204,7 @@
 
 
                 
-                <span>友情链接</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -308,6 +308,14 @@
 
     <div class="tagCloud-tags">
         
+            <a href="/categories/%E6%95%99%E7%A8%8B/" class="font_size_1">
+                教程
+            </a>
+        
+            <a href="/categories/%E6%97%A5%E5%B8%B8/" class="font_size_1">
+                日常
+            </a>
+        
     </div>
 </section>
 
@@ -326,7 +334,7 @@
 
         <div class="section-card">
             <div class="section-details">
-                <h3 class="section-count">1 个页面</h3>
+                <h3 class="section-count">4 个页面</h3>
                 <h1 class="section-term">Categories</h1>
                 
             </div>
@@ -336,18 +344,52 @@
     <section class="article-list--compact">
         
             <article>
-    <a href="/categories/test/">
+    <a href="/categories/%E6%95%99%E7%A8%8B/">
         <div class="article-details">
-            <h2 class="article-title">Test</h2>
+            <h2 class="article-title">教程</h2>
+            <footer class="article-time">
+                <time datetime='2025-12-24T19:46:26&#43;08:00'>2025-12-24</time>
+            </footer>
+        </div>
+            <div class="article-image">
+                
+                    <img src="/tutorial.png" loading="lazy" alt="Featured image of post 教程" />
+                
+            </div>
+        
+    </a>
+</article>
+        
+            <article>
+    <a href="/categories/%E6%97%A5%E5%B8%B8/">
+        <div class="article-details">
+            <h2 class="article-title">日常</h2>
+            <footer class="article-time">
+                <time datetime='2025-12-24T16:38:24&#43;08:00'>2025-12-24</time>
+            </footer>
+        </div>
+            <div class="article-image">
+                
+                    <img src="/daily.png" loading="lazy" alt="Featured image of post 日常" />
+                
+            </div>
+        
+    </a>
+</article>
+        
+            <article>
+    <a href="/categories/linux/">
+        <div class="article-details">
+            <h2 class="article-title">Linux</h2>
             <footer class="article-time">
                 <time datetime='0001-01-01T00:00:00Z'>0001-01-01</time>
             </footer>
         </div>
             <div class="article-image">
-                <img src="/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash_hu_147a8f90287e725.jpg" 
+                <img src="/categories/linux/Linux_hu_4bf0e534bd11b1bd.png" 
                         width="120"
                         height="120" 
-                        alt="Test"
+                        alt="Linux"
                         loading="lazy">
                 
             </div>
@@ -355,7 +397,16 @@
     </a>
 </article>
         
-    </section><footer class="site-footer">
+    </section><nav class="pagination" role="navigation" aria-label="pagination"><a class="page-link disabled"aria-label="Previous page"aria-disabled="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+    </a><a class="page-link current" aria-label="Page 1"aria-current="page">
+        1
+    </a><a class="page-link "href="/categories/page/2/"aria-label="Page 2">
+        2
+    </a><a class="page-link "href="/categories/page/2/"aria-label="Next page">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+    </a>
+</nav><footer class="site-footer">
     <section class="copyright">
         &copy; 
         
@@ -389,6 +440,42 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    audio: [],
+    
+    fixed: true
+});
+</script>
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
 
     </body>
 </html>

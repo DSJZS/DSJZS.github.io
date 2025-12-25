@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="This is a test page for i18n support.\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="一个普通的个人博客，欢迎访问\n">
 <title>关于</title>
 
 <link rel='canonical' href='https://DSJZS.github.io/%E5%85%B3%E4%BA%8E/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="关于">
-<meta property='og:description' content="This is a test page for i18n support.\n">
+<link rel="stylesheet" href="/scss/style.min.0ee87300fba6e979932c6c9dce819f7c6286fd130e19aa9a6c031dd312fc6ccf.css"><meta property='og:title' content="关于">
+<meta property='og:description' content="一个普通的个人博客，欢迎访问\n">
 <meta property='og:url' content='https://DSJZS.github.io/%E5%85%B3%E4%BA%8E/'>
 <meta property='og:site_name' content='永远null的成元'>
 <meta property='og:type' content='article'><meta property='article:section' content='Page' />
 <meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="This is a test page for i18n support.\n">
+<meta name="twitter:description" content="一个普通的个人博客，欢迎访问\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -193,7 +193,7 @@
         
         
         <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -206,7 +206,7 @@
 
 
                 
-                <span>友情链接</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -269,7 +269,7 @@
     <section class="article-content">
     
     
-    <p>This is a test page for i18n support.</p>
+    <p>一个普通的个人博客，欢迎访问</p>
 
 </section>
 
@@ -459,6 +459,42 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    audio: [],
+    
+    fixed: true
+});
+</script>
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
 
     </body>
 </html>

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://DSJZS.github.io/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="编写了一个用户快速创建Hugo博客的脚本">
+<link rel="stylesheet" href="/scss/style.min.0ee87300fba6e979932c6c9dce819f7c6286fd130e19aa9a6c031dd312fc6ccf.css"><meta property='og:title' content="编写了一个用户快速创建Hugo博客的脚本">
 <meta property='og:description' content="脚本介绍 今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就没事找事花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/'>
 <meta property='og:site_name' content='永远null的成元'>
@@ -193,7 +193,7 @@
         
         
         <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -206,7 +206,7 @@
 
 
                 
-                <span>友情链接</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -282,6 +282,14 @@
 
     <div class="article-details">
     
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%99%E7%A8%8B/" style="background-color: #2a9d8f; color: #fff;">
+                教程
+            </a>
+        
+    </header>
+    
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
@@ -312,6 +320,15 @@
         
 
         
+        
+        
+        <div id="viewCount">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
     </footer>
     
 
@@ -577,6 +594,42 @@ hugo_blog -p ~/my-hugo-site/ -g</p>
         document.head.appendChild(customFont);
     }());
 </script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    audio: [],
+    
+    fixed: true
+});
+</script>
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
 
     </body>
 </html>

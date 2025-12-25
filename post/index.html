@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://DSJZS.github.io/post/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="Posts">
+<link rel="stylesheet" href="/scss/style.min.0ee87300fba6e979932c6c9dce819f7c6286fd130e19aa9a6c031dd312fc6ccf.css"><meta property='og:title' content="Posts">
 <meta property='og:description' content="欢迎来到我的个人博客！">
 <meta property='og:url' content='https://DSJZS.github.io/post/'>
 <meta property='og:site_name' content='永远null的成元'>
@@ -191,7 +191,7 @@
         
         
         <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -204,7 +204,7 @@
 
 
                 
-                <span>友情链接</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -308,6 +308,14 @@
 
     <div class="tagCloud-tags">
         
+            <a href="/categories/%E6%95%99%E7%A8%8B/" class="font_size_1">
+                教程
+            </a>
+        
+            <a href="/categories/%E6%97%A5%E5%B8%B8/" class="font_size_1">
+                日常
+            </a>
+        
     </div>
 </section>
 
@@ -391,6 +399,42 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    audio: [],
+    
+    fixed: true
+});
+</script>
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
 
     </body>
 </html>

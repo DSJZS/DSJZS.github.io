@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="This is an example category">
-<title>Category: Test - 永远null的成元</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="本人的笔记">
+<title>Category: 笔记 - 永远null的成元</title>
 
-<link rel='canonical' href='https://DSJZS.github.io/categories/test/'>
+<link rel='canonical' href='https://DSJZS.github.io/categories/%E7%AC%94%E8%AE%B0/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="Category: Test - 永远null的成元">
-<meta property='og:description' content="This is an example category">
-<meta property='og:url' content='https://DSJZS.github.io/categories/test/'>
+<link rel="stylesheet" href="/scss/style.min.0ee87300fba6e979932c6c9dce819f7c6286fd130e19aa9a6c031dd312fc6ccf.css"><meta property='og:title' content="Category: 笔记 - 永远null的成元">
+<meta property='og:description' content="本人的笔记">
+<meta property='og:url' content='https://DSJZS.github.io/categories/%E7%AC%94%E8%AE%B0/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2025-12-24T19:46:26&#43;08:00 '/><meta property='og:image' content='https://DSJZS.github.io/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg' />
-<meta name="twitter:title" content="Category: Test - 永远null的成元">
-<meta name="twitter:description" content="This is an example category"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://DSJZS.github.io/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg' /><link rel="alternate" type="application/rss&#43;xml" href="https://DSJZS.github.io/categories/test/index.xml">
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2025-12-24T19:46:26&#43;08:00 '/><meta property='og:image' content='https://DSJZS.github.io/note.png' />
+<meta name="twitter:title" content="Category: 笔记 - 永远null的成元">
+<meta name="twitter:description" content="本人的笔记"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://DSJZS.github.io/note.png' /><link rel="alternate" type="application/rss&#43;xml" href="https://DSJZS.github.io/categories/%E7%AC%94%E8%AE%B0/index.xml">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -192,7 +192,7 @@
         
         
         <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -205,7 +205,7 @@
 
 
                 
-                <span>友情链接</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -309,6 +309,14 @@
 
     <div class="tagCloud-tags">
         
+            <a href="/categories/%E6%95%99%E7%A8%8B/" class="font_size_1">
+                教程
+            </a>
+        
+            <a href="/categories/%E6%97%A5%E5%B8%B8/" class="font_size_1">
+                日常
+            </a>
+        
     </div>
 </section>
 
@@ -328,16 +336,14 @@
         <div class="section-card">
             <div class="section-details">
                 <h3 class="section-count">0 个页面</h3>
-                <h1 class="section-term">Test</h1>
+                <h1 class="section-term">笔记</h1>
                 
-                    <h2 class="section-description">This is an example category</h2>
+                    <h2 class="section-description">本人的笔记</h2>
                 
             </div>
                 <div class="section-image">
-                    <img src="/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash_hu_147a8f90287e725.jpg" 
-                            width="120"
-                            height="120" 
-                            loading="lazy">
+                    
+                        <img src="/note.png" loading="lazy" />
                     
                 </div>
             
@@ -381,6 +387,42 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    audio: [],
+    
+    fixed: true
+});
+</script>
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
 
     </body>
 </html>

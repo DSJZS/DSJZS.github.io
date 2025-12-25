@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://DSJZS.github.io/archives/'>
 
-<link rel="stylesheet" href="/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css"><meta property='og:title' content="归档">
+<link rel="stylesheet" href="/scss/style.min.0ee87300fba6e979932c6c9dce819f7c6286fd130e19aa9a6c031dd312fc6ccf.css"><meta property='og:title' content="归档">
 <meta property='og:description' content="">
 <meta property='og:url' content='https://DSJZS.github.io/archives/'>
 <meta property='og:site_name' content='永远null的成元'>
@@ -191,7 +191,7 @@
         
         
         <li >
-            <a href='/%E5%8F%8B%E6%83%85%E9%93%BE%E6%8E%A5/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -204,7 +204,7 @@
 
 
                 
-                <span>友情链接</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -245,23 +245,80 @@
                 
                     
 <article class="has-image">
-    <a href="/categories/test/">
+    <a href="/categories/%E6%95%99%E7%A8%8B/">
         
         
             <div class="article-image">
-                <img src="/categories/test/hutomo-abrianto-l2jk-uxb1BY-unsplash.bec89fe99958d89413edc0f93688bdd6_hu_543ba73fab19d0c8.jpg" 
-                        width="250" 
-                        height="150" 
-                        loading="lazy"
-                        alt="Featured image of post Test"
-                        data-key="test" 
-                        data-hash="md5-vsif6ZlY2JQT7cD5Noi91g==">
+                
+                    <img src="/tutorial.png" loading="lazy" data-key="tutorial" data-hash="/tutorial.png"/>
                 
             </div>
         
 
         <div class="article-details">
-            <h2 class="article-title">Test</h2>
+            <h2 class="article-title">教程</h2>
+        </div>
+    </a>
+</article>
+
+                
+                    
+<article class="has-image">
+    <a href="/categories/%E6%97%A5%E5%B8%B8/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/daily.png" loading="lazy" data-key="daily" data-hash="/daily.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">日常</h2>
+        </div>
+    </a>
+</article>
+
+                
+                    
+<article class="has-image">
+    <a href="/categories/linux/">
+        
+        
+            <div class="article-image">
+                <img src="/categories/linux/Linux.775951060da0c44a53a92f1b5986680b_hu_c81acc196daa9573.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Linux"
+                        data-key="linux" 
+                        data-hash="md5-d1lRBg2gxEpTqS8bWYZoCw==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux</h2>
+        </div>
+    </a>
+</article>
+
+                
+                    
+<article class="has-image">
+    <a href="/categories/%E7%AC%94%E8%AE%B0/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/note.png" loading="lazy" data-key="note" data-hash="/note.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">笔记</h2>
         </div>
     </a>
 </article>
@@ -341,6 +398,42 @@
         document.head.appendChild(customFont);
     }());
 </script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+const ap = new APlayer({
+    container: document.getElementById('aplayer'),
+    audio: [],
+    
+    fixed: true
+});
+</script>
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
 
     </body>
 </html>

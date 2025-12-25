@@ -412,6 +412,27 @@
 
 
 
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
 <div id="aplayer"></div>
 <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
 
@@ -475,25 +496,6 @@
 </script>
 
 
-<script defer src="https://cn.vercount.one/js"></script>
-
-<script>
-    function showHideView() {
-        
-        let viewCounts = document.querySelectorAll("#viewCount");
-        if (viewCounts) {
-            
-            let article =  document.querySelector(".article-page");
-            if (!article) {
-                viewCounts.forEach(ele => {
-                    ele.style.display = 'none';
-                });
-            }
-        }
-    }
-    
-    showHideView();
-</script>
 
 <style>
     #backTopBtn {

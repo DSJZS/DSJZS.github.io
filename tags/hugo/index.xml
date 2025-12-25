@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>永远null的成元</title>
-        <link>https://DSJZS.github.io/</link>
-        <description>Recent content on 永远null的成元</description>
+        <title>Hugo on 永远null的成元</title>
+        <link>https://DSJZS.github.io/tags/hugo/</link>
+        <description>Recent content in Hugo on 永远null的成元</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>关于Hugo框架设置的吐槽</title>
-        <link>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
-        <pubDate>Thu, 25 Dec 2025 15:11:10 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
-        <description>&lt;h1 id=&#34;事情的缘由&#34;&gt;事情的缘由
-&lt;/h1&gt;&lt;p&gt;最近学习各种协议、组件等等，发现了很多大佬的博客，想着昨天休息，也没啥活动，于是心血来潮准备搞个个人博客网站。一开始照着&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1bovfeaEtQ/?spm_id_from=333.1391.0.0&amp;amp;p=4&amp;amp;vd_source=9b2ee795ef170df3280fc7223c9f92b8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;B站上的教程&lt;/a&gt;搭建的无比顺利，搭建完之后虽然页面啥也没有，但总算能发布博客了。今天&lt;del&gt;没事找事&lt;/del&gt;看着博客的画风特别丑陋，而且按键也不符合我的习惯，于是就开始折腾Hugo框架设置。然后我的🧠就💥了。&lt;/p&gt;
-&lt;h1 id=&#34;个人的吐槽&#34;&gt;个人的吐槽
-&lt;/h1&gt;&lt;p&gt;鉴于本人的专业，完全没学过网站的设计，CCS 还有 HTML 啥的那是完全不懂啊，看着跟天书一样，在经历了4~5个小时的折磨之后，也是照猫画虎复制粘贴终于搞出来了几个基本的功能了🥲。
-以后根据需求慢慢加吧，盲目加功能还是不可取😌。&lt;/p&gt;
-</description>
-        </item>
-        <item>
+        <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>编写了一个用户快速创建Hugo博客的脚本</title>
         <link>https://DSJZS.github.io/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/</link>
         <pubDate>Wed, 24 Dec 2025 19:46:26 +0800</pubDate>
@@ -95,57 +81,6 @@ hugo_blog -p ~/my-hugo-site/ -g&lt;/p&gt;
 &lt;/div&gt;&lt;h2 id=&#34;结语&#34;&gt;结语
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;如果你有更好的想法，欢迎交流！&lt;/strong&gt;&lt;/p&gt;
 </description>
-        </item>
-        <item>
-        <title>Hello World</title>
-        <link>https://DSJZS.github.io/p/hello-world/</link>
-        <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/hello-world/</guid>
-        <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>分类&amp;标签</title>
-        <link>https://DSJZS.github.io/categories-tags/</link>
-        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/categories-tags/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>归档</title>
-        <link>https://DSJZS.github.io/archives/</link>
-        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/archives/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>关于</title>
-        <link>https://DSJZS.github.io/%E5%85%B3%E4%BA%8E/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/%E5%85%B3%E4%BA%8E/</guid>
-        <description>&lt;p&gt;一个普通的个人博客，欢迎访问&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>链接</title>
-        <link>https://DSJZS.github.io/%E9%93%BE%E6%8E%A5/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/%E9%93%BE%E6%8E%A5/</guid>
-        <description>&lt;p&gt;下面是本站点的链接&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>搜索</title>
-        <link>https://DSJZS.github.io/search/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/search/</guid>
-        <description></description>
         </item>
         
     </channel>

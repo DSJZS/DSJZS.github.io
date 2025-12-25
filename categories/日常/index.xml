@@ -7,6 +7,20 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>关于Hugo框架设置的吐槽</title>
+        <link>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
+        <pubDate>Thu, 25 Dec 2025 15:11:10 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
+        <description>&lt;h1 id=&#34;事情的缘由&#34;&gt;事情的缘由
+&lt;/h1&gt;&lt;p&gt;最近学习各种协议、组件等等，发现了很多大佬的博客，想着昨天休息，也没啥活动，于是心血来潮准备搞个个人博客网站。一开始照着&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1bovfeaEtQ/?spm_id_from=333.1391.0.0&amp;amp;p=4&amp;amp;vd_source=9b2ee795ef170df3280fc7223c9f92b8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;B站上的教程&lt;/a&gt;搭建的无比顺利，搭建完之后虽然页面啥也没有，但总算能发布博客了。今天&lt;del&gt;没事找事&lt;/del&gt;看着博客的画风特别丑陋，而且按键也不符合我的习惯，于是就开始折腾Hugo框架设置。然后我的🧠就💥了。&lt;/p&gt;
+&lt;h1 id=&#34;个人的吐槽&#34;&gt;个人的吐槽
+&lt;/h1&gt;&lt;p&gt;鉴于本人的专业，完全没学过网站的设计，CCS 还有 HTML 啥的那是完全不懂啊，看着跟天书一样，在经历了4~5个小时的折磨之后，也是照猫画虎复制粘贴终于搞出来了几个基本的功能了🥲。
+以后根据需求慢慢加吧，盲目加功能还是不可取😌。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Hello World</title>
         <link>https://DSJZS.github.io/p/hello-world/</link>
         <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>

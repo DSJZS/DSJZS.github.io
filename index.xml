@@ -14,6 +14,9 @@
         <guid>https://DSJZS.github.io/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/</guid>
         <description>&lt;h2 id=&#34;脚本介绍&#34;&gt;脚本介绍
 &lt;/h2&gt;&lt;p&gt;今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就&lt;del&gt;没事找事&lt;/del&gt;花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;仅在 Ubuntu 24.04 下进行过测试，不保证所有的场景都没有Bug，必须在阅读脚本文件后自行决定是否使用，本人接收issue但不对产生的问题负责&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;主要功能&#34;&gt;主要功能
 &lt;/h2&gt;&lt;ol&gt;
 &lt;li&gt;支持对Hugo博客进行增删查改这些基础操作&lt;/li&gt;
@@ -85,7 +88,7 @@ hugo_blog -p ~/my-hugo-site/ -g&lt;/p&gt;
         <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
         
         <guid>https://DSJZS.github.io/p/hello-world/</guid>
-        <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们来到我的网站！&lt;/p&gt;
+        <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;
 </description>
         </item>
         <item>

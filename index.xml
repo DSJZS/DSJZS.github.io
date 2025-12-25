@@ -7,6 +7,28 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>推荐一个开源工具👉163MusicLyrics👈</title>
+        <link>https://DSJZS.github.io/p/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
+        <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</guid>
+        <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由
+&lt;/h2&gt;&lt;p&gt;今天完善网站的音乐播放器，发现给播放器添加歌曲需要歌曲的封面图片、音乐文件、歌词文件等等，而要从网易云等网站中下载这些文件&lt;strong&gt;太麻烦了!!!&lt;/strong&gt;&lt;br&gt;
+&lt;del&gt;本着能偷懒就偷懒的原则&lt;/del&gt;，果断去网上寻找工具，找了没一会儿还真找到一个满足我所有要求的开源项目——&lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics.git&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;163MusicLyrics&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;软件的下载与安装&#34;&gt;软件的下载与安装
+&lt;/h2&gt;&lt;p&gt;Github仓库地址: &lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics.git&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/jitwxs/163MusicLyrics.git&lt;/a&gt;&lt;br&gt;
+参考仓库 &lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics/wiki#Downloads&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官方Wiki的Downloads部分与Quick Start部分&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;具体的使用方法&#34;&gt;具体的使用方法
+&lt;/h2&gt;&lt;p&gt;参考仓库 &lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics/wiki#%e2%80%98Use%20Guide%e2%80%99&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;官方Wiki的Use Guide部分&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;结语&#34;&gt;结语
+&lt;/h2&gt;&lt;p&gt;感谢贡献163MusicLyrics项目的开源开发者们!!!&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>关于Hugo框架设置的吐槽</title>
         <link>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
         <pubDate>Thu, 25 Dec 2025 15:11:10 +0800</pubDate>
@@ -59,7 +81,7 @@ hugo_blog -p ~/my-hugo-site/ -w &amp;ldquo;旧文章优化&amp;rdquo; -e code&lt
 hugo_blog -p ~/my-hugo-site/ -g&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;具体功能可以参看脚本文件内容&lt;/p&gt;
+&lt;p&gt;还有其它的一些功能，具体功能可以参看脚本文件内容&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;blockquote&gt;
@@ -70,15 +92,23 @@ hugo_blog -p ~/my-hugo-site/ -g&lt;/p&gt;
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias new_blog=&amp;#39;hugo_blog -p ~/my-hugo-site/ -e code -n&amp;#39;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias delete_blog=&amp;#39;hugo_blog -p ~/my-hugo-site/ -e code -d&amp;#39;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias write_blog=&amp;#39;hugo_blog -p ~/my-hugo-site/ -e code -w&amp;#39;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias read_blog=&amp;#39;hugo_blog -p ~/my-hugo-site/ -r&amp;#39;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;MY_BLOG_ROOT_DIR_PATH=&amp;#34;$HOME/blog/dev/&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias new_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -n&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias delete_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -d&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lias write_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -w&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias read_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -r&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias list_blogs=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -l&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias git_push_blogs=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -g&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias develop_blogs=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -t&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这样增删改查操作都只用输入博客名字就行了&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;这样增删改查等操作基本上只用输入博客名字就行了&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;脚本获取&#34;&gt;脚本获取
 &lt;/h2&gt;&lt;p&gt;我已将脚本上传到我的Github仓库，可以到&lt;a class=&#34;link&#34; href=&#34;https://github.com/DSJZS/ygtool/tree/main/shell/hugo_blog&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

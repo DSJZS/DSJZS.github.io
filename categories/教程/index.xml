@@ -72,7 +72,8 @@ hugo_blog -p ~/my-hugo-site/ -g&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias develop_blogs=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -t&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这样增删改查等操作基本上只用输入博客名字就行了&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;这样增删改查等操作基本上只用输入博客名字就行了
+如果想要避免频繁的 Yes or No 选项，也可以添加 &lt;code&gt;-y&lt;/code&gt; 或者 &lt;code&gt;-n&lt;/code&gt; 选项来自动选择(我更推荐手动选择)&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;脚本获取&#34;&gt;脚本获取
 &lt;/h2&gt;&lt;p&gt;我已将脚本上传到我的Github仓库，可以到&lt;a class=&#34;link&#34; href=&#34;https://github.com/DSJZS/ygtool/tree/main/shell/hugo_blog&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

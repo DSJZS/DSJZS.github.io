@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Thu, 25 Dec 2025 23:17:53 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 26 Dec 2025 14:04:17 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>推荐一个开源工具👉163MusicLyrics👈</title>
         <link>https://DSJZS.github.io/p/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
         <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
@@ -63,7 +63,7 @@
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;新增博客(并且使用 vim 对其进行编辑，可选择只创建不编辑)&lt;br&gt;
-hugo_blog -p ~/my-hugo-site/ -n &amp;ldquo;我的技术分享&amp;rdquo; -e vim&lt;/p&gt;
+hugo_blog -p ~/my-hugo-site/ -c &amp;ldquo;我的技术分享&amp;rdquo; -e vim&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;删除博客&lt;br&gt;
@@ -100,7 +100,7 @@ hugo_blog -p ~/my-hugo-site/ -g&lt;/p&gt;
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;MY_BLOG_ROOT_DIR_PATH=&amp;#34;$HOME/blog/dev/&amp;#34;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias new_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -n&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias new_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -c&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias delete_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -d&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lias write_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -w&amp;#39;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;alias read_blog=&amp;#39;hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -r&amp;#39;

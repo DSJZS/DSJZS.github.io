@@ -7,7 +7,27 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Fri, 26 Dec 2025 14:24:52 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 28 Dec 2025 19:39:38 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>非前端工作者对于HTML、CSS、JavaScript的吐槽</title>
+        <link>https://DSJZS.github.io/p/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</link>
+        <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
+        <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由
+&lt;/h2&gt;&lt;p&gt;学习了ESP32的HTTP服务器示例之后，感觉这玩意挺好玩的，于是&lt;del&gt;没事找事地&lt;/del&gt;看了下前端的课程。&lt;/p&gt;
+&lt;h2 id=&#34;对前端基础工具的理解&#34;&gt;对前端基础工具的理解
+&lt;/h2&gt;&lt;p&gt;作为一个初学者(学习没一两天)，而且不打算以前端为主要工作方向的在校生，对于这方面肯定不专业，只略微的了解过HTML、CSS 和 JavaScript，以下为我当前的，个人的看法。😖&lt;/p&gt;
+&lt;h3 id=&#34;html&#34;&gt;HTML
+&lt;/h3&gt;&lt;p&gt;首先 HTML 我觉得是必须学的(至少要了解)，因为这玩意是网页的“骨架”，很大程度上决定了网页的布局，各种内容(比如文本，图片啥的)应该怎么摆。靠AI生成也行，但是很难精准作出自己想要的布局，要描写大量的文本来实现，还是得了解 h、p、a、form、input 等基础的标签还有对应的属性，方便进行微调。🤓&lt;/p&gt;
+&lt;h3 id=&#34;css&#34;&gt;CSS
+&lt;/h3&gt;&lt;p&gt;CSS 主要用于装饰，大部分内容可以靠AI完成，本人没有什么艺术细胞，自己写肯定不如AI写的顺眼，当然至少需要了解这玩意是啥，能干什么以及不能干什么，这样给AI的提示词啥的更准确，风格更接近自己想要的样子。😋&lt;/p&gt;
+&lt;h3 id=&#34;javascript&#34;&gt;JavaScript
+&lt;/h3&gt;&lt;p&gt;JavaScript 感觉必须得了解，因为它决定了网页背后的“逻辑”，如何与用户还有后端交互，个人觉得可以靠AI辅助，但是必须得懂，如果不懂可能出现比较大的问题(就像某个人完全不懂命令行，让AI生成一个涉及rm命令的操作一样，对了就对了，错了就💥了)，这种涉及执行逻辑的内容我一般不会让AI全部完成。🤔&lt;/p&gt;
+&lt;h2 id=&#34;结语&#34;&gt;结语
+&lt;/h2&gt;&lt;p&gt;前端感觉入门容易，入门之后怎么样就不懂了，你是怎么看得了?🫵&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>推荐一个开源工具👉163MusicLyrics👈</title>
         <link>https://DSJZS.github.io/p/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
         <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>ESP32 on 永远null的成元</title>
-        <link>https://DSJZS.github.io/tags/esp32/</link>
-        <description>Recent content in ESP32 on 永远null的成元</description>
+        <title>前端 on 永远null的成元</title>
+        <link>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+        <description>Recent content in 前端 on 永远null的成元</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/tags/esp32/index.xml" rel="self" type="application/rss+xml" /><item>
+        <copyright>永远null的成元</copyright>
+        <lastBuildDate>Sun, 28 Dec 2025 19:39:38 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>非前端工作者对于HTML、CSS、JavaScript的吐槽</title>
         <link>https://DSJZS.github.io/p/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</link>
         <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>

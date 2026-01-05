@@ -56,7 +56,7 @@
 &lt;/h3&gt;&lt;p&gt;创建一个局域网，并准备包括电脑网卡接口在内的两个无线网络接口(平板、手机或者另一个电脑网卡接口等等)。确保它们都能连接上局域网。&lt;/p&gt;
 &lt;h3 id=&#34;检查arp缓存表&#34;&gt;检查ARP缓存表
 &lt;/h3&gt;&lt;p&gt;使用 &lt;code&gt;arp -a&lt;/code&gt; 指令查询当前设备的 &lt;strong&gt;ARP缓存表&lt;/strong&gt;，&lt;strong&gt;确保另一台设备不在这个表中&lt;/strong&gt;。 &lt;br&gt;
-如下所示，除了网关以外，没有目标设备的记录。&lt;/p&gt;
+如下所示，除了网关以外没有任何接口的记录。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
 <title>Wi Fi网络学习记录(2)：Linux无线网络配置</title>
 
 <link rel='canonical' href='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/'>
 
 <link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Wi Fi网络学习记录(2)：Linux无线网络配置">
-<meta property='og:description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<meta property='og:description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:published_time' content='2026-01-07T22:00:03&#43;08:00'/><meta property='article:modified_time' content='2026-01-10T17:47:31&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:published_time' content='2026-01-07T22:00:03&#43;08:00'/><meta property='article:modified_time' content='2026-01-10T21:44:28&#43;08:00'/>
 <meta name="twitter:title" content="Wi Fi网络学习记录(2)：Linux无线网络配置">
-<meta name="twitter:description" content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<meta name="twitter:description" content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -285,6 +285,7 @@
     <li><a href="#一些自动配置工具">一些自动配置工具</a>
       <ol>
         <li><a href="#systemd-networkd">systemd-networkd</a></li>
+        <li><a href="#systemd">systemd</a></li>
         <li><a href="#待更新">待更新</a></li>
       </ol>
     </li>
@@ -357,7 +358,7 @@
 
 
                 <time>
-                    Jan 10, 2026 17:47 &#43;0800
+                    Jan 10, 2026 21:44 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -379,7 +380,7 @@
     
     
     <h2 id="简介">简介
-</h2><p>第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动</p>
+</h2><p>第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。</p>
 <h2 id="观前需知">观前需知
 </h2><p>① 本文演示设备安装的系统为 Ubuntu Server，具体如下。</p>
 <div class="highlight"><div class="chroma">
@@ -416,8 +417,10 @@
 </span></span><span class="line"><span class="cl"><span class="nv">LOGO</span><span class="o">=</span>ubuntu-logo
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>② 代码块中的 <code>......</code> 表示省略，避免显示无用信息。</p>
-<p>③ 代码快中的 <code>~$</code> 为shell命令行提示符，表示后面的是shell命令</p>
+</div><p>② 代码块中的 <code>......</code> 表示省略，避免显示无用信息。<br>
+③ 代码快中的 <code>~$</code> 为shell命令行提示符，表示后面的是shell命令<br>
+④ 可以用 <code>man</code> 命令或者访问 <a class="link" href="https://wiki.archlinuxcn.org/wiki/%E9%A6%96%E9%A1%B5"  target="_blank" rel="noopener"
+    >Arch Linux 中文维基</a> 等方式查询感到疑惑的内容。</p>
 <h2 id="废键盘的操作方式">废键盘的操作方式💥⌨
 </h2><p>所谓的“<strong>废键盘</strong>”指的是不利用任何管理工具，手动执行每一步配置操作。</p>
 <h3 id="添加无线网卡接口并打开">添加无线网卡接口并打开
@@ -643,7 +646,8 @@ wpa_supplicant 是一个 WPA Supplicant(接入客户端) 组件的实现。<br>
 </h2><p>可以看到手动输入一个个指令十分的麻烦，我们可以使用一些工具来自动配置。</p>
 <h3 id="systemd-networkd">systemd-networkd
 </h3><p>一般安装在Ubuntu Server等纯命令行环境下(桌面环境下一般是 NetworkManager，本文不涉及)。<br>
-systemd-networkd 是 systemd 的配套组件，要使用它必须在一些特定的文件夹下编写 .network 单元，<br>
+systemd-networkd 是 systemd 的配套组件，配置完后可以自动检测链路层是否建立连接，<br>
+检测到连接其会自动的配置DHCP等功能，要使用它必须在一些特定的文件夹下编写 systemd.network 单元,<br>
 这里在 /etc/systemd/network/ 目录下新建 10-wlan1.network  单元文件。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -679,6 +683,90 @@ systemd-networkd 是 systemd 的配套组件，要使用它必须在一些特定
 </div>
 </div><p>之后重启设备或者执行 <code>sudo systemctl restart systemd-networkd</code> 来刷新服务。<br>
 <strong>如果没有 DHCP服务 请等待一会儿，新配置一般比较慢</strong>。</p>
+<h3 id="systemd">systemd
+</h3><p>既然提到了 <a class="link" href="#systemd-networkd" >systemd-networkd</a> ，那么 systemd 也不能落下。<br>
+systemd 是当今最流行的初始化与进程管理系统实现，ubuntu、debian等系统都默认使用它。<br>
+我们将使用 systemd.service 单元，实现开机自动创建新的接口，然后自动连接对应的AP。<br>
+这里将在 /etc/systemd/system/ 目录下创建两个单元，分别用于打开新接口和使用wpa_supplicant进行连接。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ cat /etc/systemd/system/wlan-sta.service 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Unit<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Description</span><span class="o">=</span>Create some managed<span class="o">(</span>sta<span class="o">)</span> interface
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Service<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Type</span><span class="o">=</span>oneshot
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStart</span><span class="o">=</span>/usr/sbin/iw phy phy0 interface add wlan1 <span class="nb">type</span> managed
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStartPost</span><span class="o">=</span>/usr/sbin/ip link <span class="nb">set</span> dev wlan1 up
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStop</span><span class="o">=</span>/usr/sbin/ip link <span class="nb">set</span> wlan1 down
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStop</span><span class="o">=</span>/usr/sbin/iw dev wlan1 del
+</span></span><span class="line"><span class="cl"><span class="nv">RemainAfterExit</span><span class="o">=</span>yes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Install<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ cat /etc/systemd/system/wpa-wlan1.service 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Unit<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Description</span><span class="o">=</span>WPA supplicant <span class="k">for</span> wlan1
+</span></span><span class="line"><span class="cl"><span class="nv">Requires</span><span class="o">=</span>wlan-sta.service
+</span></span><span class="line"><span class="cl"><span class="nv">After</span><span class="o">=</span>wlan-sta.service
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Service<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Type</span><span class="o">=</span>simple
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里 /path/to/hello_world.config 修改为你设置上对应的路径</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里为了演示，模糊化了路径</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStart</span><span class="o">=</span>/sbin/wpa_supplicant -c /path/to/hello_world.config -i wlan1
+</span></span><span class="line"><span class="cl"><span class="nv">ExecReload</span><span class="o">=</span>/sbin/wpa_cli -i wlan1 reconfigure
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Install<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后设置它们开机自启动。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> wlan-sta.service 
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> wpa-wlan1.service 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后我们每次启动电脑，便会自动查创建wlan1接口，并按照hello_world.config连接AP。<br>
+如果你同时使用了 <a class="link" href="#systemd-networkd" >systemd-networkd</a> ，链路层连接成功后会自动获取DHCP等服务。</p>
 <h3 id="待更新">待更新
 </h3><p>等待更新中&hellip;&hellip;</p>
 
@@ -718,7 +806,7 @@ systemd-networkd 是 systemd 的配套组件，要使用它必须在一些特定
 
 
         <span>
-            最后更新于 Jan 10, 2026 17:47 &#43;0800
+            最后更新于 Jan 10, 2026 21:44 &#43;0800
         </span>
     </section></footer>
 

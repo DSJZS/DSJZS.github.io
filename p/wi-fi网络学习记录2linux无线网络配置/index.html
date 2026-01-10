@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简介 第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。\n适合了解了ARP协议的人观看🤓。\nARP协议简介 功能介绍 ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，可以通过某个主机的IPv4地址找到它的MAC地址）。\n之所以强调IPv4地址，是因为ARP仅用于IPv4，IPv6使用邻居发现协议。\n与之相反的协议为RARP，不过其几乎已经不再被使用。\n">
-<title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<title>Wi Fi网络学习记录(2)：Linux无线网络配置</title>
 
-<link rel='canonical' href='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/'>
+<link rel='canonical' href='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/'>
 
-<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Wi-Fi网络学习记录(1)：抓包ARP协议">
-<meta property='og:description' content="简介 第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。\n适合了解了ARP协议的人观看🤓。\nARP协议简介 功能介绍 ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，可以通过某个主机的IPv4地址找到它的MAC地址）。\n之所以强调IPv4地址，是因为ARP仅用于IPv4，IPv6使用邻居发现协议。\n与之相反的协议为RARP，不过其几乎已经不再被使用。\n">
-<meta property='og:url' content='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/'>
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Wi Fi网络学习记录(2)：Linux无线网络配置">
+<meta property='og:description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:tag' content='Wireshark' /><meta property='article:published_time' content='2026-01-05T18:16:41&#43;08:00'/><meta property='article:modified_time' content='2026-01-05T21:42:25&#43;08:00'/>
-<meta name="twitter:title" content="Wi-Fi网络学习记录(1)：抓包ARP协议">
-<meta name="twitter:description" content="简介 第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。\n适合了解了ARP协议的人观看🤓。\nARP协议简介 功能介绍 ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，可以通过某个主机的IPv4地址找到它的MAC地址）。\n之所以强调IPv4地址，是因为ARP仅用于IPv4，IPv6使用邻居发现协议。\n与之相反的协议为RARP，不过其几乎已经不再被使用。\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:published_time' content='2026-01-07T22:00:03&#43;08:00'/><meta property='article:modified_time' content='2026-01-10T17:47:31&#43;08:00'/>
+<meta name="twitter:title" content="Wi Fi网络学习记录(2)：Linux无线网络配置">
+<meta name="twitter:description" content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -274,29 +274,20 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#简介">简介</a></li>
-    <li><a href="#arp协议简介">ARP协议简介</a>
+    <li><a href="#观前需知">观前需知</a></li>
+    <li><a href="#废键盘的操作方式">废键盘的操作方式💥⌨</a>
       <ol>
-        <li><a href="#功能介绍">功能介绍</a></li>
-        <li><a href="#arp帧格式">ARP帧格式</a></li>
-        <li><a href="#arp缓存表">ARP缓存表</a></li>
+        <li><a href="#添加无线网卡接口并打开">添加无线网卡接口并打开</a></li>
+        <li><a href="#让网卡接口连接到接入点ap">让网卡接口连接到接入点(AP)</a></li>
+        <li><a href="#获取dhcp服务">获取DHCP服务</a></li>
       </ol>
     </li>
-    <li><a href="#wireshark抓包流程">Wireshark抓包流程</a>
+    <li><a href="#一些自动配置工具">一些自动配置工具</a>
       <ol>
-        <li><a href="#准备网络环境">准备网络环境</a></li>
-        <li><a href="#检查arp缓存表">检查ARP缓存表</a></li>
-        <li><a href="#查询另一台设备的ipv4地址">查询另一台设备的IPv4地址</a></li>
-        <li><a href="#打开wireshark并抓包">打开Wireshark并抓包</a></li>
+        <li><a href="#systemd-networkd">systemd-networkd</a></li>
+        <li><a href="#待更新">待更新</a></li>
       </ol>
     </li>
-    <li><a href="#wireshark抓包内容解析">Wireshark抓包内容解析</a>
-      <ol>
-        <li><a href="#第一个arp帧">第一个ARP帧</a></li>
-        <li><a href="#第二个arp帧">第二个ARP帧</a></li>
-        <li><a href="#第三个和第四个arp帧">第三个和第四个ARP帧</a></li>
-      </ol>
-    </li>
-    <li><a href="#结语">结语</a></li>
   </ol>
 </nav>
         </div>
@@ -328,7 +319,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/">Wi-Fi网络学习记录(1)：抓包ARP协议</a>
+            <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/">Wi Fi网络学习记录(2)：Linux无线网络配置</a>
         </h2>
     
         
@@ -350,7 +341,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published" datetime='2026-01-05T18:16:41&#43;08:00'>2026-01-05</time>
+                <time class="article-time--published" datetime='2026-01-07T22:00:03&#43;08:00'>2026-01-07</time>
             </div>
         
 
@@ -366,7 +357,7 @@
 
 
                 <time>
-                    Jan 05, 2026 21:42 &#43;0800
+                    Jan 10, 2026 17:47 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -388,147 +379,308 @@
     
     
     <h2 id="简介">简介
-</h2><p>第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。<br>
-适合了解了ARP协议的人观看🤓。</p>
-<h2 id="arp协议简介">ARP协议简介
-</h2><h3 id="功能介绍">功能介绍
-</h3><p>ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，<strong>可以通过某个主机的IPv4地址找到它的MAC地址</strong>）。<br>
-之所以强调IPv4地址，是因为<strong>ARP仅用于IPv4</strong>，IPv6使用邻居发现协议。<br>
-与之相反的协议为RARP，不过其几乎已经不再被使用。</p>
-<h3 id="arp帧格式">ARP帧格式
-</h3><p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F.png"
-	width="1979"
-	height="579"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F_hu_5cf419b540ef4d24.png 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F_hu_23f19d46c717f146.png 1024w"
-	loading="lazy"
-	
-		alt="ARP帧(Ethernet II头部)"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="341"
-		data-flex-basis="820px"
-	
-></p>
-<blockquote>
-<p>本文的实验是直接监听网卡接口，收到的是Ethernet II帧，故这里给出对应的格式。</p>
-</blockquote>
-<p>ARP帧字段解释：</p>
-<ul>
-<li>硬件类型：硬件地址(MAC地址)的类型。对于以太网，这里为1。</li>
-<li>协议类型：映射的协议协议地址类型。对于IPv4地址，此字段为0x0800。</li>
-<li>硬件大小：硬件地址的字节数。对于MAC地址，应该为6。</li>
-<li>协议大小：协议地址的字节数。对于IPv4地址，应该为4.</li>
-<li>Op：ARP请求(1)、ARP应答(2)、RARP请求(3)、RARP应答(4)。</li>
-<li>地址字段：用于存放发送方与接收方的硬件地址与协议地址。</li>
-</ul>
-<h3 id="arp缓存表">ARP缓存表
-</h3><p>这个表格维护了每个接口从IP地址到MAC地址的最新映射(每个IPv4地址对应的MAC地址)。<br>
-每个条目由ARP协议动态学习或者手工输入得到。<br>
-在 Windows/Linux 中，可以通过 <code>arp -a</code> 指令查看。</p>
-<h2 id="wireshark抓包流程">Wireshark抓包流程
-</h2><h3 id="准备网络环境">准备网络环境
-</h3><p>创建一个局域网，并准备包括电脑网卡接口在内的两个无线网络接口(平板、手机或者另一个电脑网卡接口等等)。确保它们都能连接上局域网。</p>
-<h3 id="检查arp缓存表">检查ARP缓存表
-</h3><p>使用 <code>arp -a</code> 指令查询当前设备的 <strong>ARP缓存表</strong>，<strong>确保另一台设备不在这个表中</strong>。 <br>
-如下所示，除了网关以外没有任何接口的记录。</p>
+</h2><p>第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动</p>
+<h2 id="观前需知">观前需知
+</h2><p>① 本文演示设备安装的系统为 Ubuntu Server，具体如下。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ cat /etc/os-release 
+</span></span><span class="line"><span class="cl"><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Ubuntu 24.04.3 LTS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Ubuntu&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&#34;24.04&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&#34;24.04.3 LTS (Noble Numbat)&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION_CODENAME</span><span class="o">=</span>noble
+</span></span><span class="line"><span class="cl"><span class="nv">ID</span><span class="o">=</span>ubuntu
+</span></span><span class="line"><span class="cl"><span class="nv">ID_LIKE</span><span class="o">=</span>debian
+</span></span><span class="line"><span class="cl"><span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://www.ubuntu.com/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SUPPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://help.ubuntu.com/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://bugs.launchpad.net/ubuntu/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PRIVACY_POLICY_URL</span><span class="o">=</span><span class="s2">&#34;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UBUNTU_CODENAME</span><span class="o">=</span>noble
+</span></span><span class="line"><span class="cl"><span class="nv">LOGO</span><span class="o">=</span>ubuntu-logo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>② 代码块中的 <code>......</code> 表示省略，避免显示无用信息。</p>
+<p>③ 代码快中的 <code>~$</code> 为shell命令行提示符，表示后面的是shell命令</p>
+<h2 id="废键盘的操作方式">废键盘的操作方式💥⌨
+</h2><p>所谓的“<strong>废键盘</strong>”指的是不利用任何管理工具，手动执行每一步配置操作。</p>
+<h3 id="添加无线网卡接口并打开">添加无线网卡接口并打开
+</h3><p>① 首先可以执行 <code>iw list</code> 查看网卡的可用接口组合，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">❯ arp -a  
-</span></span><span class="line"><span class="cl">&gt;_gateway (192.168.102.158) 位于 66:ce:bd:27:59:a9 [ether] 在 wlo1
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ iw list
+</span></span><span class="line"><span class="cl">Wiphy phy0
+</span></span><span class="line"><span class="cl">    ......
+</span></span><span class="line"><span class="cl">	valid interface combinations:
+</span></span><span class="line"><span class="cl">		 * <span class="c1">#{ managed } &lt;= 2, #{ P2P-device } &lt;= 1, #{ P2P-client, P2P-GO } &lt;= 1,</span>
+</span></span><span class="line"><span class="cl">		   total &lt;<span class="o">=</span> 3, <span class="c1">#channels &lt;= 2</span>
+</span></span><span class="line"><span class="cl">		 * <span class="c1">#{ managed } &lt;= 1, #{ AP } &lt;= 1, #{ P2P-client } &lt;= 1, #{ P2P-device } &lt;= 1,</span>
+</span></span><span class="line"><span class="cl">		   total &lt;<span class="o">=</span> 4, <span class="c1">#channels &lt;= 1</span>
+</span></span><span class="line"><span class="cl">    ......
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果有了另一台设备的记录(比如重复实验等情况)，可以用 <code>sudo arp -d &lt;IPv4地址&gt;</code>进行删除。</p>
-<h3 id="查询另一台设备的ipv4地址">查询另一台设备的IPv4地址
-</h3><p>这个操作可以通过设备的<strong>设置</strong>软件或者AP设备(比如你的路由器)查询。<br>
-<strong>本文中另一台设备的IPv4地址为 192.168.102.112</strong>，下文不在复述。</p>
-<h3 id="打开wireshark并抓包">打开Wireshark并抓包
-</h3><ol>
-<li>打开Wireshark，并在过滤器中输入<code>arp</code>。</li>
-<li>打开虚拟终端软件，输入 <code>ping 192.168.102.112</code><br>
-(这里的IP地址由前面的<a class="link" href="#%e6%9f%a5%e8%af%a2%e5%8f%a6%e4%b8%80%e5%8f%b0%e8%ae%be%e5%a4%87%e7%9a%84ipv4%e5%9c%b0%e5%9d%80" >查询步骤</a>得到).</li>
-</ol>
-<p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85.jpg"
-	width="2495"
-	height="1364"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85_hu_9eacbd8311746ab9.jpg 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85_hu_5aeeb8b1ceaa7ec8.jpg 1024w"
-	loading="lazy"
-	
-		alt="Wireshark抓到的ARP帧"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="182"
-		data-flex-basis="439px"
-	
-></p>
-<p>最终应该会得到1对或者2对ARP帧。如上图所示(可以放大观看)。</p>
-<h2 id="wireshark抓包内容解析">Wireshark抓包内容解析
-</h2><p>上一个步骤一共得到了四个ARP帧，这里分别做解释。</p>
-<h3 id="第一个arp帧">第一个ARP帧
-</h3><p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7.png"
-	width="1894"
-	height="1006"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7_hu_12e96aeedd79b720.png 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7_hu_1ebcac7bfd7d8cc5.png 1024w"
-	loading="lazy"
-	
-		alt="电脑网卡接口在局域网中广播的ARP请求"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="188"
-		data-flex-basis="451px"
-	
-></p>
-<p>当执行<code>ping 192.168.102.112</code>时。电脑的<a class="link" href="#arp%e7%bc%93%e5%ad%98%e8%a1%a8" ><strong>ARP缓存表</strong></a>中并没有对应的条目，<br>
-因此为了得到 192.168.102.112 与MAC地址的映射关系，协议栈软件底层自动发送了一个ARP请求帧。
-Ethernet II头部中：</p>
-<ul>
-<li>目标地址：全1，表示广播，表示发往同一局域网中的所有接口。</li>
-<li>源地址：为电脑网卡接口的MAC地址。</li>
-<li>类型：为0x0806，表明这是一个ARP协议帧，载荷交由ARP协议软件处理。
-ARP协议内容：</li>
-<li>前四个字段如<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。</li>
-<li>Op：<strong>为1，表示这个帧为ARP请求帧，希望得到目标接口的应答</strong>。</li>
-<li>后面的地址字段也和<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。<br>
-<strong>值得注意的是目的硬件地址为全0，因为当前还不知道</strong>。</li>
-</ul>
-<h3 id="第二个arp帧">第二个ARP帧
-</h3><p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7.png"
-	width="1894"
-	height="1006"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7_hu_bf3a5f1e239121d8.png 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7_hu_4c337d147599c218.png 1024w"
-	loading="lazy"
-	
-		alt="目标设备单播发往电脑网卡接口的ARP请求"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="188"
-		data-flex-basis="451px"
-	
-></p>
-<p>IPv4地址为 192.168.102.112 的接口收到了电脑网卡接口广播的ARP请求，<strong>单播</strong>进行应答。<br>
-Ethernet II头部中的：</p>
-<ul>
-<li>目标地址：为ARP请求发送方的MAC地址。</li>
-<li>源地址：目标接口的MAC地址。</li>
-<li>类型：为0x0806，表明这是一个ARP协议帧，载荷交由ARP协议软件处理。
-ARP协议内容：</li>
-<li>前四个字段如<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。</li>
-<li>Op：<strong>为2，表示这个帧为ARP应答帧，是对ARP请求的应答</strong>。</li>
-<li>后面的地址字段也和<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。<br>
-电脑网卡接口收到ARP应答帧后会将其解析并作为一个动态条目加入<a class="link" href="#arp%e7%bc%93%e5%ad%98%e8%a1%a8" ><strong>ARP缓存表</strong></a></li>
-</ul>
-<h3 id="第三个和第四个arp帧">第三个和第四个ARP帧
-</h3><p>一般而言，目标设备收到ARP请求时，除了发送ARP应答，还会在<a class="link" href="#arp%e7%bc%93%e5%ad%98%e8%a1%a8" ><strong>ARP缓存表</strong></a>中添加有关发送方的映射条目。这是一个很常见的优化举措，但这里目标设备并没有这么做。<br>
-当它被电脑 ping 时，它为了回复同样也需要知晓电脑网卡接口的IPv4地址与MAC地址的映射关系，但是它发送ARP应答的时候并没有记录，因此它这里也需要往电脑发送ARP请求，等待电脑网卡接口的ARP应答，这就是第三个和第四个ARP帧的由来，可以参考前两个ARP帧示例。</p>
-<h2 id="结语">结语
-</h2><p>ARP协议算是比较简单的协议了，Wireshark抓包还是比较容易的，快去亲手试试吧🫵。</p>
+</div><p>可以看到我的网卡phy0有两个组合，<strong>其中组合一支持同时运行两个managed接口（managed模式可以理解为STA模式，与AP模式对应）</strong>，这正好方便我们演示如何配置。</p>
+<p>② 执行 <code>sudo iw phy phy0 interface add wlan1 type managed</code> 来创建一个 managed 模式的新接口。我们可以执行 <code>iw dev</code>来查看，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ iw dev
+</span></span><span class="line"><span class="cl">phy#0
+</span></span><span class="line"><span class="cl">	Interface wlan1
+</span></span><span class="line"><span class="cl">		ifindex <span class="m">4</span>
+</span></span><span class="line"><span class="cl">		wdev 0x3
+</span></span><span class="line"><span class="cl">		addr 2e:cf:67:8f:fb:3b
+</span></span><span class="line"><span class="cl">		<span class="nb">type</span> managed
+</span></span><span class="line"><span class="cl">		channel <span class="m">36</span> <span class="o">(</span><span class="m">5180</span> MHz<span class="o">)</span>, width: <span class="m">80</span> MHz, center1: <span class="m">5210</span> MHz
+</span></span><span class="line"><span class="cl">		txpower 31.00 dBm
+</span></span><span class="line"><span class="cl">    ......
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到新接口被成功的创建了。</p>
+<p>③ 执行 <code>sudo ip link set wlan1 up</code> 打开（所谓的&quot;上行&quot;）新建的接口</p>
+<h3 id="让网卡接口连接到接入点ap">让网卡接口连接到接入点(AP)
+</h3><p>网卡创建好了之后，就要开始链路层的连接了，对于无线网络来说，最常见的就是<strong>STA连接AP</strong>了。</p>
+<p>① 创建AP<br>
+这一步很容易完成，一般来说使用手机开启热点即可做到。可以使用 <code>iw dev wlan1 scan</code> 来测试接口是否能扫描到热点，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 这里我创建了一个 SSID 为 HELLOWORLD 的热点</span>
+</span></span><span class="line"><span class="cl">~$ iw dev wlan1 scan <span class="p">|</span> grep <span class="s1">&#39;HELLOWORLD&#39;</span>
+</span></span><span class="line"><span class="cl">	SSID: HELLOWORLD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我让刚才创建的wlan1接口进行扫描，看它是否能找到我刚才创建的热点。</p>
+<p>② 获取PSK，获取配置文件<br>
+想必大家的热点都设置了密码对吧？为了能够成功连接，我们需要使用密码进行验证操作。<br>
+本文创建的热点采用WPA2，因为树莓派自带的网卡似乎对WPA3支持的不太好<br>
+我们可以使用 wpa_passphrase 来获取PSK，并重定向到配置文件，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 这里可以直接给出 ssid 与 passphrase</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 也可以只给出 ssid，然后在标准输入流中写入 passphrase</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 后者被认为更安全</span>
+</span></span><span class="line"><span class="cl">~$ wpa_passphrase HELLOWORLD THISISMYPASSWORD &gt; hello_world.config
+</span></span><span class="line"><span class="cl">~$ cat hello_world.config
+</span></span><span class="line"><span class="cl"><span class="nv">network</span><span class="o">={</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;HELLOWORLD&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">#psk=&#34;THISISMYPASSWORD&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">psk</span><span class="o">=</span>30de7b35dd21ef152bf48de9731c46f516daed2079b8a2011609d160d1f4e157
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>③ 利用配置文件连接AP
+wpa_supplicant 是一个 WPA Supplicant(接入客户端) 组件的实现。<br>
+这里要使用 wpa_supplicant 工具进行认证与连接。如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># -B , 表示后台运行程序，如果想要前台观察Log等信息，可以不加此选项</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -i , 指定无线网络接口，这里为前几步创建的接口 wlan1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -c , 指定配置文件，这里直接使用刚才利用 wpa_passphrase 创建的配置文件</span>
+</span></span><span class="line"><span class="cl">~$ sudo wpa_supplicant -B -i wlan1 -c hello_world.config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时如果参数正确，网络接口就会顺利的连接上AP，链路层的连接就完毕了。<br>
+不过此时我们查询新接口的的一些信息，便会发现一些严重的问题，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ ip addr show dev wlan1
+</span></span><span class="line"><span class="cl">4: wlan1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">    link/ether 2e:cf:67:8f:fb:3b brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet6 fe80::2ccf:67ff:fe8f:fb3b/64 scope link 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl"><span class="c1"># 新的接口似乎没有IPv4地址</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ resolvectl status wlan1
+</span></span><span class="line"><span class="cl">Link <span class="m">4</span> <span class="o">(</span>wlan1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Current Scopes: none
+</span></span><span class="line"><span class="cl">         Protocols: -DefaultRoute -LLMNR -mDNS -DNSOverTLS <span class="nv">DNSSEC</span><span class="o">=</span>no/unsupported
+</span></span><span class="line"><span class="cl"><span class="c1"># 似乎也没有配置任何 DNS 服务器</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果强行使用新接口，会产生警告，并且无法正常访问</span>
+</span></span><span class="line"><span class="cl">~$ ping -I wlan1 baidu.com
+</span></span><span class="line"><span class="cl">ping: Warning: <span class="nb">source</span> address might be selected on device other than: wlan1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原来链路层的连接完毕了不意味着新接口就能成功上网了，<strong>此时还需要DHCP服务</strong>（本文不演示静态配置）。</p>
+<h3 id="获取dhcp服务">获取DHCP服务
+</h3><p>我们可以通过**DHCP客户端工具(dhcpcd)**自动地获取IPv4地址与DNS服务器，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ sudo dhcpcd -b wlan1
+</span></span><span class="line"><span class="cl">dhcpcd-10.0.6 starting
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ ip address show dev wlan1
+</span></span><span class="line"><span class="cl">4: wlan1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">    link/ether 2e:cf:67:8f:fb:3b brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet 192.168.10.41/24 brd 192.168.10.255 scope global dynamic noprefixroute wlan1
+</span></span><span class="line"><span class="cl">       valid_lft 3589sec preferred_lft 3139sec
+</span></span><span class="line"><span class="cl">    inet6 fe80::2ccf:67ff:fe8f:fb3b/64 scope link 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ resolvectl status wlan1
+</span></span><span class="line"><span class="cl">Link <span class="m">4</span> <span class="o">(</span>wlan1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Current Scopes: DNS
+</span></span><span class="line"><span class="cl">         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS <span class="nv">DNSSEC</span><span class="o">=</span>no/unsupported
+</span></span><span class="line"><span class="cl">       DNS Servers: 192.168.10.237
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 现在可以正常的访问网络了</span>
+</span></span><span class="line"><span class="cl">~$ ping -c <span class="m">1</span> -I wlan1 baidu.com
+</span></span><span class="line"><span class="cl">PING baidu.com <span class="o">(</span>110.242.74.102<span class="o">)</span> from 192.168.10.41 wlan1: 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+</span></span><span class="line"><span class="cl"><span class="m">64</span> bytes from 110.242.74.102: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">48</span> <span class="nv">time</span><span class="o">=</span>74.9 ms
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">--- baidu.com ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">1</span> packets transmitted, <span class="m">1</span> received, 0% packet loss, <span class="nb">time</span> 0ms
+</span></span><span class="line"><span class="cl">rtt min/avg/max/mdev <span class="o">=</span> 74.912/74.912/74.912/0.000 ms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一些自动配置工具">一些自动配置工具
+</h2><p>可以看到手动输入一个个指令十分的麻烦，我们可以使用一些工具来自动配置。</p>
+<h3 id="systemd-networkd">systemd-networkd
+</h3><p>一般安装在Ubuntu Server等纯命令行环境下(桌面环境下一般是 NetworkManager，本文不涉及)。<br>
+systemd-networkd 是 systemd 的配套组件，要使用它必须在一些特定的文件夹下编写 .network 单元，<br>
+这里在 /etc/systemd/network/ 目录下新建 10-wlan1.network  单元文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 单元文件名格式为: 数字-文件名.network</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 数字越小优先级越高，文件后缀应该为 network</span>
+</span></span><span class="line"><span class="cl">~$ cat /etc/systemd/network/10-wlan1.network 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Match<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Name</span><span class="o">=</span>wlan1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Network<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DHCP</span><span class="o">=</span>ipv4
+</span></span><span class="line"><span class="cl"><span class="nv">LinkLocalAddressing</span><span class="o">=</span>ipv6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DHCP<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">RouteMetric</span><span class="o">=</span><span class="m">600</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UseMTU</span><span class="o">=</span><span class="nb">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后重启设备或者执行 <code>sudo systemctl restart systemd-networkd</code> 来刷新服务。<br>
+<strong>如果没有 DHCP服务 请等待一会儿，新配置一般比较慢</strong>。</p>
+<h3 id="待更新">待更新
+</h3><p>等待更新中&hellip;&hellip;</p>
 
 </section>
 
@@ -540,8 +692,6 @@ ARP协议内容：</li>
             <a href="/tags/linux/">Linux</a>
         
             <a href="/tags/wi-fi/">Wi-Fi</a>
-        
-            <a href="/tags/wireshark/">Wireshark</a>
         
     </section>
 
@@ -568,7 +718,7 @@ ARP协议内容：</li>
 
 
         <span>
-            最后更新于 Jan 05, 2026 21:42 &#43;0800
+            最后更新于 Jan 10, 2026 17:47 &#43;0800
         </span>
     </section></footer>
 
@@ -587,12 +737,12 @@ ARP协议内容：</li>
             
                 
 <article class="">
-    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/">
+    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Wi Fi网络学习记录(2)：Linux无线网络配置</h2>
+            <h2 class="article-title">Wi-Fi网络学习记录(1)：抓包ARP协议</h2>
         </div>
     </a>
 </article>

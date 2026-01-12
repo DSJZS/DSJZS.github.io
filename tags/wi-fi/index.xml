@@ -7,11 +7,11 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/tags/wi-fi/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Wi Fi网络学习记录(2)：Linux无线网络配置</title>
-        <link>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</link>
+        <title>Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</title>
+        <link>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
         <pubDate>Wed, 07 Jan 2026 22:00:03 +0800</pubDate>
         
-        <guid>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</guid>
+        <guid>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
         <description>&lt;h2 id=&#34;简介&#34;&gt;简介
 &lt;/h2&gt;&lt;p&gt;第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;
 &lt;h2 id=&#34;观前需知&#34;&gt;观前需知

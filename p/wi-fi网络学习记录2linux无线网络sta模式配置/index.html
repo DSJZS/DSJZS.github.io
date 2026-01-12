@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<title>Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</title>
+
+<link rel='canonical' href='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/'>
+
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Wi Fi网络学习记录(2)：Linux无线网络STA模式配置">
+<meta property='og:description' content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/'>
+<meta property='og:site_name' content='永远null的成元'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:published_time' content='2026-01-07T22:00:03&#43;08:00'/><meta property='article:modified_time' content='2026-01-12T23:32:39&#43;08:00'/>
+<meta name="twitter:title" content="Wi Fi网络学习记录(2)：Linux无线网络STA模式配置">
+<meta name="twitter:description" content="简介 第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。\n观前需知 ① 本文演示设备安装的系统为 Ubuntu Server，具体如下。\n">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_23a75caddf849e79.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🫵</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">永远null的成元</a></h1>
+            <h2 class="site-description">欢迎来到我的个人博客！</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/322395014?spm_id_from=333.1007.0.0'
+                        target="_blank"
+                        title="BiliBili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6z" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/DSJZS'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E7%95%99%E8%A8%80%E6%9D%BF/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言板</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories-tags/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tags"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2z" /><path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" /><path d="M7 10h-.01" /></svg>
+                
+                <span>分类&amp;标签</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#观前需知">观前需知</a></li>
+    <li><a href="#废键盘的操作方式">废键盘的操作方式💥⌨</a>
+      <ol>
+        <li><a href="#添加无线网卡接口并打开">添加无线网卡接口并打开</a></li>
+        <li><a href="#让网卡接口连接到接入点ap">让网卡接口连接到接入点(AP)</a></li>
+        <li><a href="#获取dhcp服务">获取DHCP服务</a></li>
+      </ol>
+    </li>
+    <li><a href="#一些自动配置工具">一些自动配置工具</a>
+      <ol>
+        <li><a href="#systemd-networkd">systemd-networkd</a></li>
+        <li><a href="#systemd">systemd</a></li>
+        <li><a href="#待更新">待更新</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%99%E7%A8%8B/" style="background-color: #2a8a9dff; color: #fff;">
+                教程
+            </a>
+        
+            <a href="/categories/%E7%AC%94%E8%AE%B0/" style="background-color: #2a9d2cff; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-01-07T22:00:03&#43;08:00'>2026-01-07</time>
+            </div>
+        
+
+        
+        
+        <div class="article-lastmod">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time>
+                    Jan 12, 2026 23:32 &#43;0800
+                </time>
+            </div>
+        <div id="viewCount">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="简介">简介
+</h2><p>第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。</p>
+<h2 id="观前需知">观前需知
+</h2><p>① 本文演示设备安装的系统为 Ubuntu Server，具体如下。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ cat /etc/os-release 
+</span></span><span class="line"><span class="cl"><span class="nv">PRETTY_NAME</span><span class="o">=</span><span class="s2">&#34;Ubuntu 24.04.3 LTS&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">NAME</span><span class="o">=</span><span class="s2">&#34;Ubuntu&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION_ID</span><span class="o">=</span><span class="s2">&#34;24.04&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION</span><span class="o">=</span><span class="s2">&#34;24.04.3 LTS (Noble Numbat)&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">VERSION_CODENAME</span><span class="o">=</span>noble
+</span></span><span class="line"><span class="cl"><span class="nv">ID</span><span class="o">=</span>ubuntu
+</span></span><span class="line"><span class="cl"><span class="nv">ID_LIKE</span><span class="o">=</span>debian
+</span></span><span class="line"><span class="cl"><span class="nv">HOME_URL</span><span class="o">=</span><span class="s2">&#34;https://www.ubuntu.com/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SUPPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://help.ubuntu.com/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">BUG_REPORT_URL</span><span class="o">=</span><span class="s2">&#34;https://bugs.launchpad.net/ubuntu/&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">PRIVACY_POLICY_URL</span><span class="o">=</span><span class="s2">&#34;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UBUNTU_CODENAME</span><span class="o">=</span>noble
+</span></span><span class="line"><span class="cl"><span class="nv">LOGO</span><span class="o">=</span>ubuntu-logo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>② 代码块中的 <code>......</code> 表示省略，避免显示无用信息。<br>
+③ 代码快中的 <code>~$</code> 为shell命令行提示符，表示后面的是shell命令<br>
+④ 可以用 <code>man</code> 命令或者访问 <a class="link" href="https://wiki.archlinuxcn.org/wiki/%E9%A6%96%E9%A1%B5"  target="_blank" rel="noopener"
+    >Arch Linux 中文维基</a> 等方式查询感到疑惑的内容。</p>
+<h2 id="废键盘的操作方式">废键盘的操作方式💥⌨
+</h2><p>所谓的“<strong>废键盘</strong>”指的是不利用任何管理工具，手动执行每一步配置操作。</p>
+<h3 id="添加无线网卡接口并打开">添加无线网卡接口并打开
+</h3><p>① 首先可以执行 <code>iw list</code> 查看网卡的可用接口组合，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ iw list
+</span></span><span class="line"><span class="cl">Wiphy phy0
+</span></span><span class="line"><span class="cl">    ......
+</span></span><span class="line"><span class="cl">	valid interface combinations:
+</span></span><span class="line"><span class="cl">		 * <span class="c1">#{ managed } &lt;= 2, #{ P2P-device } &lt;= 1, #{ P2P-client, P2P-GO } &lt;= 1,</span>
+</span></span><span class="line"><span class="cl">		   total &lt;<span class="o">=</span> 3, <span class="c1">#channels &lt;= 2</span>
+</span></span><span class="line"><span class="cl">		 * <span class="c1">#{ managed } &lt;= 1, #{ AP } &lt;= 1, #{ P2P-client } &lt;= 1, #{ P2P-device } &lt;= 1,</span>
+</span></span><span class="line"><span class="cl">		   total &lt;<span class="o">=</span> 4, <span class="c1">#channels &lt;= 1</span>
+</span></span><span class="line"><span class="cl">    ......
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到我的网卡phy0有两个组合，<strong>其中组合一支持同时运行两个managed接口（managed模式可以理解为STA模式，与AP模式对应）</strong>，这正好方便我们演示如何配置。</p>
+<p>② 执行 <code>sudo iw phy phy0 interface add wlan1 type managed</code> 来创建一个 managed 模式的新接口。我们可以执行 <code>iw dev</code>来查看，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ iw dev
+</span></span><span class="line"><span class="cl">phy#0
+</span></span><span class="line"><span class="cl">	Interface wlan1
+</span></span><span class="line"><span class="cl">		ifindex <span class="m">4</span>
+</span></span><span class="line"><span class="cl">		wdev 0x3
+</span></span><span class="line"><span class="cl">		addr 2e:cf:67:8f:fb:3b
+</span></span><span class="line"><span class="cl">		<span class="nb">type</span> managed
+</span></span><span class="line"><span class="cl">		channel <span class="m">36</span> <span class="o">(</span><span class="m">5180</span> MHz<span class="o">)</span>, width: <span class="m">80</span> MHz, center1: <span class="m">5210</span> MHz
+</span></span><span class="line"><span class="cl">		txpower 31.00 dBm
+</span></span><span class="line"><span class="cl">    ......
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>可以看到新接口被成功的创建了。</p>
+<p>③ 执行 <code>sudo ip link set wlan1 up</code> 打开（所谓的&quot;上行&quot;）新建的接口</p>
+<h3 id="让网卡接口连接到接入点ap">让网卡接口连接到接入点(AP)
+</h3><p>网卡创建好了之后，就要开始链路层的连接了，对于无线网络来说，最常见的就是<strong>STA连接AP</strong>了。</p>
+<p>① 创建AP<br>
+这一步很容易完成，一般来说使用手机开启热点即可做到。可以使用 <code>iw dev wlan1 scan</code> 来测试接口是否能扫描到热点，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 这里我创建了一个 SSID 为 HELLOWORLD 的热点</span>
+</span></span><span class="line"><span class="cl">~$ iw dev wlan1 scan <span class="p">|</span> grep <span class="s1">&#39;HELLOWORLD&#39;</span>
+</span></span><span class="line"><span class="cl">	SSID: HELLOWORLD
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里我让刚才创建的wlan1接口进行扫描，看它是否能找到我刚才创建的热点。</p>
+<p>② 获取PSK，获取配置文件<br>
+想必大家的热点都设置了密码对吧？为了能够成功连接，我们需要使用密码进行验证操作。<br>
+本文创建的热点采用WPA2，因为树莓派自带的网卡似乎对WPA3支持的不太好<br>
+我们可以使用 wpa_passphrase 来获取PSK，并重定向到配置文件，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 这里可以直接给出 ssid 与 passphrase</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 也可以只给出 ssid，然后在标准输入流中写入 passphrase</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 后者被认为更安全</span>
+</span></span><span class="line"><span class="cl">~$ wpa_passphrase HELLOWORLD THISISMYPASSWORD &gt; hello_world.config
+</span></span><span class="line"><span class="cl">~$ cat hello_world.config
+</span></span><span class="line"><span class="cl"><span class="nv">network</span><span class="o">={</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;HELLOWORLD&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">#psk=&#34;THISISMYPASSWORD&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nv">psk</span><span class="o">=</span>30de7b35dd21ef152bf48de9731c46f516daed2079b8a2011609d160d1f4e157
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>③ 利用配置文件连接AP
+wpa_supplicant 是一个 WPA Supplicant(接入客户端) 组件的实现。<br>
+这里要使用 wpa_supplicant 工具进行认证与连接。如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># -B , 表示后台运行程序，如果想要前台观察Log等信息，可以不加此选项</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -i , 指定无线网络接口，这里为前几步创建的接口 wlan1</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -c , 指定配置文件，这里直接使用刚才利用 wpa_passphrase 创建的配置文件</span>
+</span></span><span class="line"><span class="cl">~$ sudo wpa_supplicant -B -i wlan1 -c hello_world.config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时如果参数正确，网络接口就会顺利的连接上AP，链路层的连接就完毕了。<br>
+不过此时我们查询新接口的的一些信息，便会发现一些严重的问题，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ ip addr show dev wlan1
+</span></span><span class="line"><span class="cl">4: wlan1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">    link/ether 2e:cf:67:8f:fb:3b brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet6 fe80::2ccf:67ff:fe8f:fb3b/64 scope link 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl"><span class="c1"># 新的接口似乎没有IPv4地址</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ resolvectl status wlan1
+</span></span><span class="line"><span class="cl">Link <span class="m">4</span> <span class="o">(</span>wlan1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Current Scopes: none
+</span></span><span class="line"><span class="cl">         Protocols: -DefaultRoute -LLMNR -mDNS -DNSOverTLS <span class="nv">DNSSEC</span><span class="o">=</span>no/unsupported
+</span></span><span class="line"><span class="cl"><span class="c1"># 似乎也没有配置任何 DNS 服务器</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果强行使用新接口，会产生警告，并且无法正常访问</span>
+</span></span><span class="line"><span class="cl">~$ ping -I wlan1 baidu.com
+</span></span><span class="line"><span class="cl">ping: Warning: <span class="nb">source</span> address might be selected on device other than: wlan1
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>原来链路层的连接完毕了不意味着新接口就能成功上网了，<strong>此时还需要DHCP服务</strong>（本文不演示静态配置）。</p>
+<h3 id="获取dhcp服务">获取DHCP服务
+</h3><p>我们可以通过**DHCP客户端工具(dhcpcd)**自动地获取IPv4地址与DNS服务器，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ sudo dhcpcd -b wlan1
+</span></span><span class="line"><span class="cl">dhcpcd-10.0.6 starting
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ ip address show dev wlan1
+</span></span><span class="line"><span class="cl">4: wlan1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="m">1500</span> qdisc pfifo_fast state UP group default qlen <span class="m">1000</span>
+</span></span><span class="line"><span class="cl">    link/ether 2e:cf:67:8f:fb:3b brd ff:ff:ff:ff:ff:ff
+</span></span><span class="line"><span class="cl">    inet 192.168.10.41/24 brd 192.168.10.255 scope global dynamic noprefixroute wlan1
+</span></span><span class="line"><span class="cl">       valid_lft 3589sec preferred_lft 3139sec
+</span></span><span class="line"><span class="cl">    inet6 fe80::2ccf:67ff:fe8f:fb3b/64 scope link 
+</span></span><span class="line"><span class="cl">       valid_lft forever preferred_lft forever
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ resolvectl status wlan1
+</span></span><span class="line"><span class="cl">Link <span class="m">4</span> <span class="o">(</span>wlan1<span class="o">)</span>
+</span></span><span class="line"><span class="cl">    Current Scopes: DNS
+</span></span><span class="line"><span class="cl">         Protocols: +DefaultRoute -LLMNR -mDNS -DNSOverTLS <span class="nv">DNSSEC</span><span class="o">=</span>no/unsupported
+</span></span><span class="line"><span class="cl">       DNS Servers: 192.168.10.237
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 现在可以正常的访问网络了</span>
+</span></span><span class="line"><span class="cl">~$ ping -c <span class="m">1</span> -I wlan1 baidu.com
+</span></span><span class="line"><span class="cl">PING baidu.com <span class="o">(</span>110.242.74.102<span class="o">)</span> from 192.168.10.41 wlan1: 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+</span></span><span class="line"><span class="cl"><span class="m">64</span> bytes from 110.242.74.102: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">48</span> <span class="nv">time</span><span class="o">=</span>74.9 ms
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">--- baidu.com ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">1</span> packets transmitted, <span class="m">1</span> received, 0% packet loss, <span class="nb">time</span> 0ms
+</span></span><span class="line"><span class="cl">rtt min/avg/max/mdev <span class="o">=</span> 74.912/74.912/74.912/0.000 ms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="一些自动配置工具">一些自动配置工具
+</h2><p>可以看到手动输入一个个指令十分的麻烦，我们可以使用一些工具来自动配置。</p>
+<h3 id="systemd-networkd">systemd-networkd
+</h3><p>一般安装在Ubuntu Server等纯命令行环境下(桌面环境下一般是 NetworkManager，本文不涉及)。<br>
+systemd-networkd 是 systemd 的配套组件，配置完后可以自动检测链路层是否建立连接，<br>
+检测到连接其会自动的配置DHCP等功能，要使用它必须在一些特定的文件夹下编写 systemd.network 单元,<br>
+这里在 /etc/systemd/network/ 目录下新建 10-wlan1.network  单元文件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 单元文件名格式为: 数字-文件名.network</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 数字越小优先级越高，文件后缀应该为 network</span>
+</span></span><span class="line"><span class="cl">~$ cat /etc/systemd/network/10-wlan1.network 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Match<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Name</span><span class="o">=</span>wlan1
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Network<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">DHCP</span><span class="o">=</span>ipv4
+</span></span><span class="line"><span class="cl"><span class="nv">LinkLocalAddressing</span><span class="o">=</span>ipv6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DHCP<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">RouteMetric</span><span class="o">=</span><span class="m">600</span>
+</span></span><span class="line"><span class="cl"><span class="nv">UseMTU</span><span class="o">=</span><span class="nb">true</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后重启设备或者执行 <code>sudo systemctl restart systemd-networkd</code> 来刷新服务。<br>
+<strong>如果没有 DHCP服务 请等待一会儿，新配置一般比较慢</strong>。</p>
+<h3 id="systemd">systemd
+</h3><p>既然提到了 <a class="link" href="#systemd-networkd" >systemd-networkd</a> ，那么 systemd 也不能落下。<br>
+systemd 是当今最流行的初始化与进程管理系统实现，ubuntu、debian等系统都默认使用它。<br>
+我们将使用 systemd.service 单元，实现开机自动创建新的接口，然后自动连接对应的AP。<br>
+这里将在 /etc/systemd/system/ 目录下创建两个单元，分别用于打开新接口和使用wpa_supplicant进行连接。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ cat /etc/systemd/system/wlan-sta.service 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Unit<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Description</span><span class="o">=</span>Create some managed<span class="o">(</span>sta<span class="o">)</span> interface
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Service<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Type</span><span class="o">=</span>oneshot
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStart</span><span class="o">=</span>/usr/sbin/iw phy phy0 interface add wlan1 <span class="nb">type</span> managed
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStartPost</span><span class="o">=</span>/usr/sbin/ip link <span class="nb">set</span> dev wlan1 up
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStop</span><span class="o">=</span>/usr/sbin/ip link <span class="nb">set</span> wlan1 down
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStop</span><span class="o">=</span>/usr/sbin/iw dev wlan1 del
+</span></span><span class="line"><span class="cl"><span class="nv">RemainAfterExit</span><span class="o">=</span>yes
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Install<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~$ cat /etc/systemd/system/wpa-wlan1.service 
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Unit<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Description</span><span class="o">=</span>WPA supplicant <span class="k">for</span> wlan1
+</span></span><span class="line"><span class="cl"><span class="nv">Requires</span><span class="o">=</span>wlan-sta.service
+</span></span><span class="line"><span class="cl"><span class="nv">After</span><span class="o">=</span>wlan-sta.service
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Service<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">Type</span><span class="o">=</span>simple
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里 /path/to/hello_world.config 修改为你设置上对应的路径</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里为了演示，模糊化了路径</span>
+</span></span><span class="line"><span class="cl"><span class="nv">ExecStart</span><span class="o">=</span>/sbin/wpa_supplicant -c /path/to/hello_world.config -i wlan1
+</span></span><span class="line"><span class="cl"><span class="nv">ExecReload</span><span class="o">=</span>/sbin/wpa_cli -i wlan1 reconfigure
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">[</span>Install<span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后设置它们开机自启动。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> wlan-sta.service 
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> wpa-wlan1.service 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>之后我们每次启动电脑，便会自动查创建wlan1接口，并按照hello_world.config连接AP。<br>
+如果你同时使用了 <a class="link" href="#systemd-networkd" >systemd-networkd</a> ，链路层连接成功后会自动获取DHCP等服务。</p>
+<h3 id="待更新">待更新
+</h3><p>等待更新中&hellip;&hellip;</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/wi-fi/">Wi-Fi</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Jan 12, 2026 23:32 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Wi-Fi网络学习记录(1)：抓包ARP协议</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E7%9A%84debug%E7%A8%8B%E5%BA%8F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(1)：如何愉快(?)的Debug程序</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">编写了一个用户快速创建Hugo博客的脚本</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="DSJZS/DSJZS.github.io"
+    data-repo-id="R_kgDOQuMMVg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQuMMVs4C0OeT"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('preferred_color_scheme');
+            } else {
+                setGiscusTheme('preferred_color_scheme');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 永远null的成元
+    </section>
+    
+    <section class="powerby">
+        
+            不可能被发现的一段文字 :-) <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.33.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+    
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+    const musicDir = "https://DSJZS.github.io/" + 'music/';
+    const songs = [
+        '乖乖报到-MC 张天赋',
+        'Time (ATLUS Kitajoh Remix)-藤田真由美',
+        'Cathy-当山瞳',
+        'Fabulous-BLU-SWING',
+        '光影 HIKAGE(feat. 初音ミク)-H.K.君',
+        '白夜狐步舞-丢莱卡WastedLaika',
+        'ミッドナイト・ユア・ステップ (feat. 初音ミク)-ベール_Veil',
+        '视神(feat.初音ミク)-翌川屿芊',
+        '弥留之际(feat.洛天依)-的确如此如确的',
+        '恋-星野源',
+    ];
+    let audios = [];
+    songs.forEach((item) => {
+        const songInfo = item.split('-');
+        audios.push({
+            name: songInfo[0],
+            artist: songInfo[1],
+            url: musicDir + item + '/song.mp3',
+            cover: musicDir + item + '/cover.jpg',
+            lrc: musicDir + item + '/lyric.lrc',
+        })
+    })
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        lrcType: 3,
+        audio: audios,
+        
+        fixed: true
+    });
+
+    window.onbeforeunload = () => {
+        
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.audio.paused,
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    
+
+    window.onload = () => {
+        
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        
+        ap.list.switch(playInfo.index);
+        
+        setTimeout(() => {
+            
+            ap.seek(playInfo.currentTime);
+            
+            if (!playInfo.paused) {
+                
+                ap.play()
+            }
+        }, 500);
+    };
+
+</script>
+
+
+
+<style>
+    #backTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        z-index: 99;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-image: url(https://DSJZS.github.io/icons/backTop.svg);
+    }
+</style>
+
+<script>
+    
+
+    function initScrollTop() {
+        let rightSideBar = document.querySelector(".right-sidebar");
+        if (!rightSideBar) {
+            return;
+        }
+        
+        let btn = document.createElement("div");
+        btn.id = "backTopBtn";
+        btn.onclick = backToTop
+        rightSideBar.appendChild(btn)
+        
+        window.onscroll = function() {
+            
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    }
+
+    
+
+    function backToTop(){
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    initScrollTop();
+</script>
+
+<style>
+    .highlight {
+         
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .code-show {
+        max-height: none !important;
+    }
+
+    .code-more-box {
+        width: 100%;
+        padding-top: 78px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .code-more-btn {
+        display: block;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+    .code-more-img {
+        cursor: pointer !important;
+        display: block;
+        margin: auto;
+        width: 22px;
+        height: 16px;
+    }
+</style>
+
+<script>
+  function initCodeMoreBox() {
+    let codeBlocks = document.querySelectorAll(".highlight");
+    if (!codeBlocks) {
+      return;
+    }
+    codeBlocks.forEach(codeBlock => {
+      
+      if (codeBlock.scrollHeight <= codeBlock.clientHeight) {
+        return;
+      }
+      
+      
+      let codeMoreBox = document.createElement('div');
+      codeMoreBox.classList.add('code-more-box');
+      
+      let codeMoreBtn = document.createElement('span');
+      codeMoreBtn.classList.add('code-more-btn');
+      codeMoreBtn.addEventListener('click', () => {
+        codeBlock.classList.add('code-show');
+        codeMoreBox.style.display = 'none';
+        
+        window.dispatchEvent(new Event('resize'))
+      })
+      
+      let img = document.createElement('img');
+      img.classList.add('code-more-img');
+      img.src = "https://DSJZS.github.io/icons/codeMore.png"
+      
+      codeMoreBtn.appendChild(img);
+      codeMoreBox.appendChild(codeMoreBtn);
+      codeBlock.appendChild(codeMoreBox)
+    })
+  }
+
+  initCodeMoreBox();
+</script>
+
+
+    </body>
+</html>

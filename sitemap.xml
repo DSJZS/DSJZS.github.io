@@ -3,16 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://DSJZS.github.io/categories/</loc>
-    <lastmod>2026-01-10T21:44:28+08:00</lastmod>
+    <lastmod>2026-01-12T23:32:39+08:00</lastmod>
+  </url><url>
+    <loc>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E7%9A%84debug%E7%A8%8B%E5%BA%8F/</loc>
+    <lastmod>2026-01-12T23:32:39+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/post/</loc>
-    <lastmod>2026-01-10T21:44:28+08:00</lastmod>
+    <lastmod>2026-01-12T23:32:39+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/tags/</loc>
-    <lastmod>2026-01-10T21:44:28+08:00</lastmod>
+    <lastmod>2026-01-12T23:32:39+08:00</lastmod>
   </url><url>
-    <loc>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2026-01-10T21:44:28+08:00</lastmod>
+    <loc>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2026-01-12T23:32:39+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</loc>
     <lastmod>2026-01-05T21:42:25+08:00</lastmod>
@@ -61,6 +64,9 @@
   </url><url>
     <loc>https://DSJZS.github.io/tags/esp32/</loc>
     <lastmod>2025-12-26T14:04:17+08:00</lastmod>
+  </url><url>
+    <loc>https://DSJZS.github.io/tags/gdb/</loc>
+    <lastmod>2026-01-12T23:32:39+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/tags/hugo/</loc>
     <lastmod>2025-12-25T15:30:45+08:00</lastmod>

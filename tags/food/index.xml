@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Food on 永远null的成元</title>
+        <link>https://DSJZS.github.io/tags/food/</link>
+        <description>Recent content in Food on 永远null的成元</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/tags/food/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>屋里食研(1)：炒面</title>
+        <link>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
+        <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;
+也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;
+本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;
+&lt;h2 id=&#34;食材准备&#34;&gt;食材准备
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;手工面条(也就是成型的分开的面条)或者碱水挂面(要煮成型)&lt;/li&gt;
+&lt;li&gt;鸡蛋等配菜(看着加，本教程默认配菜只有鸡蛋)&lt;/li&gt;
+&lt;li&gt;油&lt;/li&gt;
+&lt;li&gt;老抽&lt;/li&gt;
+&lt;li&gt;盐&lt;/li&gt;
+&lt;li&gt;胡椒(可以不要)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;制作步骤&#34;&gt;制作步骤
+&lt;/h2&gt;&lt;h3 id=&#34;-将面条煮到熟-&#34;&gt;① 将面条煮到熟 🍜
+&lt;/h3&gt;&lt;p&gt;如果是成型的手工面特别简单，煮到八分熟就行，然后捞出来；如果是碱水挂面则需要煮到成型，然后看情况在粘粘前捞出(无论是那种面，煮面时可以加一点盐，这样煮面更快，煮出来的面更加劲道)。把面捞出来后倒入装满冷水的碗，然后用筷子分开粘黏的面条，等待冷却后快速沥干水分，防止成“泡面”了。最后加入老抽拌匀上色，拌的时候还可以加点食用油进一步防止面条粘黏。&lt;/p&gt;
+&lt;h3 id=&#34;-搅拌鸡蛋液-&#34;&gt;② 搅拌鸡蛋液 🥚🥄
+&lt;/h3&gt;&lt;p&gt;敲 1 ~ 2 个鸡蛋，将蛋液倒入一个碗中并用筷子或者专门的工具搅拌均匀备用。&lt;/p&gt;
+&lt;h3 id=&#34;-炒鸡蛋-&#34;&gt;③ 炒鸡蛋 🍳
+&lt;/h3&gt;&lt;p&gt;开火热锅，然后加足够的油(很关键不然粘锅)，接着加盐并倒入搅拌完成的鸡蛋液。蛋液入锅后快速用锅铲沿着一个方向搅拌蛋液弄散鸡蛋。等鸡蛋成型后关火进入下一步。&lt;/p&gt;
+&lt;h3 id=&#34;-炒面-&#34;&gt;④ 炒面 🪏
+&lt;/h3&gt;&lt;p&gt;此时锅里有上一步炒好的鸡蛋，观察锅的表面是否比较“油”，如果没有油膜必须加油(很关键不然粘锅)。倒入准备好的面条并开大火翻锅开炒！炒到差不多熟后可以根据口味自己额外加点盐或者胡椒啥的然后继续炒到完全熟之后出锅！。&lt;/p&gt;
+&lt;h2 id=&#34;总结-&#34;&gt;总结 ☝️🤓
+&lt;/h2&gt;&lt;p&gt;只能说面确实是炒出来的，本人多次“仿真”外加“物理机实验”都没问题，但不代表没有BUG，也不保障能在不同“运行环境”下运行，如果按照这个开源流程“炸机”了本人概不负责。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

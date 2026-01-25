@@ -10,7 +10,7 @@
 <meta property='og:description' content="前言 又一个新系列(坑)开始了！这个系列我会发布一些自己学习Linux开发过程中写下的笔记。\n第一篇笔记便是如何愉快(?)的在Linux环境下进行Debug工作(以C语言举例)。\n使用的主要工具为 systemd-coredump、GDB。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E7%9A%84debug%E7%A8%8B%E5%BA%8F/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='C' /><meta property='article:tag' content='GDB' /><meta property='article:published_time' content='2026-01-11T18:52:26&#43;08:00'/><meta property='article:modified_time' content='2026-01-12T23:32:39&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='C' /><meta property='article:tag' content='GDB' /><meta property='article:published_time' content='2026-01-11T18:52:26&#43;08:00'/><meta property='article:modified_time' content='2026-01-25T22:42:01&#43;08:00'/>
 <meta name="twitter:title" content="Linux开发学习记录(1)：如何愉快(?)的Debug程序">
 <meta name="twitter:description" content="前言 又一个新系列(坑)开始了！这个系列我会发布一些自己学习Linux开发过程中写下的笔记。\n第一篇笔记便是如何愉快(?)的在Linux环境下进行Debug工作(以C语言举例)。\n使用的主要工具为 systemd-coredump、GDB。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -278,33 +278,42 @@
     <li><a href="#systemd-coredump-介绍">systemd-coredump 介绍</a></li>
     <li><a href="#gdb-介绍">GDB 介绍</a>
       <ol>
-        <li><a href="#举例演示的一些说明">举例演示的一些说明</a></li>
-        <li><a href="#info-inf-i-信息">info inf i 信息</a></li>
-        <li><a href="#break-brea-bre-br-b-断点">break brea bre br b 断点</a></li>
-        <li><a href="#hbreak-tbreak-thbreak-其它断点">hbreak tbreak thbreak 其它断点</a></li>
-        <li><a href="#clear-cl-清除断点">clear cl 清除断点</a></li>
-        <li><a href="#enable-en--disable-disa-dis-启用禁用断点">enable en / disable disa dis 启用/禁用断点</a></li>
-        <li><a href="#conditon-断点条件的添加替换与删除">conditon 断点条件的添加(替换)与删除</a></li>
-        <li><a href="#run-r-运行">run r 运行</a></li>
-        <li><a href="#start---开始">start   开始</a></li>
-        <li><a href="#backtrace-bt-where-显示栈帧">backtrace bt where 显示栈帧</a></li>
-        <li><a href="#print-p-显示变量">print p 显示变量</a></li>
-        <li><a href="#x---显示内存">x   显示内存</a></li>
-        <li><a href="#disassemble-disas-反汇编">disassemble disas 反汇编</a></li>
-        <li><a href="#next-n-单步不进入函数内部">next n 单步(不进入函数内部)</a></li>
-        <li><a href="#step-s-单步进入函数内部">step s 单步(进入函数内部)</a></li>
-        <li><a href="#ignore---忽略断点监视点捕获点">ignore   忽略断点、监视点、捕获点</a></li>
-        <li><a href="#continue-c-fg-继续运行">continue c fg 继续运行</a></li>
-        <li><a href="#finish-fin-执行完当前函数">finish fin 执行完当前函数</a></li>
-        <li><a href="#until-u-运行到某一位置">until u 运行到某一位置</a></li>
-        <li><a href="#watch-awatch-rwatch-监视点">watch awatch rwatch 监视点</a></li>
-        <li><a href="#delete-d-del-删除断点和监视点">delete d del 删除断点和监视点</a></li>
-        <li><a href="#set-调试进程中修改">set 调试进程中修改</a></li>
-        <li><a href="#generate-core-file-gcore-生成core-dump文件">generate-core-file gcore 生成Core dump文件</a></li>
-        <li><a href="#attach-detach-调试附加到和脱离已启动进程">attach detach 调试(附加到)和脱离已启动进程</a></li>
-        <li><a href="#commands---断点命令">commands   断点命令</a></li>
-        <li><a href="#list-l-显示函数或行">list l 显示函数或行</a></li>
-        <li><a href="#help-h-帮助文档">help h 帮助文档</a></li>
+        <li><a href="#gdb初始化文件">GDB初始化文件</a></li>
+        <li><a href="#常用的gdb命令">常用的GDB命令</a>
+          <ol>
+            <li><a href="#举例演示的补充说明">举例演示的补充说明</a></li>
+            <li><a href="#info-inf-i-信息">info inf i 信息</a></li>
+            <li><a href="#sharedlibrary-share-手动添加共享库动态库">sharedlibrary share 手动添加共享库(动态库)</a></li>
+            <li><a href="#break-brea-bre-br-b-断点">break brea bre br b 断点</a></li>
+            <li><a href="#hbreak-tbreak-thbreak-其它断点">hbreak tbreak thbreak 其它断点</a></li>
+            <li><a href="#clear-cl-清除断点">clear cl 清除断点</a></li>
+            <li><a href="#enable-en--disable-disa-dis-启用禁用断点">enable en / disable disa dis 启用/禁用断点</a></li>
+            <li><a href="#conditon-断点条件的添加替换与删除">conditon 断点条件的添加(替换)与删除</a></li>
+            <li><a href="#run-r-运行">run r 运行</a></li>
+            <li><a href="#start---开始">start   开始</a></li>
+            <li><a href="#backtrace-bt-where-显示栈帧">backtrace bt where 显示栈帧</a></li>
+            <li><a href="#print-p-显示变量">print p 显示变量</a></li>
+            <li><a href="#x---显示内存">x   显示内存</a></li>
+            <li><a href="#disassemble-disas-反汇编">disassemble disas 反汇编</a></li>
+            <li><a href="#next-n-单步不进入函数内部">next n 单步(不进入函数内部)</a></li>
+            <li><a href="#step-s-单步进入函数内部">step s 单步(进入函数内部)</a></li>
+            <li><a href="#ignore---忽略断点监视点捕获点">ignore   忽略断点、监视点、捕获点</a></li>
+            <li><a href="#continue-c-fg-继续运行">continue c fg 继续运行</a></li>
+            <li><a href="#finish-fin-执行完当前函数">finish fin 执行完当前函数</a></li>
+            <li><a href="#until-u-运行到某一位置">until u 运行到某一位置</a></li>
+            <li><a href="#watch-awatch-rwatch-监视点">watch awatch rwatch 监视点</a></li>
+            <li><a href="#delete-d-del-删除断点和监视点">delete d del 删除断点和监视点</a></li>
+            <li><a href="#set-设置值">set 设置值</a></li>
+            <li><a href="#generate-core-file-gcore-生成core-dump文件">generate-core-file gcore 生成Core dump文件</a></li>
+            <li><a href="#attach-detach-调试附加到和脱离已启动进程">attach detach 调试(附加到)和脱离已启动进程</a></li>
+            <li><a href="#commands---断点命令">commands   断点命令</a></li>
+            <li><a href="#list-l-显示函数或行">list l 显示函数或行</a></li>
+            <li><a href="#help-h-帮助文档">help h 帮助文档</a></li>
+            <li><a href="#show---显示数据">show   显示数据</a></li>
+            <li><a href="#define-命令定义--document-命令说明">define 命令定义 / document 命令说明</a></li>
+            <li><a href="#source---引入初始化文件">source   引入初始化文件</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
     <li><a href="#参考文章">参考文章</a></li>
@@ -377,7 +386,7 @@
 
 
                 <time>
-                    Jan 12, 2026 23:32 &#43;0800
+                    Jan 25, 2026 22:42 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -564,15 +573,28 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 </span></span><span class="line"><span class="cl">Sun 2026-01-11 18:25:08 CST <span class="m">378385</span> <span class="m">1000</span> <span class="m">1000</span> SIGSEGV present  /home/bigshot/project/c/error/test.exe 19.3K
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>具体的用法可以通过指令<code>coredumpctl help</code>或者手册 coredumpctl(1) 查询。</p>
+</div><p>具体的用法可以通过命令<code>coredumpctl help</code>或者手册 coredumpctl(1) 查询。</p>
 <h2 id="gdb-介绍">GDB 介绍
 </h2><p>GDB (GNU Debugger) 应该是 Linux 系统下最常用的程序调试工具了，程序员们都或多或少用过它或者基于它的工具进行Debug。<br>
 如果想要使用GDB进行调试，那么编译C代码时必须使用 debug 模式（或者尽可能保留Debug信息），比如使用 gcc 的 <code>-g</code> 选项。<br>
-使用 <code>gdb &lt;可执行文件&gt;</code> 即可开启对指定程序的Debug，具体的指令如下(部分不常用的指令或格式省略)。</p>
+使用 <code>gdb &lt;可执行文件&gt;</code> 即可开启对指定程序的Debug，</p>
+<h3 id="gdb初始化文件">GDB初始化文件
+</h3><p>和shell类似，GDB也有初始化文件，不同的是GDB的初始化文件使用<a class="link" href="#%e5%b8%b8%e7%94%a8%e7%9a%84gdb%e5%91%bd%e4%bb%a4" >GDB命令</a>。<br>
+其会按照以下的顺序读取初始化文件，并依次执行：</p>
+<ol>
+<li>$HOME/.gdbinit</li>
+<li>运行命令行选项</li>
+<li>./.gdbinit</li>
+<li>通过-x选项给出的命令文件</li>
+</ol>
+<p>此外通过 <a class="link" href="#source---%e5%bc%95%e5%85%a5%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6" >source</a> 命令也能引入文件。</p>
+<h3 id="常用的gdb命令">常用的GDB命令
+</h3><p>具体如下(<strong>部分不常用的命令或格式省略</strong>)：<br>
+举例演示的补充说明跳转到<a class="link" href="#%e4%b8%be%e4%be%8b%e6%bc%94%e7%a4%ba%e7%9a%84%e8%a1%a5%e5%85%85%e8%af%b4%e6%98%8e" >下一小节</a>。</p>
 <div class="table-wrapper"><table>
   <thead>
       <tr>
-          <th>指令</th>
+          <th>命令</th>
           <th>简写</th>
           <th>作用</th>
           <th>跳转目录</th>
@@ -584,6 +606,12 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
           <td>inf i</td>
           <td>查询有关信息</td>
           <td><a class="link" href="#info-inf-i-%e4%bf%a1%e6%81%af" >info inf i 信息</a></td>
+      </tr>
+      <tr>
+          <td>sharedlibrary</td>
+          <td>share</td>
+          <td>手动添加共享库(动态库)</td>
+          <td><a class="link" href="#sharedlibrary-share-%e6%89%8b%e5%8a%a8%e6%b7%bb%e5%8a%a0%e5%85%b1%e4%ba%ab%e5%ba%93%e5%8a%a8%e6%80%81%e5%ba%93" >sharedlibrary share 手动添加共享库(动态库)</a></td>
       </tr>
       <tr>
           <td>break</td>
@@ -720,8 +748,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       <tr>
           <td>set</td>
           <td></td>
-          <td>调试进程中修改</td>
-          <td><a class="link" href="#set-%e8%b0%83%e8%af%95%e8%bf%9b%e7%a8%8b%e4%b8%ad%e4%bf%ae%e6%94%b9" >set 调试进程中修改</a></td>
+          <td>设置值</td>
+          <td><a class="link" href="#set-%e8%ae%be%e7%bd%ae%e5%80%bc" >set 设置值</a></td>
       </tr>
       <tr>
           <td>generate-core-file</td>
@@ -759,10 +787,34 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
           <td>帮助文档</td>
           <td><a class="link" href="#help-h-%e5%b8%ae%e5%8a%a9%e6%96%87%e6%a1%a3" >help h 帮助文档</a></td>
       </tr>
+      <tr>
+          <td>show</td>
+          <td></td>
+          <td>显示数据</td>
+          <td><a class="link" href="#show---%e6%98%be%e7%a4%ba%e6%95%b0%e6%8d%ae" >show 显示数据</a></td>
+      </tr>
+      <tr>
+          <td>define</td>
+          <td></td>
+          <td>命令定义</td>
+          <td><a class="link" href="#define-%e5%91%bd%e4%bb%a4%e5%ae%9a%e4%b9%89--document-%e5%91%bd%e4%bb%a4%e8%af%b4%e6%98%8e" >define 命令定义 / document 命令说明</a></td>
+      </tr>
+      <tr>
+          <td>document</td>
+          <td></td>
+          <td>命令说明</td>
+          <td><a class="link" href="#define-%e5%91%bd%e4%bb%a4%e5%ae%9a%e4%b9%89--document-%e5%91%bd%e4%bb%a4%e8%af%b4%e6%98%8e" >define 命令定义 / document 命令说明</a></td>
+      </tr>
+      <tr>
+          <td>source</td>
+          <td></td>
+          <td>引入初始化文件</td>
+          <td><a class="link" href="#source---%e5%bc%95%e5%85%a5%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6" >source 引入初始化文件</a></td>
+      </tr>
   </tbody>
 </table></div>
-<h3 id="举例演示的一些说明">举例演示的一些说明
-</h3><p>演示程序如下：</p>
+<h4 id="举例演示的补充说明">举例演示的补充说明
+</h4><p>演示程序如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -833,8 +885,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 </span></span><span class="line"><span class="cl">gdb_test.exe  main.c
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="info-inf-i-信息">info inf i 信息
-</h3><div class="table-wrapper"><table>
+</div><h4 id="info-inf-i-信息">info inf i 信息
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -863,10 +915,23 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
           <td></td>
           <td>显示进程信息</td>
       </tr>
+      <tr>
+          <td>info sharedlibrary</td>
+          <td>info share, info shared</td>
+          <td>显示已加载的共享库(动态库)的状态</td>
+      </tr>
+      <tr>
+          <td>info set</td>
+          <td></td>
+          <td>同 <a class="link" href="#show---%e6%98%be%e7%a4%ba%e6%95%b0%e6%8d%ae" >show</a></td>
+      </tr>
   </tbody>
 </table></div>
-<h3 id="break-brea-bre-br-b-断点">break brea bre br b 断点
-</h3><p>断点的设置：</p>
+<h4 id="sharedlibrary-share-手动添加共享库动态库">sharedlibrary share 手动添加共享库(动态库)
+</h4><p>格式：<code>sharedlibrary 共享库(动态库)路径</code><br>
+手动添加共享库(动态库)到当前进程。</p>
+<h4 id="break-brea-bre-br-b-断点">break brea bre br b 断点
+</h4><p>断点的设置：</p>
 <div class="table-wrapper"><table>
   <thead>
       <tr>
@@ -906,7 +971,7 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
   </tbody>
 </table></div>
 <p>断点可以附加条件：
-格式：break 断点 if 条件<br>
+格式：<code>break 断点 if 条件</code><br>
 举例，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -948,16 +1013,16 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 </span></span><span class="line"><span class="cl">	breakpoint already hit <span class="m">1</span> <span class="nb">time</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="hbreak-tbreak-thbreak-其它断点">hbreak tbreak thbreak 其它断点
-</h3><p>硬件断点(hbreak)，适用于ROM 空间等无法修改的内存区域中的程序。在有些架构中无法使用。<br>
+</div><h4 id="hbreak-tbreak-thbreak-其它断点">hbreak tbreak thbreak 其它断点
+</h4><p>硬件断点(hbreak)，适用于ROM 空间等无法修改的内存区域中的程序。在有些架构中无法使用。<br>
 临时断点(tbreak)和临时硬件断点(thbreak)，与断点(硬件断点)相同，都会在运行到该处时暂停，<br>
 不同之处就是临时断点(临时硬件断点)会在此时被删除，所以在只需要停止一次时用起来很方便。<br>
 三者的语法与<a class="link" href="#break-b-%e6%96%ad%e7%82%b9" >break</a>一样</p>
-<h3 id="clear-cl-清除断点">clear cl 清除断点
-</h3><p><a class="link" href="#break-b-%e6%96%ad%e7%82%b9" >break</a> 的反命令，<br>
+<h4 id="clear-cl-清除断点">clear cl 清除断点
+</h4><p><a class="link" href="#break-b-%e6%96%ad%e7%82%b9" >break</a> 的反命令，<br>
 格式与break类似，不过 break 会创建断点，而 clear 会删除断点。</p>
-<h3 id="enable-en--disable-disa-dis-启用禁用断点">enable en / disable disa dis 启用/禁用断点
-</h3><p>对于 enable：</p>
+<h4 id="enable-en--disable-disa-dis-启用禁用断点">enable en / disable disa dis 启用/禁用断点
+</h4><p>对于 enable：</p>
 <div class="table-wrapper"><table>
   <thead>
       <tr>
@@ -995,8 +1060,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       </tr>
   </tbody>
 </table></div>
-<h3 id="conditon-断点条件的添加替换与删除">conditon 断点条件的添加(替换)与删除
-</h3><div class="table-wrapper"><table>
+<h4 id="conditon-断点条件的添加替换与删除">conditon 断点条件的添加(替换)与删除
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1079,16 +1144,16 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 </span></span><span class="line"><span class="cl">	breakpoint already hit <span class="m">1</span> <span class="nb">time</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="run-r-运行">run r 运行
-</h3><p>格式：run [参数&hellip;]<br>
+</div><h4 id="run-r-运行">run r 运行
+</h4><p>格式：<code>run [参数...]</code><br>
 (重头开始)运行，直到结束或者遇到断点。<br>
 添加的参数会传递给程序(而非run本身有参数)。</p>
-<h3 id="start---开始">start   开始
-</h3><p>格式：start [参数&hellip;]<br>
+<h4 id="start---开始">start   开始
+</h4><p>格式：<code>start [参数...]</code><br>
 与 <a class="link" href="#run-r-%e8%bf%90%e8%a1%8c" >run</a> 类似，但是运行到 main 函数停止，<br>
 等价于在 main 函数处打上断点( break main )，然后执行 run。</p>
-<h3 id="backtrace-bt-where-显示栈帧">backtrace bt where 显示栈帧
-</h3><div class="table-wrapper"><table>
+<h4 id="backtrace-bt-where-显示栈帧">backtrace bt where 显示栈帧
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1122,8 +1187,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       </tr>
   </tbody>
 </table></div>
-<h3 id="print-p-显示变量">print p 显示变量
-</h3><p>格式①：print 变量</p>
+<h4 id="print-p-显示变量">print p 显示变量
+</h4><p>格式①：<code>print 变量</code></p>
 <div class="table-wrapper"><table>
   <thead>
       <tr>
@@ -1150,7 +1215,7 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       </tr>
   </tbody>
 </table></div>
-<p>格式②: print/格式 $寄存器</p>
+<p>格式②: <code>print/格式 $寄存器</code></p>
 <div class="table-wrapper"><table>
   <thead>
       <tr>
@@ -1216,9 +1281,9 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 </span></span><span class="line"><span class="cl"><span class="nv">$5</span> <span class="o">=</span> <span class="m">101</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="x---显示内存">x   显示内存
-</h3><p>x 源自 eXamining。<br>
-格式：x/NFU 地址<br>
+</div><h4 id="x---显示内存">x   显示内存
+</h4><p>x 源自 eXamining。<br>
+格式：<code>x/NFU 地址</code><br>
 N：重复的次数<br>
 F：同<a class="link" href="#print-p-%e6%98%be%e7%a4%ba%e5%8f%98%e9%87%8f" >print p 显示变量</a>中提到的格式。<br>
 U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四字接)、双字(8字节) )<br>
@@ -1235,8 +1300,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </span></span><span class="line"><span class="cl"><span class="o">=</span>&gt; 0x555555555171 &lt;deepdark+8&gt;:	lea    0xe8c<span class="o">(</span>%rip<span class="o">)</span>,%rax        <span class="c1"># 0x555555556004</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="disassemble-disas-反汇编">disassemble disas 反汇编
-</h3><div class="table-wrapper"><table>
+</div><h4 id="disassemble-disas-反汇编">disassemble disas 反汇编
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1258,8 +1323,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       </tr>
   </tbody>
 </table></div>
-<h3 id="next-n-单步不进入函数内部">next n 单步(不进入函数内部)
-</h3><div class="table-wrapper"><table>
+<h4 id="next-n-单步不进入函数内部">next n 单步(不进入函数内部)
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1285,8 +1350,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       </tr>
   </tbody>
 </table></div>
-<h3 id="step-s-单步进入函数内部">step s 单步(进入函数内部)
-</h3><div class="table-wrapper"><table>
+<h4 id="step-s-单步进入函数内部">step s 单步(进入函数内部)
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1312,12 +1377,12 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       </tr>
   </tbody>
 </table></div>
-<h3 id="ignore---忽略断点监视点捕获点">ignore   忽略断点、监视点、捕获点
-</h3><p>格式：ignore 断点编号 N<br>
+<h4 id="ignore---忽略断点监视点捕获点">ignore   忽略断点、监视点、捕获点
+</h4><p>格式：<code>ignore 断点编号 N</code><br>
 忽略指定编号的忽略断点、监视点、捕获点接下来会忽略 N 次命中。<br>
 效果类似与 <a class="link" href="#continue-c-%e7%bb%a7%e7%bb%ad%e8%bf%90%e8%a1%8c" >continue N</a> ，但有所不同。</p>
-<h3 id="continue-c-fg-继续运行">continue c fg 继续运行
-</h3><div class="table-wrapper"><table>
+<h4 id="continue-c-fg-继续运行">continue c fg 继续运行
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1331,7 +1396,7 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       </tr>
       <tr>
           <td>continue N</td>
-          <td>同 continue，不过当前停止处的断点接下来会忽略 N-1 次命中(即使使用run等指令重启程序也会生效)</td>
+          <td>同 continue，不过当前停止处的断点接下来会忽略 N-1 次命中(即使使用run等命令重启程序也会生效)</td>
       </tr>
   </tbody>
 </table></div>
@@ -1381,11 +1446,11 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </span></span><span class="line"><span class="cl">......
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="finish-fin-执行完当前函数">finish fin 执行完当前函数
-</h3><p>格式 finish<br>
+</div><h4 id="finish-fin-执行完当前函数">finish fin 执行完当前函数
+</h4><p>格式 <code>finish</code><br>
 执行后会直接运行到当前函数结束(退出当前函数)。</p>
-<h3 id="until-u-运行到某一位置">until u 运行到某一位置
-</h3><div class="table-wrapper"><table>
+<h4 id="until-u-运行到某一位置">until u 运行到某一位置
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1407,8 +1472,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 <li>会触发断点</li>
 <li>格式 <code>until 位置</code> ，<strong>位置必须在当前栈帧内</strong>，如果不在，大概率会运行到下个断点或者程序结束处。</li>
 </ol>
-<h3 id="watch-awatch-rwatch-监视点">watch awatch rwatch 监视点
-</h3><p>大型软件或大量使用指针的程序中，很难弄清变量在什么地方被改变。<br>
+<h4 id="watch-awatch-rwatch-监视点">watch awatch rwatch 监视点
+</h4><p>大型软件或大量使用指针的程序中，很难弄清变量在什么地方被改变。<br>
 要想找到变量在何处被改变，可以使用 watch 相关的命令(监视点，watchpoint)</p>
 <div class="table-wrapper"><table>
   <thead>
@@ -1475,11 +1540,11 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </span></span><span class="line"><span class="cl">	breakpoint already hit <span class="m">1</span> <span class="nb">time</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="delete-d-del-删除断点和监视点">delete d del 删除断点和监视点
-</h3><p>格式：delete &lt;编号&gt;<br>
+</div><h4 id="delete-d-del-删除断点和监视点">delete d del 删除断点和监视点
+</h4><p>格式：<code>delete &lt;编号&gt;</code><br>
 删除&lt;编号&gt;所指示的断点或监视点。</p>
-<h3 id="set-调试进程中修改">set 调试进程中修改
-</h3><div class="table-wrapper"><table>
+<h4 id="set-设置值">set 设置值
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1491,9 +1556,17 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
           <td>set variable &lt;变量&gt;=&lt;表达式&gt;</td>
           <td>改变变量的值</td>
       </tr>
+      <tr>
+          <td>set $&lt;便利变量名&gt;=&lt;表达式&gt;</td>
+          <td>设置 gdb 内的&quot;便利变量&quot;(类似于宏)</td>
+      </tr>
+      <tr>
+          <td>set history [功能]</td>
+          <td>开启命令历史的功能</td>
+      </tr>
   </tbody>
 </table></div>
-<p>举例，如下：</p>
+<p>格式 <code>set variable &lt;变量&gt;=&lt;表达式&gt;</code> 举例，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1510,8 +1583,31 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </span></span><span class="line"><span class="cl"><span class="nv">$15</span> <span class="o">=</span> <span class="m">2026</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="generate-core-file-gcore-生成core-dump文件">generate-core-file gcore 生成Core dump文件
-</h3><p>用于在调试的过程中生成 Core dump 文件，制作进程的&quot;快照&quot;。<br>
+</div><p>格式 <code>set $&lt;便利变量名&gt;=&lt;表达式&gt;</code> 举例，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> <span class="nb">set</span> <span class="nv">$my_var</span><span class="o">=</span><span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> p <span class="nv">$my_var</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$1</span> <span class="o">=</span> <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> <span class="nb">set</span> <span class="nv">$log10</span> <span class="o">=</span> <span class="o">(</span>double <span class="o">(</span>*<span class="o">)(</span>double<span class="o">))</span> log10
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> p <span class="nv">$log10</span><span class="o">(</span>10<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$4</span> <span class="o">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> p <span class="nv">$log10</span><span class="o">(</span><span class="nv">$my_var</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">$5</span> <span class="o">=</span> <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="generate-core-file-gcore-生成core-dump文件">generate-core-file gcore 生成Core dump文件
+</h4><p>用于在调试的过程中生成 Core dump 文件，制作进程的&quot;快照&quot;。<br>
 如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1583,14 +1679,14 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </span></span><span class="line"><span class="cl">~$ ls core_vim.633690                                                  
 </span></span><span class="line"><span class="cl">core_vim.633690
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 之后边可以执行下面的指令复原保存时的 vim 进程环境</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 之后边可以执行下面的命令复原保存时的 vim 进程环境</span>
 </span></span><span class="line"><span class="cl">~$ gdb -c core_vim.633690 vim
 </span></span><span class="line"><span class="cl">......
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="attach-detach-调试附加到和脱离已启动进程">attach detach 调试(附加到)和脱离已启动进程
-</h3><p>要调试守护进程(daemon process)等已经启动的进程，或是调试陷入死循环而无法返回控制台的进程时，可以使用 attach 命令。<br>
-格式：attach <pid><br>
+</div><h4 id="attach-detach-调试附加到和脱离已启动进程">attach detach 调试(附加到)和脱离已启动进程
+</h4><p>要调试守护进程(daemon process)等已经启动的进程，或是调试陷入死循环而无法返回控制台的进程时，可以使用 attach 命令。<br>
+格式：<code>attach &lt;pid&gt;</code><br>
 而脱离直接输入 detach 即可。</p>
 <p>attach 之后就能使用普通的 gdb 命令，因此可以通过 print 命令显示变量，也可以设置断点。<br>
 此外，恢复程序运行一般可以使用 continue命令(简写为c)。<br>
@@ -1672,13 +1768,23 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </span></span><span class="line"><span class="cl">No current process: you must name one.
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="commands---断点命令">commands   断点命令
-</h3><p>格式：
-commands 断点编号<br>
-命令<br>
-&hellip;<br>
-end</p>
-<p>举例，如下：</p>
+</div><h4 id="commands---断点命令">commands   断点命令
+</h4><p>格式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">commands 断点编号  
+</span></span><span class="line"><span class="cl">命令  
+</span></span><span class="line"><span class="cl">...  
+</span></span><span class="line"><span class="cl">end  
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>举例，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1721,8 +1827,8 @@ end</p>
 </span></span><span class="line"><span class="cl">......
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="list-l-显示函数或行">list l 显示函数或行
-</h3><div class="table-wrapper"><table>
+</div><h4 id="list-l-显示函数或行">list l 显示函数或行
+</h4><div class="table-wrapper"><table>
   <thead>
       <tr>
           <th>格式</th>
@@ -1760,8 +1866,8 @@ end</p>
 <li>位置还可以为地址等，因为过多，这里省略。</li>
 <li>特别地， <code>list *$pc</code> 可以显示当前行周围的代码(与 <code>list .</code> 不同，这显示当前的地址与行号)。</li>
 </ol>
-<h3 id="help-h-帮助文档">help h 帮助文档
-</h3><p>格式：help 指令
+<h4 id="help-h-帮助文档">help h 帮助文档
+</h4><p>格式：help 命令
 举例，如下：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1779,7 +1885,111 @@ end</p>
 </span></span><span class="line"><span class="cl">......
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="参考文章">参考文章
+</div><h4 id="show---显示数据">show   显示数据
+</h4><div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>格式</th>
+          <th>作用</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>show value</td>
+          <td><a class="link" href="#print-p-%e6%98%be%e7%a4%ba%e5%8f%98%e9%87%8f" >print</a> 命令显示历史的最新十个记录</td>
+      </tr>
+      <tr>
+          <td>show history [功能]</td>
+          <td>显示命令历史功能的开关与说明，与 <a class="link" href="#set-%e8%ae%be%e7%bd%ae%e5%80%bc" >set history [功能]</a> 配合使用</td>
+      </tr>
+  </tbody>
+</table></div>
+<h4 id="define-命令定义--document-命令说明">define 命令定义 / document 命令说明
+</h4><p>define 可以用于自定义命令(类似函数)，格式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">define 命令名
+</span></span><span class="line"><span class="cl">  命令
+</span></span><span class="line"><span class="cl">  ...
+</span></span><span class="line"><span class="cl">end
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>document 可以用于给自定义命令添加说明，格式如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">document 命令名
+</span></span><span class="line"><span class="cl">  说明
+</span></span><span class="line"><span class="cl">end
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>举例，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> define li
+</span></span><span class="line"><span class="cl">Type commands <span class="k">for</span> definition of <span class="s2">&#34;li&#34;</span>.
+</span></span><span class="line"><span class="cl">End with a line saying just <span class="s2">&#34;end&#34;</span>.
+</span></span><span class="line"><span class="cl">&gt;x/10i <span class="nv">$pc</span>
+</span></span><span class="line"><span class="cl">&gt;end
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> document li
+</span></span><span class="line"><span class="cl">Type documentation <span class="k">for</span> <span class="s2">&#34;li&#34;</span>.
+</span></span><span class="line"><span class="cl">End with a line saying just <span class="s2">&#34;end&#34;</span>.
+</span></span><span class="line"><span class="cl">&gt;list machine instruction
+</span></span><span class="line"><span class="cl">&gt;end
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> <span class="nv">li</span>
+</span></span><span class="line"><span class="cl"><span class="o">=</span>&gt; 0x5555555551e8 &lt;main+8&gt;:	lea    0xe31<span class="o">(</span>%rip<span class="o">)</span>,%rax        <span class="c1"># 0x555555556020</span>
+</span></span><span class="line"><span class="cl">   0x5555555551ef &lt;main+15&gt;:	mov    %rax,%rdi
+</span></span><span class="line"><span class="cl">   0x5555555551f2 &lt;main+18&gt;:	call   0x555555555060 &lt;puts@plt&gt;
+</span></span><span class="line"><span class="cl">   0x5555555551f7 &lt;main+23&gt;:	mov    <span class="nv">$0</span>x0,%eax
+</span></span><span class="line"><span class="cl">   0x5555555551fc &lt;main+28&gt;:	call   0x5555555551a7 &lt;happy&gt;
+</span></span><span class="line"><span class="cl">   0x555555555201 &lt;main+33&gt;:	mov    <span class="nv">$0</span>x0,%eax
+</span></span><span class="line"><span class="cl">   0x555555555206 &lt;main+38&gt;:	pop    %rbp
+</span></span><span class="line"><span class="cl">   0x555555555207 &lt;main+39&gt;:	ret
+</span></span><span class="line"><span class="cl">   0x555555555208 &lt;_fini&gt;:	endbr64
+</span></span><span class="line"><span class="cl">   0x55555555520c &lt;_fini+4&gt;:	sub    <span class="nv">$0</span>x8,%rsp
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> <span class="nb">help</span> li
+</span></span><span class="line"><span class="cl">list machine instruction
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="source---引入初始化文件">source   引入初始化文件
+</h4><p>格式：<code>source 文件名</code><br>
+除了<a class="link" href="#gdb%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6" >初始化文件</a>，这种方式也能引入命令进行设置。</p>
+<h2 id="参考文章">参考文章
 </h2><p><a class="link" href="https://geek-blogs.com/blog/linux-core-dump-location/"  target="_blank" rel="noopener"
     >Linux 核心转储（Core Dump）位置详解：配置、实践与故障排除</a><br>
 <a class="link" href="https://wiki.archlinux.org.cn/title/Core_dump#Where_do_they_go?"  target="_blank" rel="noopener"
@@ -1826,7 +2036,7 @@ Debug Hacks中文版</p>
 
 
         <span>
-            最后更新于 Jan 12, 2026 23:32 &#43;0800
+            最后更新于 Jan 25, 2026 22:42 &#43;0800
         </span>
     </section></footer>
 
@@ -1864,6 +2074,19 @@ Debug Hacks中文版</p>
 
         <div class="article-details">
             <h2 class="article-title">Wi-Fi网络学习记录(1)：抓包ARP协议</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">屋里食研(1)：炒面</h2>
         </div>
     </a>
 </article>
@@ -2091,13 +2314,17 @@ Debug Hacks中文版</p>
         '乖乖报到-MC 张天赋',
         'Time (ATLUS Kitajoh Remix)-藤田真由美',
         'Cathy-当山瞳',
-        'Fabulous-BLU-SWING',
+        'Fabulous-BLU SWING',
         '光影 HIKAGE(feat. 初音ミク)-H.K.君',
         '白夜狐步舞-丢莱卡WastedLaika',
         'ミッドナイト・ユア・ステップ (feat. 初音ミク)-ベール_Veil',
         '视神(feat.初音ミク)-翌川屿芊',
         '弥留之际(feat.洛天依)-的确如此如确的',
         '恋-星野源',
+        'Twisted Getaway-Neon Nox',
+        '南京夜无电波讯号(feat.洛天依)-花水',
+        'Running In The Night-FM 84',
+        'Zombies on Your Lawn-Laura Shigihara',
     ];
     let audios = [];
     songs.forEach((item) => {

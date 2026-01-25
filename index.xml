@@ -7,6 +7,38 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>屋里食研(1)：炒面</title>
+        <link>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
+        <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;
+也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;
+本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;
+&lt;h2 id=&#34;食材准备&#34;&gt;食材准备
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;手工面条(也就是成型的分开的面条)或者碱水挂面(要煮成型)&lt;/li&gt;
+&lt;li&gt;鸡蛋等配菜(看着加，本教程默认配菜只有鸡蛋)&lt;/li&gt;
+&lt;li&gt;油&lt;/li&gt;
+&lt;li&gt;老抽&lt;/li&gt;
+&lt;li&gt;盐&lt;/li&gt;
+&lt;li&gt;胡椒(可以不要)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;制作步骤&#34;&gt;制作步骤
+&lt;/h2&gt;&lt;h3 id=&#34;-将面条煮到熟-&#34;&gt;① 将面条煮到熟 🍜
+&lt;/h3&gt;&lt;p&gt;如果是成型的手工面特别简单，煮到八分熟就行，然后捞出来；如果是碱水挂面则需要煮到成型，然后看情况在粘粘前捞出(无论是那种面，煮面时可以加一点盐，这样煮面更快，煮出来的面更加劲道)。把面捞出来后倒入装满冷水的碗，然后用筷子分开粘黏的面条，等待冷却后快速沥干水分，防止成“泡面”了。最后加入老抽拌匀上色，拌的时候还可以加点食用油进一步防止面条粘黏。&lt;/p&gt;
+&lt;h3 id=&#34;-搅拌鸡蛋液-&#34;&gt;② 搅拌鸡蛋液 🥚🥄
+&lt;/h3&gt;&lt;p&gt;敲 1 ~ 2 个鸡蛋，将蛋液倒入一个碗中并用筷子或者专门的工具搅拌均匀备用。&lt;/p&gt;
+&lt;h3 id=&#34;-炒鸡蛋-&#34;&gt;③ 炒鸡蛋 🍳
+&lt;/h3&gt;&lt;p&gt;开火热锅，然后加足够的油(很关键不然粘锅)，接着加盐并倒入搅拌完成的鸡蛋液。蛋液入锅后快速用锅铲沿着一个方向搅拌蛋液弄散鸡蛋。等鸡蛋成型后关火进入下一步。&lt;/p&gt;
+&lt;h3 id=&#34;-炒面-&#34;&gt;④ 炒面 🪏
+&lt;/h3&gt;&lt;p&gt;此时锅里有上一步炒好的鸡蛋，观察锅的表面是否比较“油”，如果没有油膜必须加油(很关键不然粘锅)。倒入准备好的面条并开大火翻锅开炒！炒到差不多熟后可以根据口味自己额外加点盐或者胡椒啥的然后继续炒到完全熟之后出锅！。&lt;/p&gt;
+&lt;h2 id=&#34;总结-&#34;&gt;总结 ☝️🤓
+&lt;/h2&gt;&lt;p&gt;只能说面确实是炒出来的，本人多次“仿真”外加“物理机实验”都没问题，但不代表没有BUG，也不保障能在不同“运行环境”下运行，如果按照这个开源流程“炸机”了本人概不负责。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Linux开发学习记录(1)：如何愉快(?)的Debug程序</title>
         <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E7%9A%84debug%E7%A8%8B%E5%BA%8F/</link>
         <pubDate>Sun, 11 Jan 2026 18:52:26 +0800</pubDate>
@@ -178,15 +210,28 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Sun 2026-01-11 18:25:08 CST &lt;span class=&#34;m&#34;&gt;378385&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt; SIGSEGV present  /home/bigshot/project/c/error/test.exe 19.3K
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;具体的用法可以通过指令&lt;code&gt;coredumpctl help&lt;/code&gt;或者手册 coredumpctl(1) 查询。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;具体的用法可以通过命令&lt;code&gt;coredumpctl help&lt;/code&gt;或者手册 coredumpctl(1) 查询。&lt;/p&gt;
 &lt;h2 id=&#34;gdb-介绍&#34;&gt;GDB 介绍
 &lt;/h2&gt;&lt;p&gt;GDB (GNU Debugger) 应该是 Linux 系统下最常用的程序调试工具了，程序员们都或多或少用过它或者基于它的工具进行Debug。&lt;br&gt;
 如果想要使用GDB进行调试，那么编译C代码时必须使用 debug 模式（或者尽可能保留Debug信息），比如使用 gcc 的 &lt;code&gt;-g&lt;/code&gt; 选项。&lt;br&gt;
-使用 &lt;code&gt;gdb &amp;lt;可执行文件&amp;gt;&lt;/code&gt; 即可开启对指定程序的Debug，具体的指令如下(部分不常用的指令或格式省略)。&lt;/p&gt;
+使用 &lt;code&gt;gdb &amp;lt;可执行文件&amp;gt;&lt;/code&gt; 即可开启对指定程序的Debug，&lt;/p&gt;
+&lt;h3 id=&#34;gdb初始化文件&#34;&gt;GDB初始化文件
+&lt;/h3&gt;&lt;p&gt;和shell类似，GDB也有初始化文件，不同的是GDB的初始化文件使用&lt;a class=&#34;link&#34; href=&#34;#%e5%b8%b8%e7%94%a8%e7%9a%84gdb%e5%91%bd%e4%bb%a4&#34; &gt;GDB命令&lt;/a&gt;。&lt;br&gt;
+其会按照以下的顺序读取初始化文件，并依次执行：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$HOME/.gdbinit&lt;/li&gt;
+&lt;li&gt;运行命令行选项&lt;/li&gt;
+&lt;li&gt;./.gdbinit&lt;/li&gt;
+&lt;li&gt;通过-x选项给出的命令文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;此外通过 &lt;a class=&#34;link&#34; href=&#34;#source---%e5%bc%95%e5%85%a5%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6&#34; &gt;source&lt;/a&gt; 命令也能引入文件。&lt;/p&gt;
+&lt;h3 id=&#34;常用的gdb命令&#34;&gt;常用的GDB命令
+&lt;/h3&gt;&lt;p&gt;具体如下(&lt;strong&gt;部分不常用的命令或格式省略&lt;/strong&gt;)：&lt;br&gt;
+举例演示的补充说明跳转到&lt;a class=&#34;link&#34; href=&#34;#%e4%b8%be%e4%be%8b%e6%bc%94%e7%a4%ba%e7%9a%84%e8%a1%a5%e5%85%85%e8%af%b4%e6%98%8e&#34; &gt;下一小节&lt;/a&gt;。&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
-          &lt;th&gt;指令&lt;/th&gt;
+          &lt;th&gt;命令&lt;/th&gt;
           &lt;th&gt;简写&lt;/th&gt;
           &lt;th&gt;作用&lt;/th&gt;
           &lt;th&gt;跳转目录&lt;/th&gt;
@@ -198,6 +243,12 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
           &lt;td&gt;inf i&lt;/td&gt;
           &lt;td&gt;查询有关信息&lt;/td&gt;
           &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#info-inf-i-%e4%bf%a1%e6%81%af&#34; &gt;info inf i 信息&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;sharedlibrary&lt;/td&gt;
+          &lt;td&gt;share&lt;/td&gt;
+          &lt;td&gt;手动添加共享库(动态库)&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#sharedlibrary-share-%e6%89%8b%e5%8a%a8%e6%b7%bb%e5%8a%a0%e5%85%b1%e4%ba%ab%e5%ba%93%e5%8a%a8%e6%80%81%e5%ba%93&#34; &gt;sharedlibrary share 手动添加共享库(动态库)&lt;/a&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;break&lt;/td&gt;
@@ -334,8 +385,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       &lt;tr&gt;
           &lt;td&gt;set&lt;/td&gt;
           &lt;td&gt;&lt;/td&gt;
-          &lt;td&gt;调试进程中修改&lt;/td&gt;
-          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#set-%e8%b0%83%e8%af%95%e8%bf%9b%e7%a8%8b%e4%b8%ad%e4%bf%ae%e6%94%b9&#34; &gt;set 调试进程中修改&lt;/a&gt;&lt;/td&gt;
+          &lt;td&gt;设置值&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#set-%e8%ae%be%e7%bd%ae%e5%80%bc&#34; &gt;set 设置值&lt;/a&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;generate-core-file&lt;/td&gt;
@@ -373,10 +424,34 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
           &lt;td&gt;帮助文档&lt;/td&gt;
           &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#help-h-%e5%b8%ae%e5%8a%a9%e6%96%87%e6%a1%a3&#34; &gt;help h 帮助文档&lt;/a&gt;&lt;/td&gt;
       &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;show&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+          &lt;td&gt;显示数据&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#show---%e6%98%be%e7%a4%ba%e6%95%b0%e6%8d%ae&#34; &gt;show 显示数据&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;define&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+          &lt;td&gt;命令定义&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#define-%e5%91%bd%e4%bb%a4%e5%ae%9a%e4%b9%89--document-%e5%91%bd%e4%bb%a4%e8%af%b4%e6%98%8e&#34; &gt;define 命令定义 / document 命令说明&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;document&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+          &lt;td&gt;命令说明&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#define-%e5%91%bd%e4%bb%a4%e5%ae%9a%e4%b9%89--document-%e5%91%bd%e4%bb%a4%e8%af%b4%e6%98%8e&#34; &gt;define 命令定义 / document 命令说明&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;source&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+          &lt;td&gt;引入初始化文件&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#source---%e5%bc%95%e5%85%a5%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6&#34; &gt;source 引入初始化文件&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;举例演示的一些说明&#34;&gt;举例演示的一些说明
-&lt;/h3&gt;&lt;p&gt;演示程序如下：&lt;/p&gt;
+&lt;h4 id=&#34;举例演示的补充说明&#34;&gt;举例演示的补充说明
+&lt;/h4&gt;&lt;p&gt;演示程序如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -447,8 +522,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gdb_test.exe  main.c
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;info-inf-i-信息&#34;&gt;info inf i 信息
-&lt;/h3&gt;&lt;table&gt;
+&lt;/div&gt;&lt;h4 id=&#34;info-inf-i-信息&#34;&gt;info inf i 信息
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -477,10 +552,23 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
           &lt;td&gt;&lt;/td&gt;
           &lt;td&gt;显示进程信息&lt;/td&gt;
       &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;info sharedlibrary&lt;/td&gt;
+          &lt;td&gt;info share, info shared&lt;/td&gt;
+          &lt;td&gt;显示已加载的共享库(动态库)的状态&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;info set&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+          &lt;td&gt;同 &lt;a class=&#34;link&#34; href=&#34;#show---%e6%98%be%e7%a4%ba%e6%95%b0%e6%8d%ae&#34; &gt;show&lt;/a&gt;&lt;/td&gt;
+      &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;break-brea-bre-br-b-断点&#34;&gt;break brea bre br b 断点
-&lt;/h3&gt;&lt;p&gt;断点的设置：&lt;/p&gt;
+&lt;h4 id=&#34;sharedlibrary-share-手动添加共享库动态库&#34;&gt;sharedlibrary share 手动添加共享库(动态库)
+&lt;/h4&gt;&lt;p&gt;格式：&lt;code&gt;sharedlibrary 共享库(动态库)路径&lt;/code&gt;&lt;br&gt;
+手动添加共享库(动态库)到当前进程。&lt;/p&gt;
+&lt;h4 id=&#34;break-brea-bre-br-b-断点&#34;&gt;break brea bre br b 断点
+&lt;/h4&gt;&lt;p&gt;断点的设置：&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -520,7 +608,7 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;断点可以附加条件：
-格式：break 断点 if 条件&lt;br&gt;
+格式：&lt;code&gt;break 断点 if 条件&lt;/code&gt;&lt;br&gt;
 举例，如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -562,16 +650,16 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	breakpoint already hit &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;hbreak-tbreak-thbreak-其它断点&#34;&gt;hbreak tbreak thbreak 其它断点
-&lt;/h3&gt;&lt;p&gt;硬件断点(hbreak)，适用于ROM 空间等无法修改的内存区域中的程序。在有些架构中无法使用。&lt;br&gt;
+&lt;/div&gt;&lt;h4 id=&#34;hbreak-tbreak-thbreak-其它断点&#34;&gt;hbreak tbreak thbreak 其它断点
+&lt;/h4&gt;&lt;p&gt;硬件断点(hbreak)，适用于ROM 空间等无法修改的内存区域中的程序。在有些架构中无法使用。&lt;br&gt;
 临时断点(tbreak)和临时硬件断点(thbreak)，与断点(硬件断点)相同，都会在运行到该处时暂停，&lt;br&gt;
 不同之处就是临时断点(临时硬件断点)会在此时被删除，所以在只需要停止一次时用起来很方便。&lt;br&gt;
 三者的语法与&lt;a class=&#34;link&#34; href=&#34;#break-b-%e6%96%ad%e7%82%b9&#34; &gt;break&lt;/a&gt;一样&lt;/p&gt;
-&lt;h3 id=&#34;clear-cl-清除断点&#34;&gt;clear cl 清除断点
-&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;#break-b-%e6%96%ad%e7%82%b9&#34; &gt;break&lt;/a&gt; 的反命令，&lt;br&gt;
+&lt;h4 id=&#34;clear-cl-清除断点&#34;&gt;clear cl 清除断点
+&lt;/h4&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;#break-b-%e6%96%ad%e7%82%b9&#34; &gt;break&lt;/a&gt; 的反命令，&lt;br&gt;
 格式与break类似，不过 break 会创建断点，而 clear 会删除断点。&lt;/p&gt;
-&lt;h3 id=&#34;enable-en--disable-disa-dis-启用禁用断点&#34;&gt;enable en / disable disa dis 启用/禁用断点
-&lt;/h3&gt;&lt;p&gt;对于 enable：&lt;/p&gt;
+&lt;h4 id=&#34;enable-en--disable-disa-dis-启用禁用断点&#34;&gt;enable en / disable disa dis 启用/禁用断点
+&lt;/h4&gt;&lt;p&gt;对于 enable：&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -609,8 +697,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;conditon-断点条件的添加替换与删除&#34;&gt;conditon 断点条件的添加(替换)与删除
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;conditon-断点条件的添加替换与删除&#34;&gt;conditon 断点条件的添加(替换)与删除
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -693,16 +781,16 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	breakpoint already hit &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;run-r-运行&#34;&gt;run r 运行
-&lt;/h3&gt;&lt;p&gt;格式：run [参数&amp;hellip;]&lt;br&gt;
+&lt;/div&gt;&lt;h4 id=&#34;run-r-运行&#34;&gt;run r 运行
+&lt;/h4&gt;&lt;p&gt;格式：&lt;code&gt;run [参数...]&lt;/code&gt;&lt;br&gt;
 (重头开始)运行，直到结束或者遇到断点。&lt;br&gt;
 添加的参数会传递给程序(而非run本身有参数)。&lt;/p&gt;
-&lt;h3 id=&#34;start---开始&#34;&gt;start   开始
-&lt;/h3&gt;&lt;p&gt;格式：start [参数&amp;hellip;]&lt;br&gt;
+&lt;h4 id=&#34;start---开始&#34;&gt;start   开始
+&lt;/h4&gt;&lt;p&gt;格式：&lt;code&gt;start [参数...]&lt;/code&gt;&lt;br&gt;
 与 &lt;a class=&#34;link&#34; href=&#34;#run-r-%e8%bf%90%e8%a1%8c&#34; &gt;run&lt;/a&gt; 类似，但是运行到 main 函数停止，&lt;br&gt;
 等价于在 main 函数处打上断点( break main )，然后执行 run。&lt;/p&gt;
-&lt;h3 id=&#34;backtrace-bt-where-显示栈帧&#34;&gt;backtrace bt where 显示栈帧
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;backtrace-bt-where-显示栈帧&#34;&gt;backtrace bt where 显示栈帧
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -736,8 +824,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;print-p-显示变量&#34;&gt;print p 显示变量
-&lt;/h3&gt;&lt;p&gt;格式①：print 变量&lt;/p&gt;
+&lt;h4 id=&#34;print-p-显示变量&#34;&gt;print p 显示变量
+&lt;/h4&gt;&lt;p&gt;格式①：&lt;code&gt;print 变量&lt;/code&gt;&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -764,7 +852,7 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;格式②: print/格式 $寄存器&lt;/p&gt;
+&lt;p&gt;格式②: &lt;code&gt;print/格式 $寄存器&lt;/code&gt;&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -830,9 +918,9 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;101&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;x---显示内存&#34;&gt;x   显示内存
-&lt;/h3&gt;&lt;p&gt;x 源自 eXamining。&lt;br&gt;
-格式：x/NFU 地址&lt;br&gt;
+&lt;/div&gt;&lt;h4 id=&#34;x---显示内存&#34;&gt;x   显示内存
+&lt;/h4&gt;&lt;p&gt;x 源自 eXamining。&lt;br&gt;
+格式：&lt;code&gt;x/NFU 地址&lt;/code&gt;&lt;br&gt;
 N：重复的次数&lt;br&gt;
 F：同&lt;a class=&#34;link&#34; href=&#34;#print-p-%e6%98%be%e7%a4%ba%e5%8f%98%e9%87%8f&#34; &gt;print p 显示变量&lt;/a&gt;中提到的格式。&lt;br&gt;
 U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四字接)、双字(8字节) )&lt;br&gt;
@@ -849,8 +937,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;gt; 0x555555555171 &amp;lt;deepdark+8&amp;gt;:	lea    0xe8c&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;%rip&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;,%rax        &lt;span class=&#34;c1&#34;&gt;# 0x555555556004&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;disassemble-disas-反汇编&#34;&gt;disassemble disas 反汇编
-&lt;/h3&gt;&lt;table&gt;
+&lt;/div&gt;&lt;h4 id=&#34;disassemble-disas-反汇编&#34;&gt;disassemble disas 反汇编
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -872,8 +960,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;next-n-单步不进入函数内部&#34;&gt;next n 单步(不进入函数内部)
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;next-n-单步不进入函数内部&#34;&gt;next n 单步(不进入函数内部)
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -899,8 +987,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;step-s-单步进入函数内部&#34;&gt;step s 单步(进入函数内部)
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;step-s-单步进入函数内部&#34;&gt;step s 单步(进入函数内部)
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -926,12 +1014,12 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h3 id=&#34;ignore---忽略断点监视点捕获点&#34;&gt;ignore   忽略断点、监视点、捕获点
-&lt;/h3&gt;&lt;p&gt;格式：ignore 断点编号 N&lt;br&gt;
+&lt;h4 id=&#34;ignore---忽略断点监视点捕获点&#34;&gt;ignore   忽略断点、监视点、捕获点
+&lt;/h4&gt;&lt;p&gt;格式：&lt;code&gt;ignore 断点编号 N&lt;/code&gt;&lt;br&gt;
 忽略指定编号的忽略断点、监视点、捕获点接下来会忽略 N 次命中。&lt;br&gt;
 效果类似与 &lt;a class=&#34;link&#34; href=&#34;#continue-c-%e7%bb%a7%e7%bb%ad%e8%bf%90%e8%a1%8c&#34; &gt;continue N&lt;/a&gt; ，但有所不同。&lt;/p&gt;
-&lt;h3 id=&#34;continue-c-fg-继续运行&#34;&gt;continue c fg 继续运行
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;continue-c-fg-继续运行&#34;&gt;continue c fg 继续运行
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -945,7 +1033,7 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
       &lt;/tr&gt;
       &lt;tr&gt;
           &lt;td&gt;continue N&lt;/td&gt;
-          &lt;td&gt;同 continue，不过当前停止处的断点接下来会忽略 N-1 次命中(即使使用run等指令重启程序也会生效)&lt;/td&gt;
+          &lt;td&gt;同 continue，不过当前停止处的断点接下来会忽略 N-1 次命中(即使使用run等命令重启程序也会生效)&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -995,11 +1083,11 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;......
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;finish-fin-执行完当前函数&#34;&gt;finish fin 执行完当前函数
-&lt;/h3&gt;&lt;p&gt;格式 finish&lt;br&gt;
+&lt;/div&gt;&lt;h4 id=&#34;finish-fin-执行完当前函数&#34;&gt;finish fin 执行完当前函数
+&lt;/h4&gt;&lt;p&gt;格式 &lt;code&gt;finish&lt;/code&gt;&lt;br&gt;
 执行后会直接运行到当前函数结束(退出当前函数)。&lt;/p&gt;
-&lt;h3 id=&#34;until-u-运行到某一位置&#34;&gt;until u 运行到某一位置
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;until-u-运行到某一位置&#34;&gt;until u 运行到某一位置
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -1021,8 +1109,8 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;li&gt;会触发断点&lt;/li&gt;
 &lt;li&gt;格式 &lt;code&gt;until 位置&lt;/code&gt; ，&lt;strong&gt;位置必须在当前栈帧内&lt;/strong&gt;，如果不在，大概率会运行到下个断点或者程序结束处。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;watch-awatch-rwatch-监视点&#34;&gt;watch awatch rwatch 监视点
-&lt;/h3&gt;&lt;p&gt;大型软件或大量使用指针的程序中，很难弄清变量在什么地方被改变。&lt;br&gt;
+&lt;h4 id=&#34;watch-awatch-rwatch-监视点&#34;&gt;watch awatch rwatch 监视点
+&lt;/h4&gt;&lt;p&gt;大型软件或大量使用指针的程序中，很难弄清变量在什么地方被改变。&lt;br&gt;
 要想找到变量在何处被改变，可以使用 watch 相关的命令(监视点，watchpoint)&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
@@ -1089,11 +1177,11 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	breakpoint already hit &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;time&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;delete-d-del-删除断点和监视点&#34;&gt;delete d del 删除断点和监视点
-&lt;/h3&gt;&lt;p&gt;格式：delete &amp;lt;编号&amp;gt;&lt;br&gt;
+&lt;/div&gt;&lt;h4 id=&#34;delete-d-del-删除断点和监视点&#34;&gt;delete d del 删除断点和监视点
+&lt;/h4&gt;&lt;p&gt;格式：&lt;code&gt;delete &amp;lt;编号&amp;gt;&lt;/code&gt;&lt;br&gt;
 删除&amp;lt;编号&amp;gt;所指示的断点或监视点。&lt;/p&gt;
-&lt;h3 id=&#34;set-调试进程中修改&#34;&gt;set 调试进程中修改
-&lt;/h3&gt;&lt;table&gt;
+&lt;h4 id=&#34;set-设置值&#34;&gt;set 设置值
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -1105,9 +1193,17 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
           &lt;td&gt;set variable &amp;lt;变量&amp;gt;=&amp;lt;表达式&amp;gt;&lt;/td&gt;
           &lt;td&gt;改变变量的值&lt;/td&gt;
       &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;set $&amp;lt;便利变量名&amp;gt;=&amp;lt;表达式&amp;gt;&lt;/td&gt;
+          &lt;td&gt;设置 gdb 内的&amp;quot;便利变量&amp;quot;(类似于宏)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;set history [功能]&lt;/td&gt;
+          &lt;td&gt;开启命令历史的功能&lt;/td&gt;
+      &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;举例，如下：&lt;/p&gt;
+&lt;p&gt;格式 &lt;code&gt;set variable &amp;lt;变量&amp;gt;=&amp;lt;表达式&amp;gt;&lt;/code&gt; 举例，如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -1124,8 +1220,31 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$15&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2026&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;generate-core-file-gcore-生成core-dump文件&#34;&gt;generate-core-file gcore 生成Core dump文件
-&lt;/h3&gt;&lt;p&gt;用于在调试的过程中生成 Core dump 文件，制作进程的&amp;quot;快照&amp;quot;。&lt;br&gt;
+&lt;/div&gt;&lt;p&gt;格式 &lt;code&gt;set $&amp;lt;便利变量名&amp;gt;=&amp;lt;表达式&amp;gt;&lt;/code&gt; 举例，如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$my_var&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; p &lt;span class=&#34;nv&#34;&gt;$my_var&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$1&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;set&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$log10&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;double &lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;*&lt;span class=&#34;o&#34;&gt;)(&lt;/span&gt;double&lt;span class=&#34;o&#34;&gt;))&lt;/span&gt; log10
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; p &lt;span class=&#34;nv&#34;&gt;$log10&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;10&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$4&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; p &lt;span class=&#34;nv&#34;&gt;$log10&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;$my_var&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$5&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;generate-core-file-gcore-生成core-dump文件&#34;&gt;generate-core-file gcore 生成Core dump文件
+&lt;/h4&gt;&lt;p&gt;用于在调试的过程中生成 Core dump 文件，制作进程的&amp;quot;快照&amp;quot;。&lt;br&gt;
 如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1197,14 +1316,14 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ ls core_vim.633690                                                  
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;core_vim.633690
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 之后边可以执行下面的指令复原保存时的 vim 进程环境&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 之后边可以执行下面的命令复原保存时的 vim 进程环境&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ gdb -c core_vim.633690 vim
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;......
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;attach-detach-调试附加到和脱离已启动进程&#34;&gt;attach detach 调试(附加到)和脱离已启动进程
-&lt;/h3&gt;&lt;p&gt;要调试守护进程(daemon process)等已经启动的进程，或是调试陷入死循环而无法返回控制台的进程时，可以使用 attach 命令。&lt;br&gt;
-格式：attach &lt;pid&gt;&lt;br&gt;
+&lt;/div&gt;&lt;h4 id=&#34;attach-detach-调试附加到和脱离已启动进程&#34;&gt;attach detach 调试(附加到)和脱离已启动进程
+&lt;/h4&gt;&lt;p&gt;要调试守护进程(daemon process)等已经启动的进程，或是调试陷入死循环而无法返回控制台的进程时，可以使用 attach 命令。&lt;br&gt;
+格式：&lt;code&gt;attach &amp;lt;pid&amp;gt;&lt;/code&gt;&lt;br&gt;
 而脱离直接输入 detach 即可。&lt;/p&gt;
 &lt;p&gt;attach 之后就能使用普通的 gdb 命令，因此可以通过 print 命令显示变量，也可以设置断点。&lt;br&gt;
 此外，恢复程序运行一般可以使用 continue命令(简写为c)。&lt;br&gt;
@@ -1286,13 +1405,23 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;No current process: you must name one.
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;commands---断点命令&#34;&gt;commands   断点命令
-&lt;/h3&gt;&lt;p&gt;格式：
-commands 断点编号&lt;br&gt;
-命令&lt;br&gt;
-&amp;hellip;&lt;br&gt;
-end&lt;/p&gt;
-&lt;p&gt;举例，如下：&lt;/p&gt;
+&lt;/div&gt;&lt;h4 id=&#34;commands---断点命令&#34;&gt;commands   断点命令
+&lt;/h4&gt;&lt;p&gt;格式：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;commands 断点编号  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;命令  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;...  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;end  
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;举例，如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -1335,8 +1464,8 @@ end&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;......
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;list-l-显示函数或行&#34;&gt;list l 显示函数或行
-&lt;/h3&gt;&lt;table&gt;
+&lt;/div&gt;&lt;h4 id=&#34;list-l-显示函数或行&#34;&gt;list l 显示函数或行
+&lt;/h4&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;格式&lt;/th&gt;
@@ -1374,8 +1503,8 @@ end&lt;/p&gt;
 &lt;li&gt;位置还可以为地址等，因为过多，这里省略。&lt;/li&gt;
 &lt;li&gt;特别地， &lt;code&gt;list *$pc&lt;/code&gt; 可以显示当前行周围的代码(与 &lt;code&gt;list .&lt;/code&gt; 不同，这显示当前的地址与行号)。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;help-h-帮助文档&#34;&gt;help h 帮助文档
-&lt;/h3&gt;&lt;p&gt;格式：help 指令
+&lt;h4 id=&#34;help-h-帮助文档&#34;&gt;help h 帮助文档
+&lt;/h4&gt;&lt;p&gt;格式：help 命令
 举例，如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1393,7 +1522,111 @@ end&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;......
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;参考文章&#34;&gt;参考文章
+&lt;/div&gt;&lt;h4 id=&#34;show---显示数据&#34;&gt;show   显示数据
+&lt;/h4&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;格式&lt;/th&gt;
+          &lt;th&gt;作用&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;show value&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;#print-p-%e6%98%be%e7%a4%ba%e5%8f%98%e9%87%8f&#34; &gt;print&lt;/a&gt; 命令显示历史的最新十个记录&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;show history [功能]&lt;/td&gt;
+          &lt;td&gt;显示命令历史功能的开关与说明，与 &lt;a class=&#34;link&#34; href=&#34;#set-%e8%ae%be%e7%bd%ae%e5%80%bc&#34; &gt;set history [功能]&lt;/a&gt; 配合使用&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;define-命令定义--document-命令说明&#34;&gt;define 命令定义 / document 命令说明
+&lt;/h4&gt;&lt;p&gt;define 可以用于自定义命令(类似函数)，格式如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;define 命令名
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  命令
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;end
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;document 可以用于给自定义命令添加说明，格式如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;document 命令名
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  说明
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;end
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;举例，如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; define li
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Type commands &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; definition of &lt;span class=&#34;s2&#34;&gt;&amp;#34;li&amp;#34;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;End with a line saying just &lt;span class=&#34;s2&#34;&gt;&amp;#34;end&amp;#34;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt;x/10i &lt;span class=&#34;nv&#34;&gt;$pc&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt;end
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; document li
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Type documentation &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;li&amp;#34;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;End with a line saying just &lt;span class=&#34;s2&#34;&gt;&amp;#34;end&amp;#34;&lt;/span&gt;.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt;list machine instruction
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt;end
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;li&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;gt; 0x5555555551e8 &amp;lt;main+8&amp;gt;:	lea    0xe31&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;%rip&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt;,%rax        &lt;span class=&#34;c1&#34;&gt;# 0x555555556020&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x5555555551ef &amp;lt;main+15&amp;gt;:	mov    %rax,%rdi
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x5555555551f2 &amp;lt;main+18&amp;gt;:	call   0x555555555060 &amp;lt;puts@plt&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x5555555551f7 &amp;lt;main+23&amp;gt;:	mov    &lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;x0,%eax
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x5555555551fc &amp;lt;main+28&amp;gt;:	call   0x5555555551a7 &amp;lt;happy&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x555555555201 &amp;lt;main+33&amp;gt;:	mov    &lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;x0,%eax
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x555555555206 &amp;lt;main+38&amp;gt;:	pop    %rbp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x555555555207 &amp;lt;main+39&amp;gt;:	ret
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x555555555208 &amp;lt;_fini&amp;gt;:	endbr64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   0x55555555520c &amp;lt;_fini+4&amp;gt;:	sub    &lt;span class=&#34;nv&#34;&gt;$0&lt;/span&gt;x8,%rsp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;gdb&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;help&lt;/span&gt; li
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;list machine instruction
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;source---引入初始化文件&#34;&gt;source   引入初始化文件
+&lt;/h4&gt;&lt;p&gt;格式：&lt;code&gt;source 文件名&lt;/code&gt;&lt;br&gt;
+除了&lt;a class=&#34;link&#34; href=&#34;#gdb%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6&#34; &gt;初始化文件&lt;/a&gt;，这种方式也能引入命令进行设置。&lt;/p&gt;
+&lt;h2 id=&#34;参考文章&#34;&gt;参考文章
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://geek-blogs.com/blog/linux-core-dump-location/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Linux 核心转储（Core Dump）位置详解：配置、实践与故障排除&lt;/a&gt;&lt;br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org.cn/title/Core_dump#Where_do_they_go?&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;

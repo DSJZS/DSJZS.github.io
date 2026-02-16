@@ -7,6 +7,42 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>屋里食研(2)：蒸饭</title>
+        <link>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
+        <pubDate>Mon, 16 Feb 2026 20:45:38 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;前几天懒得做饭，又不想花钱点外卖，于是看网上的快速做饭方法，总结出用一套电饭煲快速做饭的方法。🧑‍🍳&lt;br&gt;
+鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;
+&lt;h2 id=&#34;食材准备&#34;&gt;食材准备
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;大米&lt;/li&gt;
+&lt;li&gt;老抽&lt;/li&gt;
+&lt;li&gt;生抽&lt;/li&gt;
+&lt;li&gt;各种想吃的菜&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;制作步骤&#34;&gt;制作步骤
+&lt;/h2&gt;&lt;h3 id=&#34;-淘米-&#34;&gt;① 淘米 🌾
+&lt;/h3&gt;&lt;p&gt;如果米比较干净，没有米虫啥的，可以略过这一步。&lt;br&gt;
+淘米的过程中记清楚正常煮饭时应该要加多少水，等下加东西后不好用手指测量。&lt;br&gt;
+淘米结束后尽可能把锅里的水倒出。&lt;/p&gt;
+&lt;h3 id=&#34;-加生抽和老抽-&#34;&gt;② 加生抽和老抽 ⛽︎
+&lt;/h3&gt;&lt;p&gt;先加一点生抽，用筷子搅拌，尽可能使所有的米变色，&lt;br&gt;
+然后再加老抽，同理，用筷子搅拌，尽可能使所有的米变色。&lt;br&gt;
+这一步加的量不要太多，能全部变色的量即可，尤其是老抽，不要太多。&lt;/p&gt;
+&lt;h3 id=&#34;-加入食材-&#34;&gt;③ 加入食材 🥩🥬
+&lt;/h3&gt;&lt;p&gt;这一步主要看个人爱好或者有啥可用的材料，&lt;br&gt;
+比如可以加香肠、卤肉、肉丸、蔬菜等等，稍微麻烦点可以炒个鸡蛋啥的。&lt;br&gt;
+我一般懒得做饭就直接丢一堆熟食到锅里完事。&lt;/p&gt;
+&lt;h3 id=&#34;-开煮&#34;&gt;④ 开煮！🍚
+&lt;/h3&gt;&lt;p&gt;加入平时煮饭量的水到锅里，然后用电饭煲开煮！电饭煲煮熟即可食用！&lt;/p&gt;
+&lt;h2 id=&#34;总结-&#34;&gt;总结 ☝️🤓
+&lt;/h2&gt;&lt;p&gt;这一套下来味道还行，而且方便，几乎不需要啥技巧，会用电饭煲，知道啥能吃啥不能吃就能完成。&lt;br&gt;
+值得注意的是，本人多次“仿真”外加“物理机实验”都没问题，但不代表没有BUG，也不保障能在不同“运行环境”下运行，如果按照这个开源流程“炸机”了本人概不负责。&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>屋里食研(1)：炒面</title>
         <link>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
         <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>

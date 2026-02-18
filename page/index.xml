@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Wed, 18 Feb 2026 22:42:21 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 19 Feb 2026 00:00:45 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/page/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>分类&amp;标签</title>
         <link>https://DSJZS.github.io/categories-tags/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
@@ -29,7 +29,7 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://DSJZS.github.io/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/</guid>
-        <description>&lt;p&gt;这里是更新日志，该日志从 2026/2/18 开始记录。&lt;/p&gt;
+        <description>&lt;p&gt;这里是更新日志，该日志从 2026年2月18日 开始记录。&lt;/p&gt;
 &lt;h2 id=&#34;站点功能更新&#34;&gt;站点功能更新
 &lt;/h2&gt;&lt;table&gt;
   &lt;thead&gt;
@@ -59,10 +59,22 @@
   &lt;/thead&gt;
   &lt;tbody&gt;
       &lt;tr&gt;
-          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;../p/linux%e5%bc%80%e5%8f%91%e5%ad%a6%e4%b9%a0%e8%ae%b0%e5%bd%952%e5%a6%82%e4%bd%95%e6%84%89%e5%bf%ab%e5%9c%b0%e4%bd%bf%e7%94%a8debian%e7%b3%bb%e5%9f%ba%e7%a1%80%e5%8c%85%e7%ae%a1%e7%90%86%e5%b7%a5%e5%85%b7/&#34; &gt;Linux开发学习记录(2)：如何愉快(?)地使用Debian系基础包管理工具&lt;/a&gt;&lt;/td&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;../p/linux%e5%bc%80%e5%8f%91%e5%ad%a6%e4%b9%a0%e8%ae%b0%e5%bd%952%e5%a6%82%e4%bd%95%e6%84%89%e5%bf%ab%e5%9c%b0%e4%bd%bf%e7%94%a8debian%e7%b3%bb%e5%9f%ba%e7%a1%80%e5%8c%85%e7%ae%a1%e7%90%86%e5%b7%a5%e5%85%b7/&#34; &gt;Linux开发学习记录(2)&lt;/a&gt;&lt;/td&gt;
           &lt;td&gt;2026.02.18&lt;/td&gt;
           &lt;td&gt;未完成&lt;/td&gt;
           &lt;td&gt;剩下 aptitude 部分没完成&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;一个交叉编译的文章&lt;/td&gt;
+          &lt;td&gt;2026.02.19&lt;/td&gt;
+          &lt;td&gt;未动笔&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;一个关于deb打包的文章&lt;/td&gt;
+          &lt;td&gt;2026.02.19&lt;/td&gt;
+          &lt;td&gt;未动笔&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;

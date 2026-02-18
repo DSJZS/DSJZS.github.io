@@ -13,7 +13,8 @@
         
         <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%9F%BA%E7%A1%80%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
         <description>&lt;h2 id=&#34;前言&#34;&gt;前言
-&lt;/h2&gt;&lt;p&gt;本文会简略地介绍以下内容：&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;This blog does have Super Cow Powers.&lt;br&gt;
+本文会简略地介绍以下内容：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#deb&#34; &gt;.deb 软件包&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#dpkg&#34; &gt;dpkg&lt;/a&gt;&lt;/li&gt;
@@ -620,13 +621,13 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;h3 id=&#34;主要功能-3&#34;&gt;主要功能
 &lt;/h3&gt;&lt;h4 id=&#34;通过仓库获取最新的软件包信息&#34;&gt;通过仓库获取最新的软件包信息
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;子命令：&lt;code&gt;update&lt;/code&gt;&lt;br&gt;
+&lt;li&gt;操作：&lt;code&gt;update&lt;/code&gt;&lt;br&gt;
 该选项用于从配置的所有软件源中获取最新的可用软件包信息，但不会安装或升级任何软件。&lt;br&gt;
 其他命令基于此获取的软件包数据进行操作，例如执行软件包升级(upgrades)或搜索(search)并显示所有可供安装的软件包的详细信息。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4 id=&#34;列出所有可用的软件包&#34;&gt;列出所有可用的软件包
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;子命令：&lt;code&gt;list&lt;/code&gt;&lt;br&gt;
+&lt;li&gt;操作：&lt;code&gt;list&lt;/code&gt;&lt;br&gt;
 用于显示仓库中所有可用的软件包，通过 &lt;code&gt;--installed&lt;/code&gt; 选项可以只列出已经安装的软件包。&lt;br&gt;
 举例，如下：&lt;/li&gt;
 &lt;/ul&gt;
@@ -646,8 +647,8 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;/div&gt;
 &lt;/div&gt;&lt;h4 id=&#34;搜索指定的软件包&#34;&gt;搜索指定的软件包
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;子命令：&lt;code&gt;search&lt;/code&gt;&lt;br&gt;
-用于从仓库中搜索指定的软件包。默认会搜索名称或者描述中包含搜索关键字的软件包，可使用 &lt;code&gt;--names-only&lt;/code&gt; 选项来指明只搜索名称。 &lt;br&gt;
+&lt;li&gt;操作：&lt;code&gt;search&lt;/code&gt;&lt;br&gt;
+用于从本地软件包信息缓存中搜索指定的软件包。默认会搜索名称或者描述中包含搜索关键字的软件包，可使用 &lt;code&gt;--names-only&lt;/code&gt; 选项来指明只搜索名称。 &lt;br&gt;
 举例，如下：&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -664,8 +665,8 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;/div&gt;
 &lt;/div&gt;&lt;h4 id=&#34;查看指定软件包的信息&#34;&gt;查看指定软件包的信息
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;子命令：&lt;code&gt;show&lt;/code&gt;&lt;br&gt;
-用于从仓库中搜索指定的软件包的信息，包括其依赖关系、安装和下载大小、软件包可用的源、软件包内容的描述等更多信息。&lt;br&gt;
+&lt;li&gt;操作：&lt;code&gt;show&lt;/code&gt;&lt;br&gt;
+用于本地软件包信息缓存搜索指定的软件包的信息，包括其依赖关系、安装和下载大小、软件包可用的源、软件包内容的描述等更多信息。&lt;br&gt;
 能够显示软件包非常详细的元数据，是了解一个软件包的绝佳方式。&lt;br&gt;
 举例，如下：&lt;/li&gt;
 &lt;/ul&gt;
@@ -715,9 +716,10 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;/div&gt;
 &lt;/div&gt;&lt;h4 id=&#34;通过仓库或者本地安装软件包&#34;&gt;通过仓库(或者本地)安装软件包
 &lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;字命令:&lt;code&gt;install&lt;/code&gt;&lt;br&gt;
+&lt;li&gt;操作:&lt;code&gt;install&lt;/code&gt;&lt;br&gt;
 用于从仓库中安装指定的软件包，或者就像 dpkg 一样直接安装已下载到本地的 .deb 软件包(或以URL形式提供)。&lt;br&gt;
-&lt;strong&gt;会自动读取安装的软件包的信息并处理依赖关系，有时会从仓库安装额外的包来满足依赖关系&lt;/strong&gt;，这正是我们使用 apt 的一个重要的原因。
+&lt;strong&gt;会自动读取安装的软件包的信息并处理依赖关系，有时会从仓库安装额外的包来满足依赖关系&lt;/strong&gt;，这正是我们使用 apt 的一个重要的原因。&lt;br&gt;
+&lt;strong&gt;提醒：使用前需要使用 &lt;code&gt;update&lt;/code&gt; 操作获取最新的软件包信息，不然可能会导致无法知晓可用的软件包&lt;/strong&gt;。&lt;br&gt;
 举例，如下:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -743,14 +745,14 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;/div&gt;&lt;h4 id=&#34;通过仓库更新软件&#34;&gt;通过仓库更新软件
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;子命令：&lt;code&gt;upgrade&lt;/code&gt;&lt;br&gt;
+&lt;p&gt;操作：&lt;code&gt;upgrade&lt;/code&gt;&lt;br&gt;
 用于从通过 &lt;code&gt;sources.list&lt;/code&gt; 配置的源中，安装当前系统上所有已安装软件包的可用升级。&lt;br&gt;
 如果需要满足依赖关系，将安装新软件包，但永远不会删除现有软件包。&lt;br&gt;
 如果某个软件包的升级需要移除一个已安装的软件包，则该软件包的升级将不会执行。&lt;br&gt;
-&lt;strong&gt;提醒：使用前需要使用 &lt;code&gt;update&lt;/code&gt; 子命令获取最新的软件包信息，不然无法知晓可用的升级&lt;/strong&gt;。&lt;/p&gt;
+&lt;strong&gt;提醒：使用前需要使用 &lt;code&gt;update&lt;/code&gt; 操作获取最新的软件包信息，不然可能会导致无法知晓可用的升级&lt;/strong&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;子命令：&lt;code&gt;full-upgrade&lt;/code&gt;&lt;br&gt;
+&lt;p&gt;操作：&lt;code&gt;full-upgrade&lt;/code&gt;&lt;br&gt;
 执行与 &lt;code&gt;upgrade&lt;/code&gt; 相同的功能，但如果需要升级整个系统，它将移除当前已安装的软件包。&lt;br&gt;
 &lt;code&gt;full-upgrade&lt;/code&gt; 在处理复杂的依赖关系时更彻底，但风险也更高，因为它可能会为了完成升级而删除一些软件包。在 Ubuntu 系统中，这个命令通常等同于 &lt;code&gt;dist-upgrade&lt;/code&gt;。&lt;/p&gt;
 &lt;/li&gt;
@@ -758,19 +760,19 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;h4 id=&#34;卸载软件包-1&#34;&gt;卸载软件包
 &lt;/h4&gt;&lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;子命令：&lt;code&gt;remove&lt;/code&gt;&lt;br&gt;
+&lt;p&gt;操作：&lt;code&gt;remove&lt;/code&gt;&lt;br&gt;
 用于删除指定的软件包，但会保留对应的数据和配置文件。&lt;br&gt;
 类似 &lt;a class=&#34;link&#34; href=&#34;#%e5%8d%b8%e8%bd%bd%e8%bd%af%e4%bb%b6%e5%8c%85&#34; &gt;&lt;code&gt;dpkg-deb -r&lt;/code&gt;&lt;/a&gt;。&lt;br&gt;
 &lt;strong&gt;如果软件包存在依赖，不会将依赖删除，请参考下面的 &lt;code&gt;automove&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;子命令：&lt;code&gt;purge&lt;/code&gt;&lt;br&gt;
+&lt;p&gt;操作：&lt;code&gt;purge&lt;/code&gt;&lt;br&gt;
 用于删除指定的软件包，并且还会删除对应的数据和配置文件。&lt;br&gt;
 类似 &lt;a class=&#34;link&#34; href=&#34;#%e5%8d%b8%e8%bd%bd%e8%bd%af%e4%bb%b6%e5%8c%85&#34; &gt;&lt;code&gt;dpkg-deb -P&lt;/code&gt;&lt;/a&gt;。&lt;br&gt;
 &lt;strong&gt;如果软件包存在依赖，不会将依赖删除，请参考下面的 &lt;code&gt;automove&lt;/code&gt;&lt;/strong&gt;。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;子命令：&lt;code&gt;autoremove&lt;/code&gt;&lt;br&gt;
+&lt;p&gt;操作：&lt;code&gt;autoremove&lt;/code&gt;&lt;br&gt;
 用于移除那些当初为了满足其他软件包的依赖关系而自动安装，但现在由于依赖关系变更或需要它们的软件包已被移除而不再需要的软件包。&lt;br&gt;
 &lt;strong&gt;但是本人不建议你轻易使用，因为它的外号是依赖粉碎机，执行后可能会造成比较严重的后果&lt;/strong&gt;。&lt;/p&gt;
 &lt;/li&gt;
@@ -847,13 +849,111 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;p&gt;aptitude 和 apt 一样，都基于 apt-get ，因为 apt-get 基于 dpkg ，因此 dpkg 和 aptitude 能识别彼此安装的 deb 软件包。&lt;/p&gt;
 &lt;p&gt;aptitude 和 apt 一样，会解决包的依赖关系，不过(个人认为) aptitude 的功能比 apt 更为强大。&lt;/p&gt;
 &lt;p&gt;可以参考&lt;a class=&#34;link&#34; href=&#34;#debian%e7%b3%bb%e7%bb%9f%e5%8c%85%e7%ae%a1%e7%90%86%e5%b7%a5%e5%85%b7%e6%80%9d%e7%bb%b4%e5%af%bc%e5%9b%be&#34; &gt;Debian系统包管理工具思维导图&lt;/a&gt;理解各个工具之间的关系。&lt;/p&gt;
-&lt;h3 id=&#34;主要功能-4&#34;&gt;主要功能
-&lt;/h3&gt;&lt;p&gt;部分功能与 apt 类似。&lt;/p&gt;
-&lt;h4 id=&#34;可视化模式&#34;&gt;可视化模式
-&lt;/h4&gt;&lt;p&gt;如果在命令行中未指定动作，aptitude 将以可视化模式启动。&lt;br&gt;
+&lt;h3 id=&#34;可视化模式&#34;&gt;可视化模式
+&lt;/h3&gt;&lt;p&gt;如果在命令行中未指定动作，aptitude 将以可视化模式启动。&lt;br&gt;
 在该模式下会提供一个同时支持键盘与鼠标操作的可视化窗口，你可以在里面完成诸多操作，比如&lt;strong&gt;玩扫雷&lt;/strong&gt;。&lt;/p&gt;
-&lt;h4 id=&#34;待补充&#34;&gt;待补充
-&lt;/h4&gt;&lt;p&gt;aptitude 相较于 apt 有诸多的新特性，短时间内难以说明，可参考下面提供的资料。&lt;br&gt;
+&lt;h3 id=&#34;search-patterns&#34;&gt;Search patterns
+&lt;/h3&gt;&lt;p&gt;aptitude 规定了一些特有的模式给一些特定的操作使用。&lt;br&gt;
+举例，如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 精确搜索名字为 git 的软件包&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude search &lt;span class=&#34;s1&#34;&gt;&amp;#39;~n^git$&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;i   git                                              - 快速、可缩放的分布式版本控制系统                           
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;p   git:i386                                         - 快速、可缩放的分布式版本控制系统 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;查阅&lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/aptitude/ch02s04.en.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt; aptitude reference manual 的 “Search Patterns” 章节 &lt;/a&gt;获取更多的信息。&lt;br&gt;
+由其是&lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/aptitude/ch02s04s05.en.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt; Search term reference 小节 &lt;/a&gt;。&lt;/p&gt;
+&lt;h3 id=&#34;主要选项&#34;&gt;主要选项
+&lt;/h3&gt;&lt;h4 id=&#34;指定输出格式&#34;&gt;指定输出格式
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;选项：&lt;code&gt;-F &amp;lt;format&amp;gt;, --display-format &amp;lt;format&amp;gt;&lt;/code&gt;&lt;br&gt;
+指定应用于显示来自 &lt;a class=&#34;link&#34; href=&#34;#%e6%90%9c%e7%b4%a2%e6%8c%87%e5%ae%9a%e7%9a%84%e8%bd%af%e4%bb%b6%e5%8c%85-1&#34; &gt;search&lt;/a&gt; 和 &lt;a class=&#34;link&#34; href=&#34;#%e5%88%97%e5%87%ba%e6%8c%87%e5%ae%9a%e8%bd%af%e4%bb%b6%e5%8c%85%e7%9a%84%e7%89%88%e6%9c%ac&#34; &gt;versions&lt;/a&gt; 操作的输出的格式。&lt;br&gt;
+命令行选项 &amp;ndash;disable-columns 通常与 -F 结合使用。&lt;br&gt;
+对于 search，这对应于配置选项 Aptitude::CmdLine::Package-Display-Format；对于 versions，这对应于配置选项 Aptitude::CmdLine::Version-Display-Format。&lt;br&gt;
+举例，如下：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 输出格式为： &amp;lt;包名&amp;gt; &amp;lt;已经安装的版本(如果没有就显示无)&amp;gt; &amp;lt;仓库中的最新版本(如果没有就显示无)&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude search &lt;span class=&#34;s1&#34;&gt;&amp;#39;~n^git$&amp;#39;&lt;/span&gt; -F &lt;span class=&#34;s1&#34;&gt;&amp;#39;%p %v %V&amp;#39;&lt;/span&gt; --disable-columns
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git 1:2.43.0-1ubuntu7.3 1:2.43.0-1ubuntu7.3
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git:i386 &amp;lt;无&amp;gt; 1:2.43.0-1ubuntu7.3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;查阅&lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/aptitude/ch02s05s01.en.html#secDisplayFormat&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt; aptitude reference manual 的 “Customizing how packages are displayed” 章节 &lt;/a&gt;获取更多的信息。&lt;/p&gt;
+&lt;h3 id=&#34;主要操作&#34;&gt;主要操作
+&lt;/h3&gt;&lt;p&gt;部分操作与 apt 类似。&lt;/p&gt;
+&lt;h4 id=&#34;搜索指定的软件包-1&#34;&gt;搜索指定的软件包
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;操作：&lt;code&gt;search&lt;/code&gt;&lt;br&gt;
+用于从本地软件包信息缓存中搜索指定的软件包。默认会搜索名称中包含搜索关键字的软件包。&lt;br&gt;
+可以使用&lt;a class=&#34;link&#34; href=&#34;#search-patterns&#34; &gt;&lt;code&gt;Search patterns&lt;/code&gt; &lt;/a&gt;描述指定的包，还可以使用&lt;a class=&#34;link&#34; href=&#34;#%e6%8c%87%e5%ae%9a%e8%be%93%e5%87%ba%e6%a0%bc%e5%bc%8f&#34; &gt; &lt;code&gt;-F&lt;/code&gt; 选项&lt;/a&gt;描述如何输出信息。&lt;br&gt;
+举例，如下：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 精确搜索名字为 git 的软件包&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 输出格式为： &amp;lt;包名&amp;gt; &amp;lt;已经安装的版本(如果没有就显示无)&amp;gt; &amp;lt;仓库中的最新版本(如果没有就显示无)&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude search &lt;span class=&#34;s1&#34;&gt;&amp;#39;~n^git$&amp;#39;&lt;/span&gt; -F &lt;span class=&#34;s1&#34;&gt;&amp;#39;%p %v %V&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git                                                                                  1:2.43.0-1ubun 1:2.43.0-1ubun
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git:i386                                                                             &amp;lt;无&amp;gt;           1:2.43.0-1ubun
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;列出指定软件包的版本&#34;&gt;列出指定软件包的版本
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;操作：&lt;code&gt;versions&lt;/code&gt;
+显示命令行上列出的软件包的版本。&lt;br&gt;
+可以使用&lt;a class=&#34;link&#34; href=&#34;#search-patterns&#34; &gt;&lt;code&gt;Search patterns&lt;/code&gt; &lt;/a&gt;描述指定的包，还可以使用&lt;a class=&#34;link&#34; href=&#34;#%e6%8c%87%e5%ae%9a%e8%be%93%e5%87%ba%e6%a0%bc%e5%bc%8f&#34; &gt; &lt;code&gt;-F&lt;/code&gt; 选项&lt;/a&gt;描述如何输出信息。&lt;br&gt;
+举例，如下：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude versions &lt;span class=&#34;s1&#34;&gt;&amp;#39;git&amp;#39;&lt;/span&gt;                                              
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;软件包 git：                           
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;p   1:2.43.0-1ubuntu7                                              noble                                      &lt;span class=&#34;m&#34;&gt;500&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;i   1:2.43.0-1ubuntu7.3                                            noble-security,noble-updates               &lt;span class=&#34;m&#34;&gt;500&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;软件包 git:i386：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;p   1:2.43.0-1ubuntu7                                              noble                                      &lt;span class=&#34;m&#34;&gt;500&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;p   1:2.43.0-1ubuntu7.3                                            noble-security,noble-updates               &lt;span class=&#34;m&#34;&gt;500&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;待补充&#34;&gt;待补充
+&lt;/h3&gt;&lt;p&gt;aptitude 相较于 apt 有诸多的新特性，短时间内难以说明，可参考下面提供的资料。&lt;br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/aptitude/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;aptitude user&amp;rsquo;s manual&lt;/a&gt;&lt;br&gt;
 &lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/aptitude/rn01re01.en.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -897,6 +997,7 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude -h &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt; tail -1
@@ -919,12 +1020,13 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude -vvvvv moo
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;好吧，您赢了。
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                /----&lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                        -------/      &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                        /               &lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    /
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;-----------------/                  --------&lt;span class=&#34;se&#34;&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    ----------------------------------------------
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                               /----&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                       -------/      &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                      /               &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                     /                &lt;span class=&#34;p&#34;&gt;|&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   -----------------/                  --------&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;   ----------------------------------------------
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aptitude -vvvvvv moo
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;这是什么？这当然是一只大象被一条蛇吞吃了。
@@ -989,6 +1091,8 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
     &gt;.deb 包结构详解&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/maint-guide/dreq.zh-cn.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;debian 目录中的必需内容&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.debian.org/doc/manuals/aptitude/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;aptitude user&amp;rsquo;s manual&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>

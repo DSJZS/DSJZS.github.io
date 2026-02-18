@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 本文会简略地介绍以下内容：\n.deb 软件包 dpkg dpkg-deb dpkg-query apt aptitude 如果想了解详细的内容，请自行阅读对应的资料。\n.deb .deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等。\n通过 ar 命令可以查看其内部结构( code.deb 的获取方式见备注 )：\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 This blog does have Super Cow Powers.\n本文会简略地介绍以下内容：\n.deb 软件包 dpkg dpkg-deb dpkg-query apt aptitude 如果想了解详细的内容，请自行阅读对应的资料。\n.deb .deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等。\n通过 ar 命令可以查看其内部结构( code.deb 的获取方式见备注 )：\n">
 <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系基础包管理工具</title>
 
 <link rel='canonical' href='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%9F%BA%E7%A1%80%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/'>
 
 <link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Linux开发学习记录(2)：如何愉快(?)地使用Debian系基础包管理工具">
-<meta property='og:description' content="前言 本文会简略地介绍以下内容：\n.deb 软件包 dpkg dpkg-deb dpkg-query apt aptitude 如果想了解详细的内容，请自行阅读对应的资料。\n.deb .deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等。\n通过 ar 命令可以查看其内部结构( code.deb 的获取方式见备注 )：\n">
+<meta property='og:description' content="前言 This blog does have Super Cow Powers.\n本文会简略地介绍以下内容：\n.deb 软件包 dpkg dpkg-deb dpkg-query apt aptitude 如果想了解详细的内容，请自行阅读对应的资料。\n.deb .deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等。\n通过 ar 命令可以查看其内部结构( code.deb 的获取方式见备注 )：\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%9F%BA%E7%A1%80%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Dpkg' /><meta property='article:tag' content='Apt' /><meta property='article:published_time' content='2026-02-17T14:04:55&#43;08:00'/><meta property='article:modified_time' content='2026-02-18T22:42:21&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Dpkg' /><meta property='article:tag' content='Apt' /><meta property='article:published_time' content='2026-02-17T14:04:55&#43;08:00'/><meta property='article:modified_time' content='2026-02-19T00:00:45&#43;08:00'/>
 <meta name="twitter:title" content="Linux开发学习记录(2)：如何愉快(?)地使用Debian系基础包管理工具">
-<meta name="twitter:description" content="前言 本文会简略地介绍以下内容：\n.deb 软件包 dpkg dpkg-deb dpkg-query apt aptitude 如果想了解详细的内容，请自行阅读对应的资料。\n.deb .deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等。\n通过 ar 命令可以查看其内部结构( code.deb 的获取方式见备注 )：\n">
+<meta name="twitter:description" content="前言 This blog does have Super Cow Powers.\n本文会简略地介绍以下内容：\n.deb 软件包 dpkg dpkg-deb dpkg-query apt aptitude 如果想了解详细的内容，请自行阅读对应的资料。\n.deb .deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等。\n通过 ar 命令可以查看其内部结构( code.deb 的获取方式见备注 )：\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -344,12 +344,20 @@
     <li><a href="#aptitude">aptitude</a>
       <ol>
         <li><a href="#工具介绍-4">工具介绍</a></li>
-        <li><a href="#主要功能-4">主要功能</a>
+        <li><a href="#可视化模式">可视化模式</a></li>
+        <li><a href="#search-patterns">Search patterns</a></li>
+        <li><a href="#主要选项">主要选项</a>
           <ol>
-            <li><a href="#可视化模式">可视化模式</a></li>
-            <li><a href="#待补充">待补充</a></li>
+            <li><a href="#指定输出格式">指定输出格式</a></li>
           </ol>
         </li>
+        <li><a href="#主要操作">主要操作</a>
+          <ol>
+            <li><a href="#搜索指定的软件包-1">搜索指定的软件包</a></li>
+            <li><a href="#列出指定软件包的版本">列出指定软件包的版本</a></li>
+          </ol>
+        </li>
+        <li><a href="#待补充">待补充</a></li>
         <li><a href="#彩蛋-1">彩蛋</a></li>
       </ol>
     </li>
@@ -429,7 +437,7 @@
 
 
                 <time>
-                    Feb 18, 2026 22:42 &#43;0800
+                    Feb 19, 2026 00:00 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -451,7 +459,8 @@
     
     
     <h2 id="前言">前言
-</h2><p>本文会简略地介绍以下内容：</p>
+</h2><p>This blog does have Super Cow Powers.<br>
+本文会简略地介绍以下内容：</p>
 <ul>
 <li><a class="link" href="#deb" >.deb 软件包</a></li>
 <li><a class="link" href="#dpkg" >dpkg</a></li>
@@ -1058,13 +1067,13 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 <h3 id="主要功能-3">主要功能
 </h3><h4 id="通过仓库获取最新的软件包信息">通过仓库获取最新的软件包信息
 </h4><ul>
-<li>子命令：<code>update</code><br>
+<li>操作：<code>update</code><br>
 该选项用于从配置的所有软件源中获取最新的可用软件包信息，但不会安装或升级任何软件。<br>
 其他命令基于此获取的软件包数据进行操作，例如执行软件包升级(upgrades)或搜索(search)并显示所有可供安装的软件包的详细信息。</li>
 </ul>
 <h4 id="列出所有可用的软件包">列出所有可用的软件包
 </h4><ul>
-<li>子命令：<code>list</code><br>
+<li>操作：<code>list</code><br>
 用于显示仓库中所有可用的软件包，通过 <code>--installed</code> 选项可以只列出已经安装的软件包。<br>
 举例，如下：</li>
 </ul>
@@ -1084,8 +1093,8 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 </div>
 </div><h4 id="搜索指定的软件包">搜索指定的软件包
 </h4><ul>
-<li>子命令：<code>search</code><br>
-用于从仓库中搜索指定的软件包。默认会搜索名称或者描述中包含搜索关键字的软件包，可使用 <code>--names-only</code> 选项来指明只搜索名称。 <br>
+<li>操作：<code>search</code><br>
+用于从本地软件包信息缓存中搜索指定的软件包。默认会搜索名称或者描述中包含搜索关键字的软件包，可使用 <code>--names-only</code> 选项来指明只搜索名称。 <br>
 举例，如下：</li>
 </ul>
 <div class="highlight"><div class="chroma">
@@ -1102,8 +1111,8 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 </div>
 </div><h4 id="查看指定软件包的信息">查看指定软件包的信息
 </h4><ul>
-<li>子命令：<code>show</code><br>
-用于从仓库中搜索指定的软件包的信息，包括其依赖关系、安装和下载大小、软件包可用的源、软件包内容的描述等更多信息。<br>
+<li>操作：<code>show</code><br>
+用于本地软件包信息缓存搜索指定的软件包的信息，包括其依赖关系、安装和下载大小、软件包可用的源、软件包内容的描述等更多信息。<br>
 能够显示软件包非常详细的元数据，是了解一个软件包的绝佳方式。<br>
 举例，如下：</li>
 </ul>
@@ -1153,9 +1162,10 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 </div>
 </div><h4 id="通过仓库或者本地安装软件包">通过仓库(或者本地)安装软件包
 </h4><ul>
-<li>字命令:<code>install</code><br>
+<li>操作:<code>install</code><br>
 用于从仓库中安装指定的软件包，或者就像 dpkg 一样直接安装已下载到本地的 .deb 软件包(或以URL形式提供)。<br>
-<strong>会自动读取安装的软件包的信息并处理依赖关系，有时会从仓库安装额外的包来满足依赖关系</strong>，这正是我们使用 apt 的一个重要的原因。
+<strong>会自动读取安装的软件包的信息并处理依赖关系，有时会从仓库安装额外的包来满足依赖关系</strong>，这正是我们使用 apt 的一个重要的原因。<br>
+<strong>提醒：使用前需要使用 <code>update</code> 操作获取最新的软件包信息，不然可能会导致无法知晓可用的软件包</strong>。<br>
 举例，如下:</li>
 </ul>
 <div class="highlight"><div class="chroma">
@@ -1181,14 +1191,14 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 </div><h4 id="通过仓库更新软件">通过仓库更新软件
 </h4><ul>
 <li>
-<p>子命令：<code>upgrade</code><br>
+<p>操作：<code>upgrade</code><br>
 用于从通过 <code>sources.list</code> 配置的源中，安装当前系统上所有已安装软件包的可用升级。<br>
 如果需要满足依赖关系，将安装新软件包，但永远不会删除现有软件包。<br>
 如果某个软件包的升级需要移除一个已安装的软件包，则该软件包的升级将不会执行。<br>
-<strong>提醒：使用前需要使用 <code>update</code> 子命令获取最新的软件包信息，不然无法知晓可用的升级</strong>。</p>
+<strong>提醒：使用前需要使用 <code>update</code> 操作获取最新的软件包信息，不然可能会导致无法知晓可用的升级</strong>。</p>
 </li>
 <li>
-<p>子命令：<code>full-upgrade</code><br>
+<p>操作：<code>full-upgrade</code><br>
 执行与 <code>upgrade</code> 相同的功能，但如果需要升级整个系统，它将移除当前已安装的软件包。<br>
 <code>full-upgrade</code> 在处理复杂的依赖关系时更彻底，但风险也更高，因为它可能会为了完成升级而删除一些软件包。在 Ubuntu 系统中，这个命令通常等同于 <code>dist-upgrade</code>。</p>
 </li>
@@ -1196,19 +1206,19 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 <h4 id="卸载软件包-1">卸载软件包
 </h4><ul>
 <li>
-<p>子命令：<code>remove</code><br>
+<p>操作：<code>remove</code><br>
 用于删除指定的软件包，但会保留对应的数据和配置文件。<br>
 类似 <a class="link" href="#%e5%8d%b8%e8%bd%bd%e8%bd%af%e4%bb%b6%e5%8c%85" ><code>dpkg-deb -r</code></a>。<br>
 <strong>如果软件包存在依赖，不会将依赖删除，请参考下面的 <code>automove</code></strong>。</p>
 </li>
 <li>
-<p>子命令：<code>purge</code><br>
+<p>操作：<code>purge</code><br>
 用于删除指定的软件包，并且还会删除对应的数据和配置文件。<br>
 类似 <a class="link" href="#%e5%8d%b8%e8%bd%bd%e8%bd%af%e4%bb%b6%e5%8c%85" ><code>dpkg-deb -P</code></a>。<br>
 <strong>如果软件包存在依赖，不会将依赖删除，请参考下面的 <code>automove</code></strong>。</p>
 </li>
 <li>
-<p>子命令：<code>autoremove</code><br>
+<p>操作：<code>autoremove</code><br>
 用于移除那些当初为了满足其他软件包的依赖关系而自动安装，但现在由于依赖关系变更或需要它们的软件包已被移除而不再需要的软件包。<br>
 <strong>但是本人不建议你轻易使用，因为它的外号是依赖粉碎机，执行后可能会造成比较严重的后果</strong>。</p>
 </li>
@@ -1285,13 +1295,111 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 <p>aptitude 和 apt 一样，都基于 apt-get ，因为 apt-get 基于 dpkg ，因此 dpkg 和 aptitude 能识别彼此安装的 deb 软件包。</p>
 <p>aptitude 和 apt 一样，会解决包的依赖关系，不过(个人认为) aptitude 的功能比 apt 更为强大。</p>
 <p>可以参考<a class="link" href="#debian%e7%b3%bb%e7%bb%9f%e5%8c%85%e7%ae%a1%e7%90%86%e5%b7%a5%e5%85%b7%e6%80%9d%e7%bb%b4%e5%af%bc%e5%9b%be" >Debian系统包管理工具思维导图</a>理解各个工具之间的关系。</p>
-<h3 id="主要功能-4">主要功能
-</h3><p>部分功能与 apt 类似。</p>
-<h4 id="可视化模式">可视化模式
-</h4><p>如果在命令行中未指定动作，aptitude 将以可视化模式启动。<br>
+<h3 id="可视化模式">可视化模式
+</h3><p>如果在命令行中未指定动作，aptitude 将以可视化模式启动。<br>
 在该模式下会提供一个同时支持键盘与鼠标操作的可视化窗口，你可以在里面完成诸多操作，比如<strong>玩扫雷</strong>。</p>
-<h4 id="待补充">待补充
-</h4><p>aptitude 相较于 apt 有诸多的新特性，短时间内难以说明，可参考下面提供的资料。<br>
+<h3 id="search-patterns">Search patterns
+</h3><p>aptitude 规定了一些特有的模式给一些特定的操作使用。<br>
+举例，如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 精确搜索名字为 git 的软件包</span>
+</span></span><span class="line"><span class="cl">~$ aptitude search <span class="s1">&#39;~n^git$&#39;</span>
+</span></span><span class="line"><span class="cl">i   git                                              - 快速、可缩放的分布式版本控制系统                           
+</span></span><span class="line"><span class="cl">p   git:i386                                         - 快速、可缩放的分布式版本控制系统 
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查阅<a class="link" href="https://www.debian.org/doc/manuals/aptitude/ch02s04.en.html"  target="_blank" rel="noopener"
+    > aptitude reference manual 的 “Search Patterns” 章节 </a>获取更多的信息。<br>
+由其是<a class="link" href="https://www.debian.org/doc/manuals/aptitude/ch02s04s05.en.html"  target="_blank" rel="noopener"
+    > Search term reference 小节 </a>。</p>
+<h3 id="主要选项">主要选项
+</h3><h4 id="指定输出格式">指定输出格式
+</h4><ul>
+<li>选项：<code>-F &lt;format&gt;, --display-format &lt;format&gt;</code><br>
+指定应用于显示来自 <a class="link" href="#%e6%90%9c%e7%b4%a2%e6%8c%87%e5%ae%9a%e7%9a%84%e8%bd%af%e4%bb%b6%e5%8c%85-1" >search</a> 和 <a class="link" href="#%e5%88%97%e5%87%ba%e6%8c%87%e5%ae%9a%e8%bd%af%e4%bb%b6%e5%8c%85%e7%9a%84%e7%89%88%e6%9c%ac" >versions</a> 操作的输出的格式。<br>
+命令行选项 &ndash;disable-columns 通常与 -F 结合使用。<br>
+对于 search，这对应于配置选项 Aptitude::CmdLine::Package-Display-Format；对于 versions，这对应于配置选项 Aptitude::CmdLine::Version-Display-Format。<br>
+举例，如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 输出格式为： &lt;包名&gt; &lt;已经安装的版本(如果没有就显示无)&gt; &lt;仓库中的最新版本(如果没有就显示无)&gt;</span>
+</span></span><span class="line"><span class="cl">~$ aptitude search <span class="s1">&#39;~n^git$&#39;</span> -F <span class="s1">&#39;%p %v %V&#39;</span> --disable-columns
+</span></span><span class="line"><span class="cl">git 1:2.43.0-1ubuntu7.3 1:2.43.0-1ubuntu7.3
+</span></span><span class="line"><span class="cl">git:i386 &lt;无&gt; 1:2.43.0-1ubuntu7.3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>查阅<a class="link" href="https://www.debian.org/doc/manuals/aptitude/ch02s05s01.en.html#secDisplayFormat"  target="_blank" rel="noopener"
+    > aptitude reference manual 的 “Customizing how packages are displayed” 章节 </a>获取更多的信息。</p>
+<h3 id="主要操作">主要操作
+</h3><p>部分操作与 apt 类似。</p>
+<h4 id="搜索指定的软件包-1">搜索指定的软件包
+</h4><ul>
+<li>操作：<code>search</code><br>
+用于从本地软件包信息缓存中搜索指定的软件包。默认会搜索名称中包含搜索关键字的软件包。<br>
+可以使用<a class="link" href="#search-patterns" ><code>Search patterns</code> </a>描述指定的包，还可以使用<a class="link" href="#%e6%8c%87%e5%ae%9a%e8%be%93%e5%87%ba%e6%a0%bc%e5%bc%8f" > <code>-F</code> 选项</a>描述如何输出信息。<br>
+举例，如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 精确搜索名字为 git 的软件包</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 输出格式为： &lt;包名&gt; &lt;已经安装的版本(如果没有就显示无)&gt; &lt;仓库中的最新版本(如果没有就显示无)&gt;</span>
+</span></span><span class="line"><span class="cl">~$ aptitude search <span class="s1">&#39;~n^git$&#39;</span> -F <span class="s1">&#39;%p %v %V&#39;</span>
+</span></span><span class="line"><span class="cl">git                                                                                  1:2.43.0-1ubun 1:2.43.0-1ubun
+</span></span><span class="line"><span class="cl">git:i386                                                                             &lt;无&gt;           1:2.43.0-1ubun
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="列出指定软件包的版本">列出指定软件包的版本
+</h4><ul>
+<li>操作：<code>versions</code>
+显示命令行上列出的软件包的版本。<br>
+可以使用<a class="link" href="#search-patterns" ><code>Search patterns</code> </a>描述指定的包，还可以使用<a class="link" href="#%e6%8c%87%e5%ae%9a%e8%be%93%e5%87%ba%e6%a0%bc%e5%bc%8f" > <code>-F</code> 选项</a>描述如何输出信息。<br>
+举例，如下：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ aptitude versions <span class="s1">&#39;git&#39;</span>                                              
+</span></span><span class="line"><span class="cl">软件包 git：                           
+</span></span><span class="line"><span class="cl">p   1:2.43.0-1ubuntu7                                              noble                                      <span class="m">500</span> 
+</span></span><span class="line"><span class="cl">i   1:2.43.0-1ubuntu7.3                                            noble-security,noble-updates               <span class="m">500</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">软件包 git:i386：
+</span></span><span class="line"><span class="cl">p   1:2.43.0-1ubuntu7                                              noble                                      <span class="m">500</span> 
+</span></span><span class="line"><span class="cl">p   1:2.43.0-1ubuntu7.3                                            noble-security,noble-updates               <span class="m">500</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="待补充">待补充
+</h3><p>aptitude 相较于 apt 有诸多的新特性，短时间内难以说明，可参考下面提供的资料。<br>
 <a class="link" href="https://www.debian.org/doc/manuals/aptitude/"  target="_blank" rel="noopener"
     >aptitude user&rsquo;s manual</a><br>
 <a class="link" href="https://www.debian.org/doc/manuals/aptitude/rn01re01.en.html"  target="_blank" rel="noopener"
@@ -1335,6 +1443,7 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 </span><span class="lnt">27
 </span><span class="lnt">28
 </span><span class="lnt">29
+</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ aptitude -h <span class="p">|</span> tail -1
@@ -1357,12 +1466,13 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">~$ aptitude -vvvvv moo
 </span></span><span class="line"><span class="cl">好吧，您赢了。
-</span></span><span class="line"><span class="cl">                                /----<span class="se">\
-</span></span></span><span class="line"><span class="cl">                        -------/      <span class="se">\
-</span></span></span><span class="line"><span class="cl">                        /               <span class="se">\
-</span></span></span><span class="line"><span class="cl">                    /
-</span></span><span class="line"><span class="cl">    <span class="p">|</span>-----------------/                  --------<span class="se">\
-</span></span></span><span class="line"><span class="cl">    ----------------------------------------------
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                               /----<span class="se">\
+</span></span></span><span class="line"><span class="cl">                       -------/      <span class="se">\
+</span></span></span><span class="line"><span class="cl">                      /               <span class="se">\
+</span></span></span><span class="line"><span class="cl">                     /                <span class="p">|</span>
+</span></span><span class="line"><span class="cl">   -----------------/                  --------<span class="se">\
+</span></span></span><span class="line"><span class="cl">   ----------------------------------------------
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">~$ aptitude -vvvvvv moo
 </span></span><span class="line"><span class="cl">这是什么？这当然是一只大象被一条蛇吞吃了。
@@ -1427,6 +1537,8 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
     >.deb 包结构详解</a></li>
 <li><a class="link" href="https://www.debian.org/doc/manuals/maint-guide/dreq.zh-cn.html"  target="_blank" rel="noopener"
     >debian 目录中的必需内容</a></li>
+<li><a class="link" href="https://www.debian.org/doc/manuals/aptitude/"  target="_blank" rel="noopener"
+    >aptitude user&rsquo;s manual</a></li>
 </ul>
 
 </section>
@@ -1467,7 +1579,7 @@ deb-src 表明这是一个源代码的仓库原(即提供源码包，用于下�
 
 
         <span>
-            最后更新于 Feb 18, 2026 22:42 &#43;0800
+            最后更新于 Feb 19, 2026 00:00 &#43;0800
         </span>
     </section></footer>
 

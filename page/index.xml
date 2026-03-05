@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Thu, 19 Feb 2026 00:00:45 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 05 Mar 2026 22:59:37 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/page/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>分类&amp;标签</title>
         <link>https://DSJZS.github.io/categories-tags/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
@@ -71,7 +71,19 @@
           &lt;td&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td&gt;一个关于deb打包的文章&lt;/td&gt;
+          &lt;td&gt;一个关于 deb 打包的文章&lt;/td&gt;
+          &lt;td&gt;2026.02.19&lt;/td&gt;
+          &lt;td&gt;未动笔&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;../p/linux%e5%bc%80%e5%8f%91%e5%ad%a6%e4%b9%a0%e8%ae%b0%e5%bd%953%e5%a6%82%e4%bd%95%e6%84%89%e5%bf%ab%e5%9c%b0%e4%bd%bf%e7%94%a8makefile/&#34; &gt;Linux开发学习记录(3)&lt;/a&gt;&lt;/td&gt;
+          &lt;td&gt;2026.02.19&lt;/td&gt;
+          &lt;td&gt;未完成&lt;/td&gt;
+          &lt;td&gt;感觉给出的参考资料足够完善了，暂时没啥补充的&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;一个关于 wpa_supplicant 的文章&lt;/td&gt;
           &lt;td&gt;2026.02.19&lt;/td&gt;
           &lt;td&gt;未动笔&lt;/td&gt;
           &lt;td&gt;&lt;/td&gt;

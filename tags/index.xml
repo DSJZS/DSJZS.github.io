@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Wed, 18 Feb 2026 22:42:21 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 05 Mar 2026 22:59:37 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>前端</title>
         <link>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
         <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
@@ -48,6 +48,22 @@
         <description></description>
         </item>
         <item>
+        <title>C&#43;&#43;</title>
+        <link>https://DSJZS.github.io/tags/c&#43;&#43;/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/c&#43;&#43;/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Docker</title>
+        <link>https://DSJZS.github.io/tags/docker/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/docker/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Dpkg</title>
         <link>https://DSJZS.github.io/tags/dpkg/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -72,6 +88,14 @@
         <description></description>
         </item>
         <item>
+        <title>GCC</title>
+        <link>https://DSJZS.github.io/tags/gcc/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/gcc/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>GDB</title>
         <link>https://DSJZS.github.io/tags/gdb/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -93,6 +117,14 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://DSJZS.github.io/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Makefile</title>
+        <link>https://DSJZS.github.io/tags/makefile/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/makefile/</guid>
         <description></description>
         </item>
         <item>

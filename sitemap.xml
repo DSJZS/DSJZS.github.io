@@ -3,15 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://DSJZS.github.io/categories/</loc>
-    <lastmod>2026-02-19T00:00:45+08:00</lastmod>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
   </url><url>
-    <loc>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%9F%BA%E7%A1%80%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-02-19T00:00:45+08:00</lastmod>
+    <loc>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/post/</loc>
-    <lastmod>2026-02-19T00:00:45+08:00</lastmod>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/tags/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
+  </url><url>
+    <loc>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
+  </url><url>
+    <loc>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%9F%BA%E7%A1%80%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2026-02-19T00:00:45+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</loc>
@@ -54,7 +60,7 @@
     <lastmod>2026-02-19T00:00:45+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/page/</loc>
-    <lastmod>2026-02-19T00:00:45+08:00</lastmod>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/categories-tags/</loc>
     <lastmod>2025-12-25T15:30:45+08:00</lastmod>
@@ -74,6 +80,12 @@
     <loc>https://DSJZS.github.io/tags/c/</loc>
     <lastmod>2025-12-26T14:04:17+08:00</lastmod>
   </url><url>
+    <loc>https://DSJZS.github.io/tags/c&#43;&#43;/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
+  </url><url>
+    <loc>https://DSJZS.github.io/tags/docker/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
+  </url><url>
     <loc>https://DSJZS.github.io/tags/dpkg/</loc>
     <lastmod>2026-02-18T22:42:21+08:00</lastmod>
   </url><url>
@@ -83,6 +95,9 @@
     <loc>https://DSJZS.github.io/tags/food/</loc>
     <lastmod>2026-01-25T22:42:01+08:00</lastmod>
   </url><url>
+    <loc>https://DSJZS.github.io/tags/gcc/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
+  </url><url>
     <loc>https://DSJZS.github.io/tags/gdb/</loc>
     <lastmod>2026-01-12T23:32:39+08:00</lastmod>
   </url><url>
@@ -91,6 +106,9 @@
   </url><url>
     <loc>https://DSJZS.github.io/tags/linux/</loc>
     <lastmod>2025-12-25T15:30:45+08:00</lastmod>
+  </url><url>
+    <loc>https://DSJZS.github.io/tags/makefile/</loc>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/tags/music/</loc>
     <lastmod>2025-12-25T23:17:53+08:00</lastmod>
@@ -108,7 +126,7 @@
     <lastmod>2025-12-25T15:32:26+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/</loc>
-    <lastmod>2026-02-19T00:00:45+08:00</lastmod>
+    <lastmod>2026-03-05T22:59:37+08:00</lastmod>
   </url><url>
     <loc>https://DSJZS.github.io/categories/%E6%95%99%E7%A8%8B/</loc>
     <lastmod>2025-12-25T15:32:26+08:00</lastmod>

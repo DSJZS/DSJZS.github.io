@@ -7,6 +7,205 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux开发学习记录(4)：如何愉快(?)地交叉编译</title>
+        <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+        <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;随着不断地学习（&lt;del&gt;败家&lt;/del&gt;），现在我手里积攒了许多不同体系结构的设备，比如 x86_64、ARM、aarch64 等等，也是花了我不少的钱💸。&lt;/p&gt;
+&lt;p&gt;平常我主要是在自己的 x86_64 电脑上写 C/C++ 代码，然后进行编译和测试，测试没问题之后，便会将程序下载到其它架构的机器上。但C/C++是&amp;quot;一次编写处处编译&amp;quot;的语言，不同架构的机器要对用对应架构的编译工具链来完成编译，如果你用系统自带的 &lt;code&gt;gcc&lt;/code&gt; 编译你的代码，那么大概率编译出来的程序只能在当前架构的机器上运行(对我来说就是x86_64)。&lt;/p&gt;
+&lt;p&gt;为了让编译出来的程序能在其他架构的机器上跑起来，得用对应架构的交叉编译工具链，或者干脆直接把代码丢到对应架构的机器上，它自己编译出来的程序自己大概率能用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;交叉编译，简单说就是在一种架构的机器上编译出给另一种架构用的程序。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这篇文章就用来记录我折腾过程中发现的一些交叉编译方法，目前摸索到的有以下两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#%e4%ba%a4%e5%8f%89%e7%bc%96%e8%af%91%e5%b7%a5%e5%85%b7%e9%93%be&#34; &gt;交叉编译工具链&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#docker%e8%bf%90%e8%a1%8c%e9%9d%9e%e6%9c%ac%e6%9c%ba%e6%9e%b6%e6%9e%84%e7%bc%96%e8%af%91&#34; &gt;Docker运行非本机架构编译&lt;/a&gt;(说实话这种方式严格来讲并非交叉编译的范畴，不过也能实现我们的目标)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;本文的情景设定&#34;&gt;本文的情景设定
+&lt;/h2&gt;&lt;p&gt;假设你有一个朋友叫李华，你和他生活在一个只有 Linux 系统的世界。&lt;/p&gt;
+&lt;p&gt;某天，李华的C语言课程老师要求李华写一个经典的 hello world 程序作为第一节课的课后作业。&lt;/p&gt;
+&lt;p&gt;于是李华&lt;del&gt;照着PTT&lt;/del&gt;创建了 ~/hello.c ，并往其中写入了如下的内容：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nf&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;hello world&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\n&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;并使用 &lt;code&gt;gcc&lt;/code&gt; 进行编译，得到了正确输出 hello world 的可执行文件 hello，如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ gcc --static -o hello hello.c
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ ./hello
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hello world
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;完全没问题！于是李华按照要求，把可执行文件 hello 发到了老师的邮箱(或者QQ、微信等平台)。&lt;/p&gt;
+&lt;p&gt;过了一会儿，李华的老师给他发了一张截图，说有BUG(&lt;del&gt;BIG&lt;/del&gt;)，他点开来一看，发现了如下的报错文本：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~/作业/李华boy$ ./hello 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;可执行文件格式错误: ./hello
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 当然也可能是找不到动态库的报错，反正李华老师的电脑大概率运行不了&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;然后李华就傻了，这是为啥啊？我电脑上运行的好好的。&lt;/p&gt;
+&lt;p&gt;原来老师的电脑是 aarch64 架构的，和李华的 x86_64 架构不同，李华用自带的 &lt;code&gt;gcc&lt;/code&gt; 进行编译后，编译出来的可执行文件格式不对。&lt;/p&gt;
+&lt;p&gt;请你帮助李华正确的完成编译，将格式正确的可执行文件交给他。&lt;/p&gt;
+&lt;h2 id=&#34;交叉编译工具链&#34;&gt;交叉编译工具链
+&lt;/h2&gt;&lt;p&gt;这个是最常见的一种办法，你可以下载对应架构对应的交叉编译工具链，用这个交叉编译工具链里面的&lt;code&gt;gcc&lt;/code&gt;来编译程序。&lt;/p&gt;
+&lt;p&gt;通过&lt;a class=&#34;link&#34; href=&#34;#%e6%9c%ac%e6%96%87%e7%9a%84%e6%83%85%e6%99%af%e8%ae%be%e5%ae%9a&#34; &gt;情景设定&lt;/a&gt;可知李华老师的电脑架构为 aarch64，操作系统为 Linux，那么只要下载 aarch64-linux 交叉编译工具链就行了！&lt;/p&gt;
+&lt;p&gt;对应的工具链可以从 &lt;a class=&#34;link&#34; href=&#34;https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Arm GNU Toolchain Downloads&lt;/a&gt;  网站之中获取，如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/%E5%B7%A5%E5%85%B7%E9%93%BE%E4%B8%8B%E8%BD%BD%E6%BC%94%E7%A4%BA.png&#34;
+	width=&#34;1032&#34;
+	height=&#34;888&#34;
+	srcset=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/%E5%B7%A5%E5%85%B7%E9%93%BE%E4%B8%8B%E8%BD%BD%E6%BC%94%E7%A4%BA_hu_89f52853e3f7b42a.png 480w, https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/%E5%B7%A5%E5%85%B7%E9%93%BE%E4%B8%8B%E8%BD%BD%E6%BC%94%E7%A4%BA_hu_db84dd1f6e2a4e63.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;工具链下载演示&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;116&#34;
+		data-flex-basis=&#34;278px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;下载图中所示的 arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz 解压并放到对应的目录下，具体命令如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ wget https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ tar -Jxvf arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ mkdir -p /usr/local/aarch64
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ sudo mv arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu /usr/local/aarch64/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ &lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;export PATH=$PATH:/usr/local/aarch64/arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu/bin&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; ~/.bashrc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;上面的演示先是用 &lt;code&gt;wget&lt;/code&gt; 下载了压缩包(当然，你可以直接在浏览器中下载)，然后解压并将解压出来的文件全部移动到 &lt;code&gt;/usr/local/aarch64/&lt;/code&gt; ，最后在 bash shell 的初始化文件中给 PATH 环境变量添加对应的路径使Linux能直接找到我们接下来要用到的工具(如果你用的不是 bash ，比如 zsh，请自行改为放到对应的 shell 初始化文件中)。&lt;/p&gt;
+&lt;p&gt;最后你便可以使用交叉编译工具对李华的代码进行编译，得到能在李华老师电脑上运行的程序了，如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ aarch64-none-linux-gnu-gcc --static -o hello_aarch64 hello.c
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这里得到的 hello_aarch64 在李华老师的电脑上便能正常执行，完成任务！&lt;br&gt;
+( 这里使用 &lt;code&gt;--static&lt;/code&gt; 是因为李华和他老师电脑上的 glibc 版本可能不同 )&lt;/p&gt;
+&lt;h2 id=&#34;docker运行非本机架构编译&#34;&gt;Docker运行非本机架构编译
+&lt;/h2&gt;&lt;p&gt;说实话这种方式严格来讲并非交叉编译的范畴，不过也能实现我们的目标。&lt;/p&gt;
+&lt;p&gt;这个方法本质上就是根据对应架构和系统选择相应的Docker镜像创建容器，然后进入到容器之中进行编译。&lt;/p&gt;
+&lt;p&gt;通过&lt;a class=&#34;link&#34; href=&#34;#%e6%9c%ac%e6%96%87%e7%9a%84%e6%83%85%e6%99%af%e8%ae%be%e5%ae%9a&#34; &gt;情景设定&lt;/a&gt;可知李华老师的电脑架构为 aarch64，操作系统为 Linux，假设李华老师的电脑是 Ubuntu 24.04 ，我们按照接下来的方法即可得到我们想要的可执行程序。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ mkdir -p ./dir &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; mv helle.c ./dir/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 安装所有架构的模拟器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ sudo docker run --privileged --rm tonistiigi/binfmt --install all
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 创建一次性容器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ sudo docker run -it --rm --platform linux/arm64 -v ./dir:/app ubuntu:20.04
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 编译&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/# &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; app
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/app# apt update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install build-essential
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/app# gcc -o hello hello.c
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;/app# &lt;span class=&#34;nb&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 此时进入 dir 文件，即可获取对应架构的可执行程序&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~$ &lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; dir
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;~/dir$ ls hello
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hello
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;参考&#34;&gt;参考
+&lt;/h2&gt;&lt;h3 id=&#34;开源项目&#34;&gt;开源项目
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Arm GNU Toolchain Downloads&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://hub.docker.com/r/tonistiigi/binfmt&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;tonistiigi/binfmt&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;自媒体&#34;&gt;自媒体
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.hentioe.dev/posts/docker-run-non-native-architecture-images.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;让 Docker 运行非本机架构的镜像（binfmt_misc）&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1hqRhYnEhA/?spm_id_from=333.1391.0.0&amp;amp;vd_source=9b2ee795ef170df3280fc7223c9f92b8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;交叉编译？狗都不用，还是玩docker容器吧&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile</title>
+        <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
+        <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
+        <description>&lt;h2 id=&#34;参考&#34;&gt;参考
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1Bv4y1J7QT/?share_source=copy_web&amp;amp;vd_source=001d8202e6bdc4ef4666a69dde3b47ff&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;无限十三年/从零开始学Makefile&lt;/a&gt; &amp;amp; &lt;a class=&#34;link&#34; href=&#34;https://gitee.com/unlimited13/cpp/tree/master/Make&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;无限十三年/CPP/Make&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://liaoxuefeng.com/books/makefile/introduction/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;廖雪峰/Makefile教程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.gnu.org/software/make/manual/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GNU Make Manual&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系基础包管理工具</title>
         <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%9F%BA%E7%A1%80%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
         <pubDate>Tue, 17 Feb 2026 14:04:55 +0800</pubDate>
@@ -3578,7 +3777,19 @@ ARP协议内容：&lt;/li&gt;
           &lt;td&gt;&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td&gt;一个关于deb打包的文章&lt;/td&gt;
+          &lt;td&gt;一个关于 deb 打包的文章&lt;/td&gt;
+          &lt;td&gt;2026.02.19&lt;/td&gt;
+          &lt;td&gt;未动笔&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;../p/linux%e5%bc%80%e5%8f%91%e5%ad%a6%e4%b9%a0%e8%ae%b0%e5%bd%953%e5%a6%82%e4%bd%95%e6%84%89%e5%bf%ab%e5%9c%b0%e4%bd%bf%e7%94%a8makefile/&#34; &gt;Linux开发学习记录(3)&lt;/a&gt;&lt;/td&gt;
+          &lt;td&gt;2026.02.19&lt;/td&gt;
+          &lt;td&gt;未完成&lt;/td&gt;
+          &lt;td&gt;感觉给出的参考资料足够完善了，暂时没啥补充的&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;一个关于 wpa_supplicant 的文章&lt;/td&gt;
           &lt;td&gt;2026.02.19&lt;/td&gt;
           &lt;td&gt;未动笔&lt;/td&gt;
           &lt;td&gt;&lt;/td&gt;

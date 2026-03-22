@@ -7,6 +7,344 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想</title>
+        <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
+        <pubDate>Sun, 22 Mar 2026 20:37:11 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。&lt;/p&gt;
+&lt;p&gt;在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。&lt;/p&gt;
+&lt;p&gt;因此，这篇笔记不打算一开始就陷入具体 API 的细节，而是先从整体框架入手，记录 Linux 驱动中几个重要的设计思想，包括驱动与驱动之间的分隔、驱动逻辑与板级硬件描述的分离，以及子系统所体现出的分层思想。在理解了这些内容之后，再回头看具体的驱动接口和代码实现，往往会更容易抓住主线。&lt;/p&gt;
+&lt;h2 id=&#34;linux驱动的分隔与分离思想&#34;&gt;Linux驱动的分隔与分离思想
+&lt;/h2&gt;&lt;h3 id=&#34;驱动与驱动的分隔&#34;&gt;驱动与驱动的分隔
+&lt;/h3&gt;&lt;p&gt;不知道你是否有过这样的经历，在学习STM32时，我写过大量IIC设备的驱动代码。后来转到ESP32等平台时，我发现了一个问题——每个平台底层IIC控制器的驱动通常都不一样。如果按照传统的一对一模型来编写驱动，那么对于同一个设备，我几乎每个平台都要重新写一份驱动。这就导致大量的代码重复，如下所示。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B.png&#34;
+	width=&#34;1530&#34;
+	height=&#34;629&#34;
+	srcset=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_bb14af8ecfa827e4.png 480w, https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_7917bda8bd9560c.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;传统的IIC设备驱动模型&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;243&#34;
+		data-flex-basis=&#34;583px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;对于图中的 MPU6050 而言，初始化时需要写入的寄存器值、算法等，基本上在每个平台上都是一样的，不同的只是底层 IIC 控制器的驱动代码。如果按照一对一的模型来编写，那么前面那些部分就都成了无效的重复代码。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;不过，没有什么是加中间层解决不了的&lt;/strong&gt;，我们可以加一个&amp;quot;接口&amp;quot;层，构成如下的模型。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B.png&#34;
+	width=&#34;1539&#34;
+	height=&#34;676&#34;
+	srcset=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_ab724b687130ed7.png 480w, https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_2ac4418138d2917e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;现代的IIC设备驱动模型&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;227&#34;
+		data-flex-basis=&#34;546px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;现在MPU6050驱动与IIC控制器驱动通过一个统一的IIC接口连接起来了，一份面向IIC接口的MPU6050驱动代码可用于好几个平台，只要提供对应平台面向IIC接口的IIC控制器驱动。
+我们可以说做到了&lt;strong&gt;控制器驱动与设备驱动的分隔&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;驱动与板级硬件描述的分离&#34;&gt;驱动与板级硬件描述的分离
+&lt;/h3&gt;&lt;p&gt;此外，无论是控制器驱动还是设备驱动，都需要用到一些硬件相关信息，例如引脚、中断、时钟、电源以及设备连接关系等。假如 PCB 重新设计，或者同一 SoC 存在多套开发板，导致这些板级连接信息发生变化，那么对于同一个驱动而言，就可能不得不复制出多份几乎相同的代码，仅仅为了适配不同的硬件连接方式。这同样会造成大量重复代码。&lt;/p&gt;
+&lt;p&gt;为了解决这个问题，就像上面的上面&lt;a class=&#34;link&#34; href=&#34;#%e9%a9%b1%e5%8a%a8%e4%b8%8e%e9%a9%b1%e5%8a%a8%e7%9a%84%e5%88%86%e9%9a%94&#34; &gt;驱动与驱动的分隔&lt;/a&gt;一样，Linux 新加了一个&amp;quot;中间层&amp;quot;，将“驱动逻辑”和“板级硬件描述”尽量分离。&lt;strong&gt;驱动负责实现设备的控制逻辑，而设备的地址、中断、GPIO、时钟、电源等资源信息，则通过额外的硬件描述机制提供给内核，再由驱动在 probe 函数中获取和使用&lt;/strong&gt;。Linux 中常见的模型如下图所示。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F.png&#34;
+	width=&#34;1693&#34;
+	height=&#34;810&#34;
+	srcset=&#34;https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F_hu_51acee27b9bd3ce5.png 480w, https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F_hu_1722d1b689b3397e.png 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Linux总线、驱动和设备模式&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;209&#34;
+		data-flex-basis=&#34;501px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;现在驱动逻辑与板级硬件描述实现了解耦。驱动通常通过总线框架和固件描述接口获取设备所需的硬件资源，而不必把这些板级连接信息硬编码在驱动中&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;那么我们如何编写Linux可以读取的硬件信息了？在嵌入式 Linux 场景中(尤其是ARM架构)，常见的硬件描述方式主要有两类：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;使用C语言。使用Linux内核提供的C语言结构体进行描述，并使用对应的接口进行注册。&lt;/li&gt;
+&lt;li&gt;使用设备树。Linux内核在启动时自动读取设备树文件，将其内容自动转为合适的格式并进行注册。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;对于现代 ARM/ARM64 嵌入式 Linux 平台，社区通常更推荐第二种方案，也就是设备树&lt;/strong&gt;，原因主要包括：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;硬件描述本质上更接近数据，而不是程序逻辑，适合用一种统一的格式来描述而非程序来执行。&lt;/li&gt;
+&lt;li&gt;板级连接信息变化时，通常只需修改设备树，&lt;strong&gt;而不必像以前一样既要改动驱动代码，又要重新编译整个内核&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;将繁杂的，有很多代码重复的初始化程序转为少量的设备树文件（设备树可以通过 .dtsi 复用 SoC 级公共描述，减少重复）。&lt;/li&gt;
+&lt;li&gt;将驱动逻辑与硬件描述分开后，代码结构更清晰，也更利于社区维护（提交.c就是程序逻辑，提交.dts就是硬件信息）。诸如Linus之类的大佬更喜欢看程序逻辑，分析算法等等，而不是乱七八糟的硬件描述，这也是Linus等大佬主推第二种方案并严厉批判第一种方案的原因之一。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;小结&#34;&gt;小结
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;#%e9%a9%b1%e5%8a%a8%e4%b8%8e%e9%a9%b1%e5%8a%a8%e7%9a%84%e5%88%86%e9%9a%94&#34; &gt;驱动与驱动的分隔&lt;/a&gt;以及&lt;a class=&#34;link&#34; href=&#34;#%e9%a9%b1%e5%8a%a8%e4%b8%8e%e6%9d%bf%e7%ba%a7%e7%a1%ac%e4%bb%b6%e6%8f%8f%e8%bf%b0%e7%9a%84%e5%88%86%e7%a6%bb&#34; &gt;驱动与板级硬件描述的分离&lt;/a&gt;极大的方便了Linux驱动程序的开发。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;现如今装载Linux系统的平台在上电复位启动后，驱动管理的大概的流程流程可以参考下面的示意图&lt;/strong&gt;。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;35
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;36
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;37
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;38
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;39
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;40
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;41
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;42
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;43
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;44
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;45
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;46
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;47
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;48
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;49
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;50
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;51
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;52
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;53
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;54
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;55
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;56
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;57
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                    |  内核启动，解析设备树   |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                    |  of/platform 初始化   |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                                    +---------+------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;驱动模块初始化 / 内建驱动初始化                    |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            |                                 | 根据设备树节点
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            | platform_driver_register()      | 创建并注册 platform_device
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            v                                 v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;+----------------------+           +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;|  已注册的平台驱动列表   |           |   已注册的平台设备列表   |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;+-----------+----------+           +-----------+----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            |                                  |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            |                                  |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            └-----------------+----------------┘
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 总线进行匹配
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | platform_match()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 常见依据：
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 1. of_match_table/compatible
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 2. id_table
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 3. name
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   |      匹配成功         |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 调用驱动 probe()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   | 驱动获取资源并初始化    |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   | reg/irq/gpio/clock等 |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 创建设备节点/注册子设备/
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              | 初始化中断和硬件
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   |      设备正常工作      |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                   +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                              |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            +-----------------+-----------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            |                                   |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            | 驱动卸载                          | 设备移除/节点失效
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            v                                   v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+           +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  | 注销 platform_driver |           |  注销 platform_device |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------+-----------+           +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             |                                  |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             +-----------------+----------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                               |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                               | 若此前已绑定
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                               | 则调用 driver remove()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                               v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    |   释放资源，关闭硬件    |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                    +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;linux驱动的分层思想&#34;&gt;Linux驱动的分层思想
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;在计算机系统中，分层是一种很常见的设计方法。它的核心好处在于：每一层只需要完成自己的职责，并通过统一接口与上下层交互，而不必关心对方的具体实现。这样可以降低耦合、提高复用性，也更方便维护和扩展&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;Linux 驱动框架也采用了类似的思想。以内核中的输入设备为例，键盘、鼠标、触摸屏、游戏手柄等虽然硬件类型不同、底层总线不同，但它们都属于“输入设备”。为此，Linux 设计了input 子系统，对这些设备进行统一管理。&lt;/p&gt;
+&lt;p&gt;对于下层驱动而言，input 子系统提供了统一的注册和上报接口。驱动只需要告诉内核“我是什么输入设备”和“我产生了什么输入事件”，而不需要自己去处理用户空间如何读取这些数据。对于上层应用而言，也不需要关心底层设备到底是键盘控制器、I2C 触摸屏还是 USB 鼠标，只需要通过统一的输入事件接口读取数据即可。&lt;/p&gt;
+&lt;p&gt;流程图可以完善成这样：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;25
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;26
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;27
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;28
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;29
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;30
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;31
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;32
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;33
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;34
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |      用户应用         |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |   例如按键测试程序     |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             | read / poll / ioctl
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  | /dev/input/eventX    |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |    字符设备接口层      |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |    (如 evdev)        |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             | 统一输入事件接口
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |    input 子系统核心层  |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |   设备注册、事件管理    |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             | input_report_key()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             | input_report_abs()
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |    具体输入设备驱动     |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |  键盘/鼠标/触摸屏驱动   |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------+-----------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             | I2C / SPI / USB /
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             | platform 等总线
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;             v
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  |     具体硬件设备       |
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  +----------------------+
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;总结&#34;&gt;总结
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;总的来说，Linux 驱动框架之所以显得复杂，并不是因为它刻意追求繁琐，而是因为它试图解决一个非常现实的问题：如何让同一套驱动代码尽可能适配更多硬件平台，同时又保持良好的可维护性&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为此，Linux 一方面通过总线和子系统机制，将控制器驱动、设备驱动以及上层应用之间的关系解耦；另一方面又通过设备树等硬件描述机制，将驱动逻辑与板级硬件信息分离开来。&lt;strong&gt;这样做的结果就是，驱动开发不再总是围绕某一块具体开发板展开，而是逐渐走向通用化、模块化和可复用化&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id=&#34;参考文章&#34;&gt;参考文章
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://luyoung0001.github.io/2025/10/22/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%282%29/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Linux 驱动开发学习日记：分离的思想和总线设备驱动模型&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;【正点原子】I.MX6U嵌入式Linux驱动开发指南V2.0.1&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Linux开发学习记录(7)：设备树基础语法</title>
+        <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
+        <pubDate>Sat, 21 Mar 2026 23:07:12 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;学习Linux驱动，掌握使用设备树描述硬件资源的信息是一项基本功，十分重要。&lt;br&gt;
+本人经过近几个月零零散散学习，大量使用以及阅读手册后，有了些许感悟，于是趁热打铁做个总结。&lt;/p&gt;
+&lt;h2 id=&#34;设备树存在的意义&#34;&gt;设备树存在的意义
+&lt;/h2&gt;&lt;h2 id=&#34;设备树节点&#34;&gt;设备树节点
+&lt;/h2&gt;&lt;h2 id=&#34;设备树节点的属性&#34;&gt;设备树节点的属性
+&lt;/h2&gt;</description>
+        </item>
+        <item>
+        <title>Linux开发学习记录(6)：常见的设备接口与总线</title>
+        <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</link>
+        <pubDate>Sat, 21 Mar 2026 23:06:14 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;最近学习Linux驱动，回想起这几年打各种比赛，做各种项目，用到了一堆接口与通信协议，乱七八糟的说多也不多，说少也不少，总之这里做一下总结。&lt;/p&gt;
+&lt;h2 id=&#34;串口&#34;&gt;串口
+&lt;/h2&gt;&lt;h3 id=&#34;物理接口&#34;&gt;物理接口
+&lt;/h3&gt;&lt;h4 id=&#34;rs-232&#34;&gt;RS-232
+&lt;/h4&gt;&lt;h4 id=&#34;rs-485&#34;&gt;RS-485
+&lt;/h4&gt;&lt;h3 id=&#34;通信协议&#34;&gt;通信协议
+&lt;/h3&gt;&lt;h2 id=&#34;iic&#34;&gt;IIC
+&lt;/h2&gt;&lt;h3 id=&#34;物理接口-1&#34;&gt;物理接口
+&lt;/h3&gt;&lt;h3 id=&#34;通信协议-1&#34;&gt;通信协议
+&lt;/h3&gt;&lt;h2 id=&#34;spi&#34;&gt;SPI
+&lt;/h2&gt;&lt;h3 id=&#34;物理接口-2&#34;&gt;物理接口
+&lt;/h3&gt;&lt;h3 id=&#34;通信协议-2&#34;&gt;通信协议
+&lt;/h3&gt;&lt;h2 id=&#34;usb&#34;&gt;USB
+&lt;/h2&gt;&lt;h3 id=&#34;物理接口-3&#34;&gt;物理接口
+&lt;/h3&gt;&lt;h3 id=&#34;通信协议-3&#34;&gt;通信协议
+&lt;/h3&gt;&lt;h2 id=&#34;以太网&#34;&gt;以太网
+&lt;/h2&gt;&lt;h3 id=&#34;物理接口-4&#34;&gt;物理接口
+&lt;/h3&gt;&lt;h3 id=&#34;通信协议-4&#34;&gt;通信协议
+&lt;/h3&gt;&lt;h2 id=&#34;can&#34;&gt;CAN
+&lt;/h2&gt;&lt;h3 id=&#34;物理接口-5&#34;&gt;物理接口
+&lt;/h3&gt;&lt;h3 id=&#34;通信协议-5&#34;&gt;通信协议
+&lt;/h3&gt;</description>
+        </item>
+        <item>
         <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动</title>
         <link>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
         <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
@@ -4718,6 +5056,24 @@ ARP协议内容：&lt;/li&gt;
           &lt;td&gt;2026.02.19&lt;/td&gt;
           &lt;td&gt;未动笔&lt;/td&gt;
           &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;一个关于 ai agent 使用心得的文章&lt;/td&gt;
+          &lt;td&gt;2026.3.18&lt;/td&gt;
+          &lt;td&gt;未动笔&lt;/td&gt;
+          &lt;td&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;../p/linux%e5%bc%80%e5%8f%91%e5%ad%a6%e4%b9%a0%e8%ae%b0%e5%bd%956%e5%b8%b8%e8%a7%81%e7%9a%84%e8%ae%be%e5%a4%87%e6%8e%a5%e5%8f%a3%e4%b8%8e%e6%80%bb%e7%ba%bf/&#34; &gt;Linux开发学习记录(6)&lt;/a&gt;&lt;/td&gt;
+          &lt;td&gt;2026.3.22&lt;/td&gt;
+          &lt;td&gt;未完成&lt;/td&gt;
+          &lt;td&gt;收集信息中&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;a class=&#34;link&#34; href=&#34;../p/linux%e5%bc%80%e5%8f%91%e5%ad%a6%e4%b9%a0%e8%ae%b0%e5%bd%957%e8%ae%be%e5%a4%87%e6%a0%91%e5%9f%ba%e7%a1%80%e8%af%ad%e6%b3%95/&#34; &gt;Linux开发学习记录(7)&lt;/a&gt;&lt;/td&gt;
+          &lt;td&gt;2026.3.22&lt;/td&gt;
+          &lt;td&gt;未完成&lt;/td&gt;
+          &lt;td&gt;总结资料中&lt;/td&gt;
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;

@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。\n在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。\n">
+<title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想</title>
+
+<link rel='canonical' href='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/'>
+
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Linux开发学习记录(8)：Linux 驱动的分离与分层思想">
+<meta property='og:description' content="前言 上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。\n在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/'>
+<meta property='og:site_name' content='永远null的成元'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='C' /><meta property='article:tag' content='Device Tree' /><meta property='article:published_time' content='2026-03-22T20:37:11&#43;08:00'/><meta property='article:modified_time' content='2026-03-22T23:23:09&#43;08:00'/>
+<meta name="twitter:title" content="Linux开发学习记录(8)：Linux 驱动的分离与分层思想">
+<meta name="twitter:description" content="前言 上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。\n在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。\n">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_23a75caddf849e79.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🫵</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">永远null的成元</a></h1>
+            <h2 class="site-description">欢迎来到我的个人博客！</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/5477327'
+                        target="_blank"
+                        title="BiliBili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6z" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/DSJZS'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circuit-changeover"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 12h2" /><path d="M20 7h2" /><path d="M4 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M16 7a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M20 17h2" /><path d="M16 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M7.5 10.5l8.5 -3.5" /></svg>
+                
+                <span>更新日志</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E7%95%99%E8%A8%80%E6%9D%BF/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言板</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories-tags/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tags"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2z" /><path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" /><path d="M7 10h-.01" /></svg>
+                
+                <span>分类&amp;标签</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#linux驱动的分隔与分离思想">Linux驱动的分隔与分离思想</a>
+      <ol>
+        <li><a href="#驱动与驱动的分隔">驱动与驱动的分隔</a></li>
+        <li><a href="#驱动与板级硬件描述的分离">驱动与板级硬件描述的分离</a></li>
+        <li><a href="#小结">小结</a></li>
+      </ol>
+    </li>
+    <li><a href="#linux驱动的分层思想">Linux驱动的分层思想</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%99%E7%A8%8B/" style="background-color: #2a8a9dff; color: #fff;">
+                教程
+            </a>
+        
+            <a href="/categories/%E7%AC%94%E8%AE%B0/" style="background-color: #2a9d2cff; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/">Linux开发学习记录(8)：Linux 驱动的分离与分层思想</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-03-22T20:37:11&#43;08:00'>2026-03-22</time>
+            </div>
+        
+
+        
+        
+        <div class="article-lastmod">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time>
+                    Mar 22, 2026 23:23 &#43;0800
+                </time>
+            </div>
+        <div id="viewCount">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前言">前言
+</h2><p>上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。</p>
+<p>在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。</p>
+<p>因此，这篇笔记不打算一开始就陷入具体 API 的细节，而是先从整体框架入手，记录 Linux 驱动中几个重要的设计思想，包括驱动与驱动之间的分隔、驱动逻辑与板级硬件描述的分离，以及子系统所体现出的分层思想。在理解了这些内容之后，再回头看具体的驱动接口和代码实现，往往会更容易抓住主线。</p>
+<h2 id="linux驱动的分隔与分离思想">Linux驱动的分隔与分离思想
+</h2><h3 id="驱动与驱动的分隔">驱动与驱动的分隔
+</h3><p>不知道你是否有过这样的经历，在学习STM32时，我写过大量IIC设备的驱动代码。后来转到ESP32等平台时，我发现了一个问题——每个平台底层IIC控制器的驱动通常都不一样。如果按照传统的一对一模型来编写驱动，那么对于同一个设备，我几乎每个平台都要重新写一份驱动。这就导致大量的代码重复，如下所示。</p>
+<p><img src="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B.png"
+	width="1530"
+	height="629"
+	srcset="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_bb14af8ecfa827e4.png 480w, /p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_7917bda8bd9560c.png 1024w"
+	loading="lazy"
+	
+		alt="传统的IIC设备驱动模型"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="243"
+		data-flex-basis="583px"
+	
+></p>
+<blockquote>
+<p>对于图中的 MPU6050 而言，初始化时需要写入的寄存器值、算法等，基本上在每个平台上都是一样的，不同的只是底层 IIC 控制器的驱动代码。如果按照一对一的模型来编写，那么前面那些部分就都成了无效的重复代码。</p>
+</blockquote>
+<p><strong>不过，没有什么是加中间层解决不了的</strong>，我们可以加一个&quot;接口&quot;层，构成如下的模型。</p>
+<p><img src="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B.png"
+	width="1539"
+	height="676"
+	srcset="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_ab724b687130ed7.png 480w, /p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B_hu_2ac4418138d2917e.png 1024w"
+	loading="lazy"
+	
+		alt="现代的IIC设备驱动模型"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="227"
+		data-flex-basis="546px"
+	
+></p>
+<blockquote>
+<p>现在MPU6050驱动与IIC控制器驱动通过一个统一的IIC接口连接起来了，一份面向IIC接口的MPU6050驱动代码可用于好几个平台，只要提供对应平台面向IIC接口的IIC控制器驱动。
+我们可以说做到了<strong>控制器驱动与设备驱动的分隔</strong>。</p>
+</blockquote>
+<h3 id="驱动与板级硬件描述的分离">驱动与板级硬件描述的分离
+</h3><p>此外，无论是控制器驱动还是设备驱动，都需要用到一些硬件相关信息，例如引脚、中断、时钟、电源以及设备连接关系等。假如 PCB 重新设计，或者同一 SoC 存在多套开发板，导致这些板级连接信息发生变化，那么对于同一个驱动而言，就可能不得不复制出多份几乎相同的代码，仅仅为了适配不同的硬件连接方式。这同样会造成大量重复代码。</p>
+<p>为了解决这个问题，就像上面的上面<a class="link" href="#%e9%a9%b1%e5%8a%a8%e4%b8%8e%e9%a9%b1%e5%8a%a8%e7%9a%84%e5%88%86%e9%9a%94" >驱动与驱动的分隔</a>一样，Linux 新加了一个&quot;中间层&quot;，将“驱动逻辑”和“板级硬件描述”尽量分离。<strong>驱动负责实现设备的控制逻辑，而设备的地址、中断、GPIO、时钟、电源等资源信息，则通过额外的硬件描述机制提供给内核，再由驱动在 probe 函数中获取和使用</strong>。Linux 中常见的模型如下图所示。</p>
+<p><img src="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F.png"
+	width="1693"
+	height="810"
+	srcset="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F_hu_51acee27b9bd3ce5.png 480w, /p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F_hu_1722d1b689b3397e.png 1024w"
+	loading="lazy"
+	
+		alt="Linux总线、驱动和设备模式"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="209"
+		data-flex-basis="501px"
+	
+></p>
+<blockquote>
+<p><strong>现在驱动逻辑与板级硬件描述实现了解耦。驱动通常通过总线框架和固件描述接口获取设备所需的硬件资源，而不必把这些板级连接信息硬编码在驱动中</strong>。</p>
+<p>那么我们如何编写Linux可以读取的硬件信息了？在嵌入式 Linux 场景中(尤其是ARM架构)，常见的硬件描述方式主要有两类：</p>
+<ol>
+<li>使用C语言。使用Linux内核提供的C语言结构体进行描述，并使用对应的接口进行注册。</li>
+<li>使用设备树。Linux内核在启动时自动读取设备树文件，将其内容自动转为合适的格式并进行注册。</li>
+</ol>
+<p><strong>对于现代 ARM/ARM64 嵌入式 Linux 平台，社区通常更推荐第二种方案，也就是设备树</strong>，原因主要包括：</p>
+<ol>
+<li>硬件描述本质上更接近数据，而不是程序逻辑，适合用一种统一的格式来描述而非程序来执行。</li>
+<li>板级连接信息变化时，通常只需修改设备树，<strong>而不必像以前一样既要改动驱动代码，又要重新编译整个内核</strong>。</li>
+<li>将繁杂的，有很多代码重复的初始化程序转为少量的设备树文件（设备树可以通过 .dtsi 复用 SoC 级公共描述，减少重复）。</li>
+<li>将驱动逻辑与硬件描述分开后，代码结构更清晰，也更利于社区维护（提交.c就是程序逻辑，提交.dts就是硬件信息）。诸如Linus之类的大佬更喜欢看程序逻辑，分析算法等等，而不是乱七八糟的硬件描述，这也是Linus等大佬主推第二种方案并严厉批判第一种方案的原因之一。</li>
+</ol>
+</blockquote>
+<h3 id="小结">小结
+</h3><p><a class="link" href="#%e9%a9%b1%e5%8a%a8%e4%b8%8e%e9%a9%b1%e5%8a%a8%e7%9a%84%e5%88%86%e9%9a%94" >驱动与驱动的分隔</a>以及<a class="link" href="#%e9%a9%b1%e5%8a%a8%e4%b8%8e%e6%9d%bf%e7%ba%a7%e7%a1%ac%e4%bb%b6%e6%8f%8f%e8%bf%b0%e7%9a%84%e5%88%86%e7%a6%bb" >驱动与板级硬件描述的分离</a>极大的方便了Linux驱动程序的开发。</p>
+<p><strong>现如今装载Linux系统的平台在上电复位启动后，驱动管理的大概的流程流程可以参考下面的示意图</strong>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">                                    +----------------------+
+</span></span><span class="line"><span class="cl">                                    |  内核启动，解析设备树   |
+</span></span><span class="line"><span class="cl">                                    |  of/platform 初始化   |
+</span></span><span class="line"><span class="cl">                                    +---------+------------+
+</span></span><span class="line"><span class="cl">驱动模块初始化 / 内建驱动初始化                    |
+</span></span><span class="line"><span class="cl">            |                                 | 根据设备树节点
+</span></span><span class="line"><span class="cl">            | platform_driver_register()      | 创建并注册 platform_device
+</span></span><span class="line"><span class="cl">            v                                 v
+</span></span><span class="line"><span class="cl">+----------------------+           +----------------------+
+</span></span><span class="line"><span class="cl">|  已注册的平台驱动列表   |           |   已注册的平台设备列表   |
+</span></span><span class="line"><span class="cl">+-----------+----------+           +-----------+----------+
+</span></span><span class="line"><span class="cl">            |                                  |
+</span></span><span class="line"><span class="cl">            |                                  |
+</span></span><span class="line"><span class="cl">            └-----------------+----------------┘
+</span></span><span class="line"><span class="cl">                              |
+</span></span><span class="line"><span class="cl">                              |
+</span></span><span class="line"><span class="cl">                              | 总线进行匹配
+</span></span><span class="line"><span class="cl">                              | platform_match()
+</span></span><span class="line"><span class="cl">                              | 常见依据：
+</span></span><span class="line"><span class="cl">                              | 1. of_match_table/compatible
+</span></span><span class="line"><span class="cl">                              | 2. id_table
+</span></span><span class="line"><span class="cl">                              | 3. name
+</span></span><span class="line"><span class="cl">                              v
+</span></span><span class="line"><span class="cl">                   +----------------------+
+</span></span><span class="line"><span class="cl">                   |      匹配成功         |
+</span></span><span class="line"><span class="cl">                   +----------+-----------+
+</span></span><span class="line"><span class="cl">                              |
+</span></span><span class="line"><span class="cl">                              | 调用驱动 probe()
+</span></span><span class="line"><span class="cl">                              v
+</span></span><span class="line"><span class="cl">                   +----------------------+
+</span></span><span class="line"><span class="cl">                   | 驱动获取资源并初始化    |
+</span></span><span class="line"><span class="cl">                   | reg/irq/gpio/clock等 |
+</span></span><span class="line"><span class="cl">                   +----------+-----------+
+</span></span><span class="line"><span class="cl">                              |
+</span></span><span class="line"><span class="cl">                              | 创建设备节点/注册子设备/
+</span></span><span class="line"><span class="cl">                              | 初始化中断和硬件
+</span></span><span class="line"><span class="cl">                              v
+</span></span><span class="line"><span class="cl">                   +----------------------+
+</span></span><span class="line"><span class="cl">                   |      设备正常工作      |
+</span></span><span class="line"><span class="cl">                   +----------+-----------+
+</span></span><span class="line"><span class="cl">                              |
+</span></span><span class="line"><span class="cl">            +-----------------+-----------------+
+</span></span><span class="line"><span class="cl">            |                                   |
+</span></span><span class="line"><span class="cl">            | 驱动卸载                          | 设备移除/节点失效
+</span></span><span class="line"><span class="cl">            v                                   v
+</span></span><span class="line"><span class="cl">  +----------------------+           +----------------------+
+</span></span><span class="line"><span class="cl">  | 注销 platform_driver |           |  注销 platform_device |
+</span></span><span class="line"><span class="cl">  +----------+-----------+           +----------+-----------+
+</span></span><span class="line"><span class="cl">             |                                  |
+</span></span><span class="line"><span class="cl">             +-----------------+----------------+
+</span></span><span class="line"><span class="cl">                               |
+</span></span><span class="line"><span class="cl">                               | 若此前已绑定
+</span></span><span class="line"><span class="cl">                               | 则调用 driver remove()
+</span></span><span class="line"><span class="cl">                               v
+</span></span><span class="line"><span class="cl">                    +----------------------+
+</span></span><span class="line"><span class="cl">                    |   释放资源，关闭硬件    |
+</span></span><span class="line"><span class="cl">                    +----------------------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="linux驱动的分层思想">Linux驱动的分层思想
+</h2><p><strong>在计算机系统中，分层是一种很常见的设计方法。它的核心好处在于：每一层只需要完成自己的职责，并通过统一接口与上下层交互，而不必关心对方的具体实现。这样可以降低耦合、提高复用性，也更方便维护和扩展</strong>。</p>
+<p>Linux 驱动框架也采用了类似的思想。以内核中的输入设备为例，键盘、鼠标、触摸屏、游戏手柄等虽然硬件类型不同、底层总线不同，但它们都属于“输入设备”。为此，Linux 设计了input 子系统，对这些设备进行统一管理。</p>
+<p>对于下层驱动而言，input 子系统提供了统一的注册和上报接口。驱动只需要告诉内核“我是什么输入设备”和“我产生了什么输入事件”，而不需要自己去处理用户空间如何读取这些数据。对于上层应用而言，也不需要关心底层设备到底是键盘控制器、I2C 触摸屏还是 USB 鼠标，只需要通过统一的输入事件接口读取数据即可。</p>
+<p>流程图可以完善成这样：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl">  +----------------------+
+</span></span><span class="line"><span class="cl">  |      用户应用         |
+</span></span><span class="line"><span class="cl">  |   例如按键测试程序     |
+</span></span><span class="line"><span class="cl">  +----------+-----------+
+</span></span><span class="line"><span class="cl">             |
+</span></span><span class="line"><span class="cl">             | read / poll / ioctl
+</span></span><span class="line"><span class="cl">             v
+</span></span><span class="line"><span class="cl">  +----------------------+
+</span></span><span class="line"><span class="cl">  | /dev/input/eventX    |
+</span></span><span class="line"><span class="cl">  |    字符设备接口层      |
+</span></span><span class="line"><span class="cl">  |    (如 evdev)        |
+</span></span><span class="line"><span class="cl">  +----------+-----------+
+</span></span><span class="line"><span class="cl">             |
+</span></span><span class="line"><span class="cl">             | 统一输入事件接口
+</span></span><span class="line"><span class="cl">             v
+</span></span><span class="line"><span class="cl">  +----------------------+
+</span></span><span class="line"><span class="cl">  |    input 子系统核心层  |
+</span></span><span class="line"><span class="cl">  |   设备注册、事件管理    |
+</span></span><span class="line"><span class="cl">  +----------+-----------+
+</span></span><span class="line"><span class="cl">             |
+</span></span><span class="line"><span class="cl">             | input_report_key()
+</span></span><span class="line"><span class="cl">             | input_report_abs()
+</span></span><span class="line"><span class="cl">             v
+</span></span><span class="line"><span class="cl">  +----------------------+
+</span></span><span class="line"><span class="cl">  |    具体输入设备驱动     |
+</span></span><span class="line"><span class="cl">  |  键盘/鼠标/触摸屏驱动   |
+</span></span><span class="line"><span class="cl">  +----------+-----------+
+</span></span><span class="line"><span class="cl">             |
+</span></span><span class="line"><span class="cl">             | I2C / SPI / USB /
+</span></span><span class="line"><span class="cl">             | platform 等总线
+</span></span><span class="line"><span class="cl">             v
+</span></span><span class="line"><span class="cl">  +----------------------+
+</span></span><span class="line"><span class="cl">  |     具体硬件设备       |
+</span></span><span class="line"><span class="cl">  +----------------------+
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="总结">总结
+</h2><p><strong>总的来说，Linux 驱动框架之所以显得复杂，并不是因为它刻意追求繁琐，而是因为它试图解决一个非常现实的问题：如何让同一套驱动代码尽可能适配更多硬件平台，同时又保持良好的可维护性</strong>。</p>
+<p>为此，Linux 一方面通过总线和子系统机制，将控制器驱动、设备驱动以及上层应用之间的关系解耦；另一方面又通过设备树等硬件描述机制，将驱动逻辑与板级硬件信息分离开来。<strong>这样做的结果就是，驱动开发不再总是围绕某一块具体开发板展开，而是逐渐走向通用化、模块化和可复用化</strong>。</p>
+<h2 id="参考文章">参考文章
+</h2><ul>
+<li><a class="link" href="https://luyoung0001.github.io/2025/10/22/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%282%29/"  target="_blank" rel="noopener"
+    >Linux 驱动开发学习日记：分离的思想和总线设备驱动模型</a></li>
+<li>【正点原子】I.MX6U嵌入式Linux驱动开发指南V2.0.1</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+            <a href="/tags/c/">C</a>
+        
+            <a href="/tags/device-tree/">Device Tree</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Mar 22, 2026 23:23 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(7)：设备树基础语法</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(5)：I/O多路复用技术与信号驱动</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(4)：如何愉快(?)地交叉编译</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(3)：如何愉快(?)地使用Makefile</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(1)：如何愉快(?)地Debug程序</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="DSJZS/DSJZS.github.io"
+    data-repo-id="R_kgDOQuMMVg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQuMMVs4C0OeT"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('preferred_color_scheme');
+            } else {
+                setGiscusTheme('preferred_color_scheme');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 永远null的成元
+    </section>
+    
+    <section class="powerby">
+        
+            不可能被发现的一段文字 :-) <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.33.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+    
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+    const musicDir = "https://DSJZS.github.io/" + 'music/';
+    const songs = [
+        '乖乖报到-MC 张天赋',
+        'Time (ATLUS Kitajoh Remix)-藤田真由美',
+        'Cathy-当山瞳',
+        'Fabulous-BLU SWING',
+        '光影 HIKAGE(feat. 初音ミク)-H.K.君',
+        '白夜狐步舞-丢莱卡WastedLaika',
+        'ミッドナイト・ユア・ステップ (feat. 初音ミク)-ベール_Veil',
+        '视神(feat.初音ミク)-翌川屿芊',
+        '弥留之际(feat.洛天依)-的确如此如确的',
+        '恋-星野源',
+        'Twisted Getaway-Neon Nox',
+        '南京夜无电波讯号(feat.洛天依)-花水',
+        'Running In The Night-FM 84',
+        'Zombies on Your Lawn-Laura Shigihara',
+    ];
+    let audios = [];
+    songs.forEach((item) => {
+        const songInfo = item.split('-');
+        audios.push({
+            name: songInfo[0],
+            artist: songInfo[1],
+            url: musicDir + item + '/song.mp3',
+            cover: musicDir + item + '/cover.jpg',
+            lrc: musicDir + item + '/lyric.lrc',
+        })
+    })
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        lrcType: 3,
+        audio: audios,
+        
+        fixed: true
+    });
+
+    window.onbeforeunload = () => {
+        
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.audio.paused,
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    
+
+    window.onload = () => {
+        
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        
+        ap.list.switch(playInfo.index);
+        
+        setTimeout(() => {
+            
+            ap.seek(playInfo.currentTime);
+            
+            if (!playInfo.paused) {
+                
+                ap.play()
+            }
+        }, 500);
+    };
+
+</script>
+
+
+
+<style>
+    #backTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        z-index: 99;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-image: url(https://DSJZS.github.io/icons/backTop.svg);
+    }
+</style>
+
+<script>
+    
+
+    function initScrollTop() {
+        let rightSideBar = document.querySelector(".right-sidebar");
+        if (!rightSideBar) {
+            return;
+        }
+        
+        let btn = document.createElement("div");
+        btn.id = "backTopBtn";
+        btn.onclick = backToTop
+        rightSideBar.appendChild(btn)
+        
+        window.onscroll = function() {
+            
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    }
+
+    
+
+    function backToTop(){
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    initScrollTop();
+</script>
+
+<style>
+    .highlight {
+         
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .code-show {
+        max-height: none !important;
+    }
+
+    .code-more-box {
+        width: 100%;
+        padding-top: 78px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .code-more-btn {
+        display: block;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+    .code-more-img {
+        cursor: pointer !important;
+        display: block;
+        margin: auto;
+        width: 22px;
+        height: 16px;
+    }
+</style>
+
+<script>
+  function initCodeMoreBox() {
+    let codeBlocks = document.querySelectorAll(".highlight");
+    if (!codeBlocks) {
+      return;
+    }
+    codeBlocks.forEach(codeBlock => {
+      
+      if (codeBlock.scrollHeight <= codeBlock.clientHeight) {
+        return;
+      }
+      
+      
+      let codeMoreBox = document.createElement('div');
+      codeMoreBox.classList.add('code-more-box');
+      
+      let codeMoreBtn = document.createElement('span');
+      codeMoreBtn.classList.add('code-more-btn');
+      codeMoreBtn.addEventListener('click', () => {
+        codeBlock.classList.add('code-show');
+        codeMoreBox.style.display = 'none';
+        
+        window.dispatchEvent(new Event('resize'))
+      })
+      
+      let img = document.createElement('img');
+      img.classList.add('code-more-img');
+      img.src = "https://DSJZS.github.io/icons/codeMore.png"
+      
+      codeMoreBtn.appendChild(img);
+      codeMoreBox.appendChild(codeMoreBtn);
+      codeBlock.appendChild(codeMoreBox)
+    })
+  }
+
+  initCodeMoreBox();
+</script>
+
+
+    </body>
+</html>

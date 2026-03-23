@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="简介 第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。\n适合了解了ARP协议的人观看🤓。\nARP协议简介 功能介绍 ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，可以通过某个主机的IPv4地址找到它的MAC地址）。\n之所以强调IPv4地址，是因为ARP仅用于IPv4，IPv6使用邻居发现协议。\n与之相反的协议为RARP，不过其几乎已经不再被使用。\n">
-<title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。\n">
+<title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</title>
 
-<link rel='canonical' href='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/'>
+<link rel='canonical' href='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/'>
 
-<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Wi-Fi网络学习记录(1)：抓包ARP协议">
-<meta property='og:description' content="简介 第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。\n适合了解了ARP协议的人观看🤓。\nARP协议简介 功能介绍 ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，可以通过某个主机的IPv4地址找到它的MAC地址）。\n之所以强调IPv4地址，是因为ARP仅用于IPv4，IPv6使用邻居发现协议。\n与之相反的协议为RARP，不过其几乎已经不再被使用。\n">
-<meta property='og:url' content='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/'>
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植">
+<meta property='og:description' content="前言 学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/'>
 <meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:tag' content='Wireshark' /><meta property='article:published_time' content='2026-01-05T18:16:41&#43;08:00'/><meta property='article:modified_time' content='2026-01-05T21:42:25&#43;08:00'/>
-<meta name="twitter:title" content="Wi-Fi网络学习记录(1)：抓包ARP协议">
-<meta name="twitter:description" content="简介 第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。\n适合了解了ARP协议的人观看🤓。\nARP协议简介 功能介绍 ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，可以通过某个主机的IPv4地址找到它的MAC地址）。\n之所以强调IPv4地址，是因为ARP仅用于IPv4，IPv6使用邻居发现协议。\n与之相反的协议为RARP，不过其几乎已经不再被使用。\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Wi-Fi' /><meta property='article:published_time' content='2026-03-23T18:24:06&#43;08:00'/><meta property='article:modified_time' content='2026-03-23T20:01:43&#43;08:00'/>
+<meta name="twitter:title" content="Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植">
+<meta name="twitter:description" content="前言 学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -285,30 +285,11 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#arp协议简介">ARP协议简介</a>
-      <ol>
-        <li><a href="#功能介绍">功能介绍</a></li>
-        <li><a href="#arp帧格式">ARP帧格式</a></li>
-        <li><a href="#arp缓存表">ARP缓存表</a></li>
-      </ol>
-    </li>
-    <li><a href="#wireshark抓包流程">Wireshark抓包流程</a>
-      <ol>
-        <li><a href="#准备网络环境">准备网络环境</a></li>
-        <li><a href="#检查arp缓存表">检查ARP缓存表</a></li>
-        <li><a href="#查询另一台设备的ipv4地址">查询另一台设备的IPv4地址</a></li>
-        <li><a href="#打开wireshark并抓包">打开Wireshark并抓包</a></li>
-      </ol>
-    </li>
-    <li><a href="#wireshark抓包内容解析">Wireshark抓包内容解析</a>
-      <ol>
-        <li><a href="#第一个arp帧">第一个ARP帧</a></li>
-        <li><a href="#第二个arp帧">第二个ARP帧</a></li>
-        <li><a href="#第三个和第四个arp帧">第三个和第四个ARP帧</a></li>
-      </ol>
-    </li>
-    <li><a href="#结语">结语</a></li>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#移植-iw">移植 iw</a></li>
+    <li><a href="#移植-wpa_supplicant">移植 wpa_supplicant</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考文件">参考文件</a></li>
   </ol>
 </nav>
         </div>
@@ -340,7 +321,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/">Wi-Fi网络学习记录(1)：抓包ARP协议</a>
+            <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</a>
         </h2>
     
         
@@ -362,7 +343,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published" datetime='2026-01-05T18:16:41&#43;08:00'>2026-01-05</time>
+                <time class="article-time--published" datetime='2026-03-23T18:24:06&#43;08:00'>2026-03-23</time>
             </div>
         
 
@@ -378,7 +359,7 @@
 
 
                 <time>
-                    Jan 05, 2026 21:42 &#43;0800
+                    Mar 23, 2026 20:01 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -399,148 +380,264 @@
     <section class="article-content">
     
     
-    <h2 id="简介">简介
-</h2><p>第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。<br>
-适合了解了ARP协议的人观看🤓。</p>
-<h2 id="arp协议简介">ARP协议简介
-</h2><h3 id="功能介绍">功能介绍
-</h3><p>ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，<strong>可以通过某个主机的IPv4地址找到它的MAC地址</strong>）。<br>
-之所以强调IPv4地址，是因为<strong>ARP仅用于IPv4</strong>，IPv6使用邻居发现协议。<br>
-与之相反的协议为RARP，不过其几乎已经不再被使用。</p>
-<h3 id="arp帧格式">ARP帧格式
-</h3><p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F.png"
-	width="1979"
-	height="579"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F_hu_5cf419b540ef4d24.png 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F_hu_23f19d46c717f146.png 1024w"
-	loading="lazy"
-	
-		alt="ARP帧(Ethernet II头部)"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="341"
-		data-flex-basis="820px"
-	
-></p>
-<blockquote>
-<p>本文的实验是直接监听网卡接口，收到的是Ethernet II帧，故这里给出对应的格式。</p>
-</blockquote>
-<p>ARP帧字段解释：</p>
+    <h2 id="前言">前言
+</h2><p>学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。</p>
+<p><strong>值的注意的是，阅读下文之前，建议先配置好Linux网络驱动</strong>。如果你是按照正点原子的开发板与USB网卡进行学习的，可以参考下面两个文章：</p>
 <ul>
-<li>硬件类型：硬件地址(MAC地址)的类型。对于以太网，这里为1。</li>
-<li>协议类型：映射的协议协议地址类型。对于IPv4地址，此字段为0x0800。</li>
-<li>硬件大小：硬件地址的字节数。对于MAC地址，应该为6。</li>
-<li>协议大小：协议地址的字节数。对于IPv4地址，应该为4.</li>
-<li>Op：ARP请求(1)、ARP应答(2)、RARP请求(3)、RARP应答(4)。</li>
-<li>地址字段：用于存放发送方与接收方的硬件地址与协议地址。</li>
+<li><a class="link" href="https://akichen891.github.io/2025/04/17/LinuxWifi%E9%A9%B1%E5%8A%A8%E8%B0%83%E8%AF%95/"  target="_blank" rel="noopener"
+    >Linux RTL8188EUS Wifi驱动调试</a></li>
+<li><a class="link" href="https://blog.csdn.net/m0_61320035/article/details/140298343?spm=1001.2014.3001.5506"  target="_blank" rel="noopener"
+    >正点原子I.MAX6ULL kernel6.6移植遇到的问题</a></li>
 </ul>
-<h3 id="arp缓存表">ARP缓存表
-</h3><p>这个表格维护了每个接口从IP地址到MAC地址的最新映射(每个IPv4地址对应的MAC地址)。<br>
-每个条目由ARP协议动态学习或者手工输入得到。<br>
-在 Windows/Linux 中，可以通过 <code>arp -a</code> 指令查看。</p>
-<h2 id="wireshark抓包流程">Wireshark抓包流程
-</h2><h3 id="准备网络环境">准备网络环境
-</h3><p>创建一个局域网，并准备包括电脑网卡接口在内的两个无线网络接口(平板、手机或者另一个电脑网卡接口等等)。确保它们都能连接上局域网。</p>
-<h3 id="检查arp缓存表">检查ARP缓存表
-</h3><p>使用 <code>arp -a</code> 指令查询当前设备的 <strong>ARP缓存表</strong>，<strong>确保另一台设备不在这个表中</strong>。 <br>
-如下所示，除了网关以外没有任何接口的记录。</p>
+<h2 id="移植-iw">移植 iw
+</h2><p>iw依赖libnl库，因此我们要先移植 libnl。<strong>这里建议移植较为新的 libnl ，避免后面编译 iw 时出现版本不兼容的问题</strong>。</p>
+<p>具体的安装方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 从libnl仓库拉取源码并转到3.7版本的分支</span>
+</span></span><span class="line"><span class="cl">~$ git clone https://github.com/thom311/libnl
+</span></span><span class="line"><span class="cl">~$ mv libnl libnl-3.7
+</span></span><span class="line"><span class="cl">~$ mkdir libnl
+</span></span><span class="line"><span class="cl">~$ <span class="nb">cd</span> libnl-3.7
+</span></span><span class="line"><span class="cl">~/libnl-3.7$ git checkout -b develop libnl3_7_0
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 编译 libnl</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里的交叉编译工具链需要根据对应的平台自行更改</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 我对应的平台为 aarch64</span>
+</span></span><span class="line"><span class="cl">~/libnl-3.7$ ./autogen.sh
+</span></span><span class="line"><span class="cl">~/libnl-3.7$ ./configure <span class="se">\ </span>                                                                                      
+</span></span><span class="line"><span class="cl">    --host<span class="o">=</span>arm-none-linux-gnueabihf <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --prefix<span class="o">=</span><span class="nv">$HOME</span>/libnl <span class="se">\
+</span></span></span><span class="line"><span class="cl">    <span class="nv">CC</span><span class="o">=</span>arm-none-linux-gnueabihf-gcc
+</span></span><span class="line"><span class="cl">~/libnl-3.7$ make -j<span class="k">$(</span>nproc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">~/libnl-3.7$ make install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 复制编译出来的库到根文件系统下的 /usr/lib/</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里也是根据实际情况修改路径</span>
+</span></span><span class="line"><span class="cl">~/libnl-3.7$ <span class="nb">cd</span> ~/libnl/
+</span></span><span class="line"><span class="cl">~/libnl$ cp lib/* ../linux/nfs/rootfs/usr/lib/ -rf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后开始编译 iw。</p>
+<p>具体的安装方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~/libnl$ <span class="nb">cd</span> ~
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取 iw-6.7 的tarball，然后解压获取源码</span>
+</span></span><span class="line"><span class="cl">~$ wget <span class="s1">&#39;https://git.kernel.org/pub/scm/linux/kernel/git/jberg/iw.git/snapshot/iw-6.7.tar.gz&#39;</span>
+</span></span><span class="line"><span class="cl">~$ tar -vxf iw-6.7.tar.gz
+</span></span><span class="line"><span class="cl">~$ <span class="nb">cd</span> iw-6.7
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始编译</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里全局环境变量中的路径也要根据实际情况修改</span>
+</span></span><span class="line"><span class="cl">~/iw-6.7$ <span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/libnl/lib/pkgconfig:<span class="nv">$PKG_CONFIG_PATH</span>
+</span></span><span class="line"><span class="cl">~/iw-6.7$ make <span class="nv">CC</span><span class="o">=</span>arm-none-linux-gnueabihf-gcc -j<span class="k">$(</span>nproc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 如果你选择的libnl和iw版本与我的不一样，编译过程可能会中产生如下的错误</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># implicit declaration of function ‘nla_put_s32’</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这个是一般是你的 libnl 版本过低了，建议安装较新的 libnl</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 复制编译出的 iw 工具到根文件系统下的 /usr/bin/</span>
+</span></span><span class="line"><span class="cl">~/iw-6.7$ cp iw ../linux/nfs/rootfs/usr/bin/
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后可以使用 <code>ip link set wlan0 up</code> 或者 <code>ifconfig wlan0 up</code> 开启无线接口，然后执行 <code>iw list</code> 、 <code>iw dev</code> 与 <code>iw dev wlan0 scan</code> 等命令进行测试。</p>
+<h2 id="移植-wpa_supplicant">移植 wpa_supplicant
+</h2><p>wpa_supplicant 依赖于 openssl，因此需要先移植 openssl。</p>
+<p>具体的安装方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 获取 openssl-1.1.1t 的tarball，然后解压获取源码</span>
+</span></span><span class="line"><span class="cl">~$ wget <span class="s1">&#39;https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1t/openssl-1.1.1t.tar.gz&#39;</span>
+</span></span><span class="line"><span class="cl">~$ mkdir openssl
+</span></span><span class="line"><span class="cl">~$ <span class="nb">cd</span> openssl-1.1.1t
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 开始编译</span>
+</span></span><span class="line"><span class="cl">~/openssl-1.1.1t$ ./Configure linux-armv4 shared no-asm <span class="se">\
+</span></span></span><span class="line"><span class="cl">    --prefix<span class="o">=</span><span class="nv">$HOME</span>/openssl <span class="se">\
+</span></span></span><span class="line"><span class="cl">    <span class="nv">CROSS_COMPILE</span><span class="o">=</span>arm-none-linux-gnueabihf-
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">~/openssl-1.1.1t$ make -j<span class="k">$(</span>nproc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">~/openssl-1.1.1t$ install
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 复制编译出来的库到根文件系统下的 /usr/lib/</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里也是根据实际情况修改路径</span>
+</span></span><span class="line"><span class="cl">~/openssl-1.1.1t$ <span class="nb">cd</span> ../openssl/lib
+</span></span><span class="line"><span class="cl">~/openssl$ cp libcrypto.so* ../linux/nfs/rootfs/usr/lib/ -af
+</span></span><span class="line"><span class="cl">~/openssl$ cp libssl.so*  ../linux/nfs/rootfs/usr/lib/ -af
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后编译 wpa_supplicant。</p>
+<p>具体的安装方法如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~/openssl$ <span class="nb">cd</span> ~
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 获取 wpa_supplicant-2.10 的tarball，然后解压获取源码</span>
+</span></span><span class="line"><span class="cl">~$ wget <span class="s1">&#39;https://w1.fi/releases/wpa_supplicant-2.10.tar.gz&#39;</span>
+</span></span><span class="line"><span class="cl">~$ tar -vxf wpa_supplicant-2.10.tar.gz
+</span></span><span class="line"><span class="cl">~$ mkdir wpa_supplicant
+</span></span><span class="line"><span class="cl">~$ <span class="nb">cd</span> wpa_supplicant-2.10/wpa_supplicant
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 配置 .config</span>
+</span></span><span class="line"><span class="cl">~/wpa_supplicant-2.10/wpa_supplicant$ cp defconfig .config
+</span></span><span class="line"><span class="cl">~/wpa_supplicant-2.10/wpa_supplicant$ vim .config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>vim 需要在 .config 中添加与修改如下的部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-txt" data-lang="txt"><span class="line"><span class="cl"># 配置交叉编译工具
+</span></span><span class="line"><span class="cl">CC=arm-none-linux-gnueabihf-gcc                                                                                                               
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"># 配置 openssl 的路径
+</span></span><span class="line"><span class="cl">CFLAGS += -I$(HOME)/openssl/include
+</span></span><span class="line"><span class="cl">LIBS += -L$(HOME)/openssl/lib -lssl -lcrypto
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"># 配置 libnl 的路径
+</span></span><span class="line"><span class="cl">CFLAGS += -I$(HOME)/libnl/include/libnl3
+</span></span><span class="line"><span class="cl">LIBS += -L$(HOME)/libnl/lib
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># 注释掉下面两行
+</span></span><span class="line"><span class="cl">CONFIG_CTRL_IFACE_DBUS_NEW=y
+</span></span><span class="line"><span class="cl">CONFIG_CTRL_IFACE_DBUS_INTRO=y
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>配置完成后执行如下的命令即可：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">❯ arp -a  
-</span></span><span class="line"><span class="cl">&gt;_gateway (192.168.102.158) 位于 66:ce:bd:27:59:a9 [ether] 在 wlo1
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 开始编译</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里全局环境变量中的路径也要根据实际情况修改</span>
+</span></span><span class="line"><span class="cl">~/wpa_supplicant-2.10/wpa_supplicant$ <span class="nb">export</span> <span class="nv">PKG_CONFIG_PATH</span><span class="o">=</span><span class="nv">$HOME</span>/libnl/lib/pkgconfig:<span class="nv">$PKG_CONFIG_PATH</span>
+</span></span><span class="line"><span class="cl">~/wpa_supplicant-2.10/wpa_supplicant$ make -j<span class="k">$(</span>nproc<span class="k">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 复制编译出的 wpa_cli 与 wpa_supplicant 工具到根文件系统下的 /usr/bin/</span>
+</span></span><span class="line"><span class="cl">~/wpa_supplicant-2.10/wpa_supplicant$ cp wpa_cli wpa_supplicant ../linux/nfs/rootfs/usr/bin/
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>如果有了另一台设备的记录(比如重复实验等情况)，可以用 <code>sudo arp -d &lt;IPv4地址&gt;</code>进行删除。</p>
-<h3 id="查询另一台设备的ipv4地址">查询另一台设备的IPv4地址
-</h3><p>这个操作可以通过设备的<strong>设置</strong>软件或者AP设备(比如你的路由器)查询。<br>
-<strong>本文中另一台设备的IPv4地址为 192.168.102.112</strong>，下文不在复述。</p>
-<h3 id="打开wireshark并抓包">打开Wireshark并抓包
-</h3><ol>
-<li>打开Wireshark，并在过滤器中输入<code>arp</code>。</li>
-<li>打开虚拟终端软件，输入 <code>ping 192.168.102.112</code><br>
-(这里的IP地址由前面的<a class="link" href="#%e6%9f%a5%e8%af%a2%e5%8f%a6%e4%b8%80%e5%8f%b0%e8%ae%be%e5%a4%87%e7%9a%84ipv4%e5%9c%b0%e5%9d%80" >查询步骤</a>得到).</li>
-</ol>
-<p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85.jpg"
-	width="2495"
-	height="1364"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85_hu_9eacbd8311746ab9.jpg 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85_hu_5aeeb8b1ceaa7ec8.jpg 1024w"
-	loading="lazy"
-	
-		alt="Wireshark抓到的ARP帧"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="182"
-		data-flex-basis="439px"
-	
-></p>
-<p>最终应该会得到1对或者2对ARP帧。如上图所示(可以放大观看)。</p>
-<h2 id="wireshark抓包内容解析">Wireshark抓包内容解析
-</h2><p>上一个步骤一共得到了四个ARP帧，这里分别做解释。</p>
-<h3 id="第一个arp帧">第一个ARP帧
-</h3><p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7.png"
-	width="1894"
-	height="1006"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7_hu_12e96aeedd79b720.png 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7_hu_1ebcac7bfd7d8cc5.png 1024w"
-	loading="lazy"
-	
-		alt="电脑网卡接口在局域网中广播的ARP请求"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="188"
-		data-flex-basis="451px"
-	
-></p>
-<p>当执行<code>ping 192.168.102.112</code>时。电脑的<a class="link" href="#arp%e7%bc%93%e5%ad%98%e8%a1%a8" ><strong>ARP缓存表</strong></a>中并没有对应的条目，<br>
-因此为了得到 192.168.102.112 与MAC地址的映射关系，协议栈软件底层自动发送了一个ARP请求帧。
-Ethernet II头部中：</p>
-<ul>
-<li>目标地址：全1，表示广播，表示发往同一局域网中的所有接口。</li>
-<li>源地址：为电脑网卡接口的MAC地址。</li>
-<li>类型：为0x0806，表明这是一个ARP协议帧，载荷交由ARP协议软件处理。
-ARP协议内容：</li>
-<li>前四个字段如<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。</li>
-<li>Op：<strong>为1，表示这个帧为ARP请求帧，希望得到目标接口的应答</strong>。</li>
-<li>后面的地址字段也和<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。<br>
-<strong>值得注意的是目的硬件地址为全0，因为当前还不知道</strong>。</li>
+</div><p>最后可以使用 <code>wpa_supplicant -v</code>等命令进行测试。</p>
+<h2 id="总结">总结
+</h2><p>总而言之，还是那些老套路，先拉取代码，然后配置.config，最后 make 编译，没有什么很难的地方。成功安装上面提到的工具之后，便能愉快的网上冲浪了。</p>
+<h2 id="参考文件">参考文件
+</h2><ul>
+<li><a class="link" href="https://www.cnblogs.com/polariszg/p/18640706"  target="_blank" rel="noopener"
+    >编译iw工具</a></li>
+<li><a class="link" href="https://www.cnblogs.com/wanglouxiaozi/p/12828823.html"  target="_blank" rel="noopener"
+    >linux下WIFI模块使用：IW工具交叉编译以及配置</a></li>
+<li><a class="link" href="https://www.cnblogs.com/wanglouxiaozi/p/12829235.html"  target="_blank" rel="noopener"
+    >linux下WIFI模块使用：wpa_supplicant工具交叉编译以及配置</a></li>
+<li><a class="link" href="https://blog.csdn.net/weixin_45783574/article/details/145810790"  target="_blank" rel="noopener"
+    >WiFi交叉编译全流程（wpa_supplicant及hostapd）</a></li>
+<li><a class="link" href="https://dsjzs.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/"  target="_blank" rel="noopener"
+    >Linux开发学习记录(4)：如何愉快(?)地交叉编译</a></li>
+<li><a class="link" href="https://akichen891.github.io/2025/04/17/LinuxWifi%E9%A9%B1%E5%8A%A8%E8%B0%83%E8%AF%95/"  target="_blank" rel="noopener"
+    >Linux RTL8188EUS Wifi驱动调试</a></li>
+<li><a class="link" href="https://blog.csdn.net/m0_61320035/article/details/140298343?spm=1001.2014.3001.5506"  target="_blank" rel="noopener"
+    >正点原子I.MAX6ULL kernel6.6移植遇到的问题</a></li>
 </ul>
-<h3 id="第二个arp帧">第二个ARP帧
-</h3><p><img src="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7.png"
-	width="1894"
-	height="1006"
-	srcset="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7_hu_bf3a5f1e239121d8.png 480w, /p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7_hu_4c337d147599c218.png 1024w"
-	loading="lazy"
-	
-		alt="目标设备单播发往电脑网卡接口的ARP请求"
-	
-	
-		class="gallery-image" 
-		data-flex-grow="188"
-		data-flex-basis="451px"
-	
-></p>
-<p>IPv4地址为 192.168.102.112 的接口收到了电脑网卡接口广播的ARP请求，<strong>单播</strong>进行应答。<br>
-Ethernet II头部中的：</p>
-<ul>
-<li>目标地址：为ARP请求发送方的MAC地址。</li>
-<li>源地址：目标接口的MAC地址。</li>
-<li>类型：为0x0806，表明这是一个ARP协议帧，载荷交由ARP协议软件处理。
-ARP协议内容：</li>
-<li>前四个字段如<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。</li>
-<li>Op：<strong>为2，表示这个帧为ARP应答帧，是对ARP请求的应答</strong>。</li>
-<li>后面的地址字段也和<a class="link" href="#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f" >ARP帧格式</a>中介绍的一样。<br>
-电脑网卡接口收到ARP应答帧后会将其解析并作为一个动态条目加入<a class="link" href="#arp%e7%bc%93%e5%ad%98%e8%a1%a8" ><strong>ARP缓存表</strong></a></li>
-</ul>
-<h3 id="第三个和第四个arp帧">第三个和第四个ARP帧
-</h3><p>一般而言，目标设备收到ARP请求时，除了发送ARP应答，还会在<a class="link" href="#arp%e7%bc%93%e5%ad%98%e8%a1%a8" ><strong>ARP缓存表</strong></a>中添加有关发送方的映射条目。这是一个很常见的优化举措，但这里目标设备并没有这么做。<br>
-当它被电脑 ping 时，它为了回复同样也需要知晓电脑网卡接口的IPv4地址与MAC地址的映射关系，但是它发送ARP应答的时候并没有记录，因此它这里也需要往电脑发送ARP请求，等待电脑网卡接口的ARP应答，这就是第三个和第四个ARP帧的由来，可以参考前两个ARP帧示例。</p>
-<h2 id="结语">结语
-</h2><p>ARP协议算是比较简单的协议了，Wireshark抓包还是比较容易的，快去亲手试试吧🫵。</p>
 
 </section>
 
@@ -552,8 +649,6 @@ ARP协议内容：</li>
             <a href="/tags/linux/">Linux</a>
         
             <a href="/tags/wi-fi/">Wi-Fi</a>
-        
-            <a href="/tags/wireshark/">Wireshark</a>
         
     </section>
 
@@ -580,7 +675,7 @@ ARP协议内容：</li>
 
 
         <span>
-            最后更新于 Jan 05, 2026 21:42 &#43;0800
+            最后更新于 Mar 23, 2026 20:01 &#43;0800
         </span>
     </section></footer>
 
@@ -599,12 +694,12 @@ ARP协议内容：</li>
             
                 
 <article class="">
-    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/">
+    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</h2>
+            <h2 class="article-title">Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</h2>
         </div>
     </a>
 </article>
@@ -612,12 +707,12 @@ ARP协议内容：</li>
             
                 
 <article class="">
-    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">
+    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</h2>
+            <h2 class="article-title">Wi-Fi网络学习记录(1)：抓包ARP协议</h2>
         </div>
     </a>
 </article>

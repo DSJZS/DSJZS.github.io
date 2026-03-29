@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Linux开发学习记录(9)：构建嵌入式Linux系统">
 <meta property='og:description' content="前言 之前刚开始学习Linux驱动照着教程手动构建嵌入式Linux系统时，发现了很多教程里使用的U-Boot、Linux Kernel、BusyBox 过于老旧，比如正点原子的Linux驱动教程。这导致很多软件难以支持，无法利用很多新特性，于是头铁脱离这些老旧的教程，去网上寻找较新的教程进行手动构建。在这个过程中我收获很多，但也发现手动构建已经是&quot;非物质文化遗产&ldquo;了，如今有更方便快速的方法对Linux系统进行构建，于是在了解更先进的方法后趁热打铁写下了这篇文章。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/'>
-<meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:published_time' content='2026-03-23T17:03:06&#43;08:00'/><meta property='article:modified_time' content='2026-03-23T20:01:43&#43;08:00'/>
+<meta property='og:site_name' content='Yuan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:published_time' content='2026-03-23T17:03:06&#43;08:00'/><meta property='article:modified_time' content='2026-03-29T19:33:11&#43;08:00'/>
 <meta name="twitter:title" content="Linux开发学习记录(9)：构建嵌入式Linux系统">
 <meta name="twitter:description" content="前言 之前刚开始学习Linux驱动照着教程手动构建嵌入式Linux系统时，发现了很多教程里使用的U-Boot、Linux Kernel、BusyBox 过于老旧，比如正点原子的Linux驱动教程。这导致很多软件难以支持，无法利用很多新特性，于是头铁脱离这些老旧的教程，去网上寻找较新的教程进行手动构建。在这个过程中我收获很多，但也发现手动构建已经是&quot;非物质文化遗产&ldquo;了，如今有更方便快速的方法对Linux系统进行构建，于是在了解更先进的方法后趁热打铁写下了这篇文章。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">永远null的成元</a></h1>
+            <h1 class="site-name"><a href="/">Yuan&#39;s Blog</a></h1>
             <h2 class="site-description">欢迎来到我的个人博客！</h2>
         </div>
     </header><ol class="menu-social">
@@ -287,7 +287,17 @@
   <ol>
     <li><a href="#前言">前言</a></li>
     <li><a href="#手动构建">手动构建</a></li>
-    <li><a href="#buildroot">Buildroot</a></li>
+    <li><a href="#buildroot">Buildroot</a>
+      <ol>
+        <li><a href="#下载-buildroot">下载 Buildroot</a></li>
+        <li><a href="#使用-buildroot">使用 Buildroot</a>
+          <ol>
+            <li><a href="#buildroot-的一般使用步骤">Buildroot 的一般使用步骤</a></li>
+            <li><a href="#常用的脚本工具">常用的脚本工具</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
     <li><a href="#yocto">Yocto</a></li>
     <li><a href="#总结">总结</a></li>
     <li><a href="#参考文章">参考文章</a></li>
@@ -360,7 +370,7 @@
 
 
                 <time>
-                    Mar 23, 2026 20:01 &#43;0800
+                    Mar 29, 2026 19:33 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -555,7 +565,33 @@
 </div><p><strong>不过在实际项目开发中，完全手动构建往往不是主流做法</strong>。原因在于，现代嵌入式开发通常更加依赖成熟的构建系统和发行方案，例如Buildroot、Yocto，或芯片厂商提供的 SDK。这些工具能够更高效地完成源码管理、依赖处理、补丁集成、镜像生成和版本维护，因此更适合工程化开发。</p>
 <p>因此，手动构建在今天更多是一种学习方法，而不是大多数项目中的最终生产方案。本文提及这一过程，主要是为了建立对嵌入式 Linux 系统组成和构建流程的整体认识，具体细节在此不再展开。如果想要了解，可以阅读下面提及的<a class="link" href="#%e5%8f%82%e8%80%83%e6%96%87%e7%ab%a0" >参考文章</a>。</p>
 <h2 id="buildroot">Buildroot
-</h2><p>#待补充</p>
+</h2><p>Buildroot 是一个轻量化的工具(相比于下面提到的<a class="link" href="#yocto" >Yocto</a>来说)，<strong>可以帮助我们快速的构建 Bootloader、Linux Kernel 以及 rootfs 并打包</strong>。相比于<a class="link" href="#%e6%89%8b%e5%8a%a8%e6%9e%84%e5%bb%ba" >手动构建</a>，使用Buildroot构建一个能用的Linux系统在效率上差的不是一丁半点，十分的明显(不相信的话可以尝试一下<a class="link" href="#%e6%89%8b%e5%8a%a8%e6%9e%84%e5%bb%ba" >手动构建</a>，并移植常用的程序)。</p>
+<p><strong>Buildroot 本质上是一个 Makefile脚本集合</strong>，熟悉<code>make menuconfig</code>功能即可上手使用，不需要付出太多的学习成本即可掌握。</p>
+<h3 id="下载-buildroot">下载 Buildroot
+</h3><p>去<a class="link" href="https://buildroot.org/download.html"  target="_blank" rel="noopener"
+    >Buildroot官网的Download网页</a>下载源码即可，建议下载LTS，也就是 Long-term support 版本。</p>
+<p>一般为压缩包格式，比如 tar.gz，使用 tar 命令解压即可。</p>
+<h3 id="使用-buildroot">使用 Buildroot
+</h3><h4 id="buildroot-的一般使用步骤">Buildroot 的一般使用步骤
+</h4><p>在 Buildroot 源码的根目录下执行 <code>make menuconfig</code> 即可配置我们最终想要的 Linux 系统。</p>
+<p>一般来说，配置并编译的步骤如下：</p>
+<ol>
+<li>配置 Target options，配置目标平台架构等内容。</li>
+<li>配置 Toolchain，配置交叉编译工具链。</li>
+<li>配置 System configuration，配置系统设置。</li>
+<li>配置 Filesystem images，配置文件系统镜像。</li>
+<li>配置 Linux Kernel 和 Bootloader，一般使用开发板厂家提供的内核与引导程序，所以这一步一般禁止。</li>
+<li>配置 Target packages，配置需要移植那些软件包。</li>
+<li>编译 buildroot，执行 <code>sudo make</code> 编译出自制的Linux系统所需的所有文件。</li>
+</ol>
+<p>最终编译并打包的产物在 <code>output/images/</code> 目录下，主要关注这么几个文件：</p>
+<ul>
+<li>rootfs.tar，解压后即为 buildroot 编译出来的根文件系统，可以通过 nfs 等方式挂载到开发板上。</li>
+</ul>
+<h4 id="常用的脚本工具">常用的脚本工具
+</h4><ul>
+<li><code>sudo make show-targets</code>，用于查看当前 buildroot 所有配置了的目标软件包，也就是 packages。</li>
+</ul>
 <h2 id="yocto">Yocto
 </h2><p>#待补充</p>
 <h2 id="总结">总结
@@ -605,7 +641,7 @@
 
 
         <span>
-            最后更新于 Mar 23, 2026 20:01 &#43;0800
+            最后更新于 Mar 29, 2026 19:33 &#43;0800
         </span>
     </section></footer>
 

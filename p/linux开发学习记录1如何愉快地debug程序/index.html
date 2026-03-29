@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="Linux开发学习记录(1)：如何愉快(?)地Debug程序">
 <meta property='og:description' content="前言 又一个新系列(坑)开始了！这个系列我会发布一些自己学习Linux开发过程中写下的笔记。\n第一篇笔记便是如何愉快(?)的在Linux环境下进行Debug工作(以C语言举例)。\n使用的主要工具为 systemd-coredump、GDB。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/'>
-<meta property='og:site_name' content='永远null的成元'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='C' /><meta property='article:tag' content='GDB' /><meta property='article:published_time' content='2026-01-11T18:52:26&#43;08:00'/><meta property='article:modified_time' content='2026-02-18T22:42:21&#43;08:00'/>
+<meta property='og:site_name' content='Yuan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='C' /><meta property='article:tag' content='GDB' /><meta property='article:published_time' content='2026-01-11T18:52:26&#43;08:00'/><meta property='article:modified_time' content='2026-03-29T19:33:11&#43;08:00'/>
 <meta name="twitter:title" content="Linux开发学习记录(1)：如何愉快(?)地Debug程序">
 <meta name="twitter:description" content="前言 又一个新系列(坑)开始了！这个系列我会发布一些自己学习Linux开发过程中写下的笔记。\n第一篇笔记便是如何愉快(?)的在Linux环境下进行Debug工作(以C语言举例)。\n使用的主要工具为 systemd-coredump、GDB。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -71,7 +71,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">永远null的成元</a></h1>
+            <h1 class="site-name"><a href="/">Yuan&#39;s Blog</a></h1>
             <h2 class="site-description">欢迎来到我的个人博客！</h2>
         </div>
     </header><ol class="menu-social">
@@ -326,6 +326,7 @@
             <li><a href="#source---引入初始化文件">source   引入初始化文件</a></li>
           </ol>
         </li>
+        <li><a href="#远程调试">远程调试</a></li>
       </ol>
     </li>
     <li><a href="#参考文章">参考文章</a></li>
@@ -398,7 +399,7 @@
 
 
                 <time>
-                    Feb 18, 2026 22:42 &#43;0800
+                    Mar 29, 2026 19:33 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -2001,14 +2002,86 @@ U：表示单位( b、h、w、g ， 分别为 字节、半字(2字节)、字(四
 </div><h4 id="source---引入初始化文件">source   引入初始化文件
 </h4><p>格式：<code>source 文件名</code><br>
 除了<a class="link" href="#gdb%e5%88%9d%e5%a7%8b%e5%8c%96%e6%96%87%e4%bb%b6" >初始化文件</a>，这种方式也能引入命令进行设置。</p>
-<h2 id="参考文章">参考文章
-</h2><p><a class="link" href="https://geek-blogs.com/blog/linux-core-dump-location/"  target="_blank" rel="noopener"
-    >Linux 核心转储（Core Dump）位置详解：配置、实践与故障排除</a><br>
-<a class="link" href="https://wiki.archlinux.org.cn/title/Core_dump#Where_do_they_go?"  target="_blank" rel="noopener"
-    >Arch Linux 中文维基</a><br>
-<a class="link" href="https://blog.mdzz.wang/2024/07/31/092.coredump/"  target="_blank" rel="noopener"
-    >Linux 配置 coredump </a>
-Debug Hacks中文版</p>
+<h3 id="远程调试">远程调试
+</h3><p>有时候我们需要在一台设备中远程调试另一台设备，比如在x86_64架构的PC上调试在ARM架构的Linux开发板上运行的程序(下文以这个举例)。</p>
+<p>为了完成远程调试，我们需要对应架构的 gdb 工具与 gdbserver 工具。一般来说，交叉编译工具链会提供对应架构的gdb与gdbserver。</p>
+<p>获取对应架构的工具后，我们需要将 gdbserver 与用交叉编译工具链编译的对应架构可执行文件放到开发板上，而主机上需要对应的源码，可执行文件，与对应架构的gdb工具。</p>
+<p>假设可执行文件的名字叫 gdbtest ，而对应的源码叫 gdbtest.c ，我们需要在开发板上如下操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">~$ gdbserver &lt;主机IP地址&gt;:&lt;任意端口&gt; gdbtest
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后在主机下进行如下操作：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="c1"># 这里 arm-none-linux-gnueabihf-gdb 为交叉编译工具链</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 注意 gdbtest 要在本地备份一个供 gdb 读取</span>
+</span></span><span class="line"><span class="cl">~$ arm-none-linux-gnueabihf-gdb gdbtest
+</span></span><span class="line"><span class="cl">......
+</span></span><span class="line"><span class="cl">For help, <span class="nb">type</span> <span class="s2">&#34;help&#34;</span>.
+</span></span><span class="line"><span class="cl">Type <span class="s2">&#34;apropos word&#34;</span> to search <span class="k">for</span> commands related to <span class="s2">&#34;word&#34;</span>...
+</span></span><span class="line"><span class="cl">Reading symbols from gdbtest...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 这里要输入值令进行连接</span>
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> target remote &lt;开发板IP地址&gt;:&lt;与上文对应的端口&gt;
+</span></span><span class="line"><span class="cl">Remote debugging using 192.168.1.50:2001
+</span></span><span class="line"><span class="cl">Reading symbols from /usr/local/arm/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/lib/ld-linux-armhf.so.3...
+</span></span><span class="line"><span class="cl">0x76feff30 in _start <span class="o">()</span>
+</span></span><span class="line"><span class="cl">   from /usr/local/arm/arm-gnu-toolchain-15.2.rel1-x86_64-arm-none-linux-gnueabihf/arm-none-linux-gnueabihf/libc/lib/ld-linux-armhf.so.3
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> start
+</span></span><span class="line"><span class="cl">The <span class="s2">&#34;remote&#34;</span> target does not support <span class="s2">&#34;run&#34;</span>.  Try <span class="s2">&#34;help target&#34;</span> or <span class="s2">&#34;continue&#34;</span>.
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> b main
+</span></span><span class="line"><span class="cl">Breakpoint <span class="m">1</span> at 0x10422: file gdbtest.c, line 6.
+</span></span><span class="line"><span class="cl"><span class="o">(</span>gdb<span class="o">)</span> c
+</span></span><span class="line"><span class="cl">Continuing.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Breakpoint 1, main <span class="o">(</span><span class="nv">argc</span><span class="o">=</span>1, <span class="nv">argv</span><span class="o">=</span>0x7efffd74<span class="o">)</span> at gdbtest.c:6
+</span></span><span class="line"><span class="cl">6		unsigned int <span class="nb">times</span> <span class="o">=</span> 0<span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 下文正常运行 gdb 相关值令即可</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考文章">参考文章
+</h2><ul>
+<li><a class="link" href="https://geek-blogs.com/blog/linux-core-dump-location/"  target="_blank" rel="noopener"
+    >Linux 核心转储（Core Dump）位置详解：配置、实践与故障排除</a></li>
+<li><a class="link" href="https://wiki.archlinux.org.cn/title/Core_dump#Where_do_they_go?"  target="_blank" rel="noopener"
+    >Arch Linux 中文维基</a></li>
+<li><a class="link" href="https://blog.mdzz.wang/2024/07/31/092.coredump/"  target="_blank" rel="noopener"
+    >Linux 配置 coredump </a></li>
+<li>Debug Hacks中文版</li>
+</ul>
 
 </section>
 
@@ -2048,7 +2121,7 @@ Debug Hacks中文版</p>
 
 
         <span>
-            最后更新于 Feb 18, 2026 22:42 &#43;0800
+            最后更新于 Mar 29, 2026 19:33 &#43;0800
         </span>
     </section></footer>
 

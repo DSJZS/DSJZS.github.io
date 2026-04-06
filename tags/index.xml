@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Sun, 22 Mar 2026 23:23:09 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 06 Apr 2026 18:51:03 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>前端</title>
         <link>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
         <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
@@ -37,6 +37,14 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://DSJZS.github.io/tags/bluetooth/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>BootLoader</title>
+        <link>https://DSJZS.github.io/tags/bootloader/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/bootloader/</guid>
         <description></description>
         </item>
         <item>
@@ -104,6 +112,14 @@
         <description></description>
         </item>
         <item>
+        <title>GD32</title>
+        <link>https://DSJZS.github.io/tags/gd32/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/gd32/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>GDB</title>
         <link>https://DSJZS.github.io/tags/gdb/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -136,6 +152,14 @@
         <description></description>
         </item>
         <item>
+        <title>MCU</title>
+        <link>https://DSJZS.github.io/tags/mcu/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/mcu/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Music</title>
         <link>https://DSJZS.github.io/tags/music/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -144,11 +168,27 @@
         <description></description>
         </item>
         <item>
+        <title>OTA</title>
+        <link>https://DSJZS.github.io/tags/ota/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/ota/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Shell</title>
         <link>https://DSJZS.github.io/tags/shell/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://DSJZS.github.io/tags/shell/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>STM32</title>
+        <link>https://DSJZS.github.io/tags/stm32/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/stm32/</guid>
         <description></description>
         </item>
         <item>

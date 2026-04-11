@@ -7,6 +7,191 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</title>
+        <link>https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
+        <pubDate>Sat, 11 Apr 2026 12:31:59 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</guid>
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍&lt;/p&gt;
+&lt;h2 id=&#34;寄存器组介绍&#34;&gt;寄存器组介绍
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84.jpg&#34;
+	width=&#34;789&#34;
+	height=&#34;792&#34;
+	srcset=&#34;https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84_hu_60c051ab67680495.jpg 480w, https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84_hu_8d5e0f1f6fb09662.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Cortex-M3寄存器组&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;99&#34;
+		data-flex-basis=&#34;239px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;核心寄存器&#34;&gt;核心寄存器
+&lt;/h3&gt;&lt;h4 id=&#34;r0--r12&#34;&gt;R0 ~ R12
+&lt;/h4&gt;&lt;p&gt;均为 32 位的通用寄存器(GPR)，用于数据操作。其中：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;R0~R7为低组寄存器，所有的指令都可以访问。&lt;/li&gt;
+&lt;li&gt;R8~R12为高组寄存器，只有32位Thumb2指令和很少的16位Thumb指令能访问。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;r13sp&#34;&gt;R13(SP)
+&lt;/h4&gt;&lt;p&gt;为栈指针，&lt;strong&gt;Cortex-M3 物理上拥有两个堆栈指针，任一时刻只能使用其中的一个&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;主堆栈指针（MSP）：复位后缺省使用的堆栈指针，用于操作系统内核以及异常处理（包括中断服务）。&lt;/li&gt;
+&lt;li&gt;进程堆栈指针（PSP）：由用户的应用程序代码使用。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;具体使用那个受到&lt;a class=&#34;link&#34; href=&#34;#control&#34; &gt; CONTROL 寄存器&lt;/a&gt;与处理器模式( Thread mode、Handler mode )的影响&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;大多数情况下，如果你是裸机 编程，即没有用到嵌入式操作系统，那么 PSP 也没有必要使用。许多简单的应用可以完全依赖于 MSP，一般在操作系统中才会使用到 PSP，因其各个任务（或线程）的栈是要求相互独立的。&lt;/p&gt;
+&lt;p&gt;PSP 的初始值未定义，而 MSP 的初始值则会在复位流程中从存储器的第一个字中取出(比如 STM32 中断向量表里的 __inital_sp)&lt;/p&gt;
+&lt;h4 id=&#34;r14lr&#34;&gt;R14(LR)
+&lt;/h4&gt;&lt;p&gt;为连接寄存器，用于在调用子程序时存储返回地址。&lt;/p&gt;
+&lt;p&gt;比如使用 BL 指令( 分支变连接，Branch and Link )调用一个函数，那么函数的返回地址(BL指令的下一个指令的地址)就会自动写入 LR 寄存器。值得注意的是多层函数调用会涉及 LR 被覆盖的问题，需要将每层函数的返回地址保存到一个指定的空间。&lt;/p&gt;
+&lt;p&gt;在异常处理期间，LR 也会被自动更新为特殊的 EXC_RETURN（异常返回）数值，之后该数值会在异常处理结束时触发异常返回，从而实现从异常处理返回到正确的用户程序中 。&lt;/p&gt;
+&lt;p&gt;需要注意的是，尽管 Cortex-M 处理器中的返回地址总是偶数（由于指令会对齐到半字地址上，因此，最低位即第 0 位为 0），LR 的第 0 位是可读可写的，有些跳转/调用操作需要将 LR（或正在使用的任何寄存器）的第 0 位置 1 来表示当前处理器处于 Thumb 状态。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Thumb 状态 指的是：处理器当前按 Thumb 指令集来解释和执行指令。&lt;/p&gt;
+&lt;p&gt;在 ARM 架构里，历史上有两种执行状态：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ARM state：执行 ARM 指令&lt;/li&gt;
+&lt;li&gt;Thumb state：执行 Thumb 指令
+它们的区别本质上是“CPU 用哪套指令编码规则解码当前内存里的机器码”。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对 Cortex-M 来说，最关键的一点是：
+Cortex-M 只支持 Thumb 状态，不支持传统 ARM state。&lt;/p&gt;
+&lt;p&gt;所以在 Cortex-M3 上你可以直接理解为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU 必须工作在 Thumb 状态&lt;/li&gt;
+&lt;li&gt;跳转到某个函数地址时，必须让 CPU 知道“这是 Thumb 代码地址”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;r15pc&#34;&gt;R15(PC)
+&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;为程序计数寄存器，用于告诉处理器下一条指令在存储器中的地址&lt;/strong&gt;。&lt;br&gt;
+因为Cortex-M3内部使用了指令流水线，读PC时返回的值时当前指令的地址值+4。&lt;/p&gt;
+&lt;h3 id=&#34;特殊寄存器&#34;&gt;特殊寄存器
+&lt;/h3&gt;&lt;p&gt;Cortex-M3中的特殊功能寄存器包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;程序状态寄存器组（PSRs/xPSR）&lt;/li&gt;
+&lt;li&gt;中断屏蔽寄存器组（PRIMASK、FAULTMASK以及BASEPRI）&lt;/li&gt;
+&lt;li&gt;控制寄存器（CONTROL）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;它们只能被专用的MSR/MRS指令访问，而且它们也没有与之相关联的访问地址&lt;/strong&gt;。如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-asm&#34; data-lang=&#34;asm&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;MRS&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;gp_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;special_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;; 读特殊功能寄存器的值到通用寄存器
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;MSR&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;special_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;no&#34;&gt;gp_reg&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;; 写通用寄存器的值到特殊功能寄存器
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id=&#34;control&#34;&gt;CONTROL
+&lt;/h4&gt;&lt;p&gt;控制寄存器有两个用途，其一用于定义特权级别（CONTROL[0]），其二用于选择当前使用哪个堆栈指针（CONTROL[1]）。我们一般只关注低两位。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Register Bit&lt;/th&gt;
+          &lt;th&gt;0&lt;/th&gt;
+          &lt;th&gt;1&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;CONTROL[0]&lt;/td&gt;
+          &lt;td&gt;特权级的线程模式&lt;/td&gt;
+          &lt;td&gt;用户级的线程模式&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;CONTROL[1]&lt;/td&gt;
+          &lt;td&gt;选择主堆栈指针MSP（复位后的缺省值）&lt;/td&gt;
+          &lt;td&gt;选择进程堆栈指针PSP&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;对于 Handler mode，其不受 CONTROL 的影响，固定如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;永远都是特权级的&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;只允许使用MSP&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;由于 Handler mode 下用于都是特权级的，且只允许使用MSP；可见这个寄存器主要用于 Thread mode 下的设置。
+在 Thread mode 下，可设置为特权级的线程模式或非特权级的线程模式；使用MSP或使用PSP。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;primaskfaultmaskbasepri&#34;&gt;PRIMASK、FAULTMASK、BASEPRI
+&lt;/h4&gt;&lt;p&gt;中断屏蔽寄存器组（PRIMASK、FAULTMASK以及BASEPRI）用于控制“异常”的使能（enable）和除能（disable）。&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Register Name&lt;/th&gt;
+          &lt;th&gt;Description&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;PRIMASK&lt;/td&gt;
+          &lt;td&gt;仅1位。当为1时,表示允许NMI和Hard fault异常,而其它所有的中断和异常都会被屏蔽。它的缺省值为0，表示没有关中断。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;FAULTMASK&lt;/td&gt;
+          &lt;td&gt;仅1位。当为1时,表示仅允许NMI异常,其它所有中断和错误处理异常都会被屏蔽。它的缺省值为0，表示没有关异常。&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;BASEPRI&lt;/td&gt;
+          &lt;td&gt;这个寄存器最多有9位（由表达优先级的位数决定）。它定义了被屏蔽优先级的阈值。当它被设成某个值后，所有优先级号大于等于此值得中断都被关闭（优先级号越大，优先级越低）。但如果被设为0，则不关闭任何中断。它的缺省值为0。&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h4 id=&#34;psrsxpsr&#34;&gt;PSRs/xPSR
+&lt;/h4&gt;&lt;p&gt;程序状态寄存器在其内部又被分为三个子状态寄存器：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;应用程序PSR（APSR）：&lt;/li&gt;
+&lt;li&gt;中断号PSR（IPSR）：&lt;/li&gt;
+&lt;li&gt;执行PSR（EPSR）：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/PSRs.jpg&#34;
+	width=&#34;558&#34;
+	height=&#34;139&#34;
+	srcset=&#34;https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/PSRs_hu_8a61a8be8e39c73d.jpg 480w, https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/PSRs_hu_fe4b1e71b12d71a5.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;PSRs&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;401&#34;
+		data-flex-basis=&#34;963px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;xPSR：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/xPSR.jpg&#34;
+	width=&#34;558&#34;
+	height=&#34;74&#34;
+	srcset=&#34;https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/xPSR_hu_90eed41fe8304792.jpg 480w, https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/xPSR_hu_8f07594673e5484a.jpg 1024w&#34;
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;xPSR&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;754&#34;
+		data-flex-basis=&#34;1809px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。&lt;br&gt;
+当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。&lt;/p&gt;
+&lt;h2 id=&#34;参考文章&#34;&gt;参考文章
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cnblogs.com/utank/p/11238218.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cortex-M3 R0~R15寄存器组 &amp;amp; 特殊功能寄存器组&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/tilblackout/article/details/128191341&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ARM基础(1)：Cortex-M3的核心寄存器和特殊寄存器&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</title>
         <link>https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
         <pubDate>Sat, 04 Apr 2026 13:06:14 +0800</pubDate>

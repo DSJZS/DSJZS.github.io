@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？\n也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑\u200d🍳\n本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃\n">
-<title>屋里食研(1)：炒面</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍\n">
+<title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</title>
 
-<link rel='canonical' href='https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/'>
+<link rel='canonical' href='https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/'>
 
-<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="屋里食研(1)：炒面">
-<meta property='og:description' content="前言 唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？\n也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑\u200d🍳\n本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃\n">
-<meta property='og:url' content='https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/'>
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="MCU开发学习记录(2)：Cortex-M3 的内核寄存器组">
+<meta property='og:description' content="前言 最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/'>
 <meta property='og:site_name' content='Yuan&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Food' /><meta property='article:published_time' content='2026-01-25T21:53:45&#43;08:00'/><meta property='article:modified_time' content='2026-01-25T22:42:01&#43;08:00'/>
-<meta name="twitter:title" content="屋里食研(1)：炒面">
-<meta name="twitter:description" content="前言 唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？\n也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑\u200d🍳\n本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='GD32' /><meta property='article:tag' content='STM32' /><meta property='article:tag' content='MCU' /><meta property='article:published_time' content='2026-04-11T12:31:59&#43;08:00'/><meta property='article:modified_time' content='2026-04-11T17:43:58&#43;08:00'/>
+<meta name="twitter:title" content="MCU开发学习记录(2)：Cortex-M3 的内核寄存器组">
+<meta name="twitter:description" content="前言 最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
 
     </head>
@@ -286,16 +286,26 @@
             <nav id="TableOfContents">
   <ol>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#食材准备">食材准备</a></li>
-    <li><a href="#制作步骤">制作步骤</a>
+    <li><a href="#寄存器组介绍">寄存器组介绍</a>
       <ol>
-        <li><a href="#-将面条煮到熟-">① 将面条煮到熟 🍜</a></li>
-        <li><a href="#-搅拌鸡蛋液-">② 搅拌鸡蛋液 🥚🥄</a></li>
-        <li><a href="#-炒鸡蛋-">③ 炒鸡蛋 🍳</a></li>
-        <li><a href="#-炒面-">④ 炒面 🪏</a></li>
+        <li><a href="#核心寄存器">核心寄存器</a>
+          <ol>
+            <li><a href="#r0--r12">R0 ~ R12</a></li>
+            <li><a href="#r13sp">R13(SP)</a></li>
+            <li><a href="#r14lr">R14(LR)</a></li>
+            <li><a href="#r15pc">R15(PC)</a></li>
+          </ol>
+        </li>
+        <li><a href="#特殊寄存器">特殊寄存器</a>
+          <ol>
+            <li><a href="#control">CONTROL</a></li>
+            <li><a href="#primaskfaultmaskbasepri">PRIMASK、FAULTMASK、BASEPRI</a></li>
+            <li><a href="#psrsxpsr">PSRs/xPSR</a></li>
+          </ol>
+        </li>
       </ol>
     </li>
-    <li><a href="#总结-">总结 ☝️🤓</a></li>
+    <li><a href="#参考文章">参考文章</a></li>
   </ol>
 </nav>
         </div>
@@ -322,16 +332,12 @@
                 笔记
             </a>
         
-            <a href="/categories/%E6%97%A5%E5%B8%B8/" style="background-color: #9d2a2aff; color: #fff;">
-                日常
-            </a>
-        
     </header>
     
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/">屋里食研(1)：炒面</a>
+            <a href="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</a>
         </h2>
     
         
@@ -353,7 +359,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published" datetime='2026-01-25T21:53:45&#43;08:00'>2026-01-25</time>
+                <time class="article-time--published" datetime='2026-04-11T12:31:59&#43;08:00'>2026-04-11</time>
             </div>
         
 
@@ -369,7 +375,7 @@
 
 
                 <time>
-                    Jan 25, 2026 22:42 &#43;0800
+                    Apr 11, 2026 17:43 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -391,29 +397,182 @@
     
     
     <h2 id="前言">前言
-</h2><p>唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？<br>
-也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳<br>
-本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃</p>
-<h2 id="食材准备">食材准备
-</h2><ul>
-<li>手工面条(也就是成型的分开的面条)或者碱水挂面(要煮成型)</li>
-<li>鸡蛋等配菜(看着加，本教程默认配菜只有鸡蛋)</li>
-<li>油</li>
-<li>老抽</li>
-<li>盐</li>
-<li>胡椒(可以不要)</li>
+</h2><p>最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍</p>
+<h2 id="寄存器组介绍">寄存器组介绍
+</h2><p><img src="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84.jpg"
+	width="789"
+	height="792"
+	srcset="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84_hu_60c051ab67680495.jpg 480w, /p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84_hu_8d5e0f1f6fb09662.jpg 1024w"
+	loading="lazy"
+	
+		alt="Cortex-M3寄存器组"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="99"
+		data-flex-basis="239px"
+	
+></p>
+<h3 id="核心寄存器">核心寄存器
+</h3><h4 id="r0--r12">R0 ~ R12
+</h4><p>均为 32 位的通用寄存器(GPR)，用于数据操作。其中：</p>
+<ul>
+<li>R0~R7为低组寄存器，所有的指令都可以访问。</li>
+<li>R8~R12为高组寄存器，只有32位Thumb2指令和很少的16位Thumb指令能访问。</li>
 </ul>
-<h2 id="制作步骤">制作步骤
-</h2><h3 id="-将面条煮到熟-">① 将面条煮到熟 🍜
-</h3><p>如果是成型的手工面特别简单，煮到八分熟就行，然后捞出来；如果是碱水挂面则需要煮到成型，然后看情况在粘粘前捞出(无论是那种面，煮面时可以加一点盐，这样煮面更快，煮出来的面更加劲道)。把面捞出来后倒入装满冷水的碗，然后用筷子分开粘黏的面条，等待冷却后快速沥干水分，防止成“泡面”了。最后加入老抽拌匀上色，拌的时候还可以加点食用油进一步防止面条粘黏。</p>
-<h3 id="-搅拌鸡蛋液-">② 搅拌鸡蛋液 🥚🥄
-</h3><p>敲 1 ~ 2 个鸡蛋，将蛋液倒入一个碗中并用筷子或者专门的工具搅拌均匀备用。</p>
-<h3 id="-炒鸡蛋-">③ 炒鸡蛋 🍳
-</h3><p>开火热锅，然后加足够的油(很关键不然粘锅)，接着加盐并倒入搅拌完成的鸡蛋液。蛋液入锅后快速用锅铲沿着一个方向搅拌蛋液弄散鸡蛋。等鸡蛋成型后关火进入下一步。</p>
-<h3 id="-炒面-">④ 炒面 🪏
-</h3><p>此时锅里有上一步炒好的鸡蛋，观察锅的表面是否比较“油”，如果没有油膜必须加油(很关键不然粘锅)。倒入准备好的面条并开大火翻锅开炒！炒到差不多熟后可以根据口味自己额外加点盐或者胡椒啥的然后继续炒到完全熟之后出锅！。</p>
-<h2 id="总结-">总结 ☝️🤓
-</h2><p>只能说面确实是炒出来的，本人多次“仿真”外加“物理机实验”都没问题，但不代表没有BUG，也不保障能在不同“运行环境”下运行，如果按照这个开源流程“炸机”了本人概不负责。</p>
+<h4 id="r13sp">R13(SP)
+</h4><p>为栈指针，<strong>Cortex-M3 物理上拥有两个堆栈指针，任一时刻只能使用其中的一个</strong>：</p>
+<ul>
+<li>主堆栈指针（MSP）：复位后缺省使用的堆栈指针，用于操作系统内核以及异常处理（包括中断服务）。</li>
+<li>进程堆栈指针（PSP）：由用户的应用程序代码使用。</li>
+</ul>
+<p><strong>具体使用那个受到<a class="link" href="#control" > CONTROL 寄存器</a>与处理器模式( Thread mode、Handler mode )的影响</strong>。</p>
+<p>大多数情况下，如果你是裸机 编程，即没有用到嵌入式操作系统，那么 PSP 也没有必要使用。许多简单的应用可以完全依赖于 MSP，一般在操作系统中才会使用到 PSP，因其各个任务（或线程）的栈是要求相互独立的。</p>
+<p>PSP 的初始值未定义，而 MSP 的初始值则会在复位流程中从存储器的第一个字中取出(比如 STM32 中断向量表里的 __inital_sp)</p>
+<h4 id="r14lr">R14(LR)
+</h4><p>为连接寄存器，用于在调用子程序时存储返回地址。</p>
+<p>比如使用 BL 指令( 分支变连接，Branch and Link )调用一个函数，那么函数的返回地址(BL指令的下一个指令的地址)就会自动写入 LR 寄存器。值得注意的是多层函数调用会涉及 LR 被覆盖的问题，需要将每层函数的返回地址保存到一个指定的空间。</p>
+<p>在异常处理期间，LR 也会被自动更新为特殊的 EXC_RETURN（异常返回）数值，之后该数值会在异常处理结束时触发异常返回，从而实现从异常处理返回到正确的用户程序中 。</p>
+<p>需要注意的是，尽管 Cortex-M 处理器中的返回地址总是偶数（由于指令会对齐到半字地址上，因此，最低位即第 0 位为 0），LR 的第 0 位是可读可写的，有些跳转/调用操作需要将 LR（或正在使用的任何寄存器）的第 0 位置 1 来表示当前处理器处于 Thumb 状态。</p>
+<blockquote>
+<p>Thumb 状态 指的是：处理器当前按 Thumb 指令集来解释和执行指令。</p>
+<p>在 ARM 架构里，历史上有两种执行状态：</p>
+<ul>
+<li>ARM state：执行 ARM 指令</li>
+<li>Thumb state：执行 Thumb 指令
+它们的区别本质上是“CPU 用哪套指令编码规则解码当前内存里的机器码”。</li>
+</ul>
+<p>对 Cortex-M 来说，最关键的一点是：
+Cortex-M 只支持 Thumb 状态，不支持传统 ARM state。</p>
+<p>所以在 Cortex-M3 上你可以直接理解为：</p>
+<ul>
+<li>CPU 必须工作在 Thumb 状态</li>
+<li>跳转到某个函数地址时，必须让 CPU 知道“这是 Thumb 代码地址”</li>
+</ul>
+</blockquote>
+<h4 id="r15pc">R15(PC)
+</h4><p><strong>为程序计数寄存器，用于告诉处理器下一条指令在存储器中的地址</strong>。<br>
+因为Cortex-M3内部使用了指令流水线，读PC时返回的值时当前指令的地址值+4。</p>
+<h3 id="特殊寄存器">特殊寄存器
+</h3><p>Cortex-M3中的特殊功能寄存器包括：</p>
+<ul>
+<li>程序状态寄存器组（PSRs/xPSR）</li>
+<li>中断屏蔽寄存器组（PRIMASK、FAULTMASK以及BASEPRI）</li>
+<li>控制寄存器（CONTROL）</li>
+</ul>
+<p><strong>它们只能被专用的MSR/MRS指令访问，而且它们也没有与之相关联的访问地址</strong>。如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="nf">MRS</span> <span class="err">&lt;</span><span class="no">gp_reg</span><span class="err">&gt;</span><span class="p">,</span> <span class="err">&lt;</span><span class="no">special_reg</span><span class="err">&gt;</span> <span class="c1">; 读特殊功能寄存器的值到通用寄存器
+</span></span></span><span class="line"><span class="cl"><span class="nf">MSR</span> <span class="err">&lt;</span><span class="no">special_reg</span><span class="err">&gt;</span><span class="p">,</span> <span class="err">&lt;</span><span class="no">gp_reg</span><span class="err">&gt;</span> <span class="c1">; 写通用寄存器的值到特殊功能寄存器
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="control">CONTROL
+</h4><p>控制寄存器有两个用途，其一用于定义特权级别（CONTROL[0]），其二用于选择当前使用哪个堆栈指针（CONTROL[1]）。我们一般只关注低两位。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Register Bit</th>
+          <th>0</th>
+          <th>1</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>CONTROL[0]</td>
+          <td>特权级的线程模式</td>
+          <td>用户级的线程模式</td>
+      </tr>
+      <tr>
+          <td>CONTROL[1]</td>
+          <td>选择主堆栈指针MSP（复位后的缺省值）</td>
+          <td>选择进程堆栈指针PSP</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>对于 Handler mode，其不受 CONTROL 的影响，固定如下：</p>
+<ul>
+<li><strong>永远都是特权级的</strong>。</li>
+<li><strong>只允许使用MSP</strong>。</li>
+</ul>
+<blockquote>
+<p>由于 Handler mode 下用于都是特权级的，且只允许使用MSP；可见这个寄存器主要用于 Thread mode 下的设置。
+在 Thread mode 下，可设置为特权级的线程模式或非特权级的线程模式；使用MSP或使用PSP。</p>
+</blockquote>
+<h4 id="primaskfaultmaskbasepri">PRIMASK、FAULTMASK、BASEPRI
+</h4><p>中断屏蔽寄存器组（PRIMASK、FAULTMASK以及BASEPRI）用于控制“异常”的使能（enable）和除能（disable）。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>Register Name</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>PRIMASK</td>
+          <td>仅1位。当为1时,表示允许NMI和Hard fault异常,而其它所有的中断和异常都会被屏蔽。它的缺省值为0，表示没有关中断。</td>
+      </tr>
+      <tr>
+          <td>FAULTMASK</td>
+          <td>仅1位。当为1时,表示仅允许NMI异常,其它所有中断和错误处理异常都会被屏蔽。它的缺省值为0，表示没有关异常。</td>
+      </tr>
+      <tr>
+          <td>BASEPRI</td>
+          <td>这个寄存器最多有9位（由表达优先级的位数决定）。它定义了被屏蔽优先级的阈值。当它被设成某个值后，所有优先级号大于等于此值得中断都被关闭（优先级号越大，优先级越低）。但如果被设为0，则不关闭任何中断。它的缺省值为0。</td>
+      </tr>
+  </tbody>
+</table></div>
+<h4 id="psrsxpsr">PSRs/xPSR
+</h4><p>程序状态寄存器在其内部又被分为三个子状态寄存器：</p>
+<ul>
+<li>应用程序PSR（APSR）：</li>
+<li>中断号PSR（IPSR）：</li>
+<li>执行PSR（EPSR）：</li>
+</ul>
+<p>如下：</p>
+<p><img src="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/PSRs.jpg"
+	width="558"
+	height="139"
+	srcset="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/PSRs_hu_8a61a8be8e39c73d.jpg 480w, /p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/PSRs_hu_fe4b1e71b12d71a5.jpg 1024w"
+	loading="lazy"
+	
+		alt="PSRs"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="401"
+		data-flex-basis="963px"
+	
+></p>
+<p>xPSR：</p>
+<p><img src="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/xPSR.jpg"
+	width="558"
+	height="74"
+	srcset="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/xPSR_hu_90eed41fe8304792.jpg 480w, /p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/xPSR_hu_8f07594673e5484a.jpg 1024w"
+	loading="lazy"
+	
+		alt="xPSR"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="754"
+		data-flex-basis="1809px"
+	
+></p>
+<p>通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。<br>
+当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。</p>
+<h2 id="参考文章">参考文章
+</h2><ul>
+<li><a class="link" href="https://www.cnblogs.com/utank/p/11238218.html"  target="_blank" rel="noopener"
+    >Cortex-M3 R0~R15寄存器组 &amp; 特殊功能寄存器组</a></li>
+<li><a class="link" href="https://blog.csdn.net/tilblackout/article/details/128191341"  target="_blank" rel="noopener"
+    >ARM基础(1)：Cortex-M3的核心寄存器和特殊寄存器</a></li>
+</ul>
 
 </section>
 
@@ -422,7 +581,11 @@
     
     <section class="article-tags">
         
-            <a href="/tags/food/">Food</a>
+            <a href="/tags/gd32/">GD32</a>
+        
+            <a href="/tags/stm32/">STM32</a>
+        
+            <a href="/tags/mcu/">MCU</a>
         
     </section>
 
@@ -449,7 +612,7 @@
 
 
         <span>
-            最后更新于 Jan 25, 2026 22:42 &#43;0800
+            最后更新于 Apr 11, 2026 17:43 &#43;0800
         </span>
     </section></footer>
 
@@ -465,32 +628,6 @@
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">屋里食研(2)：蒸饭</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</h2>
-        </div>
-    </a>
-</article>
-
             
                 
 <article class="">
@@ -526,6 +663,32 @@
 
         <div class="article-details">
             <h2 class="article-title">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(9)：构建嵌入式Linux系统</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(8)：Linux 驱动的分离与分层思想</h2>
         </div>
     </a>
 </article>

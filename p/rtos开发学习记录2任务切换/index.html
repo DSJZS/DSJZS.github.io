@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 任务切换是 RTOS 最基础的功能，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。\n这篇文章记录一下如何实现 RTOS 的切换。\n完整代码请访问我的Github仓库，网址为：yuan-rtos。\n">
+<title>RTOS开发学习记录(2)：任务切换</title>
+
+<link rel='canonical' href='https://DSJZS.github.io/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/'>
+
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="RTOS开发学习记录(2)：任务切换">
+<meta property='og:description' content="前言 任务切换是 RTOS 最基础的功能，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。\n这篇文章记录一下如何实现 RTOS 的切换。\n完整代码请访问我的Github仓库，网址为：yuan-rtos。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/'>
+<meta property='og:site_name' content='Yuan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='RTOS' /><meta property='article:published_time' content='2026-04-11T23:46:40&#43;08:00'/><meta property='article:modified_time' content='2026-04-12T21:07:54&#43;08:00'/>
+<meta name="twitter:title" content="RTOS开发学习记录(2)：任务切换">
+<meta name="twitter:description" content="前言 任务切换是 RTOS 最基础的功能，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。\n这篇文章记录一下如何实现 RTOS 的切换。\n完整代码请访问我的Github仓库，网址为：yuan-rtos。\n">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_23a75caddf849e79.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">✨</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Yuan&#39;s Blog</a></h1>
+            <h2 class="site-description">欢迎来到我的个人博客！</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/5477327'
+                        target="_blank"
+                        title="BiliBili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6z" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/DSJZS'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circuit-changeover"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 12h2" /><path d="M20 7h2" /><path d="M4 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M16 7a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M20 17h2" /><path d="M16 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M7.5 10.5l8.5 -3.5" /></svg>
+                
+                <span>更新日志</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E7%95%99%E8%A8%80%E6%9D%BF/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言板</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories-tags/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tags"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2z" /><path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" /><path d="M7 10h-.01" /></svg>
+                
+                <span>分类&amp;标签</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#任务切换的原理">任务切换的原理</a></li>
+    <li><a href="#cortex-m-系列内核下的任务切换">Cortex-M 系列内核下的任务切换</a>
+      <ol>
+        <li><a href="#初始化任务">初始化任务</a></li>
+        <li><a href="#切换到第一个任务">切换到第一个任务</a></li>
+        <li><a href="#任务间的切换">任务间的切换</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%99%E7%A8%8B/" style="background-color: #2a8a9dff; color: #fff;">
+                教程
+            </a>
+        
+            <a href="/categories/%E7%AC%94%E8%AE%B0/" style="background-color: #2a9d2cff; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/">RTOS开发学习记录(2)：任务切换</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-04-11T23:46:40&#43;08:00'>2026-04-11</time>
+            </div>
+        
+
+        
+        
+        <div class="article-lastmod">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time>
+                    Apr 12, 2026 21:07 &#43;0800
+                </time>
+            </div>
+        <div id="viewCount">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前言">前言
+</h2><p><strong>任务切换是 RTOS 最基础的功能</strong>，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。</p>
+<p>这篇文章记录一下如何实现 RTOS 的切换。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a class="link" href="https://github.com/DSJZS/yuan-rtos"  target="_blank" rel="noopener"
+    >yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="任务切换的原理">任务切换的原理
+</h2><p><strong>对于每个任务而言，执行它们时都要让它们感觉&quot;只有它们自己在运行&quot;</strong>。</p>
+<p><strong>为了实现这个效果，它们要有私有的栈空间，包括 GPR、PC、SP 在内的一些的寄存器的值也要是私有的</strong>。</p>
+<p>前者好实现，比如在C语言中给每个任务单独定义一个全局数组使用即可实现&quot;私有&quot;的属性。但是后者不好实现，因为一个(单核)处理器一般不会有多套 PC、SP 等寄存器，我们不能说给每个任务单独分配一套寄存器。</p>
+<p>一般来说我们有两种常见的方案来保存每个任务的私有寄存器值：</p>
+<ol>
+<li>在类似&quot;任务控制块&quot;的结构体中添加对应寄存器的成员变量，在任务切换前进行保存，之后被调度重新执行时读取结构体即可。</li>
+<li>任务切换前将寄存器值压入私有栈，之后被调度重新执行时出栈读取寄存器值。</li>
+</ol>
+<p>一般而言，大多数 RTOS 都选择了第二种，这篇文章也是介绍如何实现第二种。</p>
+<h2 id="cortex-m-系列内核下的任务切换">Cortex-M 系列内核下的任务切换
+</h2><p>对于 Cortex-M 系列内核，一般使用 SVC(服务调用) 异常进入第一个任务，后续任务的切换使用 PendSV 异常完成。下面以 Cortex-M3 内核举例。</p>
+<h3 id="初始化任务">初始化任务
+</h3><p>首先我们要定义一个寄存器值结构体，这个结构体并非用于保存寄存器值，只是用于提供偏移量，具体如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="kt">yr_context_t</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r6</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r8</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r9</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r10</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r11</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Hardware-stacked on exception entry */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r3</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">r12</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">lr_r14</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">pc_r15</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_cpu_stack_t</span> <span class="n">psr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kt">yr_context_t</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于用户给出的栈空间，按照下面的方式进行初始化：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">yr_uint8_t</span> <span class="o">*</span><span class="nf">yr_task_stack_init</span><span class="p">(</span> <span class="kt">void</span> <span class="o">*</span><span class="n">entry</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">exit</span><span class="p">,</span> <span class="kt">yr_uint8_t</span> <span class="o">*</span><span class="n">stackaddr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_context_t</span> <span class="o">*</span><span class="n">pstack</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_uint8_t</span> <span class="o">*</span><span class="n">psp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_uint8_t</span> <span class="n">i</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">psp</span> <span class="o">=</span> <span class="n">stackaddr</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* 8-byte align per ARM procedure call &amp; exception entry requirements. */</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* aligned = value &amp; ~(align - 1) */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">psp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">yr_uint8_t</span> <span class="o">*</span><span class="p">)(</span> <span class="p">((</span><span class="kt">yr_cpu_stack_t</span><span class="p">)</span><span class="n">psp</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="p">((</span><span class="mi">8</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">);</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">     <span class="cm">/* Reserve space for initial context frame */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">psp</span> <span class="o">-=</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">yr_context_t</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pstack</span> <span class="o">=</span> <span class="p">(</span><span class="kt">yr_context_t</span> <span class="o">*</span><span class="p">)</span><span class="n">psp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Clear frame area */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">((</span><span class="kt">yr_cpu_stack_t</span> <span class="o">*</span><span class="p">)</span><span class="n">pstack</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">pstack</span><span class="o">-&gt;</span><span class="n">psr</span> <span class="o">=</span> <span class="mh">0x01000000UL</span><span class="p">;</span>             <span class="cm">/* Default xPSR (Thumb bit set) */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pstack</span><span class="o">-&gt;</span><span class="n">pc_r15</span>  <span class="o">=</span> <span class="p">(</span><span class="kt">yr_cpu_stack_t</span><span class="p">)</span><span class="n">entry</span><span class="p">;</span>    <span class="cm">/* Entry point */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pstack</span><span class="o">-&gt;</span><span class="n">lr_r14</span>  <span class="o">=</span> <span class="p">(</span><span class="kt">yr_cpu_stack_t</span><span class="p">)</span><span class="n">exit</span><span class="p">;</span>     <span class="cm">/* If thread function returns */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">psp</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个函数有三个参数，分别为：</p>
+<ul>
+<li>entry：任务进入时执行的函数</li>
+<li>exit：任务退出时执行的函数</li>
+<li>stackaddr：用户给出的栈顶指针(注意是栈顶的)</li>
+</ul>
+<p>首先我们会使用C语言将一个全0的 yr_context_t 结构体压入用户提供的栈空间，并配置好 entry 与 exit。</p>
+<p>至于为什么这么初始化，是因为我们下面切换任务时需要用到这些压入的初始化值赋给寄存器，参考下面的切换任务的介绍。</p>
+<h3 id="切换到第一个任务">切换到第一个任务
+</h3><p>相关的函数实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="err">@</span> <span class="nf">void</span> <span class="no">yr_task_first_switch_to</span><span class="p">(</span> <span class="no">yr_uint32_t</span> <span class="no">to</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="na">.thumb_func</span>
+</span></span><span class="line"><span class="cl"><span class="nl">yr_task_first_switch_to:</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r1</span><span class="p">,</span> <span class="err">=</span><span class="no">NVIC_SYSPRI2</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r2</span><span class="p">,</span> <span class="p">[</span><span class="no">r1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r3</span><span class="p">,</span> <span class="err">=</span><span class="no">NVIC_PENDSV_PRI</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">orr</span> <span class="no">r2</span><span class="p">,</span> <span class="no">r2</span><span class="p">,</span> <span class="no">r3</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">str</span> <span class="no">r2</span><span class="p">,</span> <span class="p">[</span><span class="no">r1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cpsie</span> <span class="no">i</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">svc</span> <span class="c1">#0
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">@</span> <span class="nf">SVC</span> <span class="no">exception</span> <span class="no">starts</span> <span class="no">the</span> <span class="no">first</span> <span class="no">task</span> <span class="no">using</span> <span class="no">the</span> <span class="no">PSP</span> <span class="no">value</span> <span class="no">pointed</span> <span class="no">to</span> <span class="no">by</span> <span class="no">r0.</span>
+</span></span><span class="line"><span class="cl">    <span class="na">.thumb_func</span>
+</span></span><span class="line"><span class="cl"><span class="nl">SVC_Handler:</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>              <span class="err">@</span> <span class="no">r1</span> <span class="err">=</span> <span class="p">*(</span><span class="err">&amp;</span><span class="no">task-</span><span class="err">&gt;</span><span class="no">sp</span><span class="p">)</span> <span class="err">=</span> <span class="no">task-</span><span class="err">&gt;</span><span class="no">sp</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldmia</span> <span class="no">r1</span><span class="p">!,</span> <span class="err">{</span><span class="no">r4-r11</span><span class="err">}</span>       <span class="err">@</span> <span class="no">restore</span> <span class="no">software-saved</span> <span class="no">regs</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">msr</span> <span class="no">psp</span><span class="p">,</span> <span class="no">r1</span>               <span class="err">@</span> <span class="no">PSP</span> <span class="no">now</span> <span class="no">points</span> <span class="no">to</span> <span class="no">hw-stacked</span> <span class="no">frame</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r0</span><span class="p">,</span> <span class="err">=</span><span class="mi">0xE000ED08</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r0</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>              <span class="err">@</span> <span class="no">VTOR</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r0</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>              <span class="err">@</span> <span class="no">initial</span> <span class="no">MSP</span> <span class="no">from</span> <span class="no">vector</span> <span class="no">table</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">msr</span> <span class="no">msp</span><span class="p">,</span> <span class="no">r0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r0</span><span class="p">,</span> <span class="err">=</span><span class="mi">0xFFFFFFFD</span>       <span class="err">@</span> <span class="no">return</span> <span class="no">to</span> <span class="no">Thread</span> <span class="no">mode</span><span class="p">,</span> <span class="no">use</span> <span class="no">PSP</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">bx</span>  <span class="no">r0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这段汇编代码在C语言头文件中声明如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">yr_task_first_switch_to</span><span class="p">(</span> <span class="kt">yr_uint32_t</span> <span class="n">to</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参数 to 为<strong>目标任务的栈顶指针的指针</strong>。</p>
+<p>函数 yr_task_first_switch_to 首先将 PendSV异常 的优先级拉低，然后触发 SVC 异常。</p>
+<p>SVC 异常是同步异常，所以触发后会立刻进入。这里要说明的是在 Cortex-M 系列内核中，异常进入时会往进入前使用的物理栈中压入 R0-R3，R12，LR，PC、XPSR 寄存器的值，退出时则会尝试从物理栈中取出这些寄存器值。</p>
+<p>复位后一般默认使用的物理栈为 MSP，因此这里会将寄存器值自动压入 MSP 栈。不过任务使用 PSP 栈并非 MSP 栈，所以这里压入的寄存器值我们不会用到。</p>
+<p>进入 SVC_Handler 后首先就是获取第一个任务的栈顶指针，然后使用 ldmia 操作进行类似出栈的操作，将之前压入用户栈的 yr_context_t 的前半部分依次赋给 {r4-r11}，这些值是多少了？根据 yr_task_stack_init 函数中的操作，这些寄存器值会是全 0。之后将新的栈顶指针写入 PSP。</p>
+<p>然后我们会将 MSP 通过中断向量表第一项的 __inital_sp 重置为初始值，丢弃第一个任务被调度前的调用链(这意味着我们不能再返回 main 函数了)。</p>
+<p>最后异常返回时设置 EXC_RETURN = 0xFFFFFFFD，即返回到 Thread mode，物理栈使用 PSP。</p>
+<p>前面提到异常退出时会尝试从物理栈中取出 R0-R3，R12，LR，PC、XPSR 寄存器的值，这里我们以 PSP 作为物理栈退出，所以这些值会从 PSP 栈中读取，这样 yr_context_t 结构体中的后半部分也被读取到对应的寄存器了。有没有理解为什么之前那么定义 yr_context_t 结构体与 yr_task_stack_init 函数了？</p>
+<h3 id="任务间的切换">任务间的切换
+</h3><p>相关逻辑如下，首先是C语言部分定义了一些全局变量：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">yr_uint32_t</span> <span class="n">yr_prev_task_sp_p</span><span class="p">;</span> <span class="cm">/* 切换前的任务的栈顶指针的指针 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">yr_uint32_t</span> <span class="n">yr_next_task_sp_p</span><span class="p">;</span> <span class="cm">/* 切换后的任务的栈顶指针的指针 */</span>
+</span></span><span class="line"><span class="cl"><span class="kt">yr_uint32_t</span> <span class="n">yr_switch_flag</span><span class="p">;</span>    <span class="cm">/* 切换标志，表示实际的切换进行前是否已经要求过切换 */</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>汇编代码部分：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-asm" data-lang="asm"><span class="line"><span class="cl"><span class="err">@</span> <span class="nf">void</span> <span class="no">yr_task_switch</span><span class="p">(</span> <span class="no">yr_uint32_t</span> <span class="no">from</span><span class="p">,</span> <span class="no">yr_uint32_t</span> <span class="no">to</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="na">.thumb_func</span>
+</span></span><span class="line"><span class="cl"><span class="nl">yr_task_switch:</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">mrs</span> <span class="no">r12</span><span class="p">,</span> <span class="no">PRIMASK</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cpsid</span> <span class="no">i</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">读取</span> <span class="nf">yr_switch_flag</span> 
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">如果为</span> <span class="mi">1</span> <span class="err">跳转到</span> <span class="no">task_reswitch</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">否则置</span> <span class="err">1</span> <span class="err">继续执行</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r2</span><span class="p">,</span> <span class="err">=</span><span class="no">yr_switch_flag</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r3</span><span class="p">,</span> <span class="p">[</span><span class="no">r2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">cmp</span> <span class="no">r3</span><span class="p">,</span> <span class="c1">#1
+</span></span></span><span class="line"><span class="cl">    <span class="nf">beq</span> <span class="no">task_reswitch</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">mov</span> <span class="no">r3</span><span class="p">,</span> <span class="c1">#1
+</span></span></span><span class="line"><span class="cl">    <span class="nf">str</span> <span class="no">r3</span><span class="p">,</span> <span class="p">[</span><span class="no">r2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">修改</span> <span class="nf">yr_prev_task_sp_p</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r2</span><span class="p">,</span> <span class="err">=</span><span class="no">yr_prev_task_sp_p</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">str</span> <span class="no">r0</span><span class="p">,</span> <span class="p">[</span><span class="no">r2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">task_reswitch:</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">修改</span> <span class="nf">yr_next_task_sp_p</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r2</span><span class="p">,</span> <span class="err">=</span><span class="no">yr_next_task_sp_p</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">str</span> <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">msr</span> <span class="no">PRIMASK</span><span class="p">,</span> <span class="no">r12</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">触发</span> <span class="nf">PendSV</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r2</span><span class="p">,</span> <span class="err">=</span><span class="no">NVIC_INT_CTRL</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span> <span class="no">r3</span><span class="p">,</span> <span class="err">=</span><span class="no">NVIC_PENDSVSET</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">str</span> <span class="no">r3</span><span class="p">,</span> <span class="p">[</span><span class="no">r2</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nf">bx</span> <span class="no">lr</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="na">.thumb_func</span>
+</span></span><span class="line"><span class="cl"><span class="nl">PendSV_Handler:</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">保存当前中断屏蔽状态</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">mrs</span>     <span class="no">r2</span><span class="p">,</span> <span class="no">PRIMASK</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cpsid</span>   <span class="no">i</span>
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">如果</span> <span class="nf">yr_switch_flag</span> <span class="err">为</span> <span class="mi">0</span> <span class="err">直接退出，否则置</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r0</span><span class="p">,</span> <span class="err">=</span><span class="no">yr_switch_flag</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cbz</span>     <span class="no">r1</span><span class="p">,</span> <span class="no">pendsv_exit</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">mov</span>     <span class="no">r1</span><span class="p">,</span> <span class="c1">#0
+</span></span></span><span class="line"><span class="cl">    <span class="nf">str</span>     <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r0</span><span class="p">,</span> <span class="err">=</span><span class="no">yr_prev_task_sp_p</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cbz</span>     <span class="no">r1</span><span class="p">,</span> <span class="no">switch_to_thread</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">将</span> <span class="nf">r4-r11</span> <span class="err">压入旧任务的栈中，然后将</span><span class="p">(</span><span class="err">旧任务</span><span class="p">)</span><span class="err">新的栈顶指针保存到旧任务的</span> <span class="no">sp</span> <span class="err">中</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">mrs</span>     <span class="no">r1</span><span class="p">,</span> <span class="no">psp</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">stmdb</span>   <span class="no">r1</span><span class="p">!,</span> <span class="err">{</span><span class="no">r4-r11</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r0</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">str</span>     <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">switch_to_thread:</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">将</span> <span class="nf">r4-r11</span> <span class="err">从新任务的栈中取出，然后将</span><span class="p">(</span><span class="err">新任务</span><span class="p">)</span><span class="err">新的栈顶指针保存到</span> <span class="no">PSP</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r1</span><span class="p">,</span> <span class="err">=</span><span class="no">yr_next_task_sp_p</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ldr</span>     <span class="no">r1</span><span class="p">,</span> <span class="p">[</span><span class="no">r1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">ldmia</span>   <span class="no">r1</span><span class="p">!,</span> <span class="err">{</span><span class="no">r4-r11</span><span class="err">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">msr</span>     <span class="no">psp</span><span class="p">,</span> <span class="no">r1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">pendsv_exit:</span>
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">恢复中断屏蔽状态</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">msr</span>     <span class="no">PRIMASK</span><span class="p">,</span> <span class="no">r2</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="err">@</span> <span class="err">把当前异常返回码</span> <span class="nf">LR</span> <span class="err">改成“返回线程模式时使用</span> <span class="no">PSP</span><span class="err">”，然后执行异常返回</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">orr</span>     <span class="no">lr</span><span class="p">,</span> <span class="no">lr</span><span class="p">,</span> <span class="c1">#0x04
+</span></span></span><span class="line"><span class="cl">    <span class="nf">bx</span>      <span class="no">lr</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>切换函数在C语言头文件中的声明为：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">yr_task_switch</span><span class="p">(</span> <span class="kt">yr_uint32_t</span> <span class="n">from</span><span class="p">,</span> <span class="kt">yr_uint32_t</span> <span class="n">to</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>两个参数分别为：</p>
+<ul>
+<li>from：切换前的任务的栈顶指针的指针</li>
+<li>to：切换后的任务的栈顶指针的指针</li>
+</ul>
+<p>可以看到我们是现在 yr_task_switch 中先利用屏蔽中断的功能原子的将 yr_switch_flag 置位表示要进行切换了，并以此保证 yr_prev_task_sp_p 切换前不变，然后将 from 和 to 参数的值原子的保存到 yr_prev_task_sp_p 与 yr_next_task_sp_p 中( 如果 yr_switch_flag 置位了只保存后者 )，然后触发 PendSV 异常，在 PendSV_Handler 中进行任务的切换。</p>
+<p>PendSV_Handler 中先屏蔽掉中断，防止切换被打断，确保切换是原子的，然后通过 yr_switch_flag 判断异常是不是错误的发生了，接着将旧任务的 {r4-r11} 寄存器压入旧任务的栈，新任务的 {r4-r11} 从栈中读到当前 {r4-r11} 中。至于为什么只处理 {r4-r11} ，参考之前提到的 Cortex-M 的异常压栈/出栈机制。</p>
+<p>为什么不直接在 yr_task_switch 中进行切换，而是在 PendSV_Handler 中进行切换？这是因为<strong>上下文切换应该被延后到最低优先级异常里统一完成，而不是在任意调用点立刻发生</strong>，这样会把切换逻辑变得非常难维护(切换可能发生在很多种上下文环境中，有时某些寄存器/栈不适合进行立即切换的操作)。上面给出的方法既能利用 Cortex-M 的异常压栈/出栈机制，又能避免在任意调用点直接切换带来的复杂性和风险。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/rtos/">RTOS</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Apr 12, 2026 21:07 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RTOS开发学习记录(1)：程序结构</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Linux开发学习记录(10)：如何阅读设备树绑定文档</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="DSJZS/DSJZS.github.io"
+    data-repo-id="R_kgDOQuMMVg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQuMMVs4C0OeT"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('preferred_color_scheme');
+            } else {
+                setGiscusTheme('preferred_color_scheme');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 永远null的成元
+    </section>
+    
+    <section class="powerby">
+        
+            不可能被发现的一段文字 :-) <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.33.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+    
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+    const musicDir = "https://DSJZS.github.io/" + 'music/';
+    const songs = [
+        '乖乖报到-MC 张天赋',
+        'Time (ATLUS Kitajoh Remix)-藤田真由美',
+        'Cathy-当山瞳',
+        'Fabulous-BLU SWING',
+        '光影 HIKAGE(feat. 初音ミク)-H.K.君',
+        '白夜狐步舞-丢莱卡WastedLaika',
+        'ミッドナイト・ユア・ステップ (feat. 初音ミク)-ベール_Veil',
+        '视神(feat.初音ミク)-翌川屿芊',
+        '弥留之际(feat.洛天依)-的确如此如确的',
+        '恋-星野源',
+        'Twisted Getaway-Neon Nox',
+        '南京夜无电波讯号(feat.洛天依)-花水',
+        'Running In The Night-FM 84',
+        'Zombies on Your Lawn-Laura Shigihara',
+    ];
+    let audios = [];
+    songs.forEach((item) => {
+        const songInfo = item.split('-');
+        audios.push({
+            name: songInfo[0],
+            artist: songInfo[1],
+            url: musicDir + item + '/song.mp3',
+            cover: musicDir + item + '/cover.jpg',
+            lrc: musicDir + item + '/lyric.lrc',
+        })
+    })
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        lrcType: 3,
+        audio: audios,
+        
+        fixed: true
+    });
+
+    window.onbeforeunload = () => {
+        
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.audio.paused,
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    
+
+    window.onload = () => {
+        
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        
+        ap.list.switch(playInfo.index);
+        
+        setTimeout(() => {
+            
+            ap.seek(playInfo.currentTime);
+            
+            if (!playInfo.paused) {
+                
+                ap.play()
+            }
+        }, 500);
+    };
+
+</script>
+
+
+
+<style>
+    #backTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        z-index: 99;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-image: url(https://DSJZS.github.io/icons/backTop.svg);
+    }
+</style>
+
+<script>
+    
+
+    function initScrollTop() {
+        let rightSideBar = document.querySelector(".right-sidebar");
+        if (!rightSideBar) {
+            return;
+        }
+        
+        let btn = document.createElement("div");
+        btn.id = "backTopBtn";
+        btn.onclick = backToTop
+        rightSideBar.appendChild(btn)
+        
+        window.onscroll = function() {
+            
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    }
+
+    
+
+    function backToTop(){
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    initScrollTop();
+</script>
+
+<style>
+    .highlight {
+         
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .code-show {
+        max-height: none !important;
+    }
+
+    .code-more-box {
+        width: 100%;
+        padding-top: 78px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .code-more-btn {
+        display: block;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+    .code-more-img {
+        cursor: pointer !important;
+        display: block;
+        margin: auto;
+        width: 22px;
+        height: 16px;
+    }
+</style>
+
+<script>
+  function initCodeMoreBox() {
+    let codeBlocks = document.querySelectorAll(".highlight");
+    if (!codeBlocks) {
+      return;
+    }
+    codeBlocks.forEach(codeBlock => {
+      
+      if (codeBlock.scrollHeight <= codeBlock.clientHeight) {
+        return;
+      }
+      
+      
+      let codeMoreBox = document.createElement('div');
+      codeMoreBox.classList.add('code-more-box');
+      
+      let codeMoreBtn = document.createElement('span');
+      codeMoreBtn.classList.add('code-more-btn');
+      codeMoreBtn.addEventListener('click', () => {
+        codeBlock.classList.add('code-show');
+        codeMoreBox.style.display = 'none';
+        
+        window.dispatchEvent(new Event('resize'))
+      })
+      
+      let img = document.createElement('img');
+      img.classList.add('code-more-img');
+      img.src = "https://DSJZS.github.io/icons/codeMore.png"
+      
+      codeMoreBtn.appendChild(img);
+      codeMoreBox.appendChild(codeMoreBtn);
+      codeBlock.appendChild(codeMoreBox)
+    })
+  }
+
+  initCodeMoreBox();
+</script>
+
+
+    </body>
+</html>

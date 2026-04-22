@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。\n如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。\n">
+<title>RTOS开发学习记录(4)：软件定时器</title>
+
+<link rel='canonical' href='https://DSJZS.github.io/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/'>
+
+<link rel="stylesheet" href="/scss/style.min.6c6b4f20171060411edbc9f012965980dce7aae98f02838020a7fa1b6775d425.css"><meta property='og:title' content="RTOS开发学习记录(4)：软件定时器">
+<meta property='og:description' content="前言 在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。\n如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。\n">
+<meta property='og:url' content='https://DSJZS.github.io/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/'>
+<meta property='og:site_name' content='Yuan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='RTOS' /><meta property='article:published_time' content='2026-04-22T10:10:00&#43;08:00'/><meta property='article:modified_time' content='2026-04-22T17:49:09&#43;08:00'/>
+<meta name="twitter:title" content="RTOS开发学习记录(4)：软件定时器">
+<meta name="twitter:description" content="前言 在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。\n如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。\n">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_23a75caddf849e79.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">✨</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Yuan&#39;s Blog</a></h1>
+            <h2 class="site-description">欢迎来到我的个人博客！</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://space.bilibili.com/5477327'
+                        target="_blank"
+                        title="BiliBili"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-brand-bilibili"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 10a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v6a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4v-6z" /><path d="M8 3l2 3" /><path d="M16 3l-2 3" /><path d="M9 13v-2" /><path d="M15 11v2" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/DSJZS'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-circuit-changeover"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 12h2" /><path d="M20 7h2" /><path d="M4 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M16 7a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M20 17h2" /><path d="M16 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M7.5 10.5l8.5 -3.5" /></svg>
+                
+                <span>更新日志</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E7%95%99%E8%A8%80%E6%9D%BF/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>留言板</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/categories-tags/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-tags"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 8v4.172a2 2 0 0 0 .586 1.414l5.71 5.71a2.41 2.41 0 0 0 3.408 0l3.592 -3.592a2.41 2.41 0 0 0 0 -3.408l-5.71 -5.71a2 2 0 0 0 -1.414 -.586h-4.172a2 2 0 0 0 -2 2z" /><path d="M18 19l1.592 -1.592a4.82 4.82 0 0 0 0 -6.816l-4.592 -4.592" /><path d="M7 10h-.01" /></svg>
+                
+                <span>分类&amp;标签</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#系统-tick">系统 tick</a></li>
+    <li><a href="#定时器对象">定时器对象</a></li>
+    <li><a href="#有序链表">有序链表</a></li>
+    <li><a href="#超时检查">超时检查</a></li>
+    <li><a href="#任务延时">任务延时</a></li>
+    <li><a href="#周期延时">周期延时</a></li>
+    <li><a href="#ipc-超时">IPC 超时</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E6%95%99%E7%A8%8B/" style="background-color: #2a8a9dff; color: #fff;">
+                教程
+            </a>
+        
+            <a href="/categories/%E7%AC%94%E8%AE%B0/" style="background-color: #2a9d2cff; color: #fff;">
+                笔记
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/">RTOS开发学习记录(4)：软件定时器</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published" datetime='2026-04-22T10:10:00&#43;08:00'>2026-04-22</time>
+            </div>
+        
+
+        
+        
+        <div class="article-lastmod">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time>
+                    Apr 22, 2026 17:49 &#43;0800
+                </time>
+            </div>
+        <div id="viewCount">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-eye"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+            <time class="article-time--reading">
+                
+                <span id="vercount_value_page_pv">loading... </span>次
+            </time>
+        </div>
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="前言">前言
+</h2><p>在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。</p>
+<p>如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。</p>
+<p>这篇文章记录一下 Yuan RTOS 中软件定时器的实现。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a class="link" href="https://github.com/DSJZS/yuan-rtos"  target="_blank" rel="noopener"
+    >yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="系统-tick">系统 tick
+</h2><p>软件定时器首先需要一个稳定的时间基准。在 Yuan RTOS 中，这个时间基准就是系统 tick：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">volatile</span> <span class="kt">yr_uint32_t</span> <span class="n">yr_current_ticks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>每次硬件定时中断到来时，需要调用：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">yr_tick_update</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>对于 Cortex-M ，一般在  <code>SysTick_Handler()</code> 中调用它。</p>
+<p><code>yr_tick_update()</code> 做的事情主要有三件：</p>
+<ul>
+<li>递增全局 tick 计数</li>
+<li>处理当前任务的时间片</li>
+<li>检查是否有软件定时器超时</li>
+</ul>
+<p>相关逻辑如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="o">++</span><span class="n">yr_current_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">--</span><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">remaining_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span> <span class="n">current_task</span><span class="o">-&gt;</span><span class="n">remaining_ticks</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">current_task</span><span class="o">-&gt;</span><span class="n">remaining_ticks</span> <span class="o">=</span> <span class="n">current_task</span><span class="o">-&gt;</span><span class="n">init_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">yr_sched_yield</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">yr_timer_check</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>也就是说，任务时间片和软件定时器都依赖同一个系统 tick。</p>
+<h2 id="定时器对象">定时器对象
+</h2><p>Yuan RTOS 中的软件定时器结构体如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="kt">yr_timer_t</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_list_t</span> <span class="n">list_node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_timer_func_t</span> <span class="n">timeout_func</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_uint32_t</span> <span class="n">init_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_uint32_t</span> <span class="n">timeout_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kt">yr_timer_t</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中：</p>
+<ul>
+<li><code>list_node</code>：用于挂入定时器链表</li>
+<li><code>timeout_func</code>：超时回调函数</li>
+<li><code>param</code>：传给超时回调的参数</li>
+<li><code>init_ticks</code>：定时器启动后等待多少 tick</li>
+<li><code>timeout_ticks</code>：实际超时的系统 tick 值</li>
+</ul>
+<p>定时器初始化时只会设置这些基础信息，并不会自动启动：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">yr_err_t</span> <span class="nf">yr_timer_init</span><span class="p">(</span> <span class="kt">yr_timer_t</span> <span class="o">*</span><span class="n">timer</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="kt">yr_timer_func_t</span> <span class="n">func</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="kt">yr_uint32_t</span> <span class="n">ticks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">yr_list_init</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">timer</span><span class="o">-&gt;</span><span class="n">list_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">timer</span><span class="o">-&gt;</span><span class="n">timeout_func</span> <span class="o">=</span> <span class="n">func</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timer</span><span class="o">-&gt;</span><span class="n">param</span> <span class="o">=</span> <span class="n">param</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timer</span><span class="o">-&gt;</span><span class="n">init_ticks</span> <span class="o">=</span> <span class="n">ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timer</span><span class="o">-&gt;</span><span class="n">timeout_ticks</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">YR_OK</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="有序链表">有序链表
+</h2><p>Yuan RTOS 使用一个全局链表管理所有已经启动的软件定时器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">yr_list_head_t</span> <span class="n">yr_timer_list</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个链表并不是随便插入的，而是按照超时时间从小到大排序。启动定时器时，会先计算它的绝对超时时刻：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="n">timer</span><span class="o">-&gt;</span><span class="n">timeout_ticks</span> <span class="o">=</span> <span class="n">yr_current_ticks</span> <span class="o">+</span> <span class="n">timer</span><span class="o">-&gt;</span><span class="n">init_ticks</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后遍历定时器链表，找到第一个超时时间比自己更晚的节点，把当前定时器插到它前面：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span> <span class="n">timer_node</span> <span class="o">=</span> <span class="n">yr_timer_list</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="n">timer_node</span> <span class="o">!=</span> <span class="o">&amp;</span><span class="n">yr_timer_list</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="n">timer_node</span> <span class="o">=</span> <span class="n">timer_node</span><span class="o">-&gt;</span><span class="n">next</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">yr_timer_t</span> <span class="o">*</span><span class="n">ptimer</span> <span class="o">=</span> <span class="nf">YR_LIST_ENTRY</span><span class="p">(</span> <span class="n">timer_node</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                        <span class="kt">yr_timer_t</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                        <span class="n">list_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="kt">yr_int32_t</span><span class="p">)(</span> <span class="n">ptimer</span><span class="o">-&gt;</span><span class="n">timeout_ticks</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">timer</span><span class="o">-&gt;</span><span class="n">timeout_ticks</span> <span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">yr_list_insert_before</span><span class="p">(</span> <span class="n">timer_node</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">timer</span><span class="o">-&gt;</span><span class="n">list_node</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样做的好处是检查超时时，只需要从链表头开始检查。只要遇到第一个没超时的定时器，就可以直接停止遍历，因为后面的定时器一定更晚超时。</p>
+<h2 id="超时检查">超时检查
+</h2><p>定时器检查函数的核心逻辑如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="nf">yr_list_isempty</span><span class="p">(</span><span class="o">&amp;</span><span class="n">yr_timer_list</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timer_node</span> <span class="o">=</span> <span class="n">yr_timer_list</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ptimer</span> <span class="o">=</span> <span class="nf">YR_LIST_ENTRY</span><span class="p">(</span> <span class="n">timer_node</span><span class="p">,</span> <span class="kt">yr_timer_t</span><span class="p">,</span> <span class="n">list_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="kt">yr_int32_t</span><span class="p">)(</span> <span class="n">yr_current_ticks</span> <span class="o">-</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">ptimer</span><span class="o">-&gt;</span><span class="n">timeout_ticks</span> <span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">yr_list_delete_self</span><span class="p">(</span> <span class="n">timer_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">yr_list_insert_before</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">timeout_list</span><span class="p">,</span> <span class="n">timer_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里有两个值得注意的地方。</p>
+<p>第一，判断超时使用的是强制转换后的有符号减法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="p">(</span><span class="kt">yr_int32_t</span><span class="p">)(</span><span class="n">yr_current_ticks</span> <span class="o">-</span> <span class="n">ptimer</span><span class="o">-&gt;</span><span class="n">timeout_ticks</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种写法可以在一定范围内处理 tick 溢出的情况，比直接比较两个无符号数更稳妥。</p>
+<p>第二，超时的定时器不是立刻执行回调，而是先移动到一个临时链表 <code>timeout_list</code> 中，之后再统一执行回调：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="nf">yr_list_isempty</span><span class="p">(</span><span class="o">&amp;</span><span class="n">timeout_list</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">timer_node</span> <span class="o">=</span> <span class="n">timeout_list</span><span class="p">.</span><span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ptimer</span> <span class="o">=</span> <span class="nf">YR_LIST_ENTRY</span><span class="p">(</span><span class="n">timer_node</span><span class="p">,</span> <span class="kt">yr_timer_t</span><span class="p">,</span> <span class="n">list_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">yr_list_delete_self</span><span class="p">(</span><span class="n">timer_node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">ptimer</span><span class="o">-&gt;</span><span class="n">timeout_func</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ptimer</span><span class="o">-&gt;</span><span class="nf">timeout_func</span><span class="p">(</span><span class="n">ptimer</span><span class="o">-&gt;</span><span class="n">param</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样做是为了避免回调函数中再次操作定时器链表时破坏当前遍历过程。例如回调中可能会重新启动当前定时器，用于实现周期软件定时器。</p>
+<h2 id="任务延时">任务延时
+</h2><p>软件定时器在 Yuan RTOS 中最直接的用途就是任务延时。每个任务控制块中都有一个定时器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">yr_timer_t</span> <span class="n">timer</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当任务调用 <code>yr_task_sleep_ticks()</code> 时，当前任务会被移出就绪队列，并启动自己的定时器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="nf">yr_sched_remove_task</span><span class="p">(</span> <span class="n">current_task</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">YR_TASK_STATUS_BLOCKED</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">yr_timer_stop</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">timer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">yr_timer_set_ticks</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">timer</span><span class="p">,</span> <span class="n">ticks</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">yr_timer_start</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">timer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">yr_sched_switch</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>此时任务不再参与调度，直到定时器超时。</p>
+<p>任务定时器使用的默认回调是：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">yr_timeout_default_func</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">param</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这个函数会把阻塞任务重新放回就绪队列：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="n">task</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="n">YR_TASK_STATUS_READY</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nf">yr_task_set_msg</span><span class="p">(</span> <span class="n">task</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="nb">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="nb">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">YR_TASK_MR_NONE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">YR_TASK_MN_WAIT_TIMEOUT</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nf">yr_sched_insert_task</span><span class="p">(</span><span class="n">task</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果被唤醒任务的优先级高于当前任务，还会触发一次任务切换。</p>
+<h2 id="周期延时">周期延时
+</h2><p>除了相对延时，Yuan RTOS 还实现了 <code>yr_task_sleep_until()</code>，用于周期任务：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">yr_err_t</span> <span class="nf">yr_task_sleep_until</span><span class="p">(</span><span class="kt">yr_uint32_t</span> <span class="o">*</span><span class="n">pre_ticks</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                             <span class="kt">yr_uint32_t</span> <span class="n">inc_ticks</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="o">*</span><span class="n">pre_ticks</span> <span class="o">+=</span> <span class="n">inc_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">current_ticks</span> <span class="o">=</span> <span class="nf">yr_get_current_ticks</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">((</span><span class="kt">yr_int32_t</span><span class="p">)(</span><span class="o">*</span><span class="n">pre_ticks</span> <span class="o">-</span> <span class="n">current_ticks</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">YR_OK</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">sleep_ticks</span> <span class="o">=</span> <span class="o">*</span><span class="n">pre_ticks</span> <span class="o">-</span> <span class="n">current_ticks</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">yr_task_sleep_ticks</span><span class="p">(</span><span class="n">sleep_ticks</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">YR_OK</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>普通的相对延时大概是“从现在开始延时多少 tick”。而周期延时是“下一次应该在某个绝对 tick 醒来”。</p>
+<p>这样可以减少任务执行时间带来的累计误差，更适合周期采样、周期打印、周期控制等场景。</p>
+<h2 id="ipc-超时">IPC 超时
+</h2><p>软件定时器还有一个重要用途：IPC 等待超时。</p>
+<p>例如任务获取信号量失败时，如果 <code>wait_ticks</code> 不是 <code>0</code>，任务会进入 IPC 阻塞队列。如果 <code>wait_ticks</code> 也不是 <code>YR_WAIT_FOREVER</code>，则会启动当前任务的定时器：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="nf">yr_ipc_block_task</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">sem</span><span class="o">-&gt;</span><span class="n">ipc_base</span><span class="p">,</span> <span class="n">current_task</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span> <span class="n">wait_ticks</span> <span class="o">!=</span> <span class="n">YR_WAIT_FOREVER</span> <span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">yr_timer_set_ticks</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">timer</span><span class="p">,</span> <span class="n">wait_ticks</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">yr_timer_start</span><span class="p">(</span> <span class="o">&amp;</span><span class="n">current_task</span><span class="o">-&gt;</span><span class="n">timer</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果在超时前资源可用，则 IPC 模块会停止这个定时器，并把任务唤醒。</p>
+<p>如果先发生超时，则 <code>yr_timeout_default_func()</code> 会把任务从 IPC 的阻塞链表中删除，并设置通知状态为 <code>YR_TASK_MN_WAIT_TIMEOUT</code>。任务恢复运行后，就可以根据这个状态判断等待是否成功。</p>
+<h2 id="总结">总结
+</h2><p>Yuan RTOS 的软件定时器实现可以概括为：</p>
+<ul>
+<li>使用系统 tick 作为时间基准</li>
+<li>所有已启动定时器挂入一个按超时时间排序的链表</li>
+<li>每次 tick 后检查链表头部已经超时的定时器</li>
+<li>使用临时链表执行超时回调，避免遍历过程中被回调破坏链表</li>
+<li>任务延时和 IPC 超时都复用了同一套定时器机制</li>
+</ul>
+<p>这种实现的优点是结构简单，代码量较少，并且便于理解。缺点是启动定时器时需要遍历链表，定时器数量很多时效率会下降。不过对于轻量化 RTOS 和小型 MCU 项目来说，这个实现已经比较够用了。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/rtos/">RTOS</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            最后更新于 Apr 22, 2026 17:49 &#43;0800
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RTOS开发学习记录(9)：移植</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RTOS开发学习记录(8)：测试</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RTOS开发学习记录(7)：队列</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RTOS开发学习记录(6)：信号量与互斥量</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">RTOS开发学习记录(5)：IPC基础</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script
+    src="https://giscus.app/client.js"
+    data-repo="DSJZS/DSJZS.github.io"
+    data-repo-id="R_kgDOQuMMVg"
+    data-category="Announcements"
+    data-category-id="DIC_kwDOQuMMVs4C0OeT"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    data-loading=""
+    crossorigin="anonymous"
+    async
+></script>
+<script>
+    function setGiscusTheme(theme) {
+        let giscus = document.querySelector("iframe.giscus-frame");
+        if (giscus) {
+            giscus.contentWindow.postMessage(
+                {
+                    giscus: {
+                        setConfig: {
+                            theme: theme,
+                        },
+                    },
+                },
+                "https://giscus.app"
+            );
+        }
+    }
+
+    (function () {
+        addEventListener("message", (e) => {
+            if (event.origin !== "https://giscus.app") return;
+            handler();
+        });
+        window.addEventListener("onColorSchemeChange", handler);
+
+        function handler() {
+            if (document.documentElement.dataset.scheme === "light") {
+                setGiscusTheme('preferred_color_scheme');
+            } else {
+                setGiscusTheme('preferred_color_scheme');
+            }
+        }
+    })();
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 永远null的成元
+    </section>
+    
+    <section class="powerby">
+        
+            不可能被发现的一段文字 :-) <br/>
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.33.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+    
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+
+
+<script defer src="https://cn.vercount.one/js"></script>
+
+<script>
+    function showHideView() {
+        
+        let viewCounts = document.querySelectorAll("#viewCount");
+        if (viewCounts) {
+            
+            let article =  document.querySelector(".article-page");
+            if (!article) {
+                viewCounts.forEach(ele => {
+                    ele.style.display = 'none';
+                });
+            }
+        }
+    }
+    
+    showHideView();
+</script>
+
+
+
+<div id="aplayer"></div>
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+
+<script>
+    const musicDir = "https://DSJZS.github.io/" + 'music/';
+    const songs = [
+        '乖乖报到-MC 张天赋',
+        'Time (ATLUS Kitajoh Remix)-藤田真由美',
+        'Cathy-当山瞳',
+        'Fabulous-BLU SWING',
+        '光影 HIKAGE(feat. 初音ミク)-H.K.君',
+        '白夜狐步舞-丢莱卡WastedLaika',
+        'ミッドナイト・ユア・ステップ (feat. 初音ミク)-ベール_Veil',
+        '视神(feat.初音ミク)-翌川屿芊',
+        '弥留之际(feat.洛天依)-的确如此如确的',
+        '恋-星野源',
+        'Twisted Getaway-Neon Nox',
+        '南京夜无电波讯号(feat.洛天依)-花水',
+        'Running In The Night-FM 84',
+        'Zombies on Your Lawn-Laura Shigihara',
+    ];
+    let audios = [];
+    songs.forEach((item) => {
+        const songInfo = item.split('-');
+        audios.push({
+            name: songInfo[0],
+            artist: songInfo[1],
+            url: musicDir + item + '/song.mp3',
+            cover: musicDir + item + '/cover.jpg',
+            lrc: musicDir + item + '/lyric.lrc',
+        })
+    })
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        lrcType: 3,
+        audio: audios,
+        
+        fixed: true
+    });
+
+    window.onbeforeunload = () => {
+        
+        const playInfo = {
+            index: ap.list.index,
+            currentTime: ap.audio.currentTime,
+            paused: ap.audio.paused,
+        };
+        localStorage.setItem("playInfo", JSON.stringify(playInfo));
+    };
+
+    
+
+    window.onload = () => {
+        
+        const playInfo = JSON.parse(localStorage.getItem("playInfo"));
+        if (!playInfo) {
+            return;
+        }
+        
+        ap.list.switch(playInfo.index);
+        
+        setTimeout(() => {
+            
+            ap.seek(playInfo.currentTime);
+            
+            if (!playInfo.paused) {
+                
+                ap.play()
+            }
+        }, 500);
+    };
+
+</script>
+
+
+
+<style>
+    #backTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        z-index: 99;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        background-image: url(https://DSJZS.github.io/icons/backTop.svg);
+    }
+</style>
+
+<script>
+    
+
+    function initScrollTop() {
+        let rightSideBar = document.querySelector(".right-sidebar");
+        if (!rightSideBar) {
+            return;
+        }
+        
+        let btn = document.createElement("div");
+        btn.id = "backTopBtn";
+        btn.onclick = backToTop
+        rightSideBar.appendChild(btn)
+        
+        window.onscroll = function() {
+            
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    }
+
+    
+
+    function backToTop(){
+        window.scrollTo({ top: 0, behavior: "smooth" })
+    }
+
+    initScrollTop();
+</script>
+
+<style>
+    .highlight {
+         
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .code-show {
+        max-height: none !important;
+    }
+
+    .code-more-box {
+        width: 100%;
+        padding-top: 78px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .code-more-btn {
+        display: block;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+    .code-more-img {
+        cursor: pointer !important;
+        display: block;
+        margin: auto;
+        width: 22px;
+        height: 16px;
+    }
+</style>
+
+<script>
+  function initCodeMoreBox() {
+    let codeBlocks = document.querySelectorAll(".highlight");
+    if (!codeBlocks) {
+      return;
+    }
+    codeBlocks.forEach(codeBlock => {
+      
+      if (codeBlock.scrollHeight <= codeBlock.clientHeight) {
+        return;
+      }
+      
+      
+      let codeMoreBox = document.createElement('div');
+      codeMoreBox.classList.add('code-more-box');
+      
+      let codeMoreBtn = document.createElement('span');
+      codeMoreBtn.classList.add('code-more-btn');
+      codeMoreBtn.addEventListener('click', () => {
+        codeBlock.classList.add('code-show');
+        codeMoreBox.style.display = 'none';
+        
+        window.dispatchEvent(new Event('resize'))
+      })
+      
+      let img = document.createElement('img');
+      img.classList.add('code-more-img');
+      img.src = "https://DSJZS.github.io/icons/codeMore.png"
+      
+      codeMoreBtn.appendChild(img);
+      codeMoreBox.appendChild(codeMoreBtn);
+      codeBlock.appendChild(codeMoreBox)
+    })
+  }
+
+  initCodeMoreBox();
+</script>
+
+
+    </body>
+</html>

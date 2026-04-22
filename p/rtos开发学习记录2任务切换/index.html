@@ -10,7 +10,7 @@
 <meta property='og:description' content="前言 任务切换是 RTOS 最基础的功能，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。\n这篇文章记录一下如何实现 RTOS 的切换。\n完整代码请访问我的Github仓库，网址为：yuan-rtos。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/'>
 <meta property='og:site_name' content='Yuan&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='RTOS' /><meta property='article:published_time' content='2026-04-11T23:46:40&#43;08:00'/><meta property='article:modified_time' content='2026-04-12T21:07:54&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='RTOS' /><meta property='article:published_time' content='2026-04-11T23:46:40&#43;08:00'/><meta property='article:modified_time' content='2026-04-22T17:49:09&#43;08:00'/>
 <meta name="twitter:title" content="RTOS开发学习记录(2)：任务切换">
 <meta name="twitter:description" content="前言 任务切换是 RTOS 最基础的功能，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。\n这篇文章记录一下如何实现 RTOS 的切换。\n完整代码请访问我的Github仓库，网址为：yuan-rtos。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -294,6 +294,7 @@
         <li><a href="#任务间的切换">任务间的切换</a></li>
       </ol>
     </li>
+    <li><a href="#qingkev4-内核下的任务切换">QingKeV4 内核下的任务切换</a></li>
   </ol>
 </nav>
         </div>
@@ -363,7 +364,7 @@
 
 
                 <time>
-                    Apr 12, 2026 21:07 &#43;0800
+                    Apr 22, 2026 17:49 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -393,13 +394,14 @@
 <h2 id="任务切换的原理">任务切换的原理
 </h2><p><strong>对于每个任务而言，执行它们时都要让它们感觉&quot;只有它们自己在运行&quot;</strong>。</p>
 <p><strong>为了实现这个效果，它们要有私有的栈空间，包括 GPR、PC、SP 在内的一些的寄存器的值也要是私有的</strong>。</p>
-<p>前者好实现，比如在C语言中给每个任务单独定义一个全局数组使用即可实现&quot;私有&quot;的属性。但是后者不好实现，因为一个(单核)处理器一般不会有多套 PC、SP 等寄存器，我们不能说给每个任务单独分配一套寄存器。</p>
+<p>私有的栈空间看起来好实现，比如在C语言中给每个任务单独定义一个全局数组使用即可实现&quot;私有&quot;的属性，但是也有说法。<strong>比如很多RTOS都会将任务栈与异常栈(通俗来说就是中断栈)分开以节省空间(因为不分开，每个任务都要加大私有栈以防止中断压栈太多)</strong>，对于 Cortex-M 系列内核来说，这个天然支持，可以利用 MSP 和 PSP 这两个物理栈进行划分，但是对于其它的内核来说，可能就不好实现，需要用到一些技巧。</p>
+<p>私有的寄存器值则是看起来就不好实现，因为一个(单核)处理器一般不会有多套 PC、SP 等寄存器，我们不能说给每个任务单独分配一套寄存器。</p>
 <p>一般来说我们有两种常见的方案来保存每个任务的私有寄存器值：</p>
 <ol>
 <li>在类似&quot;任务控制块&quot;的结构体中添加对应寄存器的成员变量，在任务切换前进行保存，之后被调度重新执行时读取结构体即可。</li>
 <li>任务切换前将寄存器值压入私有栈，之后被调度重新执行时出栈读取寄存器值。</li>
 </ol>
-<p>一般而言，大多数 RTOS 都选择了第二种，这篇文章也是介绍如何实现第二种。</p>
+<p><strong>一般而言，大多数 RTOS 都选择了第二种，这篇文章也是介绍如何实现第二种</strong>。</p>
 <h2 id="cortex-m-系列内核下的任务切换">Cortex-M 系列内核下的任务切换
 </h2><p>对于 Cortex-M 系列内核，一般使用 SVC(服务调用) 异常进入第一个任务，后续任务的切换使用 PendSV 异常完成。下面以 Cortex-M3 内核举例。</p>
 <h3 id="初始化任务">初始化任务
@@ -585,9 +587,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>参数 to 为<strong>目标任务的栈顶指针的指针</strong>。</p>
-<p>函数 yr_task_first_switch_to 首先将 PendSV异常 的优先级拉低，然后触发 SVC 异常。</p>
+<p>函数 yr_task_first_switch_to 首先将 PendSV异常 的优先级到最低(原因参考下文)，然后触发 SVC 异常。</p>
 <p>SVC 异常是同步异常，所以触发后会立刻进入。这里要说明的是在 Cortex-M 系列内核中，异常进入时会往进入前使用的物理栈中压入 R0-R3，R12，LR，PC、XPSR 寄存器的值，退出时则会尝试从物理栈中取出这些寄存器值。</p>
-<p>复位后一般默认使用的物理栈为 MSP，因此这里会将寄存器值自动压入 MSP 栈。不过任务使用 PSP 栈并非 MSP 栈，所以这里压入的寄存器值我们不会用到。</p>
+<p>Cortext-M 系列内核中一般将 MSP 用于异常栈，PSP 用于任务栈，复位后一般默认使用的物理栈为 MSP，因此这里会将寄存器值自动压入 MSP 栈。不过任务使用 PSP 栈并非 MSP 栈，所以这里压入的寄存器值我们不会用到。</p>
 <p>进入 SVC_Handler 后首先就是获取第一个任务的栈顶指针，然后使用 ldmia 操作进行类似出栈的操作，将之前压入用户栈的 yr_context_t 的前半部分依次赋给 {r4-r11}，这些值是多少了？根据 yr_task_stack_init 函数中的操作，这些寄存器值会是全 0。之后将新的栈顶指针写入 PSP。</p>
 <p>然后我们会将 MSP 通过中断向量表第一项的 __inital_sp 重置为初始值，丢弃第一个任务被调度前的调用链(这意味着我们不能再返回 main 函数了)。</p>
 <p>最后异常返回时设置 EXC_RETURN = 0xFFFFFFFD，即返回到 Thread mode，物理栈使用 PSP。</p>
@@ -777,7 +779,10 @@
 </ul>
 <p>可以看到我们是现在 yr_task_switch 中先利用屏蔽中断的功能原子的将 yr_switch_flag 置位表示要进行切换了，并以此保证 yr_prev_task_sp_p 切换前不变，然后将 from 和 to 参数的值原子的保存到 yr_prev_task_sp_p 与 yr_next_task_sp_p 中( 如果 yr_switch_flag 置位了只保存后者 )，然后触发 PendSV 异常，在 PendSV_Handler 中进行任务的切换。</p>
 <p>PendSV_Handler 中先屏蔽掉中断，防止切换被打断，确保切换是原子的，然后通过 yr_switch_flag 判断异常是不是错误的发生了，接着将旧任务的 {r4-r11} 寄存器压入旧任务的栈，新任务的 {r4-r11} 从栈中读到当前 {r4-r11} 中。至于为什么只处理 {r4-r11} ，参考之前提到的 Cortex-M 的异常压栈/出栈机制。</p>
-<p>为什么不直接在 yr_task_switch 中进行切换，而是在 PendSV_Handler 中进行切换？这是因为<strong>上下文切换应该被延后到最低优先级异常里统一完成，而不是在任意调用点立刻发生</strong>，这样会把切换逻辑变得非常难维护(切换可能发生在很多种上下文环境中，有时某些寄存器/栈不适合进行立即切换的操作)。上面给出的方法既能利用 Cortex-M 的异常压栈/出栈机制，又能避免在任意调用点直接切换带来的复杂性和风险。</p>
+<p>为什么不直接在 yr_task_switch 中进行切换，而是在 PendSV_Handler 中进行切换？这是因为<strong>上下文切换应该被延后到最低优先级异常里统一完成，而不是在任意调用点立刻发生</strong>。这样做的好处是无论在那种上下文环境中(比如任务中、中断中)请求切换，最后都会统一到 PendSV_Handler 之中进行实际的切换，这样方便维护(因为我们只用确保在 PendSV_Handler 中寄存器/栈等资源适合进行切换就行了)。此外还能利用 Cortex-M 的异常压栈/出栈机制，实现切换较为方便。</p>
+<h2 id="qingkev4-内核下的任务切换">QingKeV4 内核下的任务切换
+</h2><p>QingKeV4 内核相比于 Cortex-M 系列内核来说，实现任务切换功能较为麻烦。</p>
+<p><strong>与 Cortex-M 系列相比，QingKeV4 没有 MSP 与 PSP 之分，因此异常栈与任务栈之间的切换需要用户自己在中断中自行实现</strong>，这导致中断服务函数即使使用了栈切换函数，如果不使用汇编编写总会占用一部分的任务栈(编译器编译C语言代码时一般在执行栈切换函数之前会添加压栈指令，这是几乎是无法避免的)。<strong>与此同时还要防止中断嵌套破坏栈切换&quot;一进一出&quot;的顺序</strong>，一般而言，要么直接关闭中断嵌套(这可能破坏了一些基于中断的功能的实时性)，要么原子地设置一个标志位来判断是否进行了切换。</p>
 
 </section>
 
@@ -813,7 +818,7 @@
 
 
         <span>
-            最后更新于 Apr 12, 2026 21:07 &#43;0800
+            最后更新于 Apr 22, 2026 17:49 &#43;0800
         </span>
     </section></footer>
 
@@ -832,12 +837,12 @@
             
                 
 <article class="">
-    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">RTOS开发学习记录(1)：程序结构</h2>
+            <h2 class="article-title">RTOS开发学习记录(9)：移植</h2>
         </div>
     </a>
 </article>
@@ -845,12 +850,12 @@
             
                 
 <article class="">
-    <a href="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</h2>
+            <h2 class="article-title">RTOS开发学习记录(8)：测试</h2>
         </div>
     </a>
 </article>
@@ -858,12 +863,12 @@
             
                 
 <article class="">
-    <a href="/p/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</h2>
+            <h2 class="article-title">RTOS开发学习记录(7)：队列</h2>
         </div>
     </a>
 </article>
@@ -871,12 +876,12 @@
             
                 
 <article class="">
-    <a href="/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Linux开发学习记录(10)：如何阅读设备树绑定文档</h2>
+            <h2 class="article-title">RTOS开发学习记录(6)：信号量与互斥量</h2>
         </div>
     </a>
 </article>
@@ -884,12 +889,12 @@
             
                 
 <article class="">
-    <a href="/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/">
+    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</h2>
+            <h2 class="article-title">RTOS开发学习记录(5)：IPC基础</h2>
         </div>
     </a>
 </article>

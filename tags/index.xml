@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>永远null的成元</copyright>
-        <lastBuildDate>Sun, 12 Apr 2026 21:07:54 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 25 Apr 2026 21:29:10 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>FSM</title>
+        <link>https://DSJZS.github.io/tags/fsm/</link>
+        <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/fsm/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>前端</title>
         <link>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
         <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
@@ -128,6 +136,14 @@
         <description></description>
         </item>
         <item>
+        <title>HDL</title>
+        <link>https://DSJZS.github.io/tags/hdl/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/hdl/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Hugo</title>
         <link>https://DSJZS.github.io/tags/hugo/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -197,6 +213,14 @@
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
         <guid>https://DSJZS.github.io/tags/stm32/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Verilog</title>
+        <link>https://DSJZS.github.io/tags/verilog/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://DSJZS.github.io/tags/verilog/</guid>
         <description></description>
         </item>
         <item>

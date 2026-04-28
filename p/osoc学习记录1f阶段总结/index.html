@@ -10,7 +10,7 @@
 <meta property='og:description' content="前言 我是在3月20号接触的OSOC项目，断断续续做了一周，也算是完成 F 阶段了，这里打算每完成一个阶段就记录一篇文章。\n值得注意的是可以看到这篇文章的分类除了教程和笔记还有日常。这是因为我并不打算像前面的几个系列一样，出一个类似手册或者说明性质的文章，告知读者如何快速的完成这个项目，或者每个题目的答案以及完整的解题步骤（因为自我感觉个人水平不足以教会别人，此外如果你阅读过F1部分，就知道这不是项目主办方提倡的做法）。更多的是借助这个项目说明一下自己对某些技术或者行业的看法，以及一些感想，可以说教程、笔记还有日常这三者都沾一点边。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/'>
 <meta property='og:site_name' content='Yuan&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-04-22T18:06:29&#43;08:00'/><meta property='article:modified_time' content='2026-04-25T21:29:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2026-04-22T18:06:29&#43;08:00'/><meta property='article:modified_time' content='2026-04-28T10:35:46&#43;08:00'/>
 <meta name="twitter:title" content="OSOC学习记录(1)：F阶段总结">
 <meta name="twitter:description" content="前言 我是在3月20号接触的OSOC项目，断断续续做了一周，也算是完成 F 阶段了，这里打算每完成一个阶段就记录一篇文章。\n值得注意的是可以看到这篇文章的分类除了教程和笔记还有日常。这是因为我并不打算像前面的几个系列一样，出一个类似手册或者说明性质的文章，告知读者如何快速的完成这个项目，或者每个题目的答案以及完整的解题步骤（因为自我感觉个人水平不足以教会别人，此外如果你阅读过F1部分，就知道这不是项目主办方提倡的做法）。更多的是借助这个项目说明一下自己对某些技术或者行业的看法，以及一些感想，可以说教程、笔记还有日常这三者都沾一点边。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -365,7 +365,7 @@
 
 
                 <time>
-                    Apr 25, 2026 21:29 &#43;0800
+                    Apr 28, 2026 10:35 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -402,7 +402,7 @@
 <p>还有就是加深了我对编译的理解。果然高级语言的代码就应该只“写给人看”，越容易理解越好。反正 CPU 也看不懂 C 语言之类的高级语言，它只认机器指令。很多无所谓的优化，大多数时候除了让别人看不懂以外，感觉没有任何意义。最终编译器会优化并处理成机器指令，让 CPU 看懂就行了。</p>
 <h2 id="f5">F5
 </h2><p>F5 部分承接 F4 的内容，跟着完成了支持 sISA 的 sCPU，同时也体验到了“古法编程”（手搓机器指令）的痛苦，体会到了汇编语言以及高级语言的伟大之处。没有这些编程语言和编译器，给现在支持上千条指令的商业 CPU 编写程序，感觉真要“皆尧舜”才能完成了。</p>
-<p>另外，F5 的最后给出了一个不算任务的问答：“能设计一条让 10 个数相加的指令吗？”我一开始觉得这不是挺好的吗？像 F4 章节给出的汇编指令要 8 行，如果实现了这个指令的话，一行就够了。后来我想了一下，这就和问“在 C 语言里面设计一个能让 10 个数相加的函数有用吗？”一样。如果要实现，我肯定会实现一个“n 个数相加的函数”，而不是固定 10个。所以我改变了对这个问题的看法。我觉得没有必要，ISA 中应该只有尽量通用的指令，而 CPU 中也应该尽可能舍弃不必要的功能，以降低功耗，同时给更重要的功能留出空间。</p>
+<p>另外，F5 的最后给出了一个不算任务的问答：“能设计一条让 10 个数相加的指令吗？”我一开始觉得这不是挺好的吗？像 F4 章节给出的汇编指令要 8 行，如果实现了这个指令的话，一行就够了。后来我想了一下，这就和问“在 C 语言里面设计一个能让 10 个数相加的函数有用吗？”一样。如果要实现，我肯定会实现一个“n 个数相加的函数”，而不是固定 10个。所以我改变了对这个问题的看法。我觉得没有必要，ISA 中应该尽量只留通用的指令，而 CPU 中也应该尽可能舍弃不必要的功能，以降低功耗，同时给更重要的功能留出空间。</p>
 <h2 id="f6">F6
 </h2><p>F6 部分在 F5 的基础上，基于 RV32I 与 RV32E 设计了一个 CPU，即 minirv。在实现 minirv 的过程中，我遇到了很多困难，也体会到了 Logisim 这个软件的局限性，不过最后还是成功显示 Logo 了！</p>
 <p>最后讲义提到了 HDL 语言。这个好像是电子类专业的课程，我的专业不是完全的电子类，所以没怎么看。不过我问了下学弟，他说比较像 C 语言，那应该也不难，应该很快就能学会了。</p>
@@ -437,7 +437,7 @@
 
 
         <span>
-            最后更新于 Apr 25, 2026 21:29 &#43;0800
+            最后更新于 Apr 28, 2026 10:35 &#43;0800
         </span>
     </section></footer>
 
@@ -482,38 +482,38 @@
             
                 
 <article class="">
+    <a href="/p/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9511git%E5%85%A5%E9%97%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Git学习记录(11)：Git入门</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Scala学习记录(1)：语法入门</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/">
         
         
 
         <div class="article-details">
             <h2 class="article-title">HDL学习记录(2)：Verilog常见电路实现</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">HDL学习记录(1)：Verilog入门</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">RTOS开发学习记录(9)：移植</h2>
         </div>
     </a>
 </article>

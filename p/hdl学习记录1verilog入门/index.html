@@ -10,7 +10,7 @@
 <meta property='og:description' content="前言 最近开始学习 Verilog 了。刚开始看的时候会觉得它和 C 语言有点像，但写了一些练习后发现，这种像主要停留在语法表面：C 更像是在描述“程序如何一步一步执行”，Verilog 更像是在描述“一张电路如何连接、何时更新”。\n">
 <meta property='og:url' content='https://DSJZS.github.io/p/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/'>
 <meta property='og:site_name' content='Yuan&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HDL' /><meta property='article:tag' content='Verilog' /><meta property='article:published_time' content='2026-04-23T17:47:27&#43;08:00'/><meta property='article:modified_time' content='2026-04-25T21:29:10&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='HDL' /><meta property='article:tag' content='Verilog' /><meta property='article:published_time' content='2026-04-23T17:47:27&#43;08:00'/><meta property='article:modified_time' content='2026-04-28T10:35:46&#43;08:00'/>
 <meta name="twitter:title" content="HDL学习记录(1)：Verilog入门">
 <meta name="twitter:description" content="前言 最近开始学习 Verilog 了。刚开始看的时候会觉得它和 C 语言有点像，但写了一些练习后发现，这种像主要停留在语法表面：C 更像是在描述“程序如何一步一步执行”，Verilog 更像是在描述“一张电路如何连接、何时更新”。\n">
     <link rel="shortcut icon" href="/img/favicon.ico" />
@@ -287,12 +287,18 @@
   <ol>
     <li><a href="#前言">前言</a></li>
     <li><a href="#基本观念">基本观念</a></li>
-    <li><a href="#module">Module</a></li>
+    <li><a href="#module">Module</a>
+      <ol>
+        <li><a href="#参数-parameter-与-localparam">参数 Parameter 与 Localparam</a></li>
+        <li><a href="#状态机里什么时候用">状态机里什么时候用</a></li>
+      </ol>
+    </li>
     <li><a href="#信号类型">信号类型</a>
       <ol>
         <li><a href="#wire">Wire</a></li>
         <li><a href="#reg">Reg</a></li>
         <li><a href="#隐式-wire">隐式 Wire</a></li>
+        <li><a href="#4-态逻辑01xz">4 态逻辑：0、1、x、z</a></li>
       </ol>
     </li>
     <li><a href="#常量">常量</a></li>
@@ -343,6 +349,18 @@
         <li><a href="#always-里的-for">Always 里的 For</a></li>
         <li><a href="#generate-for">Generate For</a></li>
         <li><a href="#always-与-generate-怎么选">Always 与 Generate 怎么选</a></li>
+      </ol>
+    </li>
+    <li><a href="#仿真与-testbench">仿真与 Testbench</a>
+      <ol>
+        <li><a href="#testbench-基本结构">Testbench 基本结构</a></li>
+        <li><a href="#initial">Initial</a></li>
+        <li><a href="#延时语句">延时语句</a></li>
+        <li><a href="#forever-与时钟产生">Forever 与时钟产生</a></li>
+        <li><a href="#display">Display</a></li>
+        <li><a href="#自检测试">自检测试</a></li>
+        <li><a href="#readmemb-与测试向量">Readmemb 与测试向量</a></li>
+        <li><a href="#哪些更偏仿真专用">哪些更偏仿真专用</a></li>
       </ol>
     </li>
     <li><a href="#从电路题补充的常用写法">从电路题补充的常用写法</a>
@@ -434,7 +452,7 @@
 
 
                 <time>
-                    Apr 25, 2026 21:29 &#43;0800
+                    Apr 28, 2026 10:35 &#43;0800
                 </time>
             </div>
         <div id="viewCount">
@@ -456,7 +474,7 @@
     
     
     <h2 id="前言">前言
-</h2><p>最近开始学习 Verilog 了。刚开始看的时候会觉得它和 C 语言有点像，但写了一些练习后发现，这种像主要停留在语法表面：C 更像是在描述“程序如何一步一步执行”，Verilog 更像是在描述“一张电路如何连接、何时更新”。</p>
+</h2><p>最近开始学习 Verilog 了。刚开始看的时候会觉得它和 C 语言有点像，但写了一些练习后发现，这种像主要停留在语法表面：C 更像是在描述“程序如何一步一步执行”，<strong>Verilog 更像是在描述“一张电路如何连接、何时更新”</strong>。</p>
 <p>这篇文章参考 HDLBits 的 Verilog Language、Combinational Logic 和 Sequential Logic 部分，整理成一份入门语法与示例手册。目的不是记录每一道题怎么解，而是方便以后忘记某个语法时快速翻回来。</p>
 <h2 id="基本观念">基本观念
 </h2><p>Verilog 描述的是硬件电路。很多语句看起来像“赋值”，但实际更像“连线”或者“描述一片电路”。</p>
@@ -468,7 +486,7 @@
 <pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">assign</span> <span class="n">out</span> <span class="o">=</span> <span class="n">in</span><span class="p">;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这不是执行一次赋值，而是表示 <code>out</code> 持续由 <code>in</code> 驱动。只要 <code>in</code> 改变，<code>out</code> 就会跟着改变。</p>
+</div><p><strong>这不是执行一次赋值，而是表示 <code>out</code> 持续由 <code>in</code> 驱动。只要 <code>in</code> 改变，<code>out</code> 就会跟着改变</strong>。</p>
 <p>常见的两类电路：</p>
 <ul>
 <li>组合逻辑：输出只由当前输入决定，例如与门、或门、mux、加法器。</li>
@@ -543,7 +561,175 @@
 </span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>HDLBits 会固定测试模块名和端口名，例如 <code>top_module</code>。做练习时不要随意改端口名，否则测试平台会接不上。</p>
+</div><p>注释写法和 C 类似：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="c1">// 单行注释
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cm">/* 多行注释 */</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="参数-parameter-与-localparam">参数 Parameter 与 Localparam
+</h3><p>如果一个模块有些属性希望可配置，例如位宽、深度、初值，就可以用 <code>parameter</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">mux2</span> <span class="p">#(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">WIDTH</span> <span class="o">=</span> <span class="mh">8</span>
+</span></span><span class="line"><span class="cl"><span class="p">)(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">b</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">sel</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="n">sel</span> <span class="o">?</span> <span class="n">b</span> <span class="o">:</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>例化时可以覆盖参数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="n">mux2</span> <span class="p">#(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">WIDTH</span><span class="p">(</span><span class="mh">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="n">u_mux2</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">sel</span><span class="p">(</span><span class="n">sel</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样同一个模块就可以复用在不同位宽或不同配置下。</p>
+<p>如果参数只希望在模块内部当常量使用，不希望被外部例化时改掉，可以用 <code>localparam</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">example</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">localparam</span> <span class="n">IDLE</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">localparam</span> <span class="n">RUN</span>  <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>两者可以先这样区分：</p>
+<ul>
+<li><code>parameter</code>：模块对外暴露的可配置参数</li>
+<li><code>localparam</code>：模块内部使用的只读常量</li>
+</ul>
+<p>对入门来说，一个很好记的经验是：</p>
+<ul>
+<li>位宽、深度、计数上限这类“希望模块可复用”的量，用 <code>parameter</code></li>
+<li>状态机状态编号、内部固定常量这类“不希望外部乱改”的量，用 <code>localparam</code></li>
+</ul>
+<h3 id="状态机里什么时候用">状态机里什么时候用
+</h3><p>状态机题里经常会写状态定义：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">A</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">B</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">C</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">D</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d3</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>或者 one-hot 写法：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">A</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">B</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">C</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">D</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这里更推荐用 <code>localparam</code>，原因很简单：这些状态编码通常只是模块内部实现细节，不应该让外部例化时随便改掉。</p>
+<p>如果外部真的把状态编码改了，状态转移逻辑、输出逻辑、one-hot 约束可能全都一起失效。</p>
+<p>相反，如果你是在写一个“状态位宽可配置”或者“计数终值可配置”的模块，那就更适合用 <code>parameter</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">counter</span> <span class="p">#(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">WIDTH</span> <span class="o">=</span> <span class="mh">8</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">parameter</span> <span class="n">MAX_VALUE</span> <span class="o">=</span> <span class="mh">8</span><span class="mi">&#39;d255</span>
+</span></span><span class="line"><span class="cl"><span class="p">)(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">clk</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">reset</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="n">WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">q</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">reset</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">WIDTH</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">q</span> <span class="o">==</span> <span class="n">MAX_VALUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">q</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="n">WIDTH</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}};</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span>
+</span></span><span class="line"><span class="cl">            <span class="n">q</span> <span class="o">&lt;=</span> <span class="n">q</span> <span class="o">+</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">end</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>所以状态机里可以先记一个很实用的判断：</p>
+<ul>
+<li>“这是实现细节吗？”如果是，优先 <code>localparam</code></li>
+<li>“这是希望外部能改的配置吗？”如果是，用 <code>parameter</code></li>
+</ul>
 <h2 id="信号类型">信号类型
 </h2><h3 id="wire">Wire
 </h3><p><code>wire</code> 表示连线，常用于组合逻辑连接。<code>input</code> 和 <code>output</code> 如果没有额外说明，默认也是 wire。</p>
@@ -586,6 +772,28 @@
 		data-flex-basis="593px"
 	
 ></p>
+<p>除了 <code>input</code> 和 <code>output</code>，还有一种端口方向是 <code>inout</code>，表示双向端口。它常见于总线型信号或三态接口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">top_module</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="n">ena</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">input</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">d</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">inout</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">bus</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">assign</span> <span class="n">bus</span> <span class="o">=</span> <span class="n">ena</span> <span class="o">?</span> <span class="n">d</span> <span class="o">:</span> <span class="mh">4</span><span class="p">&#39;</span><span class="n">bzzzz</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>不过在 FPGA 设计里，真正的内部三态并不常见，<code>inout</code> 更多用于顶层 I/O 口。</p>
 <h3 id="reg">Reg
 </h3><p><code>reg</code> 容易误解。它不一定代表真实寄存器，而是表示这个信号可以在 procedural block 里被赋值。</p>
 <div class="highlight"><div class="chroma">
@@ -656,6 +864,25 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>这样拼写错误会直接暴露出来。</p>
+<h3 id="4-态逻辑01xz">4 态逻辑：0、1、x、z
+</h3><p>Verilog 信号不只有 <code>0</code> 和 <code>1</code>，还有：</p>
+<ul>
+<li><code>x</code>：未知态、不确定态</li>
+<li><code>z</code>：高阻态</li>
+</ul>
+<p>例如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bx</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">assign</span> <span class="n">bus</span> <span class="o">=</span> <span class="mh">4</span><span class="p">&#39;</span><span class="n">bzzzz</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>x</code> 常见于未初始化、冲突驱动、仿真中未知结果；<code>z</code> 常见于三态总线或未被驱动的线。</p>
+<p>写可综合逻辑时，<code>z</code> 最常见的地方是顶层三态接口；<code>x</code> 更多是仿真时帮助发现问题，而不是主动拿来当设计状态。</p>
 <h2 id="常量">常量
 </h2><p>Verilog 常量常用格式：</p>
 <div class="highlight"><div class="chroma">
@@ -1969,6 +2196,184 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><code>always</code> 是行为描述，会在仿真中由敏感列表触发；<code>generate</code> 是结构生成，不会在运行时触发，它只是在综合前把代码展开成具体硬件结构。</p>
+<h2 id="仿真与-testbench">仿真与 Testbench
+</h2><p>前面写的基本都是“要综合成电路”的代码。Verilog 里还有一类很常用的写法，是给仿真和测试文件用的，也就是 testbench。</p>
+<p>testbench 的目标不是综合成电路，而是：</p>
+<ol>
+<li>例化被测模块。</li>
+<li>生成输入激励。</li>
+<li>观察输出是否符合预期。</li>
+</ol>
+<h3 id="testbench-基本结构">Testbench 基本结构
+</h3><p>一个最简单的 testbench 往往没有输入输出端口：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">module</span> <span class="n">tb</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">reg</span> <span class="n">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">wire</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">top_module</span> <span class="n">dut</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">a</span><span class="p">(</span><span class="n">a</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">b</span><span class="p">(</span><span class="n">b</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">endmodule</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>在 testbench 里，一般有个顺手的经验：</p>
+<ul>
+<li>被测模块的输入，在 testbench 里声明成 <code>reg</code></li>
+<li>被测模块的输出，在 testbench 里声明成 <code>wire</code></li>
+</ul>
+<p>因为 testbench 要主动给输入赋值，而输出通常由 DUT 自动驱动。</p>
+<h3 id="initial">Initial
+</h3><p><code>initial</code> 常用于给仿真构造激励。它在仿真开始时执行一次：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">initial</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">#</span><span class="mh">10</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">#</span><span class="mh">10</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一个 <code>initial</code> 块内部语句按顺序执行；多个 <code>initial</code> 块之间是并发执行的。</p>
+<h3 id="延时语句">延时语句
+</h3><p><code>#</code> 用于描述仿真时间延迟：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="p">#</span><span class="mh">10</span> <span class="n">a</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>它的意思是“延迟 10 个仿真时间单位后再执行后面的语句”。这在 testbench 里很常用，但它不是综合语法，不能拿来描述真实硬件延时电路。</p>
+<h3 id="forever-与时钟产生">Forever 与时钟产生
+</h3><p>testbench 里常常需要自己造一个时钟：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="kt">reg</span> <span class="n">clk</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">initial</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="n">clk</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">forever</span> <span class="p">#</span><span class="mh">5</span> <span class="n">clk</span> <span class="o">=</span> <span class="o">~</span><span class="n">clk</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这表示每 5 个时间单位翻转一次 <code>clk</code>，于是得到周期为 10 的方波。</p>
+<h3 id="display">Display
+</h3><p><code>$display</code> 用来在仿真时打印信息：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">initial</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">b</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">#</span><span class="mh">1</span> <span class="nb">$display</span><span class="p">(</span><span class="s">&#34;a=%b b=%b y=%b&#34;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>当你写自检 testbench 时，它很适合在结果不符合预期时打印错误信息。</p>
+<h3 id="自检测试">自检测试
+</h3><p>testbench 不一定只看波形，也可以自己判断对错：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">initial</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span> <span class="p">#</span><span class="mh">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">$display</span><span class="p">(</span><span class="s">&#34;ERROR: a=0 b=0 y=%b&#34;</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">a</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="p">#</span><span class="mh">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">$display</span><span class="p">(</span><span class="s">&#34;ERROR: a=1 b=1 y=%b&#34;</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这种 testbench 比单纯盯波形更高效，尤其在测试向量很多的时候。</p>
+<h3 id="readmemb-与测试向量">Readmemb 与测试向量
+</h3><p>如果测试数据很多，可以从文件里读测试向量，而不是手写一大串赋值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">vectors</span> <span class="p">[</span><span class="mh">0</span><span class="o">:</span><span class="mh">15</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">initial</span> <span class="k">begin</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">$readmemb</span><span class="p">(</span><span class="s">&#34;example.tv&#34;</span><span class="p">,</span> <span class="n">vectors</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">end</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>$readmemb</code> 表示按二进制文本读入，常用于把测试向量文件加载进数组。类似地还有 <code>$readmemh</code>，按十六进制文本读入。</p>
+<p>这类方式适合：</p>
+<ul>
+<li>枚举很多输入组合</li>
+<li>批量对比期望输出</li>
+<li>存放 ROM 初值或测试数据</li>
+</ul>
+<h3 id="哪些更偏仿真专用">哪些更偏仿真专用
+</h3><p>入门时可以先把下面这些归到“testbench 常用、一般不综合”：</p>
+<ul>
+<li><code>initial</code></li>
+<li><code>#</code> 延时</li>
+<li><code>forever</code></li>
+<li><code>$display</code></li>
+<li><code>$readmemb</code> / <code>$readmemh</code></li>
+</ul>
+<p>而 <code>always</code>、<code>assign</code>、<code>case</code>、<code>if</code>、<code>parameter</code> 这些既能在设计代码里出现，也可能在 testbench 里出现。</p>
 <h2 id="从电路题补充的常用写法">从电路题补充的常用写法
 </h2><p>前面的章节偏语法本身。做完 Combinational Logic 和 Sequential Logic 后，又会反复遇到一些“不是新语法，但非常常用”的写法，可以顺手记在这里。</p>
 <h3 id="边沿检测">边沿检测
@@ -2151,9 +2556,17 @@
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">state</span><span class="p">,</span> <span class="n">next_state</span><span class="p">;</span>
+<pre tabindex="0" class="chroma"><code class="language-verilog" data-lang="verilog"><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">A</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">B</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">localparam</span> <span class="n">C</span> <span class="o">=</span> <span class="mh">2</span><span class="mi">&#39;d2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">state</span><span class="p">,</span> <span class="n">next_state</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span> <span class="k">or</span> <span class="k">posedge</span> <span class="n">areset</span><span class="p">)</span> <span class="k">begin</span>
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">areset</span><span class="p">)</span>
@@ -2173,6 +2586,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>如果输出只依赖状态，就是 Moore 型；如果输出依赖状态和输入，就是 Mealy 型。</p>
+<p>这里状态常量通常用 <code>localparam</code>，因为它们只是模块内部的状态编码，不应该作为对外配置接口暴露出去。</p>
 <h3 id="热独码-one-hot">热独码 One-Hot
 </h3><p>One-hot 编码就是“有多少个状态，就用多少 bit；任意时刻只有一位为 1”。</p>
 <p>例如 4 个状态：</p>
@@ -2335,11 +2749,12 @@
 <li>拼接 <code>{}</code> 里的常量最好显式写位宽。</li>
 <li>批量赋值用 <code>for</code>，批量例化模块用 <code>generate for</code>。</li>
 <li>例化模块时推荐按名字连接端口。</li>
+<li><code>initial</code>、<code>#</code>、<code>forever</code>、<code>$display</code>、<code>$readmemb</code> 更偏 testbench 仿真语法，不是日常 RTL 综合主力。</li>
 <li>建议使用 <code> `default_nettype none</code> 禁止隐式 wire。</li>
 </ul>
 <h2 id="小结">小结
 </h2><p>这篇先整理到 Verilog 入门中最常见的语法：<code>module</code>、<code>wire/reg</code>、<code>assign</code>、运算符、vector、<code>always</code>、<code>if/case</code>、模块例化、<code>for/generate</code>。后面继续学组合逻辑、时序逻辑和状态机时，这些语法基本都会反复出现。</p>
-<p>目前我最需要记住的一句话是：Verilog 不是在写程序执行流程，而是在描述硬件结构与信号更新规则。</p>
+<p>最需要记住的一句话就是是：<strong>Verilog 不是在写程序执行流程，而是在描述硬件结构与信号更新规则</strong>。</p>
 <h2 id="参考资料">参考资料
 </h2><ul>
 <li><a class="link" href="https://hdlbits.01xz.net/wiki/Main_Page"  target="_blank" rel="noopener"
@@ -2398,7 +2813,7 @@
 
 
         <span>
-            最后更新于 Apr 25, 2026 21:29 &#43;0800
+            最后更新于 Apr 28, 2026 10:35 &#43;0800
         </span>
     </section></footer>
 
@@ -2430,6 +2845,32 @@
             
                 
 <article class="">
+    <a href="/p/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9511git%E5%85%A5%E9%97%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Git学习记录(11)：Git入门</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Scala学习记录(1)：语法入门</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/p/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">
         
         
@@ -2449,32 +2890,6 @@
 
         <div class="article-details">
             <h2 class="article-title">RTOS开发学习记录(9)：移植</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">RTOS开发学习记录(8)：测试</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/p/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">RTOS开发学习记录(7)：队列</h2>
         </div>
     </a>
 </article>

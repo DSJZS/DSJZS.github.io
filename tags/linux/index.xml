@@ -2573,16 +2573,9 @@ POLLRDNORM 等同于 POLLIN，普通数据可读&lt;/li&gt;
         <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
         
         <guid>https://DSJZS.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
-        <description>&lt;h2 id=&#34;参考&#34;&gt;参考
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1Bv4y1J7QT/?share_source=copy_web&amp;amp;vd_source=001d8202e6bdc4ef4666a69dde3b47ff&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;无限十三年/从零开始学Makefile&lt;/a&gt; &amp;amp; &lt;a class=&#34;link&#34; href=&#34;https://gitee.com/unlimited13/cpp/tree/master/Make&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;无限十三年/CPP/Make&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://liaoxuefeng.com/books/makefile/introduction/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;廖雪峰/Makefile教程&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.gnu.org/software/make/manual/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;GNU Make Manual&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
+&lt;/h2&gt;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。&lt;/p&gt;
+&lt;p&gt;由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;
 </description>
         </item>
         <item>

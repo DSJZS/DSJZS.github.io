@@ -806,7 +806,7 @@ end
 <li>组合逻辑里建议写 <code>default</code>，或者在 <code>case</code> 前先给默认值。</li>
 </ul>
 <h3 id="casez">Casez</h3>
-<p><code>casez</code> 会把 <code>z</code> 或 <code>?</code> 当成 don&rsquo;t-care。它常用于优先编码器。</p>
+<p><code>casez</code> 会把 <code>z</code> 或 <code>?</code> 当成 don&#39;t-care。它常用于优先编码器。</p>
 <pre><code class="language-verilog">always @(*) begin
     casez (in)
         8'b???????1: pos = 3'd0;
@@ -821,7 +821,7 @@ end
     endcase
 end
 </code></pre>
-<p><code>casex</code> 会把 <code>x</code> 和 <code>z</code> 都当作 don&rsquo;t-care。入门阶段尽量少用 <code>casex</code>，因为 <code>x</code> 可能代表未知值，把未知也忽略会让问题更难调试。</p>
+<p><code>casex</code> 会把 <code>x</code> 和 <code>z</code> 都当作 don&#39;t-care。入门阶段尽量少用 <code>casex</code>，因为 <code>x</code> 可能代表未知值，把未知也忽略会让问题更难调试。</p>
 <h2 id="模块层次">模块层次</h2>
 <p>大电路通常由小模块组成。一个 module 可以在另一个 module 中被例化。</p>
 <pre><code class="language-verilog">module sub_module(

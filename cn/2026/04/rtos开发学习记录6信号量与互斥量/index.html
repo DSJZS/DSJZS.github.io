@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(6)：信号量与互斥量 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(6)：信号量与互斥量 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="上一篇文章记录了 Yuan RTOS 中 IPC 基础层的实现。它主要解决的是“任务如何阻塞”和“任务如何被唤醒”的问题。
+[&amp;hellip;] 这篇文章继续记录两个基于 IPC 基础层实现的同步对象：信号量和互斥量。
+[&amp;hellip;] 完整代码请访问我的Github仓库，网址为：yuan-rtos。
+[&amp;hellip;] 值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(6)：信号量与互斥量</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#信号量">信号量</a></li>
+    <li><a href="#获取信号量">获取信号量</a></li>
+    <li><a href="#释放信号量">释放信号量</a></li>
+    <li><a href="#信号量的中断接口">信号量的中断接口</a></li>
+    <li><a href="#互斥量">互斥量</a></li>
+    <li><a href="#获取互斥量">获取互斥量</a></li>
+    <li><a href="#释放互斥量">释放互斥量</a></li>
+    <li><a href="#优先级继承">优先级继承</a>
+      <ul>
+        <li><a href="#惰性继承">惰性继承</a></li>
+        <li><a href="#为什么最终选择这种方式">为什么最终选择这种方式</a></li>
+        <li><a href="#后续可以怎么改进">后续可以怎么改进</a></li>
+      </ul>
+    </li>
+    <li><a href="#信号量和互斥量的区别">信号量和互斥量的区别</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>上一篇文章记录了 Yuan RTOS 中 IPC 基础层的实现。它主要解决的是“任务如何阻塞”和“任务如何被唤醒”的问题。</p>
+<p>这篇文章继续记录两个基于 IPC 基础层实现的同步对象：信号量和互斥量。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="信号量">信号量</h2>
+<p>信号量可以理解为一个带上限的计数器。它适合用于资源计数，也可以用于任务之间的简单同步。</p>
+<p>Yuan RTOS 中信号量结构体如下：</p>
+<pre><code class="language-C">typedef struct yr_semaphore_t {
+    yr_ipc_base_t ipc_base;
+    yr_uint16_t max_count; 
+    yr_uint16_t current_count;
+} yr_semaphore_t;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>ipc_base</code>：用于管理阻塞任务</li>
+<li><code>max_count</code>：最大计数值</li>
+<li><code>current_count</code>：当前计数值</li>
+</ul>
+<p>初始化时需要设置最大计数值和初始计数值：</p>
+<pre><code class="language-C">yr_err_t yr_semaphore_init( yr_semaphore_t* sem,
+                            yr_uint16_t max_count,
+                            yr_uint16_t init_count,
+                            yr_uint32_t flag)
+{
+    sem-&gt;max_count = max_count;
+    sem-&gt;current_count = init_count;
+
+    return yr_ipc_init( &amp;sem-&gt;ipc_base, flag);
+}
+</code></pre>
+<h2 id="获取信号量">获取信号量</h2>
+<p>获取信号量的函数是：</p>
+<pre><code class="language-C">yr_err_t yr_semaphore_take( yr_semaphore_t* sem,
+                            yr_uint32_t wait_ticks)
+</code></pre>
+<p>如果当前计数大于 0，说明资源可用，直接把计数减 1 后返回：</p>
+<pre><code class="language-C">if( sem-&gt;current_count &gt; 0 ) {
+    sem-&gt;current_count--;
+    return YR_OK;
+}
+</code></pre>
+<p>如果当前计数为 0，并且 <code>wait_ticks == 0</code>，说明调用者不愿意等待，那么直接返回失败。</p>
+<p>如果允许等待，则当前任务会进入信号量的阻塞队列：</p>
+<pre><code class="language-C">yr_task_set_msg( current_task,
+                 (void*)&amp;sem-&gt;ipc_base,
+                 NULL,
+                 YR_TASK_MR_IPC,
+                 YR_TASK_MN_NONE);
+
+yr_ipc_block_task( &amp;sem-&gt;ipc_base, current_task);
+</code></pre>
+<p>如果 <code>wait_ticks</code> 不是 <code>YR_WAIT_FOREVER</code>，还会启动当前任务的定时器，用于处理等待超时：</p>
+<pre><code class="language-C">if( wait_ticks != YR_WAIT_FOREVER ) {
+    yr_timer_set_ticks( &amp;current_task-&gt;timer, wait_ticks);
+    yr_timer_start( &amp;current_task-&gt;timer);
+}
+</code></pre>
+<p>任务被唤醒后，需要检查等待结果：</p>
+<pre><code class="language-C">if( current_task-&gt;msg_info.notify == YR_TASK_MN_WAIT_OK )
+    return YR_OK;
+
+return YR_ERR;
+</code></pre>
+<p>也就是说，任务从阻塞中恢复运行不一定表示获取成功，也可能是超时或者信号量被删除。</p>
+<h2 id="释放信号量">释放信号量</h2>
+<p>释放信号量的函数是：</p>
+<pre><code class="language-C">yr_err_t yr_semaphore_give( yr_semaphore_t* sem)
+</code></pre>
+<p>如果没有任务等待信号量，就直接增加 <code>current_count</code>：</p>
+<pre><code class="language-C">sem-&gt;current_count++;
+</code></pre>
+<p>如果已经达到 <code>max_count</code>，则返回错误。正常使用时，信号量计数不应该超过上限。</p>
+<p>如果有任务正在等待，那么资源不会简单地让 <code>current_count++</code>，而是直接交给阻塞队列中的第一个任务：</p>
+<pre><code class="language-C">task = YR_LIST_ENTRY( sem-&gt;ipc_base.blocked_list.next,
+                      yr_task_t,
+                      list_node);
+
+yr_list_delete_self( &amp;task-&gt;list_node);
+task-&gt;status = YR_TASK_STATUS_READY;
+yr_task_set_msg( task,
+                 NULL,
+                 NULL,
+                 YR_TASK_MR_NONE,
+                 YR_TASK_MN_WAIT_OK);
+yr_timer_stop(&amp;task-&gt;timer);
+yr_sched_insert_task( task);
+</code></pre>
+<p>这样可以避免资源刚释放又被其它任务抢走，语义上更接近“把资源交给等待者”。</p>
+<h2 id="信号量的中断接口">信号量的中断接口</h2>
+<p>信号量提供了两个中断接口：</p>
+<pre><code class="language-C">yr_semaphore_take_from_isr(...)
+yr_semaphore_give_from_isr(...)
+</code></pre>
+<p>中断上下文下有一个重要原则：<strong>不能阻塞</strong>。</p>
+<p>因此 <code>take_from_isr</code> 只能在当前计数大于 0 时成功，否则直接返回错误。</p>
+<p><code>give_from_isr</code> 可以释放信号量，并在有等待任务时唤醒一个任务。如果被唤醒任务优先级高于当前任务，则通过 <code>need_switch</code> 告诉外部需要进行任务切换。</p>
+<h2 id="互斥量">互斥量</h2>
+<p>互斥量用于保护临界资源。它和二值信号量有一点像，但互斥量多了“所有者”的概念，也支持递归持有。</p>
+<p>Yuan RTOS 中互斥量结构体如下：</p>
+<pre><code class="language-C">typedef struct yr_mutex_t {
+    yr_ipc_base_t ipc_base;
+    yr_task_t *owner;
+    yr_uint8_t hold;
+} yr_mutex_t;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>ipc_base</code>：用于管理等待锁的任务</li>
+<li><code>owner</code>：当前持有锁的任务</li>
+<li><code>hold</code>：递归持有深度</li>
+</ul>
+<p>初始化时，锁没有持有者，递归深度为 0：</p>
+<pre><code class="language-C">mutex-&gt;owner = NULL;
+mutex-&gt;hold = 0;
+
+yr_ipc_init( &amp;mutex-&gt;ipc_base, flag);
+</code></pre>
+<h2 id="获取互斥量">获取互斥量</h2>
+<p>如果当前任务已经持有锁，那么再次获取锁只会增加递归深度：</p>
+<pre><code class="language-C">if( mutex-&gt;owner == current_task ) {
+    mutex-&gt;hold++;
+    return YR_OK;
+}
+</code></pre>
+<p>如果锁没有被任何任务持有，则当前任务直接成为锁的拥有者：</p>
+<pre><code class="language-C">mutex-&gt;hold = 1;
+mutex-&gt;owner = current_task;
+current_task-&gt;hold_mutex_count++;
+</code></pre>
+<p>如果锁已经被其它任务持有，并且调用者不愿意等待，则直接返回失败。</p>
+<p>如果允许等待，当前任务会被挂到互斥量的阻塞队列上，并可根据 <code>wait_ticks</code> 启动超时定时器。</p>
+<h2 id="释放互斥量">释放互斥量</h2>
+<p>释放互斥量时，首先要检查当前任务是不是锁的拥有者：</p>
+<pre><code class="language-C">if( mutex-&gt;owner != current_task ) {
+    return YR_ERR;
+}
+</code></pre>
+<p>只有锁的拥有者才能释放锁。</p>
+<p>如果锁被递归持有多次，则释放时只减少递归深度：</p>
+<pre><code class="language-C">if( mutex-&gt;hold &gt; 0 )
+    mutex-&gt;hold--;
+</code></pre>
+<p>只有当 <code>hold</code> 变为 0 时，锁才真正释放。</p>
+<p>如果此时阻塞队列中有等待任务，则取出一个任务唤醒，并把锁直接交给它：</p>
+<pre><code class="language-C">task = YR_LIST_ENTRY( mutex-&gt;ipc_base.blocked_list.next,
+                      yr_task_t,
+                      list_node);
+
+yr_list_delete_self( &amp;task-&gt;list_node);
+task-&gt;status = YR_TASK_STATUS_READY;
+yr_task_set_msg( task,
+                 NULL,
+                 NULL,
+                 YR_TASK_MR_NONE,
+                 YR_TASK_MN_WAIT_OK);
+yr_timer_stop(&amp;task-&gt;timer);
+yr_sched_insert_task( task);
+
+mutex-&gt;owner = task;
+mutex-&gt;hold = 1;
+task-&gt;hold_mutex_count++;
+</code></pre>
+<p>这里和信号量类似，资源会直接交给等待任务，而不是先释放成一个“无主资源”。</p>
+<h2 id="优先级继承">优先级继承</h2>
+<p>互斥量中最需要注意的是优先级反转问题。</p>
+<p>假设低优先级任务持有锁，高优先级任务等待锁，如果此时中优先级任务一直运行，就可能导致高优先级任务迟迟拿不到锁。</p>
+<p>为缓解这个问题，Yuan RTOS 在互斥量中实现了简单的优先级继承：</p>
+<pre><code class="language-C">if( mutex-&gt;owner &amp;&amp;
+    current_task-&gt;current_priority &lt;
+    mutex-&gt;owner-&gt;current_priority ) {
+    yr_task_ctrl_current( mutex-&gt;owner,
+                          YR_TASK_CTL_SET_CUR_PRIORITY,
+                          &amp;current_task-&gt;current_priority,
+                          NULL);
+}
+</code></pre>
+<p>当高优先级任务等待低优先级任务持有的锁时，会临时提升锁拥有者的当前优先级。</p>
+<h3 id="惰性继承">惰性继承</h3>
+<p>不过这里需要说明一点：<strong>Yuan RTOS 当前实现的是一种比较简单的惰性优先级继承</strong>。</p>
+<p>所谓惰性，主要体现在它并不会精确记录“当前任务持有了哪些互斥量、每个互斥量上又分别有哪些任务在等待”。当一个高优先级任务等待某个互斥量时，内核只会把该互斥量的拥有者提升到等待者的优先级。</p>
+<p>这解决了最常见的一类优先级反转问题，但它不是一个非常完美的实现。比如一个任务同时持有多个互斥量时，它因为其中一个互斥量被提升了优先级。之后它释放其中某个锁时，内核并没有重新扫描它仍然持有的所有锁，也没有重新计算“它当前还应该继承到哪个最高优先级”。</p>
+<p>释放锁后，如果任务不再持有任何互斥量，并且当前优先级和初始优先级不同，则恢复初始优先级：</p>
+<pre><code class="language-C">if( current_task-&gt;hold_mutex_count == 0 &amp;&amp;
+    current_task-&gt;current_priority !=
+    current_task-&gt;init_priority ) {
+    yr_task_ctrl_current( current_task,
+                          YR_TASK_CTL_SET_CUR_PRIORITY,
+                          &amp;current_task-&gt;init_priority,
+                          &amp;need_switch);
+}
+</code></pre>
+<p>也就是说，当前实现采用的是比较保守的恢复策略：<strong>只要任务还持有任意互斥量，就暂时不恢复初始优先级；只有当它不再持有任何互斥量时，才恢复初始优先级</strong>。</p>
+<p>这种方式的好处是实现简单，不需要为每个任务维护复杂的持锁关系，也不需要在每次释放锁时做大量扫描。对于一个轻量级 RTOS 来说，这能明显减少代码复杂度、RAM 占用和运行开销。</p>
+<p>它的缺点也很明显：任务可能会比理论上需要的时间更久地保持一个被提升后的优先级。换句话说，它能避免高优先级任务被长期饿死，但不一定能做到“每一刻的任务优先级都完全精确”。</p>
+<h3 id="为什么最终选择这种方式">为什么最终选择这种方式</h3>
+<p>之所以当前选择这种惰性继承，主要是因为这个项目的目标是轻量化。</p>
+<p>如果为了追求完美的优先级继承，就需要保存更多关系。例如任务需要知道自己当前持有哪些锁，锁也需要知道有哪些任务在等待它。释放任意一个锁时，还要重新计算该任务当前应该继承的最高优先级。</p>
+<p>这当然更加准确，但代价也更高：</p>
+<ul>
+<li>任务控制块需要增加额外链表或数组，RAM 占用会上升</li>
+<li>互斥量控制块可能也要保存更多等待关系</li>
+<li><code>take</code> 和 <code>give</code> 路径会变复杂，执行时间变长</li>
+<li>需要处理更多边界情况，比如嵌套持锁、多锁交叉等待、任务删除时的清理</li>
+<li>代码复杂度上升后，调试难度也会明显增加</li>
+</ul>
+<p>对于当前 Yuan RTOS 的定位来说，先实现一个简单、可理解、能覆盖常见场景的优先级继承更合适。因此这里选择了惰性继承，而不是一开始就把互斥量做得非常复杂。</p>
+<h3 id="后续可以怎么改进">后续可以怎么改进</h3>
+<p>如果后续希望把优先级继承做得更准确，可以考虑给任务控制块增加一个“已持有互斥量链表”。大概思路如下：</p>
+<ul>
+<li>每个任务维护自己当前持有的互斥量链表</li>
+<li>每个互斥量维护阻塞等待它的任务队列</li>
+<li>任务释放某个互斥量后，扫描自己仍然持有的所有互斥量</li>
+<li>从这些互斥量的等待队列中找到最高优先级等待者</li>
+<li>将任务当前优先级恢复到 <code>init_priority</code> 与所有继承优先级中的最高者</li>
+</ul>
+<p>这样就能做到更接近“真正的优先级继承”。任务不会因为已经释放了相关互斥量而继续保持不必要的高优先级。</p>
+<p>不过这个方案也有局限。首先，任务控制块要增加链表节点或链表头，互斥量也可能需要更多辅助字段，资源占用会增加。其次，每次释放锁都可能要扫描当前任务持有的锁，再检查锁上的等待队列，执行时间会变慢。最后，实现复杂度提高后，还要认真处理任务删除、互斥量删除、超时等待、优先级动态修改等情况。</p>
+<p>所以这里本质上是一个取舍：<strong>当前实现牺牲了一部分精确性，换来了更小的资源占用、更短的关键路径和更容易维护的代码</strong>。对于一个轻量化 RTOS 的早期实现来说，这是可以接受的。</p>
+<h2 id="信号量和互斥量的区别">信号量和互斥量的区别</h2>
+<p>信号量和互斥量都能让任务阻塞，也都能唤醒等待任务，但它们的语义不同：</p>
+<ul>
+<li>信号量是计数资源，可以由一个任务获取，也可以由另一个任务释放</li>
+<li>互斥量有所有者，只有持有锁的任务才能释放锁</li>
+<li>信号量适合资源计数和任务同步</li>
+<li>互斥量适合保护临界区</li>
+<li>互斥量支持递归持有和优先级继承</li>
+</ul>
+<p>因此不要因为“二值信号量看起来像锁”就把两者完全混用。保护共享资源时，互斥量通常更合适。</p>
+<h2 id="总结">总结</h2>
+<p>Yuan RTOS 中的信号量和互斥量都建立在 IPC 基础层之上：</p>
+<ul>
+<li>信号量通过 <code>current_count</code> 和 <code>max_count</code> 表示资源数量</li>
+<li>信号量获取失败时可以阻塞等待，释放时可以唤醒等待任务</li>
+<li>互斥量记录 <code>owner</code> 和 <code>hold</code>，支持递归持有</li>
+<li>互斥量释放时会把锁直接交给等待任务</li>
+<li>互斥量实现了简单的优先级继承，用于缓解优先级反转</li>
+<li>有限等待时间通过任务定时器实现超时</li>
+</ul>
+<p>这两个同步对象覆盖了嵌入式 RTOS 中非常常见的任务同步和临界区保护需求。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/">RTOS开发学习记录(7)：队列</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/">RTOS开发学习记录(5)：IPC基础</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

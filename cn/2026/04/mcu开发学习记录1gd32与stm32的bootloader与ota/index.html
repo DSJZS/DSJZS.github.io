@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="本文用于记录如何编写 GD32 与 STM32 的 BootLoader。
+[&amp;hellip;] 为什么选择这两款？因为 STM32 可以说是资源最多的一款单片机了，而 GD32 作为其国产替代方案几乎完全兼容 STM32 的固件，两者可以放到一块来学习。
+[&amp;hellip;] BootLoader 是嵌入式系统在上电或复位后最先执行的一段程序，可以把它理解为“位于应用程序之前的裸机启动程序”。 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-04</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/gd32/" class="term-tag">[GD32,</a>
+  
+  <a href="/tags/stm32/" class="term-tag">STM32,</a>
+  
+  <a href="/tags/bootloader/" class="term-tag">Bootloader,</a>
+  
+  <a href="/tags/mcu/" class="term-tag">MCU,</a>
+  
+  <a href="/tags/ota/" class="term-tag">OTA]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#bootloader-简介">BootLoader 简介</a></li>
+    <li><a href="#为什么mcu要有-bootloader">为什么MCU要有 BootLoader?</a></li>
+    <li><a href="#stm32的内置bootloader-isp程序">STM32的内置BootLoader(ISP程序)</a></li>
+    <li><a href="#自定义-bootloader">自定义 BootLoader</a>
+      <ul>
+        <li><a href="#固件管理">固件管理</a>
+          <ul>
+            <li><a href="#串口下载固件功能">串口下载固件功能</a></li>
+            <li><a href="#ota下载固件功能">OTA下载固件功能</a></li>
+            <li><a href="#固件保存功能">固件保存功能</a></li>
+          </ul>
+        </li>
+        <li><a href="#命令行交互">命令行交互</a></li>
+        <li><a href="#跳转到用户程序">跳转到用户程序</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>本文用于记录如何编写 GD32 与 STM32 的 BootLoader。</p>
+<p>为什么选择这两款？因为 STM32 可以说是资源最多的一款单片机了，而 GD32 作为其国产替代方案几乎完全兼容 STM32 的固件，两者可以放到一块来学习。</p>
+<h2 id="bootloader-简介">BootLoader 简介</h2>
+<p>BootLoader 是嵌入式系统在上电或复位后最先执行的一段程序，可以把它理解为“位于应用程序之前的裸机启动程序”。</p>
+<p>它运行在操作系统内核之前，或者在很多 MCU 场景下运行在用户应用程序之前，主要负责完成最基础的硬件准备，并决定后续要启动哪个镜像。</p>
+<p>BootLoader 的典型职责包括：</p>
+<ul>
+<li>初始化必要的硬件资源，如时钟、存储器、串口等</li>
+<li>建立基本的运行环境</li>
+<li>校验应用程序或内核镜像的合法性</li>
+<li>将程序从指定存储位置加载到目标地址并跳转执行</li>
+<li>在需要时进入固件下载、升级或恢复模式</li>
+</ul>
+<p>由于它直接面向底层硬件，不同芯片的启动方式、存储布局和外设初始化流程差异很大，因此 BootLoader 往往具有很强的平台相关性，很难做到完全通用。</p>
+<p>从实现上看，BootLoader 通常可以分为两个阶段：</p>
+<ul>
+<li>早期初始化阶段：通常使用汇编或极少量 C 代码，完成栈、时钟、内存等最基础的初始化</li>
+<li>功能阶段：通常使用 C 语言实现，负责镜像校验、升级、下载、跳转等更复杂的逻辑</li>
+</ul>
+<h2 id="为什么mcu要有-bootloader">为什么MCU要有 BootLoader?</h2>
+<p>对于 SoC 而言，BootLoader 通常是必不可少的。因为这类芯片往往需要先初始化 DDR、时钟、存储控制器等复杂硬件，然后才能加载并启动 Linux、Android 等操作系统。</p>
+<p>而对于 MCU，情况则不同。很多单片机资源简单、上电启动路径固定，应用程序可以直接从片内 Flash 运行，因此在最基础的场景下并不一定需要单独设计一个 BootLoader。</p>
+<p>但是一旦系统需要支持以下能力，就往往需要引入 BootLoader：</p>
+<ul>
+<li>固件升级</li>
+<li>串口 / USB / CAN 下载程序</li>
+<li>OTA 远程升级</li>
+<li>双分区或 A/B 镜像切换</li>
+<li>固件校验与回滚恢复</li>
+<li>避免升级过程中设备变砖</li>
+</ul>
+<p>原因很简单：如果没有 BootLoader，升级时往往只能直接擦除原有应用程序，再写入新固件。<strong>一旦写入过程中断电、通信失败或镜像损坏，设备就可能因为主程序被破坏而无法再次启动，最终变成“砖机”</strong>。而有了 BootLoader 之后，就可以先由它接管启动流程，在一个相对安全的环境中完成下载、校验、写入和跳转，从而显著提高升级的可靠性。</p>
+<h2 id="stm32的内置bootloader-isp程序">STM32的内置BootLoader(ISP程序)</h2>
+<p>以 STM32 为例，芯片内部通常预置了厂商提供的系统启动程序，当芯片复位时，可以通过 BOOT0、BOOT1 等启动配置选择不同的启动方式。</p>
+<p>例如在某些 STM32 型号上，当配置为从 System Memory 启动时(<code>boot0 = 1；boot1 = 0</code>)，芯片会从固定的系统存储区地址开始执行(一般为 0x1FFF0000 )。这个区域中的代码由 ST 在出厂时预先烧录，通常称为片上 BootLoader，也常被称为 ISP 程序。</p>
+<p>这段出厂预置的 BootLoader 通常支持通过串口、USB 等接口下载程序到用户 Flash，从而实现量产烧录或在线升级。也就是说，即使用户自己没有编写额外的 BootLoader，很多 STM32 芯片本身也已经带有一套厂商提供的基础下载机制。</p>
+<h2 id="自定义-bootloader">自定义 BootLoader</h2>
+<p>除了使用官方烧录的 BootLoader，我们自己也可以自定义一个 BootLoader 烧录到MCU之中以实现OTA等功能。</p>
+<p>一般流程是 <strong>MCU 上电/复位后先执行烧录的自定义 BootLoader 判断是否需要进行 OTA 等操作，完成相关操作后再跳转到用户程序</strong>。</p>
+<p>下面介绍 BootLoader 的几个常用功能，以及实现方案与细节。</p>
+<h3 id="固件管理">固件管理</h3>
+<h4 id="串口下载固件功能">串口下载固件功能</h4>
+<p>官方已经烧录好了一个串口下载程序(ISP)，为什么还要自己实现一个？这是因为使用官方的串口下载程序需要按照规定修改 Boot0 与 Boot1 引脚，下载完后还要改回去然后复位，如果没有一键下载电路，那么使用起来十分麻烦！</p>
+<h4 id="ota下载固件功能">OTA下载固件功能</h4>
+<p>对于 MCU 的BootLoader，一般要实现的功能就是 OTA，即空中升级。</p>
+<p>一般由远程服务器发送新版本固件到单片机，单片机接收并利用 BootLoader 自动进行下载。</p>
+<h4 id="固件保存功能">固件保存功能</h4>
+<p>无论是串口还是OTA等方式下载固件，下载到的固件都要先保存，然后再擦除原有固件并替换为新固件。</p>
+<p><strong>因为边下载，边擦除并替换，如果遇到意外下载失败(比如网络连接问题，电池电压突然跳变等等)，那么会出现新固件已经下载一半但没下全，老固件已经被擦除，BootLoader 无处跳转的尴尬局面，如果此时无法重新下载新固件，那么MCU就&quot;变砖&quot;了</strong>。</p>
+<p>一般来说，可以使用以下两种可靠方案。</p>
+<h5 id="①-片内存储器进行双分区">① 片内存储器进行双分区</h5>
+<p>也叫 A-B 分区，这种方案适合片内 Flash 足够大的MCU，要求能同时放下：</p>
+<ul>
+<li>Bootloader</li>
+<li>当前应用</li>
+<li>新应用</li>
+</ul>
+<p>下载步骤如下：</p>
+<ol>
+<li>Bootloader 先把新固件写到备用分区</li>
+<li>校验通过后再切换启动区</li>
+<li>前提是片内 Flash 足够大，能同时放下：
+<ul>
+<li>Bootloader</li>
+<li>当前应用</li>
+<li>新应用</li>
+</ul>
+</li>
+</ol>
+<h5 id="②-利用外置存储器">② 利用外置存储器</h5>
+<p>常用于 MCU 的片内 Flash 不够，或者想保留更大的升级包缓存区甚至保存多个版本固件的常见。</p>
+<p>下载步骤如下：</p>
+<ol>
+<li>先将新固件放到外部存储器中，比如外置 Flash、EEPROM、SD 卡</li>
+<li>Bootloader 上电后从外部存储读取并搬运到目标区域</li>
+</ol>
+<h3 id="命令行交互">命令行交互</h3>
+<p>可以通过串口等方式，与 BootLoader 进行交互，获取指定的数据或者进行一些初始化配置。</p>
+<p>具体实现可以参考 《深入理解计算机系统》 的 shell 实验。</p>
+<h3 id="跳转到用户程序">跳转到用户程序</h3>
+<p>对于GD32、STM32需要完全以下几个步骤：</p>
+<ol>
+<li>跳转到用户程序前，需要将 BootLoader 用到的外设寄存器复位，给用户程序一个干净的运行环境。</li>
+<li>设置SP指针，对于Cortex-M而言，中断向量表的第一项为 __initial_sp ，存储着SP指针的初始值，而中断向量表一般位于程序的最前面，因此知晓用户程序分区的首地址即可获取用户程序的初始值。</li>
+<li>设置PC指针，对于Cortex-M而言，中断向量表的第二项为 Reset_Handler ，即复位处理函数，参考上一步骤，将用户程序 Reset_Handler 的地址设置给PC指针即可。</li>
+<li>其余的寄存器不用关心，因为 BootLoader 到用户程序的过程是单向的，不用保存 BootLoader 的环境。</li>
+</ol>
+<p>显然，上面的需求需要配合汇编指令，对于 GCC 等编译器来说，可以直接在 .c 文件里写汇编函数，特别方便。</p>
+<p>以 STM32 配合 GCC 编译器举例，相关实现如下：</p>
+<pre><code class="language-C">typedef void(*load_user_program_t)(void);
+
+/* 设置SP指针为 address */
+void MSR_SP(uint32_t address)
+{
+    __set_MSP(address);
+}
+
+/* 跳转到 address 开始的用户程序 */
+void STM32_BOOT_LOAD_USER_PROGRAM(uint32_t address) {
+    load_user_program_t load_user_program = NULL;
+    uint32_t* p = (uint32_t *)address;
+
+    /* 
+        p 应该指向用户程序分区的起始位置( 即用户程序中断向量表的顶部，指向用户程序的 __initial_sp ) 
+       *p 即为用户程序初始SP值，应该位于RAM
+       *(p+1) 即为用户程序 Reset_Handler 处理函数的地址
+    */
+    if (*p &gt;= 0x20000000U &amp;&amp; *p &lt;= 0x20005000U) {
+        MSR_SP(*p);
+        load_user_program = (load_user_program_t)*(p + 1);
+
+        /* 一系列 deinit 操作，用于复位使用到的外设 */
+        stm_boot_deinit();
+
+        /* 根据地址，直接调用用户程序的 Reset_Handler */
+        load_user_program();
+    }
+}
+</code></pre>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</a></span>
+  <span><a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/">Linux开发学习记录(10)：如何阅读设备树绑定文档</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

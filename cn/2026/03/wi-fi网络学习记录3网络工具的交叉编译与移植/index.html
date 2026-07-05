@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。
+[&amp;hellip;] 值的注意的是，阅读下文之前，建议先配置好Linux网络驱动。如果你是按照正点原子的开发板与USB网卡进行学习的，可以参考下面两个文章： &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-03-23</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/linux/" class="term-tag">[Linux,</a>
+  
+  <a href="/tags/wi-fi/" class="term-tag">Wi-Fi]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#移植-iw">移植 iw</a></li>
+    <li><a href="#移植-wpa-supplicant">移植 wpa_supplicant</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考文件">参考文件</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。</p>
+<p><strong>值的注意的是，阅读下文之前，建议先配置好Linux网络驱动</strong>。如果你是按照正点原子的开发板与USB网卡进行学习的，可以参考下面两个文章：</p>
+<ul>
+<li><a href="https://akichen891.github.io/2025/04/17/LinuxWifi%E9%A9%B1%E5%8A%A8%E8%B0%83%E8%AF%95/">Linux RTL8188EUS Wifi驱动调试</a></li>
+<li><a href="https://blog.csdn.net/m0_61320035/article/details/140298343?spm=1001.2014.3001.5506">正点原子I.MAX6ULL kernel6.6移植遇到的问题</a></li>
+</ul>
+<h2 id="移植-iw">移植 iw</h2>
+<p>iw依赖libnl库，因此我们要先移植 libnl。<strong>这里建议移植较为新的 libnl ，避免后面编译 iw 时出现版本不兼容的问题</strong>。</p>
+<p>具体的安装方法如下：</p>
+<pre><code class="language-shell"># 从libnl仓库拉取源码并转到3.7版本的分支
+~$ git clone https://github.com/thom311/libnl
+~$ mv libnl libnl-3.7
+~$ mkdir libnl
+~$ cd libnl-3.7
+~/libnl-3.7$ git checkout -b develop libnl3_7_0
+
+# 编译 libnl
+# 这里的交叉编译工具链需要根据对应的平台自行更改
+# 我对应的平台为 aarch64
+~/libnl-3.7$ ./autogen.sh
+~/libnl-3.7$ ./configure \                                                                                       
+    --host=arm-none-linux-gnueabihf \
+    --prefix=$HOME/libnl \
+    CC=arm-none-linux-gnueabihf-gcc
+~/libnl-3.7$ make -j$(nproc)
+~/libnl-3.7$ make install
+
+# 复制编译出来的库到根文件系统下的 /usr/lib/
+# 这里也是根据实际情况修改路径
+~/libnl-3.7$ cd ~/libnl/
+~/libnl$ cp lib/* ../linux/nfs/rootfs/usr/lib/ -rf
+</code></pre>
+<p>然后开始编译 iw。</p>
+<p>具体的安装方法如下：</p>
+<pre><code class="language-shell">~/libnl$ cd ~
+
+# 获取 iw-6.7 的tarball，然后解压获取源码
+~$ wget 'https://git.kernel.org/pub/scm/linux/kernel/git/jberg/iw.git/snapshot/iw-6.7.tar.gz'
+~$ tar -vxf iw-6.7.tar.gz
+~$ cd iw-6.7
+
+# 开始编译
+# 这里全局环境变量中的路径也要根据实际情况修改
+~/iw-6.7$ export PKG_CONFIG_PATH=$HOME/libnl/lib/pkgconfig:$PKG_CONFIG_PATH
+~/iw-6.7$ make CC=arm-none-linux-gnueabihf-gcc -j$(nproc)
+
+# 如果你选择的libnl和iw版本与我的不一样，编译过程可能会中产生如下的错误
+# implicit declaration of function ‘nla_put_s32’
+# 这个是一般是你的 libnl 版本过低了，建议安装较新的 libnl
+
+# 复制编译出的 iw 工具到根文件系统下的 /usr/bin/
+~/iw-6.7$ cp iw ../linux/nfs/rootfs/usr/bin/
+</code></pre>
+<p>最后可以使用 <code>ip link set wlan0 up</code> 或者 <code>ifconfig wlan0 up</code> 开启无线接口，然后执行 <code>iw list</code> 、 <code>iw dev</code> 与 <code>iw dev wlan0 scan</code> 等命令进行测试。</p>
+<h2 id="移植-wpa-supplicant">移植 wpa_supplicant</h2>
+<p>wpa_supplicant 依赖于 openssl，因此需要先移植 openssl。</p>
+<p>具体的安装方法如下：</p>
+<pre><code class="language-shell"># 获取 openssl-1.1.1t 的tarball，然后解压获取源码
+~$ wget 'https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_1t/openssl-1.1.1t.tar.gz'
+~$ mkdir openssl
+~$ cd openssl-1.1.1t
+
+# 开始编译
+~/openssl-1.1.1t$ ./Configure linux-armv4 shared no-asm \
+    --prefix=$HOME/openssl \
+    CROSS_COMPILE=arm-none-linux-gnueabihf-
+
+~/openssl-1.1.1t$ make -j$(nproc)
+~/openssl-1.1.1t$ install
+
+# 复制编译出来的库到根文件系统下的 /usr/lib/
+# 这里也是根据实际情况修改路径
+~/openssl-1.1.1t$ cd ../openssl/lib
+~/openssl$ cp libcrypto.so* ../linux/nfs/rootfs/usr/lib/ -af
+~/openssl$ cp libssl.so*  ../linux/nfs/rootfs/usr/lib/ -af
+</code></pre>
+<p>然后编译 wpa_supplicant。</p>
+<p>具体的安装方法如下：</p>
+<pre><code class="language-shell">~/openssl$ cd ~
+
+# 获取 wpa_supplicant-2.10 的tarball，然后解压获取源码
+~$ wget 'https://w1.fi/releases/wpa_supplicant-2.10.tar.gz'
+~$ tar -vxf wpa_supplicant-2.10.tar.gz
+~$ mkdir wpa_supplicant
+~$ cd wpa_supplicant-2.10/wpa_supplicant
+
+# 配置 .config
+~/wpa_supplicant-2.10/wpa_supplicant$ cp defconfig .config
+~/wpa_supplicant-2.10/wpa_supplicant$ vim .config
+</code></pre>
+<p>vim 需要在 .config 中添加与修改如下的部分：</p>
+<pre><code class="language-txt"># 配置交叉编译工具
+CC=arm-none-linux-gnueabihf-gcc                                                                                                               
+  
+# 配置 openssl 的路径
+CFLAGS += -I$(HOME)/openssl/include
+LIBS += -L$(HOME)/openssl/lib -lssl -lcrypto
+  
+# 配置 libnl 的路径
+CFLAGS += -I$(HOME)/libnl/include/libnl3
+LIBS += -L$(HOME)/libnl/lib
+
+# 注释掉下面两行
+CONFIG_CTRL_IFACE_DBUS_NEW=y
+CONFIG_CTRL_IFACE_DBUS_INTRO=y
+</code></pre>
+<p>配置完成后执行如下的命令即可：</p>
+<pre><code class="language-shell"># 开始编译
+# 这里全局环境变量中的路径也要根据实际情况修改
+~/wpa_supplicant-2.10/wpa_supplicant$ export PKG_CONFIG_PATH=$HOME/libnl/lib/pkgconfig:$PKG_CONFIG_PATH
+~/wpa_supplicant-2.10/wpa_supplicant$ make -j$(nproc)
+
+# 复制编译出的 wpa_cli 与 wpa_supplicant 工具到根文件系统下的 /usr/bin/
+~/wpa_supplicant-2.10/wpa_supplicant$ cp wpa_cli wpa_supplicant ../linux/nfs/rootfs/usr/bin/
+</code></pre>
+<p>最后可以使用 <code>wpa_supplicant -v</code>等命令进行测试。</p>
+<h2 id="总结">总结</h2>
+<p>总而言之，还是那些老套路，先拉取代码，然后配置.config，最后 make 编译，没有什么很难的地方。成功安装上面提到的工具之后，便能愉快的网上冲浪了。</p>
+<h2 id="参考文件">参考文件</h2>
+<ul>
+<li><a href="https://www.cnblogs.com/polariszg/p/18640706">编译iw工具</a></li>
+<li><a href="https://www.cnblogs.com/wanglouxiaozi/p/12828823.html">linux下WIFI模块使用：IW工具交叉编译以及配置</a></li>
+<li><a href="https://www.cnblogs.com/wanglouxiaozi/p/12829235.html">linux下WIFI模块使用：wpa_supplicant工具交叉编译以及配置</a></li>
+<li><a href="https://blog.csdn.net/weixin_45783574/article/details/145810790">WiFi交叉编译全流程（wpa_supplicant及hostapd）</a></li>
+<li><a href="https://dsjzs.github.io/p/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Linux开发学习记录(4)：如何愉快(?)地交叉编译</a></li>
+<li><a href="https://akichen891.github.io/2025/04/17/LinuxWifi%E9%A9%B1%E5%8A%A8%E8%B0%83%E8%AF%95/">Linux RTL8188EUS Wifi驱动调试</a></li>
+<li><a href="https://blog.csdn.net/m0_61320035/article/details/140298343?spm=1001.2014.3001.5506">正点原子I.MAX6ULL kernel6.6移植遇到的问题</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/">Linux开发学习记录(10)：如何阅读设备树绑定文档</a></span>
+  <span><a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/">Linux开发学习记录(9)：构建嵌入式Linux系统</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

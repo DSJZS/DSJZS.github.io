@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Linux开发学习记录(10)：如何阅读设备树绑定文档 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Linux开发学习记录(10)：如何阅读设备树绑定文档 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="前几月学了设备树，期间一直听说有绑定文档这个东西，但是一直没看，最近有时间学习了一下如何阅读绑定文档。
+[&amp;hellip;] 本篇文章对照着下面这篇文章进行解读。来源为 nxp-imx/linux-imx:if-6.12-y 仓库的 Documentation/devicetree/bindings/net/can/fsl,flexcan.yaml。此文档描述了 FlexCAN(CAN控制器外设) &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Linux开发学习记录(10)：如何阅读设备树绑定文档</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-03-30</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/linux/" class="term-tag">[Linux,</a>
+  
+  <a href="/tags/device-tree/" class="term-tag">Device Tree]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+<h2 id="前言">前言</h2>
+<p>前几月学了设备树，期间一直听说有绑定文档这个东西，但是一直没看，最近有时间学习了一下如何阅读绑定文档。</p>
+<h2 id="示例文档的来源">示例文档的来源</h2>
+<p>本篇文章对照着下面这篇文章进行解读。来源为 <a href="https://github.com/nxp-imx/linux-imx/tree/lf-6.12.y">nxp-imx/linux-imx:if-6.12-y</a> 仓库的 <code>Documentation/devicetree/bindings/net/can/fsl,flexcan.yaml</code>。此文档描述了 FlexCAN(CAN控制器外设) 节点下的相关属性信息。</p>
+<pre><code class="language-Device"># SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/net/can/fsl,flexcan.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title:
+  Flexcan CAN controller on Freescale's ARM and PowerPC system-on-a-chip (SOC).
+
+maintainers:
+  - Marc Kleine-Budde &lt;mkl@pengutronix.de&gt;
+
+allOf:
+  - $ref: can-controller.yaml#
+
+properties:
+  compatible:
+    oneOf:
+      - enum:
+          - fsl,imx95-flexcan
+          - fsl,imx93-flexcan
+          - fsl,imx8qm-flexcan
+          - fsl,imx8mp-flexcan
+          - fsl,imx6q-flexcan
+          - fsl,imx28-flexcan
+          - fsl,imx25-flexcan
+          - fsl,p1010-flexcan
+          - fsl,vf610-flexcan
+          - fsl,ls1021ar2-flexcan
+          - fsl,lx2160ar1-flexcan
+      - items:
+          - enum:
+              - fsl,imx53-flexcan
+              - fsl,imx35-flexcan
+          - const: fsl,imx25-flexcan
+      - items:
+          - enum:
+              - fsl,imx7d-flexcan
+              - fsl,imx6ul-flexcan
+              - fsl,imx6sx-flexcan
+          - const: fsl,imx6q-flexcan
+      - items:
+          - enum:
+              - fsl,ls1028ar1-flexcan
+          - const: fsl,lx2160ar1-flexcan
+
+  reg:
+    maxItems: 1
+
+  interrupts:
+    maxItems: 1
+
+  clocks:
+    maxItems: 2
+
+  clock-names:
+    items:
+      - const: ipg
+      - const: per
+
+  clock-frequency:
+    description: |
+      The oscillator frequency driving the flexcan device, filled in by the
+      boot loader. This property should only be used the used operating system
+      doesn't support the clocks and clock-names property.
+
+  power-domains:
+    maxItems: 1
+
+  xceiver-supply:
+    description: Regulator that powers the CAN transceiver.
+
+  big-endian:
+    $ref: /schemas/types.yaml#/definitions/flag
+    description: |
+      This means the registers of FlexCAN controller are big endian. This is
+      optional property.i.e. if this property is not present in device tree
+      node then controller is assumed to be little endian. If this property is
+      present then controller is assumed to be big endian.
+
+  can-transceiver:
+    $ref: can-transceiver.yaml#
+    unevaluatedProperties: false
+
+  fsl,stop-mode:
+    description: |
+      Register bits of stop mode control.
+
+      The format should be as follows:
+      &lt;gpr req_gpr req_bit&gt;
+      gpr is the phandle to general purpose register node.
+      req_gpr is the gpr register offset of CAN stop request.
+      req_bit is the bit offset of CAN stop request.
+    $ref: /schemas/types.yaml#/definitions/phandle-array
+    items:
+      - items:
+          - description: The 'gpr' is the phandle to general purpose register node.
+          - description: The 'req_gpr' is the gpr register offset of CAN stop request.
+            maximum: 0xff
+          - description: The 'req_bit' is the bit offset of CAN stop request.
+            maximum: 0x1f
+
+  fsl,clk-source:
+    description: |
+      Select the clock source to the CAN Protocol Engine (PE). It's SoC
+      implementation dependent. Refer to RM for detailed definition. If this
+      property is not set in device tree node then driver selects clock source 1
+      by default.
+      0: clock source 0 (oscillator clock)
+      1: clock source 1 (peripheral clock)
+    $ref: /schemas/types.yaml#/definitions/uint8
+    default: 1
+    minimum: 0
+    maximum: 1
+
+  wakeup-source:
+    $ref: /schemas/types.yaml#/definitions/flag
+    description:
+      Enable CAN remote wakeup.
+
+  fsl,scu-index:
+    description: |
+      The scu index of CAN instance.
+      For SoCs with SCU support, need setup stop mode via SCU firmware, so this
+      property can help indicate a resource. It supports up to 3 CAN instances
+      now.
+    $ref: /schemas/types.yaml#/definitions/uint8
+    minimum: 0
+    maximum: 2
+
+  termination-gpios: true
+  termination-ohms: true
+
+required:
+  - compatible
+  - reg
+  - interrupts
+
+additionalProperties: false
+
+examples:
+  - |
+    can@1c000 {
+        compatible = &quot;fsl,p1010-flexcan&quot;;
+        reg = &lt;0x1c000 0x1000&gt;;
+        interrupts = &lt;48 0x2&gt;;
+        interrupt-parent = &lt;&amp;mpic&gt;;
+        clock-frequency = &lt;200000000&gt;;
+        fsl,clk-source = /bits/ 8 &lt;0&gt;;
+    };
+  - |
+    #include &lt;dt-bindings/interrupt-controller/irq.h&gt;
+
+    can@2090000 {
+        compatible = &quot;fsl,imx6q-flexcan&quot;;
+        reg = &lt;0x02090000 0x4000&gt;;
+        interrupts = &lt;0 110 IRQ_TYPE_LEVEL_HIGH&gt;;
+        clocks = &lt;&amp;clks 1&gt;, &lt;&amp;clks 2&gt;;
+        clock-names = &quot;ipg&quot;, &quot;per&quot;;
+        fsl,stop-mode = &lt;&amp;gpr 0x34 28&gt;;
+        fsl,scu-index = /bits/ 8 &lt;1&gt;;
+    };
+  - |
+    #include &lt;dt-bindings/interrupt-controller/irq.h&gt;
+    #include &lt;dt-bindings/gpio/gpio.h&gt;
+
+    can@2090000 {
+        compatible = &quot;fsl,imx6q-flexcan&quot;;
+        reg = &lt;0x02090000 0x4000&gt;;
+        interrupts = &lt;0 110 IRQ_TYPE_LEVEL_HIGH&gt;;
+        clocks = &lt;&amp;clks 1&gt;, &lt;&amp;clks 2&gt;;
+        clock-names = &quot;ipg&quot;, &quot;per&quot;;
+        fsl,stop-mode = &lt;&amp;gpr 0x34 28&gt;;
+        termination-gpios = &lt;&amp;gpio1 0 GPIO_ACTIVE_LOW&gt;;
+        termination-ohms = &lt;120&gt;;
+    };
+</code></pre>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/">MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</a></span>
+  <span><a href="/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

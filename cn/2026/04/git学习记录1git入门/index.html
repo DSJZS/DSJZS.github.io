@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Git学习记录(1)：Git入门 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Git学习记录(1)：Git入门 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近开始比较认真地用 Git 了。以前虽然也会 clone、add、commit、push 这些命令，但很多时候其实是“会敲，不算真懂”。尤其是遇到 branch、checkout、reset、rebase 这些命令时，脑子里经常会冒出一个问题：这条命令到底改了什么？改的是文件、分支，还是提交历史？
+[&amp;hellip;] 后来我看了 Explain Git with D3 这个网站，感觉它最大的好 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Git学习记录(1)：Git入门</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-27</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/git/" class="term-tag">[Git]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#一条最小的-git-工作流">一条最小的 Git 工作流</a></li>
+    <li><a href="#git-到底在管理什么">Git 到底在管理什么</a></li>
+    <li><a href="#先搞清楚三个区域">先搞清楚三个区域</a>
+      <ul>
+        <li><a href="#git-status-和-git-log"><code>git status</code> 和 <code>git log</code></a></li>
+        <li><a href="#git-status-到底该怎么看"><code>git status</code> 到底该怎么看</a></li>
+        <li><a href="#git-log-到底该怎么看"><code>git log</code> 到底该怎么看</a></li>
+      </ul>
+    </li>
+    <li><a href="#文中提到的命令如果忘了-怎么继续查">文中提到的命令如果忘了，怎么继续查</a></li>
+    <li><a href="#从零开始的本地操作">从零开始的本地操作</a>
+      <ul>
+        <li><a href="#添加到暂存区">添加到暂存区</a></li>
+        <li><a href="#提交">提交</a></li>
+        <li><a href="#修改-commit-message">修改 commit message</a></li>
+        <li><a href="#为什么修改旧-message-会有风险">为什么修改旧 message 会有风险</a></li>
+        <li><a href="#从暂存区移除-但保留修改">从暂存区移除，但保留修改</a></li>
+        <li><a href="#从暂存区移除-同时丢弃修改">从暂存区移除，同时丢弃修改</a></li>
+      </ul>
+    </li>
+    <li><a href="#分支-head-与当前所在位置">分支、<code>HEAD</code> 与当前所在位置</a></li>
+    <li><a href="#分支的创建-切换与提交">分支的创建、切换与提交</a>
+      <ul>
+        <li><a href="#git-checkout-b"><code>git checkout -b</code></a></li>
+        <li><a href="#checkout-到底在切什么"><code>checkout</code> 到底在切什么</a></li>
+      </ul>
+    </li>
+    <li><a href="#合并两条开发线">合并两条开发线</a>
+      <ul>
+        <li><a href="#merge"><code>merge</code></a></li>
+        <li><a href="#fast-forward">Fast-forward</a></li>
+        <li><a href="#rebase"><code>rebase</code></a></li>
+        <li><a href="#merge-和-rebase-的区别"><code>merge</code> 和 <code>rebase</code> 的区别</a></li>
+      </ul>
+    </li>
+    <li><a href="#撤销-回退与改历史">撤销、回退与改历史</a>
+      <ul>
+        <li><a href="#git-reset"><code>git reset</code></a></li>
+        <li><a href="#reset-之后-原来的提交是不是就没了"><code>reset</code> 之后，原来的提交是不是就没了</a></li>
+        <li><a href="#想找回-reset-之前的位置怎么办">想找回 <code>reset</code> 之前的位置怎么办</a></li>
+        <li><a href="#那旧提交会永久保留吗">那旧提交会永久保留吗</a></li>
+        <li><a href="#checkout-commit-id-和-reset-commit-id-到底是什么关系"><code>checkout &lt;commit-id&gt;</code> 和 <code>reset &lt;commit-id&gt;</code> 到底是什么关系</a></li>
+        <li><a href="#git-revert"><code>git revert</code></a></li>
+        <li><a href="#这几个命令怎么粗略区分">这几个命令怎么粗略区分</a></li>
+      </ul>
+    </li>
+    <li><a href="#标签-给某个提交起一个稳定名字">标签：给某个提交起一个稳定名字</a>
+      <ul>
+        <li><a href="#常见的-tag-用法">常见的 <code>tag</code> 用法</a></li>
+        <li><a href="#轻量标签和附注标签">轻量标签和附注标签</a></li>
+        <li><a href="#tag-和-branch-的区别"><code>tag</code> 和 <code>branch</code> 的区别</a></li>
+        <li><a href="#标签与远程仓库">标签与远程仓库</a></li>
+      </ul>
+    </li>
+    <li><a href="#远程仓库-fetch-pull-push">远程仓库：<code>fetch</code>、<code>pull</code>、<code>push</code></a>
+      <ul>
+        <li><a href="#git-fetch"><code>git fetch</code></a></li>
+        <li><a href="#git-pull"><code>git pull</code></a></li>
+        <li><a href="#git-push"><code>git push</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#子模块-在一个仓库里引用另一个仓库">子模块：在一个仓库里引用另一个仓库</a>
+      <ul>
+        <li><a href="#为什么会需要-submodule">为什么会需要 submodule</a></li>
+        <li><a href="#添加子模块">添加子模块</a></li>
+        <li><a href="#克隆和更新带子模块的仓库">克隆和更新带子模块的仓库</a></li>
+        <li><a href="#子模块仓库更新后-主项目怎么跟上">子模块仓库更新后，主项目怎么跟上</a></li>
+        <li><a href="#在子模块里开发时要注意什么">在子模块里开发时要注意什么</a></li>
+      </ul>
+    </li>
+    <li><a href="#快速手册">快速手册</a>
+      <ul>
+        <li><a href="#新建或获取仓库">新建或获取仓库</a></li>
+        <li><a href="#查看状态与历史">查看状态与历史</a></li>
+        <li><a href="#查看帮助">查看帮助</a></li>
+        <li><a href="#暂存与取消暂存">暂存与取消暂存</a></li>
+        <li><a href="#提交与修改提交信息">提交与修改提交信息</a></li>
+        <li><a href="#分支操作">分支操作</a></li>
+        <li><a href="#合并与整理历史">合并与整理历史</a></li>
+        <li><a href="#撤销与回退">撤销与回退</a></li>
+        <li><a href="#标签">标签</a></li>
+        <li><a href="#远程同步">远程同步</a></li>
+        <li><a href="#子模块">子模块</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近开始比较认真地用 Git 了。以前虽然也会 <code>clone</code>、<code>add</code>、<code>commit</code>、<code>push</code> 这些命令，但很多时候其实是“会敲，不算真懂”。尤其是遇到 <code>branch</code>、<code>checkout</code>、<code>reset</code>、<code>rebase</code> 这些命令时，脑子里经常会冒出一个问题：<strong>这条命令到底改了什么？改的是文件、分支，还是提交历史？</strong></p>
+<p>后来我看了 <a href="https://onlywei.github.io/explain-git-with-d3/#checkout-b">Explain Git with D3</a> 这个网站，感觉它最大的好处不是教人死记命令，而是把 Git 里那些平时看不见的东西可视化了，比如提交图、分支指针、<code>HEAD</code> 的位置，以及 <code>merge</code>、<code>rebase</code> 之后提交历史是怎么变化的。</p>
+<p>这篇文章想同时满足两种阅读方式：</p>
+<ul>
+<li>如果是刚开始接触 Git，可以从头顺着往下看</li>
+<li>如果已经会基本使用，也可以把它当一份偏原理向的快速手册</li>
+</ul>
+<p>如果是第一次系统地看 Git，我会更建议按下面这个顺序理解：</p>
+<ul>
+<li>先搞清楚工作区、暂存区、提交历史</li>
+<li>再搞清楚分支、<code>HEAD</code>、<code>checkout</code></li>
+<li>然后再看 <code>merge</code>、<code>rebase</code>、<code>reset</code> 这些会让人混起来的命令</li>
+<li>最后再补远程仓库、<code>tag</code>、<code>submodule</code></li>
+</ul>
+<h2 id="一条最小的-git-工作流">一条最小的 Git 工作流</h2>
+<p>如果只保留最常见的一条主线，我觉得 Git 的日常使用大概就是下面这些动作：</p>
+<pre><code class="language-bash">git clone &lt;repo-url&gt;
+git status
+git add &lt;file&gt;
+git commit -m &quot;message&quot;
+git pull --rebase
+git push
+</code></pre>
+<p>它们分别对应：</p>
+<ul>
+<li>拿到仓库</li>
+<li>看当前状态</li>
+<li>把改动加入暂存区</li>
+<li>生成一次提交</li>
+<li>先同步远程最新历史</li>
+<li>再把本地提交发到远程</li>
+</ul>
+<p>如果是新建仓库而不是克隆仓库，则起点通常会变成：</p>
+<pre><code class="language-bash">git init
+</code></pre>
+<p>不过如果只是记住这一串命令，后面遇到分支、撤销、改历史时还是容易发晕。所以还得先把 Git 里几个最核心的对象分开。</p>
+<h2 id="git-到底在管理什么">Git 到底在管理什么</h2>
+<p>刚开始接触 Git 时，很容易把它理解成“一个能保存代码历史的工具”。这个理解当然没错，但还是太粗了。</p>
+<p>更具体一点地说，<strong>Git 管理的是一系列提交快照，以及指向这些快照的引用</strong>。</p>
+<p>可以先把一次提交想成“当前项目某一时刻的完整状态”，而不是某个单独文件的补丁。每次 <code>commit</code>，Git 都会记录一份新的项目快照，并把它挂到已有历史后面。</p>
+<p>如果只看最基本的情况，Git 仓库的历史大概像这样：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C
+         ^
+       HEAD
+</code></pre>
+<p>这表示：</p>
+<ul>
+<li><code>A</code>、<code>B</code>、<code>C</code> 是三个提交</li>
+<li><code>C</code> 是当前所在的提交</li>
+<li><code>HEAD</code> 表示“我当前正站在哪里”</li>
+</ul>
+<p>不过仅仅理解提交历史还不够，因为平时真正让人犯晕的，往往不是提交本身，而是工作区、暂存区、分支这些附加概念。</p>
+<h2 id="先搞清楚三个区域">先搞清楚三个区域</h2>
+<p>Git 日常最常打交道的三个区域可以粗略理解成下面这样：</p>
+<pre><code class="language-txt">工作区 Working Tree   -&gt;   暂存区 Index   -&gt;   提交历史 Commit History
+正在修改的文件             准备提交的内容        已经提交的快照
+</code></pre>
+<p>我目前觉得这样记比较顺：</p>
+<ul>
+<li>工作区：磁盘上你正在编辑的真实文件</li>
+<li>暂存区：下一次提交准备带上的内容</li>
+<li>提交历史：已经写进 Git 历史里的内容</li>
+</ul>
+<p>平时最基础的一套流程，其实就是在这三者之间搬运内容：</p>
+<pre><code class="language-bash">git add file.c
+git commit -m &quot;update file.c&quot;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>git add</code>：把工作区的改动放进暂存区</li>
+<li><code>git commit</code>：把暂存区的内容保存成一个新的提交</li>
+</ul>
+<p>所以 <code>git commit</code> 不是直接提交工作区，而是提交“暂存区当前长什么样”。这一点在后面理解 <code>reset</code> 时尤其重要。</p>
+<h3 id="git-status-和-git-log"><code>git status</code> 和 <code>git log</code></h3>
+<p>从零开始用 Git 时，我觉得最应该养成的一个习惯是：<strong>别急着敲修改历史的命令，先看状态</strong>。</p>
+<p>最常看的两个命令是：</p>
+<pre><code class="language-bash">git status
+git log --oneline --graph --decorate
+</code></pre>
+<p>前者主要看：</p>
+<ul>
+<li>工作区有没有改动</li>
+<li>哪些改动已经进入暂存区</li>
+<li>当前在哪个分支</li>
+</ul>
+<p>后者主要看：</p>
+<ul>
+<li>提交历史现在长什么样</li>
+<li>当前分支和别的分支分别指到哪里</li>
+</ul>
+<p>很多 Git 相关问题，只要先跑一下这两个命令，心里就会清楚不少。</p>
+<h3 id="git-status-到底该怎么看"><code>git status</code> 到底该怎么看</h3>
+<p><code>git status</code> 乍看输出很多字，但初学时其实可以只盯住几类信息。</p>
+<p>最常见的是：</p>
+<pre><code class="language-bash">git status
+</code></pre>
+<p>它通常会告诉你：</p>
+<ul>
+<li>当前在哪个分支</li>
+<li>工作区有没有修改但还没暂存</li>
+<li>暂存区里有哪些内容准备提交</li>
+<li>有没有未跟踪的新文件</li>
+</ul>
+<p>例如你经常会看到类似这样的提示：</p>
+<pre><code class="language-txt">On branch main
+Changes to be committed:
+  modified:   a.txt
+
+Changes not staged for commit:
+  modified:   b.txt
+
+Untracked files:
+  c.txt
+</code></pre>
+<p>这几块可以直接理解成：</p>
+<ul>
+<li><code>Changes to be committed</code>：已经进暂存区，下一次 <code>commit</code> 会带上</li>
+<li><code>Changes not staged for commit</code>：工作区改了，但还没 <code>add</code></li>
+<li><code>Untracked files</code>：Git 目前还没跟踪的新文件</li>
+</ul>
+<p>如果把它和前面的“三个区域”对应起来，其实就是在回答三个问题：</p>
+<ul>
+<li>工作区现在乱不乱</li>
+<li>暂存区现在装了什么</li>
+<li>当前分支是不是你以为的那个分支</li>
+</ul>
+<p>所以很多时候，遇到“为什么这个文件没提交进去”或者“为什么我明明改了却看不到”的问题，先看 <code>git status</code> 往往就够了。</p>
+<p>如果想让输出更短一点，也常用：</p>
+<pre><code class="language-bash">git status --short
+</code></pre>
+<p>它会把状态压缩成更适合频繁查看的形式。比如：</p>
+<pre><code class="language-txt">M  a.txt
+ M b.txt
+?? c.txt
+</code></pre>
+<p>这里可以粗略记成：</p>
+<ul>
+<li>左边那一列看暂存区</li>
+<li>右边那一列看工作区</li>
+<li><code>??</code> 表示未跟踪文件</li>
+</ul>
+<p>也就是说：</p>
+<ul>
+<li><code>M  a.txt</code>：已经暂存的修改</li>
+<li><code> M b.txt</code>：只在工作区修改了，还没暂存</li>
+<li><code>?? c.txt</code>：新文件，还没被 Git 跟踪</li>
+</ul>
+<h3 id="git-log-到底该怎么看"><code>git log</code> 到底该怎么看</h3>
+<p>看提交历史时，我最常用的还是：</p>
+<pre><code class="language-bash">git log --oneline --graph --decorate
+</code></pre>
+<p>这几个参数放在一起时特别适合初学：</p>
+<ul>
+<li><code>--oneline</code>：每个提交只显示一行，方便扫一眼历史</li>
+<li><code>--graph</code>：用字符画出分支分叉和合并</li>
+<li><code>--decorate</code>：把 <code>HEAD</code>、分支名、标签名也一起标出来</li>
+</ul>
+<p>例如输出可能长这样：</p>
+<pre><code class="language-txt">* a1b2c3d (HEAD -&gt; main) fix typo
+* d4e5f6a add reset notes
+* 1a2b3c4 init post
+</code></pre>
+<p>这里每一行开头那串像 <code>a1b2c3d</code> 的东西，就是常说的 <strong>commit id 的缩写</strong>。<br>
+很多命令里写的：</p>
+<pre><code class="language-bash">git checkout &lt;commit-id&gt;
+git reset --hard &lt;commit-id&gt;
+git revert &lt;commit-id&gt;
+git tag v1.0.0 &lt;commit-id&gt;
+</code></pre>
+<p>这里的 <code>&lt;commit-id&gt;</code>，很多时候就可以直接从 <code>git log</code> 里抄这一串短 ID。</p>
+<p>如果想看完整 commit id，也可以用：</p>
+<pre><code class="language-bash">git log --oneline --graph --decorate --no-abbrev-commit
+</code></pre>
+<p>或者看某一个提交的完整信息：</p>
+<pre><code class="language-bash">git show &lt;commit-id&gt;
+</code></pre>
+<p>所以如果问题是“我怎么知道某个提交的 commit id”，最直接的答案通常就是：</p>
+<ol>
+<li>先跑 <code>git log --oneline --graph --decorate</code></li>
+<li>找到目标提交那一行</li>
+<li>复制最前面的那串短 ID</li>
+</ol>
+<p>刚开始时，短 ID 一般已经完全够用。只有在仓库特别大、短 ID 可能不够唯一时，才需要更长甚至完整的 commit id。</p>
+<h2 id="文中提到的命令如果忘了-怎么继续查">文中提到的命令如果忘了，怎么继续查</h2>
+<p>Git 的命令很多，不太可能第一次就把所有参数都记住。<br>
+所以我现在更倾向于把两件事一起养成习惯：</p>
+<ul>
+<li>先建立大致的心智模型，知道这条命令在改哪一层</li>
+<li>真要敲细节时，再去查官方手册</li>
+</ul>
+<p>最常用的查询方式一般是：</p>
+<pre><code class="language-bash">git help &lt;command&gt;
+git &lt;command&gt; --help
+</code></pre>
+<p>例如：</p>
+<pre><code class="language-bash">git help status
+git help log
+git help commit
+git help rebase
+git help submodule
+</code></pre>
+<p>如果只是想快速看某个命令现在有哪些子命令或参数，不想直接跳到完整手册页，也可以先试：</p>
+<pre><code class="language-bash">git &lt;command&gt; -h
+</code></pre>
+<p>比如：</p>
+<pre><code class="language-bash">git rebase -h
+git submodule -h
+</code></pre>
+<p>所以后面如果我提到某个命令但没有把所有参数都展开，默认都可以顺着这条路继续查。</p>
+<h2 id="从零开始的本地操作">从零开始的本地操作</h2>
+<p>这一部分按最常见的本地使用顺序整理：先修改文件，再暂存，再提交。<br>
+也就是说，这里先只围绕“一次本地提交本身”展开，暂时不碰分支和远程。</p>
+<h3 id="添加到暂存区">添加到暂存区</h3>
+<p>最常见的加入暂存区方式当然还是：</p>
+<pre><code class="language-bash">git add file.c
+</code></pre>
+<p>如果想把当前目录下已经跟踪的改动和新文件一起加入暂存区，也经常会看到：</p>
+<pre><code class="language-bash">git add .
+</code></pre>
+<p>或者：</p>
+<pre><code class="language-bash">git add -A
+</code></pre>
+<p>它们的细节略有差别，但对初学阶段来说，先记住 <code>git add &lt;file&gt;</code> 和 <code>git add .</code> 已经够用了。</p>
+<h3 id="提交">提交</h3>
+<p>提交最常见的写法是：</p>
+<pre><code class="language-bash">git commit -m &quot;update file.c&quot;
+</code></pre>
+<p>这条命令做的事并不是“把当前所有文件保存一下”，而是把<strong>暂存区当前的状态</strong>保存成一个新的提交。</p>
+<p>如果暂存区里没有内容，那么这个提交通常也不会成功。</p>
+<p>例如如果当前只有 <code>a.txt</code> 已经进了暂存区，而 <code>b.txt</code> 还只是工作区修改，那么：</p>
+<pre><code class="language-bash">git add a.txt
+git commit -m &quot;update a.txt&quot;
+</code></pre>
+<p>这次提交通常只会包含 <code>a.txt</code>，不会自动带上 <code>b.txt</code>。</p>
+<p>这也是为什么很多 Git 问题最后都要回到一句话：<br>
+<strong><code>commit</code> 提交的是暂存区，不是工作区。</strong></p>
+<h3 id="修改-commit-message">修改 commit message</h3>
+<p>刚开始用 Git 时，最常见的一个后悔场景大概就是：提交已经做了，结果发现 <code>commit message</code> 写得太随便，甚至写错了。</p>
+<p>如果只是想修改最近一次提交的日志，最直接的方式通常是：</p>
+<pre><code class="language-bash">git commit --amend
+</code></pre>
+<p>如果你已经想好了新的 message，也可以直接写成：</p>
+<pre><code class="language-bash">git commit --amend -m &quot;better message&quot;
+</code></pre>
+<p>它会让 Git 重新生成最近一次提交，并允许修改提交信息。</p>
+<p>如果只是单纯改 message，不改文件内容，也可以这样理解：</p>
+<ul>
+<li>提交内容基本不变</li>
+<li>但这已经不是原来那个提交对象了</li>
+</ul>
+<p>因为 Git 提交对象里本来就包含提交信息、父提交、作者、时间戳等元数据，所以<strong>只要这些内容变了，提交 ID 也会变</strong>。</p>
+<p>如果要改的不是最近一次，而是更早之前的某个提交，常见做法一般是交互式 rebase：</p>
+<pre><code class="language-bash">git rebase -i &lt;commit-id&gt;^
+</code></pre>
+<p>或者如果只是想改最近几次提交中的某一个，也常写成：</p>
+<pre><code class="language-bash">git rebase -i HEAD~5
+</code></pre>
+<p>这里：</p>
+<ul>
+<li><code>HEAD~5</code> 可以粗略理解成“当前提交往前数 5 个提交”</li>
+<li><code>&lt;commit-id&gt;^</code> 则可以粗略理解成“这个提交的父提交”</li>
+</ul>
+<p>所以 <code>git rebase -i &lt;commit-id&gt;^</code> 这种写法，本质上是为了把目标提交本身也包含进交互式列表里。</p>
+<p>例如执行：</p>
+<pre><code class="language-bash">git rebase -i HEAD~3
+</code></pre>
+<p>编辑器里可能会看到类似这样的内容：</p>
+<pre><code class="language-txt">pick a1b2c3d add intro
+pick d4e5f6a fix typo
+pick 1a2b3c4 add summary
+</code></pre>
+<p>这里每一行都表示一条即将被重新处理的提交：</p>
+<ul>
+<li>最前面的 <code>pick</code> 表示“按原样保留这次提交”</li>
+<li>后面的短 ID 是 commit id</li>
+<li>最后是这次提交的 message</li>
+</ul>
+<p>如果只是想改其中某一次提交的 message，最常见的做法就是把对应那一行前面的 <code>pick</code> 改成 <code>reword</code>。</p>
+<p>例如：</p>
+<pre><code class="language-txt">pick a1b2c3d add intro
+reword d4e5f6a fix typo
+pick 1a2b3c4 add summary
+</code></pre>
+<p>保存并退出编辑器后，Git 会开始重新播放这些提交。<br>
+当它走到 <code>reword</code> 标记的那一条时，会再次打开编辑器，让你修改那次提交的 message。</p>
+<p>改完并再次保存退出后，rebase 通常就会继续执行，直到完成。</p>
+<p>如果这一步让你有点迷惑，通常不是 Git 卡住了，而是 <strong>Git 正在调用你当前配置的编辑器等你修改并保存</strong>。<br>
+如果不确定自己默认用了什么编辑器，也可以通过 <code>git help config</code> 再去查 <code>core.editor</code> 相关配置。</p>
+<p>所以如果只看“修改旧 message”这个场景，交互式 rebase 可以粗略理解成：</p>
+<ol>
+<li>先选出要重写的那一段历史</li>
+<li>告诉 Git 哪一条提交需要改 message</li>
+<li>Git 重新生成那一段提交历史</li>
+</ol>
+<p>从效果上说，这相当于让 Git 从那个位置开始，重新生成后面的提交历史。</p>
+<h3 id="为什么修改旧-message-会有风险">为什么修改旧 message 会有风险</h3>
+<p>这里最关键的一点是：<strong>修改旧提交的 message，本质上是在重写历史</strong>。</p>
+<p>原因并不复杂：</p>
+<ul>
+<li>一个提交对象里包含自己的 message</li>
+<li>一个提交对象还会记录父提交</li>
+<li>只要某个旧提交变了，它后面的提交因为“父提交变了”，也都得跟着重新生成</li>
+</ul>
+<p>也就是说，哪怕你只是把很早以前某个提交里的一个错别字改掉，那个提交以及它后面整串提交的 commit ID 通常都会变化。</p>
+<p>这就会带来几个问题：</p>
+<ul>
+<li>如果这些提交已经 <code>push</code> 到远程了，你后续通常需要 <code>git push --force</code> 或 <code>git push --force-with-lease</code></li>
+<li>别人如果已经基于旧历史继续开发，那么他们本地历史会和你改写后的历史分叉</li>
+<li>后续再 <code>pull</code>、<code>merge</code>、<code>rebase</code> 时会更麻烦，严重时甚至会让协作方误以为你“删掉又重新提交了一大串内容”</li>
+</ul>
+<p>这里如果你还没用过 <code>--force-with-lease</code>，暂时可以先把它理解成“比单纯 <code>--force</code> 更稳妥一点的强制推送”。<br>
+更细的区别可以通过 <code>git push --help</code> 查询。</p>
+<p>所以我目前的做法倾向是：</p>
+<ul>
+<li>只改自己本地、还没共享出去的提交历史</li>
+<li>如果提交已经进入公共分支，就尽量不要为了改 message 去重写历史</li>
+</ul>
+<p>如果只是最近一次提交写错了，而且还没推送，一般问题不大；但如果是公共分支上的旧提交，就要非常谨慎。</p>
+<h3 id="从暂存区移除-但保留修改">从暂存区移除，但保留修改</h3>
+<p>这种情况本质上是“我不想这次提交带上它了，但文件里的修改我还想留着继续改”。</p>
+<p>现在更推荐的写法是：</p>
+<pre><code class="language-bash">git restore --staged file.c
+</code></pre>
+<p>它的效果是：</p>
+<ul>
+<li>暂存区回退</li>
+<li>工作区修改保留</li>
+</ul>
+<p>在很多旧资料里，也会看到：</p>
+<pre><code class="language-bash">git reset HEAD file.c
+</code></pre>
+<p>它也常被用来取消暂存，不过 <code>restore</code> 在语义上更直观一点，因为它明确是在“恢复暂存区状态”，不像 <code>reset</code> 那样一上来就让人联想到改历史。</p>
+<h3 id="从暂存区移除-同时丢弃修改">从暂存区移除，同时丢弃修改</h3>
+<p>如果不仅不想提交，而且连本地修改也不要了，那么就要同时把工作区也恢复掉。</p>
+<p>现在更推荐的写法是：</p>
+<pre><code class="language-bash">git restore --staged --worktree file.c
+</code></pre>
+<p>如果只是丢弃工作区修改，而文件本来没有暂存，也可以直接写：</p>
+<pre><code class="language-bash">git restore file.c
+</code></pre>
+<p>这类命令一定要小心，因为它们的结果通常很难撤销。尤其是 <code>--worktree</code> 相关操作，本质上就是把工作区文件恢复成某个已有快照的样子。</p>
+<h2 id="分支-head-与当前所在位置">分支、<code>HEAD</code> 与当前所在位置</h2>
+<p>很多教程一上来就说“分支是 Git 最强大的功能”，但如果只是记这句话，实际用起来还是容易乱。</p>
+<p>前面把“单次提交到底提交了什么”理顺之后，再看分支会顺很多。因为分支本质上不是一堆特殊文件，而是“指向某个提交的位置”。</p>
+<p>我现在更愿意把分支理解成：<strong>一个指向某个提交的可移动标签</strong>。</p>
+<p>例如：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C
+           ^
+         main
+</code></pre>
+<p>这里 <code>main</code> 只是指向 <code>C</code> 的一个名字。</p>
+<p>如果此时再提交一次：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D
+                ^
+              main
+</code></pre>
+<p>并不是“修改了 main 里面的内容”，而是 Git 先创建了一个新提交 <code>D</code>，然后把 <code>main</code> 这个指针从 <code>C</code> 挪到了 <code>D</code>。</p>
+<p><code>HEAD</code> 通常表示“当前检出的分支”或者“当前检出的提交”。例如：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D
+                ^
+              main
+                ^
+              HEAD
+</code></pre>
+<p>这表示当前在 <code>main</code> 分支上工作。此时如果继续 <code>commit</code>，新的提交会接在 <code>main</code> 后面。</p>
+<h2 id="分支的创建-切换与提交">分支的创建、切换与提交</h2>
+<p><code>git branch dev</code> 的作用并不神秘，它只是新建一个分支指针：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C
+           ^
+         main, dev
+</code></pre>
+<p>注意这时候<strong>只是多了一个名字</strong>，并没有切换过去。当前如果还是在 <code>main</code> 上提交，新提交依旧会长在 <code>main</code> 这条线上。</p>
+<p>真正负责切换位置的是 <code>git checkout</code>：</p>
+<pre><code class="language-bash">git checkout dev
+</code></pre>
+<p>切换后可以理解成：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C
+           ^
+          dev
+           ^
+         HEAD
+
+main 仍然也指向 C
+</code></pre>
+<p>此时如果再提交：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- E
+           ^    ^
+         main  dev
+                ^
+              HEAD
+</code></pre>
+<p>这样分支才真正“分叉”出来。</p>
+<h3 id="git-checkout-b"><code>git checkout -b</code></h3>
+<p><code>git checkout -b dev</code> 本质上就是把下面两步合在一起：</p>
+<pre><code class="language-bash">git branch dev
+git checkout dev
+</code></pre>
+<p>也就是：</p>
+<ul>
+<li>新建 <code>dev</code> 分支</li>
+<li>立刻切换到 <code>dev</code></li>
+</ul>
+<p>这也是 <a href="https://onlywei.github.io/explain-git-with-d3/#checkout-b">Explain Git with D3</a> 里我感觉最直观的一部分，因为它把“建分支”和“切分支”这两个动作分开演示了。刚开始学时很容易把这两个动作混成一件事。</p>
+<h3 id="checkout-到底在切什么"><code>checkout</code> 到底在切什么</h3>
+<p><code>git checkout</code> 不只可以切分支，也可以切到某个具体提交：</p>
+<pre><code class="language-bash">git checkout &lt;commit-id&gt;
+</code></pre>
+<p>这时 <code>HEAD</code> 会直接指向某个提交，而不是某个分支，这通常叫做 detached HEAD 状态。</p>
+<p>可以把它理解成“人站到了某个历史提交上观察”，但并没有站在某个正常分支的末尾。</p>
+<p>例如原来是：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main, HEAD)
+</code></pre>
+<p>执行：</p>
+<pre><code class="language-bash">git checkout B
+</code></pre>
+<p>之后更像这样：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main)
+     ^
+   HEAD
+</code></pre>
+<p>这里最关键的一点是：<strong><code>main</code> 并没有移动，移动的只是你当前所在的位置。</strong></p>
+<p>所以 <code>checkout &lt;commit-id&gt;</code> 的主要用途更像是：</p>
+<ul>
+<li>临时查看旧版本代码</li>
+<li>在某个旧提交上做实验</li>
+<li>排查“从哪个提交开始出问题了”</li>
+</ul>
+<p>这个状态不是不能用，只是如果在这里继续提交，后续管理起来会比较容易迷路。因为这时新提交不会自动长在 <code>main</code> 这种正常分支名后面，而是会变成一段“只有 <code>HEAD</code> 暂时指着它”的历史。</p>
+<p>如果确实想从某个旧提交继续正式开发，更稳妥的写法通常是：</p>
+<pre><code class="language-bash">git checkout -b fix-old-bug &lt;commit-id&gt;
+</code></pre>
+<p>这样相当于：</p>
+<ul>
+<li>先站到那个旧提交上</li>
+<li>再立刻从那里长出一个新分支</li>
+</ul>
+<p>也就是说，<code>checkout</code> 切到旧提交，本身并不等于“把当前分支回退到了旧提交”。这点正好和后面的 <code>reset</code> 构成对比。</p>
+<p>顺便一提，新的 Git 版本里通常也推荐用：</p>
+<pre><code class="language-bash">git switch &lt;branch&gt;
+git switch -c &lt;branch&gt;
+</code></pre>
+<p>来替代一部分 <code>checkout</code> 的分支切换用途。不过很多旧资料和很多实际仓库里的说明，还是会继续使用 <code>checkout</code>，所以这条命令还是得认识。<br>
+如果想进一步看 <code>switch</code> 和 <code>checkout</code> 的边界，也可以通过 <code>git help switch</code> 或 <code>git help checkout</code> 继续查官方手册。</p>
+<h2 id="合并两条开发线">合并两条开发线</h2>
+<p>到了分支这里，后面最常见的问题就变成：两条线怎么合起来。最常见的两个命令就是 <code>merge</code> 和 <code>rebase</code>。</p>
+<h3 id="merge"><code>merge</code></h3>
+<p>假设当前历史是这样：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D   (main)
+      \
+       E &lt;- F      (dev)
+</code></pre>
+<p>如果切回 <code>main</code> 后执行：</p>
+<pre><code class="language-bash">git merge dev
+</code></pre>
+<p>可以粗略理解成：<strong>把 <code>dev</code> 这条线上的成果合到 <code>main</code> 来</strong>。</p>
+<p>如果两边确实已经分叉，Git 通常会新建一个 merge commit：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D ------- M   (main)
+      \                /
+       E &lt;- F --------'     (dev)
+</code></pre>
+<p>这个 <code>M</code> 有两个父提交，所以它明确表示“这里发生过一次合并”。</p>
+<h3 id="fast-forward">Fast-forward</h3>
+<p>有时不会生成新的 merge commit。</p>
+<p>例如当前历史是：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main)
+           \
+            D &lt;- E   (dev)
+</code></pre>
+<p>如果 <code>main</code> 其实一直没继续往前走，而 <code>dev</code> 只是单纯比它多了几个提交，那么：</p>
+<pre><code class="language-bash">git checkout main
+git merge dev
+</code></pre>
+<p>Git 往往只需要把 <code>main</code> 指针直接挪到 <code>E</code>，这就叫 fast-forward：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D &lt;- E
+                     ^
+                  main, dev
+</code></pre>
+<p>这种情况下没有真正的“分叉后再汇合”，所以也不需要额外新建一个 merge commit。</p>
+<h3 id="rebase"><code>rebase</code></h3>
+<p><code>merge</code> 和 <code>rebase</code> 都能把两条开发线合起来，但思路不太一样。</p>
+<p>还是看这个例子：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D   (main)
+      \
+       E &lt;- F      (dev)
+</code></pre>
+<p>如果在 <code>dev</code> 上执行：</p>
+<pre><code class="language-bash">git rebase main
+</code></pre>
+<p>可以把它理解成：<strong>把 <code>dev</code> 独有的提交摘下来，再接到 <code>main</code> 当前末尾后面</strong>。</p>
+<p>结果会更像这样：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C &lt;- D &lt;- E' &lt;- F'   (dev)
+</code></pre>
+<p>这里的 <code>E'</code>、<code>F'</code> 不是原来的 <code>E</code>、<code>F</code>，而是“内容相似但提交 ID 已经变了的新提交”。</p>
+<p>如果写成：</p>
+<pre><code class="language-bash">git rebase -i &lt;commit-id&gt;
+git rebase -i HEAD~5
+</code></pre>
+<p>这里的 <code>-i</code> 就是 interactive，也就是“交互式”。<br>
+它的意思并不是 Git 会弹出一个图形界面，而是：<strong>Git 会先把即将处理的那几次提交列成一个可编辑列表，让你决定每个提交接下来要怎么处理。</strong></p>
+<p>交互式列表里最常见的几个动作是：</p>
+<ul>
+<li><code>pick</code>：保留这次提交</li>
+<li><code>reword</code>：保留提交内容，但修改提交 message</li>
+<li><code>edit</code>：停下来，让你手动修改这次提交</li>
+<li><code>squash</code>：把这次提交压到前一条提交里，并合并 message</li>
+<li><code>drop</code>：丢掉这次提交</li>
+</ul>
+<p>这也是为什么很多资料都会强调：<strong>不要随便 rebase 已经共享给别人的提交</strong>。因为它本质上是在改写历史，不只是改个名字那么简单。</p>
+<h3 id="merge-和-rebase-的区别"><code>merge</code> 和 <code>rebase</code> 的区别</h3>
+<p>我目前对这两个命令的理解可以简化成：</p>
+<ul>
+<li><code>merge</code>：保留分叉与汇合的痕迹</li>
+<li><code>rebase</code>：把自己的提交重新排到另一条线后面，让历史看起来更直</li>
+</ul>
+<p>所以很多时候：</p>
+<ul>
+<li>如果是公共分支、共享历史，<code>merge</code> 往往更稳妥</li>
+<li>如果是自己本地分支还没推送，<code>rebase</code> 常常能把历史整理得更干净</li>
+</ul>
+<p>当然这也和团队规范有关，不同项目习惯可能不一样。</p>
+<h2 id="撤销-回退与改历史">撤销、回退与改历史</h2>
+<p>Git 最容易让人头疼的一点是，很多命令都像是在“撤销”，但撤销的对象并不一样。</p>
+<p>我目前觉得最重要的区分是：</p>
+<ul>
+<li><code>restore</code>：更偏向恢复文件状态</li>
+<li><code>reset</code>：更偏向移动当前位置</li>
+<li><code>revert</code>：更偏向额外新建一次反向提交</li>
+</ul>
+<h3 id="git-reset"><code>git reset</code></h3>
+<p>如果当前历史是：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main, HEAD)
+</code></pre>
+<p>执行：</p>
+<pre><code class="language-bash">git reset --soft HEAD^
+</code></pre>
+<p>可以理解成先把 <code>main</code> 从 <code>C</code> 挪回 <code>B</code>，但保留改动在暂存区。</p>
+<p>这里的 <code>HEAD^</code> 只是一个常见写法，不是 <code>reset</code> 的限制。<br>
+实际上它也可以直接指向任意提交：</p>
+<pre><code class="language-bash">git reset --soft &lt;commit-id&gt;
+git reset --mixed &lt;commit-id&gt;
+git reset --hard &lt;commit-id&gt;
+</code></pre>
+<p>也就是说，<code>reset</code> 的本质并不是“只能回退一步”，而是：<strong>把当前分支指针重置到你指定的位置</strong>。</p>
+<p>如果是：</p>
+<pre><code class="language-bash">git reset --mixed HEAD^
+</code></pre>
+<p>则通常是把分支挪回去，并把改动留在工作区，但不再保留为“已暂存”。<code>--mixed</code> 也是默认模式。</p>
+<p>如果是：</p>
+<pre><code class="language-bash">git reset --hard HEAD^
+</code></pre>
+<p>那就更激进了：<strong>分支、暂存区、工作区一起回到 <code>B</code> 的状态</strong>。</p>
+<p>这条命令很方便，但也最危险，因为当前工作区里尚未保存的改动可能会直接丢掉。</p>
+<h3 id="reset-之后-原来的提交是不是就没了"><code>reset</code> 之后，原来的提交是不是就没了</h3>
+<p>这也是 <code>reset</code> 最容易让人误会的地方。</p>
+<p>假设原来是：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main, HEAD)
+</code></pre>
+<p>如果执行：</p>
+<pre><code class="language-bash">git reset --hard B
+</code></pre>
+<p>表面上会变成：</p>
+<pre><code class="language-txt">A &lt;- B   (main, HEAD)
+
+C
+</code></pre>
+<p>这里更准确的说法不是“<code>C</code> 被立刻删除了”，而是：<strong>当前已经没有常规分支名指向 <code>C</code> 了。</strong></p>
+<p>也就是说：</p>
+<ul>
+<li><code>main</code> 被挪回了 <code>B</code></li>
+<li><code>C</code> 这个提交对象往往还会暂时留在 Git 仓库里</li>
+<li>只是它变成了一个“不再被当前分支引用”的提交</li>
+</ul>
+<p>所以在很多情况下，<code>reset</code> 之后的旧提交其实<strong>暂时还是可以找回来的</strong>，并不是马上彻底消失。</p>
+<h3 id="想找回-reset-之前的位置怎么办">想找回 <code>reset</code> 之前的位置怎么办</h3>
+<p>最常见的办法是看：</p>
+<pre><code class="language-bash">git reflog
+</code></pre>
+<p><code>reflog</code> 可以理解成 <code>HEAD</code> 和分支指针移动历史。<br>
+你执行过 <code>checkout</code>、<code>commit</code>、<code>reset</code>、<code>rebase</code> 之类操作后，Git 往往会把“你之前站在哪里”记下来。</p>
+<p>例如可能看到：</p>
+<pre><code class="language-txt">abc1234 HEAD@{0}: reset: moving to B
+def5678 HEAD@{1}: commit: add reset notes
+</code></pre>
+<p>这时如果你发现刚才 <code>reset</code> 过头了，通常就还能切回去：</p>
+<pre><code class="language-bash">git checkout def5678
+</code></pre>
+<p>或者直接把分支挪回去：</p>
+<pre><code class="language-bash">git reset --hard def5678
+</code></pre>
+<p>所以从实用角度看：</p>
+<ul>
+<li><code>git log</code> 主要看“当前可见的正式历史”</li>
+<li><code>git reflog</code> 更像看“我最近把 <code>HEAD</code> 和分支挪到过哪里”</li>
+</ul>
+<h3 id="那旧提交会永久保留吗">那旧提交会永久保留吗</h3>
+<p>通常也不能把这件事理解成“永远安全”。</p>
+<p>如果一个旧提交已经没有任何分支、标签等引用再指向它，而且经过一段时间后 Git 做垃圾回收，那么这些提交最终是可能真的被清理掉的。</p>
+<p>所以更稳妥的理解是：</p>
+<ul>
+<li><code>reset</code> 后旧提交通常不会立刻消失</li>
+<li>短时间内往往还能靠 <code>reflog</code> 找回来</li>
+<li>但如果一直没有任何引用再指向它，它并不是保证永久保留的</li>
+</ul>
+<p>也正因为这样，执行 <code>reset --hard</code> 之前最好先确认：</p>
+<ul>
+<li>这个提交是不是已经推送给别人了</li>
+<li>你是不是还可能后悔，想回到 reset 之前</li>
+<li>有没有必要先记一下 <code>git log</code> 或 <code>git reflog</code></li>
+</ul>
+<h3 id="checkout-commit-id-和-reset-commit-id-到底是什么关系"><code>checkout &lt;commit-id&gt;</code> 和 <code>reset &lt;commit-id&gt;</code> 到底是什么关系</h3>
+<p>这两个命令很容易一起让人犯晕，因为它们都能让你“看到旧提交”，但动作其实不一样。</p>
+<p>还是看原始状态：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main, HEAD)
+</code></pre>
+<p>如果执行：</p>
+<pre><code class="language-bash">git checkout B
+</code></pre>
+<p>结果更像是：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main)
+     ^
+   HEAD
+</code></pre>
+<p>也就是说：</p>
+<ul>
+<li><code>main</code> 还停在 <code>C</code></li>
+<li>你只是临时站到了 <code>B</code></li>
+</ul>
+<p>而如果执行：</p>
+<pre><code class="language-bash">git reset --hard B
+</code></pre>
+<p>结果更像是：</p>
+<pre><code class="language-txt">A &lt;- B   (main, HEAD)
+</code></pre>
+<p>这时：</p>
+<ul>
+<li><code>HEAD</code> 仍然附着在 <code>main</code> 上</li>
+<li>但 <code>main</code> 自己已经被挪到了 <code>B</code></li>
+<li>同时工作区和暂存区也被一起重置成 <code>B</code></li>
+</ul>
+<p>所以我现在更愿意这样区分：</p>
+<ul>
+<li><code>checkout &lt;commit-id&gt;</code>：切换“我现在站在哪”，重点是切换观察位置</li>
+<li><code>reset &lt;commit-id&gt;</code>：修改“当前分支指到哪”，重点是移动分支指针</li>
+</ul>
+<p>如果只是想看看旧版本、做对比、排查问题，优先想到 <code>checkout</code> 会更自然。<br>
+如果是明确要把当前分支回退到某个旧提交，再根据是否保留改动选择 <code>reset --soft</code>、<code>--mixed</code> 或 <code>--hard</code>。</p>
+<p>从这个角度看，也能更容易理解一句常见的话：<br>
+<strong><code>checkout</code> 更像“切过去看看”，<code>reset</code> 更像“把分支真的拨回去”。</strong></p>
+<h3 id="git-revert"><code>git revert</code></h3>
+<p>如果一个提交已经推送出去了，或者已经被别人拉取了，这时一般就不应该随便 <code>reset</code> 改写公共历史。</p>
+<p>这时候更合适的往往是：</p>
+<pre><code class="language-bash">git revert &lt;commit-id&gt;
+</code></pre>
+<p>它不会把历史里的那个提交“删除”，而是会新建一个提交，专门用来抵消之前那个提交的效果。</p>
+<p>也就是说：</p>
+<ul>
+<li><code>reset</code> 更像“把历史指针往回拨”</li>
+<li><code>revert</code> 更像“承认那次提交存在过，但再提交一次反向修改把它抵消”</li>
+</ul>
+<p>从协作角度看，<code>revert</code> 通常比 <code>reset</code> 更安全。</p>
+<h3 id="这几个命令怎么粗略区分">这几个命令怎么粗略区分</h3>
+<p>为了避免后面再把这些命令混起来，我这里单独记一个简化版本：</p>
+<ul>
+<li><code>restore</code>：恢复工作区或暂存区里的文件状态</li>
+<li><code>checkout</code>：切换当前所在的分支或提交</li>
+<li><code>reset</code>：移动当前分支指针，并可能重置暂存区和工作区</li>
+<li><code>revert</code>：不改已有历史，额外追加一个“反向提交”</li>
+</ul>
+<p>如果只是本地自己整理还没共享的提交，<code>reset</code> 和 <code>rebase</code> 的使用空间会更大一些。</p>
+<p>如果提交已经进入公共历史，通常就要更保守，优先考虑 <code>revert</code>。</p>
+<h2 id="标签-给某个提交起一个稳定名字">标签：给某个提交起一个稳定名字</h2>
+<p>前面说分支本质上是“会继续移动的指针”，那 <code>tag</code> 可以理解成另一种引用：<strong>它也指向某个提交，但通常不会随着后续提交继续移动。</strong></p>
+<p>这很适合拿来标记版本节点，比如：</p>
+<ul>
+<li><code>v1.0.0</code></li>
+<li><code>v1.1.0</code></li>
+<li><code>release-2026-04</code></li>
+</ul>
+<p>如果当前历史是：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main, HEAD)
+</code></pre>
+<p>执行：</p>
+<pre><code class="language-bash">git tag v1.0.0
+</code></pre>
+<p>可以粗略理解成：</p>
+<pre><code class="language-txt">A &lt;- B &lt;- C   (main, HEAD, tag: v1.0.0)
+</code></pre>
+<p>也就是说，你只是给当前提交 <code>C</code> 额外挂了一个名字。以后即使 <code>main</code> 继续往前走，这个标签通常还是留在原来的提交上。</p>
+<h3 id="常见的-tag-用法">常见的 <code>tag</code> 用法</h3>
+<p>最常见的是给当前提交打标签：</p>
+<pre><code class="language-bash">git tag v1.0.0
+</code></pre>
+<p>也可以给指定提交打标签：</p>
+<pre><code class="language-bash">git tag v1.0.0 &lt;commit-id&gt;
+</code></pre>
+<p>查看已有标签：</p>
+<pre><code class="language-bash">git tag
+</code></pre>
+<p>查看标签对应的提交：</p>
+<pre><code class="language-bash">git show v1.0.0
+</code></pre>
+<h3 id="轻量标签和附注标签">轻量标签和附注标签</h3>
+<p>初学阶段先知道 Git 里常见有两种标签就够用了：</p>
+<ul>
+<li>轻量标签：更像“给某个提交起个别名”</li>
+<li>附注标签：除了名字，还会额外记录标签说明、作者、时间等信息</li>
+</ul>
+<p>创建附注标签的常见写法是：</p>
+<pre><code class="language-bash">git tag -a v1.0.0 -m &quot;release v1.0.0&quot;
+</code></pre>
+<p>如果只是自己本地做个临时标记，轻量标签已经够用。<br>
+如果是正式版本发布，附注标签通常更合适，因为信息更完整。</p>
+<h3 id="tag-和-branch-的区别"><code>tag</code> 和 <code>branch</code> 的区别</h3>
+<p>这两个概念也容易混在一起。</p>
+<ul>
+<li><code>branch</code>：会随着新提交继续往前移动</li>
+<li><code>tag</code>：通常只是固定标记某一个提交</li>
+</ul>
+<p>所以：</p>
+<ul>
+<li>想从某个点继续开发，用 <code>branch</code></li>
+<li>想永久标记“这个提交就是某个版本”，用 <code>tag</code></li>
+</ul>
+<h3 id="标签与远程仓库">标签与远程仓库</h3>
+<p>标签不会像普通分支提交那样总是自动跟着 <code>git push</code> 一起上去。<br>
+如果想把某个标签推到远程，常见写法是：</p>
+<pre><code class="language-bash">git push origin v1.0.0
+</code></pre>
+<p>如果想一次推送本地所有标签：</p>
+<pre><code class="language-bash">git push origin --tags
+</code></pre>
+<h2 id="远程仓库-fetch-pull-push">远程仓库：<code>fetch</code>、<code>pull</code>、<code>push</code></h2>
+<p>本地仓库理解得差不多之后，远程相关命令就没那么玄学了。</p>
+<h3 id="git-fetch"><code>git fetch</code></h3>
+<p><code>fetch</code> 的作用可以理解成：<strong>把远程最新历史抓到本地，但先不自动合并到当前分支</strong>。</p>
+<p>它主要更新的是远程跟踪分支，比如 <code>origin/main</code>。</p>
+<p>所以执行完：</p>
+<pre><code class="language-bash">git fetch origin
+</code></pre>
+<p>通常意味着：</p>
+<ul>
+<li>本地知道远程仓库现在走到哪了</li>
+<li>但你当前工作的分支内容还没变</li>
+</ul>
+<h3 id="git-pull"><code>git pull</code></h3>
+<p><code>pull</code> 可以粗略看成两步：</p>
+<pre><code class="language-txt">git fetch + git merge
+</code></pre>
+<p>也就是说它先取回远程更新，再把对应远程分支合并到当前分支。</p>
+<p>如果使用：</p>
+<pre><code class="language-bash">git pull --rebase
+</code></pre>
+<p>那么第二步就会从 merge 变成 rebase。</p>
+<p>所以 <code>pull</code> 并不是一个“神秘的一步到位命令”，它本质上只是把两个动作打包了。</p>
+<h3 id="git-push"><code>git push</code></h3>
+<p><code>push</code> 的作用则是把本地分支上、而远程还没有的提交发到远程。</p>
+<p>不过 Git 一般不会允许你随便把远程公共历史改得面目全非。最典型的情况就是：如果远程分支已经比你本地分支多了一些提交，而你本地又没有先把它们整合进来，那么 <code>push</code> 往往会被拒绝。</p>
+<p>这时通常要先：</p>
+<pre><code class="language-bash">git fetch
+git merge origin/main
+</code></pre>
+<p>或者：</p>
+<pre><code class="language-bash">git pull --rebase
+</code></pre>
+<p>把历史整理好之后再推送。</p>
+<h2 id="子模块-在一个仓库里引用另一个仓库">子模块：在一个仓库里引用另一个仓库</h2>
+<p>除了普通文件和目录，Git 还有一种比较特殊的用法，就是 <code>submodule</code>。</p>
+<p>我目前对它的理解是：<strong>主仓库并不是把子仓库的历史整个吞进来，而是只记录“这个目录此刻应该对应子仓库的哪个提交”</strong>。</p>
+<p>这点很关键，因为它解释了为什么 submodule 经常让人第一次接触时感到迷惑。主仓库关心的不是子模块目录里有哪些普通文件，而是“这个子仓库现在应该停在什么 commit 上”。</p>
+<h3 id="为什么会需要-submodule">为什么会需要 submodule</h3>
+<p>这种场景一般出现在下面几种情况：</p>
+<ul>
+<li>一个项目需要依赖另一个独立维护的 Git 仓库</li>
+<li>想把公共组件拆成单独仓库复用</li>
+<li>想保留上下游各自独立的提交历史，而不是直接把代码拷进来</li>
+</ul>
+<p>也就是说，submodule 适合“我想引用另一个项目，但又不想把它彻底并入当前仓库”的情况。</p>
+<h3 id="添加子模块">添加子模块</h3>
+<p>添加一个子模块的常见命令是：</p>
+<pre><code class="language-bash">git submodule add &lt;repo-url&gt; &lt;path&gt;
+</code></pre>
+<p>例如：</p>
+<pre><code class="language-bash">git submodule add https://example.com/libfoo.git third_party/libfoo
+</code></pre>
+<p>执行之后，通常会发生两件事：</p>
+<ul>
+<li>仓库里多出一个 <code>.gitmodules</code> 文件</li>
+<li>指定目录下出现子模块内容</li>
+</ul>
+<p>其中 <code>.gitmodules</code> 记录的是子模块路径和 URL 的映射关系。</p>
+<h3 id="克隆和更新带子模块的仓库">克隆和更新带子模块的仓库</h3>
+<p>如果一个仓库本身带有子模块，那么普通 <code>git clone</code> 往往只会把主仓库拉下来，但子模块目录可能还是空的，或者没有初始化到正确状态。</p>
+<p>比较省事的方式通常是：</p>
+<pre><code class="language-bash">git clone --recurse-submodules &lt;repo-url&gt;
+</code></pre>
+<p>如果仓库已经 clone 下来了，再补做初始化和更新，也常用：</p>
+<pre><code class="language-bash">git submodule update --init --recursive
+</code></pre>
+<p>这里：</p>
+<ul>
+<li><code>--init</code>：初始化本地子模块配置</li>
+<li><code>--recursive</code>：如果子模块内部还有子模块，就继续递归处理</li>
+</ul>
+<h3 id="子模块仓库更新后-主项目怎么跟上">子模块仓库更新后，主项目怎么跟上</h3>
+<p>这也是 submodule 最容易让人误会的一点：<strong>子模块上游仓库变了，不代表你的主项目会自动跟着变。</strong></p>
+<p>原因是前面提到过，主仓库记录的不是“永远跟着子模块最新版本走”，而是“这个子模块目录当前固定对应哪个 commit”。</p>
+<p>也就是说，即使子模块所有者已经在它自己的仓库里提交并推送了新代码，你当前主项目里看到的子模块，通常还是停在原来记录的那个 commit。</p>
+<p>如果只是想把本地子模块更新到主仓库已经记录好的版本，常见命令还是：</p>
+<pre><code class="language-bash">git submodule update --init --recursive
+</code></pre>
+<p>但如果你的问题是：<strong>上游子模块仓库已经更新了，我想让当前主项目也升级到那个新版本</strong>，那往往还要多做一步“修改主仓库记录的子模块 commit”。</p>
+<p>一种比较直观的做法是：</p>
+<ol>
+<li>进入子模块目录</li>
+<li>拉取子模块仓库最新历史</li>
+<li>切到你想跟随的分支并更新到最新提交</li>
+<li>回到主仓库，把这个“子模块指针变化”提交一次</li>
+</ol>
+<p>例如：</p>
+<pre><code class="language-bash">cd third_party/libfoo
+git checkout main
+git pull
+cd ../..
+git add third_party/libfoo
+git commit -m &quot;Update libfoo submodule&quot;
+</code></pre>
+<p>这里发生的事本质上是：</p>
+<ul>
+<li>子模块仓库自己前进到了新的 commit</li>
+<li>主仓库发现“这个目录对应的子模块 commit 变了”</li>
+<li>你再把这个变化作为主仓库的一次普通提交保存下来</li>
+</ul>
+<p>所以只做 <code>git pull</code> 子模块仓库本身还不够。<br>
+<strong>如果不回到主仓库再 <code>add</code> 和 <code>commit</code> 一次，别人拉你的主仓库时，仍然只会得到旧的子模块指针。</strong></p>
+<p>如果你希望 Git 按 <code>.gitmodules</code> 里配置的分支去更新子模块，也经常会看到：</p>
+<pre><code class="language-bash">git submodule update --remote --recursive
+</code></pre>
+<p>不过初学时更容易理解的还是前面那套“进入子模块、更新、回主仓库提交指针”的流程，因为它更直观，也更容易看清每一步到底改了哪里。</p>
+<h3 id="在子模块里开发时要注意什么">在子模块里开发时要注意什么</h3>
+<p>submodule 还有一个很容易踩坑的点：进入子模块目录后，很多时候会看到它停在一个 detached HEAD 上。</p>
+<p>这意味着：</p>
+<ul>
+<li>你可以查看代码</li>
+<li>但如果直接在这里提交，又没有切到一个正常分支，后面管理这些提交会比较麻烦</li>
+</ul>
+<p>这背后的原因是：主仓库往往只是把子模块检出到某个特定 commit，而不是自动把它放到子模块仓库自己的某个分支上。</p>
+<p>所以如果你一进子模块就直接开始改代码，常见风险有几个：</p>
+<ul>
+<li>改完之后提交落在 detached HEAD 上，不容易继续管理</li>
+<li>只在子模块里提交了，但忘了回主仓库更新子模块指针</li>
+<li>只更新了主仓库指针，但子模块自己的提交还没推送，别人拉主仓库后会拿不到那个 commit</li>
+</ul>
+<p>如果确实要在子模块里开发，通常更稳妥的做法是：</p>
+<ol>
+<li>进入子模块目录</li>
+<li>先用 <code>git status</code>、<code>git branch</code> 看清当前是不是 detached HEAD</li>
+<li>切到子模块自己的工作分支，或者从当前 commit 新建一个分支</li>
+<li>在子模块里修改、<code>add</code>、<code>commit</code></li>
+<li>把子模块仓库自己的提交先推送出去</li>
+<li>回到主仓库，再把“子模块指针更新到新的 commit”提交一次</li>
+</ol>
+<p>例如一个更完整的流程可以是：</p>
+<pre><code class="language-bash">cd third_party/libfoo
+git status
+git branch
+git switch -c fix-bug
+# 修改文件
+git add .
+git commit -m &quot;Fix bug in libfoo&quot;
+git push -u origin fix-bug
+cd ../..
+git add third_party/libfoo
+git commit -m &quot;Point libfoo submodule to fix-bug commit&quot;
+</code></pre>
+<p>这里有两个很容易漏掉的点：</p>
+<ul>
+<li>
+<p><strong>先推子模块，再推主仓库</strong><br>
+否则别人虽然能拉到主仓库里新的子模块指针，但远程子模块仓库里还没有那个 commit，他们更新 submodule 时就会失败。</p>
+</li>
+<li>
+<p><strong>主仓库里看到的是“子模块目录变了”，本质上其实是“子模块 commit 记录变了”</strong><br>
+也就是说，主仓库不是在重新保存子模块内部全部文件，而是在记录“现在应该指向子模块的哪个提交”。</p>
+</li>
+</ul>
+<p>也就是说，<strong>对子模块的修改，往往至少涉及两个提交</strong>：</p>
+<ul>
+<li>子模块仓库自己的提交</li>
+<li>主仓库里对子模块指针变化的提交</li>
+</ul>
+<p>如果中途改乱了，回到主仓库执行：</p>
+<pre><code class="language-bash">git submodule update --init --recursive
+</code></pre>
+<p>通常可以把子模块重新恢复到“当前主仓库记录的那个版本”。</p>
+<p>这也是为什么 submodule 用起来会比普通目录更绕一些。它本质上不是一个普通目录，而是“目录 + 另一个仓库 + 一个被主仓库记录的 commit 指针”。</p>
+<h2 id="快速手册">快速手册</h2>
+<p>如果只是想快速回忆某个常用动作，可以先看这一节。</p>
+<h3 id="新建或获取仓库">新建或获取仓库</h3>
+<pre><code class="language-bash">git init
+git clone &lt;repo-url&gt;
+git clone --recurse-submodules &lt;repo-url&gt;
+</code></pre>
+<h3 id="查看状态与历史">查看状态与历史</h3>
+<pre><code class="language-bash">git status
+git status --short
+git log --oneline --graph --decorate
+git log --oneline --graph --decorate --no-abbrev-commit
+git show &lt;commit-id&gt;
+git reflog
+</code></pre>
+<h3 id="查看帮助">查看帮助</h3>
+<pre><code class="language-bash">git help &lt;command&gt;
+git &lt;command&gt; --help
+git &lt;command&gt; -h
+</code></pre>
+<h3 id="暂存与取消暂存">暂存与取消暂存</h3>
+<pre><code class="language-bash">git add &lt;file&gt;
+git add .
+git restore --staged &lt;file&gt;
+git restore &lt;file&gt;
+git restore --staged --worktree &lt;file&gt;
+</code></pre>
+<h3 id="提交与修改提交信息">提交与修改提交信息</h3>
+<pre><code class="language-bash">git commit -m &quot;message&quot;
+git commit --amend
+git rebase -i HEAD~5
+</code></pre>
+<h3 id="分支操作">分支操作</h3>
+<pre><code class="language-bash">git branch &lt;branch&gt;
+git checkout &lt;branch&gt;
+git checkout -b &lt;branch&gt;
+git checkout &lt;commit-id&gt;
+git switch &lt;branch&gt;
+git switch -c &lt;branch&gt;
+</code></pre>
+<h3 id="合并与整理历史">合并与整理历史</h3>
+<pre><code class="language-bash">git merge &lt;branch&gt;
+git rebase &lt;branch&gt;
+</code></pre>
+<h3 id="撤销与回退">撤销与回退</h3>
+<pre><code class="language-bash">git restore &lt;file&gt;
+git reset --soft &lt;commit-id&gt;
+git reset --mixed &lt;commit-id&gt;
+git reset --hard &lt;commit-id&gt;
+git reset --soft HEAD^
+git reset --mixed HEAD^
+git reset --hard HEAD^
+git revert &lt;commit-id&gt;
+</code></pre>
+<h3 id="标签">标签</h3>
+<pre><code class="language-bash">git tag
+git tag &lt;tag-name&gt;
+git tag &lt;tag-name&gt; &lt;commit-id&gt;
+git tag -a &lt;tag-name&gt; -m &quot;message&quot;
+git show &lt;tag-name&gt;
+git push origin &lt;tag-name&gt;
+git push origin --tags
+</code></pre>
+<h3 id="远程同步">远程同步</h3>
+<pre><code class="language-bash">git fetch
+git pull
+git pull --rebase
+git push
+</code></pre>
+<h3 id="子模块">子模块</h3>
+<pre><code class="language-bash">git submodule add &lt;repo-url&gt; &lt;path&gt;
+git submodule update --init --recursive
+git submodule update --remote --recursive
+git submodule sync --recursive
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>Git 入门最难的地方，我感觉不是命令多，而是很多命令表面看起来都像“移动文件”或者“撤销改动”，但实际上它们操作的对象并不一样。有的在改工作区，有的在改暂存区，有的在改分支指针，还有的在改提交历史。</p>
+<p>一旦把提交图、分支、<code>HEAD</code>、工作区和暂存区这几个概念分开，很多原本看起来很乱的命令就会清楚不少。至少现在再看 <code>checkout</code>、<code>merge</code>、<code>rebase</code>、<code>reset</code>、<code>revert</code> 这些命令时，我脑子里已经能大概想象出它们会把那张“提交图”改成什么样子，而不是只会硬背命令格式。</p>
+<p>如果只是日常开发，其实也不需要一开始就把 Git 所有细节吃透。先把“工作区、暂存区、提交历史”这三层和“分支只是指针”这件事想清楚，后面再回头看这些命令，通常会顺很多。</p>
+<h2 id="参考文章">参考文章</h2>
+<ul>
+<li><a href="https://onlywei.github.io/explain-git-with-d3/#checkout-b">Explain Git with D3</a></li>
+<li><a href="https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified">Git - Reset Demystified</a></li>
+<li><a href="https://git-scm.com/book/zh/v2/Git-%E5%B7%A5%E5%85%B7-%E5%AD%90%E6%A8%A1%E5%9D%97">Git - 子模块</a></li>
+<li><a href="https://git-scm.com/book/zh/v2">Pro Git 中文版</a></li>
+<li><a href="https://git-scm.com/docs/git-status/zh_HANS-CN">git-status 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-log/zh_HANS-CN">git-log 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-checkout/zh_HANS-CN">git-checkout 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-switch/zh_HANS-CN.html">git-switch 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-config/zh_HANS-CN">git-config 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-reset/zh_HANS-CN">git-reset 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-reflog/zh_HANS-CN">git-reflog 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-restore/zh_HANS-CN">git-restore 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-commit/zh_HANS-CN">git-commit 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-push/zh_HANS-CN">git-push 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-rebase/zh_HANS-CN">git-rebase 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-submodule/zh_HANS-CN">git-submodule 官方文档</a></li>
+<li><a href="https://git-scm.com/docs/git-tag/zh_HANS-CN">git-tag 官方文档</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/">Makefile学习记录(1)：GNU Make入门</a></span>
+  <span><a href="/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/">Scala学习记录(1)：语法入门</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

@@ -1,284 +1,251 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Tags on Yuan&#39;s Blog</title>
-        <link>https://DSJZS.github.io/tags/</link>
-        <description>Recent content in Tags on Yuan&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>永远null的成元</copyright>
-        <lastBuildDate>Fri, 01 May 2026 23:59:26 +0800</lastBuildDate><atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Git</title>
-        <link>https://DSJZS.github.io/tags/git/</link>
-        <pubDate>Mon, 27 Apr 2026 19:05:23 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/git/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>FSM</title>
-        <link>https://DSJZS.github.io/tags/fsm/</link>
-        <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/fsm/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>前端</title>
-        <link>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
-        <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>音乐</title>
-        <link>https://DSJZS.github.io/tags/%E9%9F%B3%E4%B9%90/</link>
-        <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/%E9%9F%B3%E4%B9%90/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Apt</title>
-        <link>https://DSJZS.github.io/tags/apt/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/apt/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Bluetooth</title>
-        <link>https://DSJZS.github.io/tags/bluetooth/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/bluetooth/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>BootLoader</title>
-        <link>https://DSJZS.github.io/tags/bootloader/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/bootloader/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>C</title>
-        <link>https://DSJZS.github.io/tags/c/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/c/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>C&#43;&#43;</title>
-        <link>https://DSJZS.github.io/tags/c&#43;&#43;/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/c&#43;&#43;/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Device Tree</title>
-        <link>https://DSJZS.github.io/tags/device-tree/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/device-tree/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Docker</title>
-        <link>https://DSJZS.github.io/tags/docker/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/docker/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Dpkg</title>
-        <link>https://DSJZS.github.io/tags/dpkg/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/dpkg/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>ESP32</title>
-        <link>https://DSJZS.github.io/tags/esp32/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/esp32/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Food</title>
-        <link>https://DSJZS.github.io/tags/food/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/food/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>GCC</title>
-        <link>https://DSJZS.github.io/tags/gcc/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/gcc/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>GD32</title>
-        <link>https://DSJZS.github.io/tags/gd32/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/gd32/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>GDB</title>
-        <link>https://DSJZS.github.io/tags/gdb/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/gdb/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>HDL</title>
-        <link>https://DSJZS.github.io/tags/hdl/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/hdl/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Hugo</title>
-        <link>https://DSJZS.github.io/tags/hugo/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/hugo/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://DSJZS.github.io/tags/linux/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/linux/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Makefile</title>
-        <link>https://DSJZS.github.io/tags/makefile/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/makefile/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>MCU</title>
-        <link>https://DSJZS.github.io/tags/mcu/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/mcu/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Music</title>
-        <link>https://DSJZS.github.io/tags/music/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/music/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>OTA</title>
-        <link>https://DSJZS.github.io/tags/ota/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/ota/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>RTOS</title>
-        <link>https://DSJZS.github.io/tags/rtos/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/rtos/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Scala</title>
-        <link>https://DSJZS.github.io/tags/scala/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/scala/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Shell</title>
-        <link>https://DSJZS.github.io/tags/shell/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/shell/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>STM32</title>
-        <link>https://DSJZS.github.io/tags/stm32/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/stm32/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Verilog</title>
-        <link>https://DSJZS.github.io/tags/verilog/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/verilog/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Wi-Fi</title>
-        <link>https://DSJZS.github.io/tags/wi-fi/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/wi-fi/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Wireshark</title>
-        <link>https://DSJZS.github.io/tags/wireshark/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/wireshark/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Zephyr</title>
-        <link>https://DSJZS.github.io/tags/zephyr/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/zephyr/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>并发编程</title>
-        <link>https://DSJZS.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>前端</title>
-        <link>https://DSJZS.github.io/tags/front/</link>
-        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-        
-        <guid>https://DSJZS.github.io/tags/front/</guid>
-        <description></description>
-        </item>
-        
-    </channel>
+  <channel>
+    <title>Tags on Yuan&#39;s Blog</title>
+    <link>https://DSJZS.github.io/tags/</link>
+    <description>Recent content in Tags on Yuan&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>成元</copyright>
+    <lastBuildDate>Sun, 05 Jul 2026 21:20:11 +0800</lastBuildDate>
+    <atom:link href="https://DSJZS.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git</title>
+      <link>https://DSJZS.github.io/tags/git/</link>
+      <pubDate>Mon, 27 Apr 2026 19:05:23 +0800</pubDate>
+      <guid>https://DSJZS.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FSM</title>
+      <link>https://DSJZS.github.io/tags/fsm/</link>
+      <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
+      <guid>https://DSJZS.github.io/tags/fsm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>前端</title>
+      <link>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+      <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
+      <guid>https://DSJZS.github.io/tags/%E5%89%8D%E7%AB%AF/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>音乐</title>
+      <link>https://DSJZS.github.io/tags/%E9%9F%B3%E4%B9%90/</link>
+      <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
+      <guid>https://DSJZS.github.io/tags/%E9%9F%B3%E4%B9%90/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Apt</title>
+      <link>https://DSJZS.github.io/tags/apt/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/apt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Bluetooth</title>
+      <link>https://DSJZS.github.io/tags/bluetooth/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/bluetooth/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>BootLoader</title>
+      <link>https://DSJZS.github.io/tags/bootloader/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/bootloader/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>C</title>
+      <link>https://DSJZS.github.io/tags/c/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/c/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>https://DSJZS.github.io/tags/c&#43;&#43;/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Device Tree</title>
+      <link>https://DSJZS.github.io/tags/device-tree/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/device-tree/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Docker</title>
+      <link>https://DSJZS.github.io/tags/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dpkg</title>
+      <link>https://DSJZS.github.io/tags/dpkg/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/dpkg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ESP32</title>
+      <link>https://DSJZS.github.io/tags/esp32/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/esp32/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Food</title>
+      <link>https://DSJZS.github.io/tags/food/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/food/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GCC</title>
+      <link>https://DSJZS.github.io/tags/gcc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/gcc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GD32</title>
+      <link>https://DSJZS.github.io/tags/gd32/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/gd32/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GDB</title>
+      <link>https://DSJZS.github.io/tags/gdb/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/gdb/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HDL</title>
+      <link>https://DSJZS.github.io/tags/hdl/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/hdl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>https://DSJZS.github.io/tags/hugo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Linux</title>
+      <link>https://DSJZS.github.io/tags/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Makefile</title>
+      <link>https://DSJZS.github.io/tags/makefile/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/makefile/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MCU</title>
+      <link>https://DSJZS.github.io/tags/mcu/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/mcu/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Music</title>
+      <link>https://DSJZS.github.io/tags/music/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/music/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OTA</title>
+      <link>https://DSJZS.github.io/tags/ota/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/ota/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RTOS</title>
+      <link>https://DSJZS.github.io/tags/rtos/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/rtos/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Scala</title>
+      <link>https://DSJZS.github.io/tags/scala/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/scala/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shell</title>
+      <link>https://DSJZS.github.io/tags/shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/shell/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>STM32</title>
+      <link>https://DSJZS.github.io/tags/stm32/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/stm32/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Verilog</title>
+      <link>https://DSJZS.github.io/tags/verilog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/verilog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wi-Fi</title>
+      <link>https://DSJZS.github.io/tags/wi-fi/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/wi-fi/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Wireshark</title>
+      <link>https://DSJZS.github.io/tags/wireshark/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/wireshark/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zephyr</title>
+      <link>https://DSJZS.github.io/tags/zephyr/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/zephyr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>前端</title>
+      <link>https://DSJZS.github.io/tags/front/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/front/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>并发编程</title>
+      <link>https://DSJZS.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://DSJZS.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+  </channel>
 </rss>

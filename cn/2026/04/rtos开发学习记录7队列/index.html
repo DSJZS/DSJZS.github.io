@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(7)：队列 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(7)：队列 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="前两篇文章记录了 IPC 基础层、信号量和互斥量。这篇文章继续记录 Yuan RTOS 中的消息队列。
+[&amp;hellip;] 消息队列用于在任务之间传递数据。相比信号量只能表达“有没有资源”或“资源数量”，队列可以真正携带一段消息内容，因此非常适合生产者消费者模型。
+[&amp;hellip;] 完整代码请访问我的Github仓库，网址为：yuan-rtos。
+[&amp;hellip;] 值得注意是本文的示例代 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(7)：队列</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#队列结构">队列结构</a></li>
+    <li><a href="#初始化队列">初始化队列</a></li>
+    <li><a href="#环形缓冲区">环形缓冲区</a></li>
+    <li><a href="#写入元素">写入元素</a></li>
+    <li><a href="#读取元素">读取元素</a></li>
+    <li><a href="#发送消息">发送消息</a></li>
+    <li><a href="#接收消息">接收消息</a></li>
+    <li><a href="#队列不是直接交付资源">队列不是直接交付资源</a></li>
+    <li><a href="#等待时间的处理">等待时间的处理</a></li>
+    <li><a href="#中断接口">中断接口</a></li>
+    <li><a href="#删除与重置">删除与重置</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>前两篇文章记录了 IPC 基础层、信号量和互斥量。这篇文章继续记录 Yuan RTOS 中的消息队列。</p>
+<p>消息队列用于在任务之间传递数据。相比信号量只能表达“有没有资源”或“资源数量”，队列可以真正携带一段消息内容，因此非常适合生产者消费者模型。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="队列结构">队列结构</h2>
+<p>Yuan RTOS 的队列使用用户提供的静态缓冲区，并在内部维护一个环形队列：</p>
+<pre><code class="language-C">typedef struct yr_queue_t {
+    yr_ipc_base_t send_ipc;
+    yr_ipc_base_t receive_ipc;
+
+    yr_uint8_t *buffer;
+    yr_uint32_t capacity;
+    yr_uint32_t item_size;
+
+    yr_uint32_t item_count;
+    yr_uint32_t head;
+    yr_uint32_t tail;
+} yr_queue_t;
+</code></pre>
+<p>这里有两个 IPC 基础对象：</p>
+<ul>
+<li><code>send_ipc</code>：队列满时，发送任务阻塞在这里</li>
+<li><code>receive_ipc</code>：队列空时，接收任务阻塞在这里</li>
+</ul>
+<p>为什么队列需要两个阻塞队列？</p>
+<p>因为发送者和接收者等待的是两种相反的条件。发送者等待“队列有空位”，接收者等待“队列有数据”。如果混在一个阻塞链表里，唤醒逻辑会很别扭，也容易唤醒错误类型的任务。</p>
+<h2 id="初始化队列">初始化队列</h2>
+<p>队列初始化函数如下：</p>
+<pre><code class="language-C">yr_err_t yr_queue_init( yr_queue_t *queue,
+                        yr_uint32_t item_size,
+                        yr_uint8_t *buffer,
+                        yr_uint32_t buffer_size,
+                        yr_uint32_t flag)
+</code></pre>
+<p>参数中比较关键的是 <code>item_size</code>、<code>buffer</code> 和 <code>buffer_size</code>。</p>
+<p>Yuan RTOS 的队列并不会自己动态分配内存，而是由用户传入一块静态缓冲区。<code>buffer_size</code> 必须是 <code>item_size</code> 的整数倍：</p>
+<pre><code class="language-C">capacity = buffer_size / item_size;
+</code></pre>
+<p>这样队列最多可以保存 <code>capacity</code> 个元素。</p>
+<p>初始化时还会把读写游标和元素数量清零：</p>
+<pre><code class="language-C">static void __queue_reset( yr_queue_t *queue)
+{
+    queue-&gt;head = 0;
+    queue-&gt;tail = 0;
+    queue-&gt;item_count = 0;
+}
+</code></pre>
+<h2 id="环形缓冲区">环形缓冲区</h2>
+<p>队列内部使用 <code>head</code> 和 <code>tail</code> 两个游标实现环形缓冲区：</p>
+<ul>
+<li><code>head</code>：下一次读取的位置</li>
+<li><code>tail</code>：下一次写入的位置</li>
+<li><code>item_count</code>：当前队列中已有的元素数量</li>
+</ul>
+<p>写入时推进 <code>tail</code>，读取时推进 <code>head</code>。当游标到达 <code>capacity</code> 后，再回到 0。</p>
+<p>这种结构的好处是实现简单，不需要移动已有数据。只要更新游标即可完成入队和出队。</p>
+<h2 id="写入元素">写入元素</h2>
+<p>写入一个元素的内部函数如下：</p>
+<pre><code class="language-C">static void __queue_write_item( yr_queue_t *queue,
+                                const void *item )
+{
+    yr_uint8_t *dst = queue-&gt;buffer +
+                      queue-&gt;tail * queue-&gt;item_size;
+
+    memcpy( dst, item, queue-&gt;item_size );
+
+    queue-&gt;tail++;
+    if( queue-&gt;tail &gt;= queue-&gt;capacity )
+        queue-&gt;tail = 0;
+
+    queue-&gt;item_count++;
+}
+</code></pre>
+<p>这里用 <code>memcpy()</code> 拷贝固定大小的元素，因此队列可以保存任意类型的数据，只要发送方和接收方对 <code>item_size</code> 的理解一致即可。</p>
+<h2 id="读取元素">读取元素</h2>
+<p>读取一个元素的内部函数如下：</p>
+<pre><code class="language-C">static void __queue_read_item( yr_queue_t *queue,
+                               void *item )
+{
+    yr_uint8_t *src = queue-&gt;buffer +
+                      queue-&gt;head * queue-&gt;item_size;
+
+    memcpy( item, src, queue-&gt;item_size );
+
+    queue-&gt;head++;
+    if( queue-&gt;head &gt;= queue-&gt;capacity )
+        queue-&gt;head = 0;
+
+    queue-&gt;item_count--;
+}
+</code></pre>
+<p>读取完成后，<code>head</code> 向后移动，并减少 <code>item_count</code>。</p>
+<h2 id="发送消息">发送消息</h2>
+<p>普通任务上下文下发送消息使用：</p>
+<pre><code class="language-C">yr_err_t yr_queue_send( yr_queue_t *queue,
+                        void *item,
+                        yr_uint32_t wait_ticks)
+</code></pre>
+<p>如果队列没满，就直接写入数据：</p>
+<pre><code class="language-C">if( queue-&gt;item_count &lt; queue-&gt;capacity ) {
+    __queue_write_item( queue, item );
+
+    if( !yr_list_isempty( &amp;queue-&gt;receive_ipc.blocked_list ) ) {
+        __queue_resume_one( &amp;queue-&gt;receive_ipc,
+                            current_task,
+                            &amp;need_switch );
+    }
+
+    return YR_OK;
+}
+</code></pre>
+<p>如果此时有任务阻塞在接收队列上，说明之前有接收者在等数据。发送成功后，就可以唤醒一个接收任务。</p>
+<p>如果队列已满，并且调用者不愿意等待，则直接返回错误。</p>
+<p>如果调用者允许等待，则当前任务会阻塞在 <code>send_ipc</code> 上：</p>
+<pre><code class="language-C">yr_task_set_msg( current_task,
+                 (void*)&amp;queue-&gt;send_ipc,
+                 NULL,
+                 YR_TASK_MR_IPC,
+                 YR_TASK_MN_NONE );
+
+yr_ipc_block_task( &amp;queue-&gt;send_ipc, current_task );
+</code></pre>
+<p>如果设置了有限等待时间，还会启动任务自己的定时器。</p>
+<h2 id="接收消息">接收消息</h2>
+<p>普通任务上下文下接收消息使用：</p>
+<pre><code class="language-C">yr_err_t yr_queue_receive( yr_queue_t *queue,
+                           void *item,
+                           yr_uint32_t wait_ticks)
+</code></pre>
+<p>如果队列非空，就直接读取数据：</p>
+<pre><code class="language-C">if( queue-&gt;item_count &gt; 0 ) {
+    __queue_read_item( queue, item );
+
+    if( !yr_list_isempty( &amp;queue-&gt;send_ipc.blocked_list ) ) {
+        __queue_resume_one( &amp;queue-&gt;send_ipc,
+                            current_task,
+                            &amp;need_switch );
+    }
+
+    return YR_OK;
+}
+</code></pre>
+<p>如果此时有任务阻塞在发送队列上，说明之前有发送者在等空位。接收成功后，队列空位增加，就可以唤醒一个发送任务。</p>
+<p>如果队列为空，并且调用者不愿意等待，则直接返回错误。</p>
+<p>如果调用者允许等待，则当前任务会阻塞在 <code>receive_ipc</code> 上，并可根据 <code>wait_ticks</code> 启动超时定时器。</p>
+<h2 id="队列不是直接交付资源">队列不是直接交付资源</h2>
+<p>这里需要特别说明一下，队列的唤醒语义和前面文章中的信号量、互斥量并不完全一样。</p>
+<p>信号量和互斥量更接近“直接交付”。例如信号量释放时，如果有任务正在等待，就不会简单地让 <code>current_count++</code>，而是直接唤醒等待队列中策略上最靠前的任务，并把等待结果设置为 <code>YR_TASK_MN_WAIT_OK</code>。互斥量释放时也类似，如果有任务等待锁，就会把 <code>mutex-&gt;owner</code> 直接设置为被唤醒的任务。</p>
+<p>这样做的原因是，信号量和互斥量的资源语义比较明确：释放的就是一个计数资源或一把锁。如果已经有任务在等，那么把资源直接交给等待者，可以避免资源释放后又被其它任务抢走，语义也更接近“谁在等，就优先满足谁”。</p>
+<p>但队列这里不是这样。队列发送或接收成功后，只是改变了队列状态：</p>
+<ul>
+<li>发送成功：队列中多了一个元素，接收条件变为可能满足</li>
+<li>接收成功：队列中少了一个元素，发送条件变为可能满足</li>
+</ul>
+<p>随后内核会从对应的阻塞队列中选择策略上最靠前的任务，将它唤醒，让它重新尝试发送或接收。<strong>被唤醒的任务并不等于已经拿到了某个队列元素，也不等于已经获得了某个空位</strong>。</p>
+<p>这也是为什么 <code>yr_queue_send()</code> 和 <code>yr_queue_receive()</code> 都写成了循环结构。任务被唤醒后，会回到循环开头重新检查队列状态，而不是直接认为操作成功。</p>
+<p>为什么队列不做直接交付？主要有两个原因。</p>
+<p>第一，队列保存的是一段缓冲区状态，而不是一个单独的“资源令牌”。发送者写入的是队列公共缓冲区，接收者读取的也是队列公共缓冲区。如果要做严格的直接交付，就需要把“唤醒哪个任务”和“把哪一条消息交给哪个任务”绑定起来，队列内部语义会复杂很多。</p>
+<p>第二，被唤醒任务真正运行之前，系统可能发生任务切换、中断、其它高优先级任务抢占等情况。比如一个接收任务被唤醒后，还没来得及运行，另一个更高优先级接收任务先执行并取走了队列中的数据，那么原来被唤醒的任务再次检查时仍然可能发现队列为空。</p>
+<p>因此 Yuan RTOS 当前选择的是更简单、也更通用的方式：<strong>队列操作只负责改变队列状态，并唤醒一个策略上最应该被唤醒的任务；被唤醒任务是否真的能完成操作，要靠恢复运行后再次检查队列状态来决定</strong>。</p>
+<p>这种设计的好处是实现简单，和超时等待、优先级/FIFO 阻塞队列都比较容易配合。缺点是被唤醒任务不一定一次就能成功完成操作，可能会出现“被唤醒后重新竞争失败，然后再次阻塞”的情况。不过这个代价是可以接受的，因为队列本身就是一个共享缓冲区，重新检查状态也能让语义更稳妥。</p>
+<h2 id="等待时间的处理">等待时间的处理</h2>
+<p>队列的发送和接收都使用了一个循环结构。原因是任务被唤醒后，仍然需要重新检查队列状态。</p>
+<p>例如发送任务因为队列满而阻塞，之后被接收任务唤醒。它恢复运行后，不是直接认为发送成功，而是回到循环开头，再次检查队列是否有空位。</p>
+<p>同时，如果 <code>wait_ticks</code> 是有限时间，函数还会记录已经等待的时间：</p>
+<pre><code class="language-C">now_ticks = yr_get_current_ticks();
+elapsed_ticks = now_ticks - start_ticks;
+if( (yr_int32_t)(elapsed_ticks - wait_ticks) &gt;= 0 )
+    return YR_ERR;
+
+wait_ticks -= elapsed_ticks;
+start_ticks = now_ticks;
+</code></pre>
+<p>这样可以避免任务被多次唤醒、重新阻塞时，等待时间被错误地重置。</p>
+<h2 id="中断接口">中断接口</h2>
+<p>队列提供了两个中断接口：</p>
+<pre><code class="language-C">yr_queue_send_from_isr(...)
+yr_queue_receive_from_isr(...)
+</code></pre>
+<p>中断上下文下仍然遵循一个原则：<strong>不能阻塞</strong>。</p>
+<p>因此：</p>
+<ul>
+<li>中断中发送时，如果队列满了，直接返回错误</li>
+<li>中断中接收时，如果队列空了，直接返回错误</li>
+<li>如果操作成功，并唤醒了更高优先级任务，则通过 <code>need_switch</code> 通知外部</li>
+</ul>
+<p>这样可以让 ISR 中的逻辑保持较轻，不在中断里做复杂的阻塞等待。</p>
+<h2 id="删除与重置">删除与重置</h2>
+<p>队列删除时，需要唤醒所有阻塞在发送队列和接收队列上的任务：</p>
+<pre><code class="language-C">if( !yr_list_isempty( &amp;queue-&gt;send_ipc.blocked_list) ) {
+    yr_ipc_resume_all( &amp;queue-&gt;send_ipc);
+}
+
+if( !yr_list_isempty( &amp;queue-&gt;receive_ipc.blocked_list) ) {
+    yr_ipc_resume_all( &amp;queue-&gt;receive_ipc);
+}
+</code></pre>
+<p>这些任务被唤醒后，会得到 <code>YR_TASK_MN_WAIT_IPC_DELETED</code> 的通知。</p>
+<p>队列也支持 reset，但 reset 只允许在没有任务等待队列状态变化时调用：</p>
+<pre><code class="language-C">if( !yr_list_isempty( &amp;queue-&gt;send_ipc.blocked_list ) ||
+    !yr_list_isempty( &amp;queue-&gt;receive_ipc.blocked_list ) ) {
+    return YR_ERR;
+}
+</code></pre>
+<p>这是为了避免唤醒语义混乱。比如有任务正在等数据，此时直接 reset 队列，任务应该被唤醒还是继续等？为了不引入这种模糊语义，当前实现直接禁止这种情况。</p>
+<h2 id="总结">总结</h2>
+<p>Yuan RTOS 的队列实现可以概括为：</p>
+<ul>
+<li>使用用户提供的静态缓冲区保存数据</li>
+<li>内部通过 <code>head</code>、<code>tail</code> 和 <code>item_count</code> 实现环形队列</li>
+<li>队列满时发送任务阻塞在 <code>send_ipc</code></li>
+<li>队列空时接收任务阻塞在 <code>receive_ipc</code></li>
+<li>发送成功后改变队列状态，并可能唤醒接收任务重新竞争</li>
+<li>接收成功后改变队列状态，并可能唤醒发送任务重新竞争</li>
+<li>支持普通任务上下文和中断上下文两类接口</li>
+<li>有限等待时间通过任务定时器实现超时</li>
+</ul>
+<p>队列是任务间传递数据最常用的 IPC 机制之一。相比信号量和互斥量，它不仅能同步任务，还能携带实际的数据内容，因此在实际项目中使用频率通常会很高。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/">RTOS开发学习记录(8)：测试</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/">RTOS开发学习记录(6)：信号量与互斥量</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

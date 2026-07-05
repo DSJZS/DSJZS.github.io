@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(9)：移植 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(9)：移植 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="前面几篇文章主要记录了 Yuan RTOS 的通用内核逻辑，比如任务调度、软件定时器和 IPC。
+[&amp;hellip;] 不过 RTOS 还有一部分代码和具体处理器、编译器强相关，比如关中断、恢复中断、任务栈初始化、第一次启动任务、任务上下文切换等。这些代码不太可能完全用一套 C 代码跑在所有平台上，因此需要单独抽出移植层。
+[&amp;hellip;] 这篇文章记录一下 Yuan RTOS 的移植思路，以 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(9)：移植</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#为什么需要移植层">为什么需要移植层</a></li>
+    <li><a href="#移植层接口">移植层接口</a></li>
+    <li><a href="#目录组织">目录组织</a></li>
+    <li><a href="#中断开关">中断开关</a></li>
+    <li><a href="#初始化任务栈">初始化任务栈</a></li>
+    <li><a href="#启动第一个任务">启动第一个任务</a></li>
+    <li><a href="#任务切换">任务切换</a></li>
+    <li><a href="#位图查找">位图查找</a></li>
+    <li><a href="#提供系统-tick">提供系统 tick</a></li>
+    <li><a href="#接入构建系统">接入构建系统</a></li>
+    <li><a href="#移植时的检查清单">移植时的检查清单</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>前面几篇文章主要记录了 Yuan RTOS 的通用内核逻辑，比如任务调度、软件定时器和 IPC。</p>
+<p>不过 RTOS 还有一部分代码和具体处理器、编译器强相关，比如关中断、恢复中断、任务栈初始化、第一次启动任务、任务上下文切换等。这些代码不太可能完全用一套 C 代码跑在所有平台上，因此需要单独抽出移植层。</p>
+<p>这篇文章记录一下 Yuan RTOS 的移植思路，以及当前 Cortex-M3 + GCC 版本移植层大概做了什么。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="为什么需要移植层">为什么需要移植层</h2>
+<p>RTOS 的通用逻辑可以尽量做到和平台无关。比如调度器只关心哪个任务应该运行，IPC 只关心任务如何阻塞和唤醒，软件定时器只关心 tick 计数和超时链表。</p>
+<p>但是下面这些事情就很难平台无关：</p>
+<ul>
+<li>如何关闭中断并保存原中断状态</li>
+<li>如何恢复中断状态</li>
+<li>任务首次运行前，栈帧应该长什么样</li>
+<li>如何启动第一个任务</li>
+<li>如何保存旧任务上下文</li>
+<li>如何恢复新任务上下文</li>
+<li>如何快速查找位图中最低位的 1</li>
+</ul>
+<p>这些都和 ISA、异常机制、ABI、编译器扩展有关，因此 Yuan RTOS 把它们放到了 <code>include/portable.h</code> 中作为接口，再由具体平台实现。</p>
+<h2 id="移植层接口">移植层接口</h2>
+<p>当前移植层接口主要如下：</p>
+<pre><code class="language-C">yr_uint32_t yr_irq_disable(void);
+void yr_irq_enable(yr_uint32_t disirq);
+
+yr_uint8_t *yr_task_stack_init( void *entry,
+                                void *exit,
+                                void *param,
+                                yr_uint8_t *stackaddr);
+
+void yr_task_first_switch_to( yr_uint32_t to);
+void yr_task_switch( yr_uint32_t from, yr_uint32_t to);
+
+int yr_find_first_set(int value);
+</code></pre>
+<p>这些接口可以分成几类：</p>
+<ul>
+<li>中断控制：<code>yr_irq_disable()</code> 和 <code>yr_irq_enable()</code></li>
+<li>初始栈帧构造：<code>yr_task_stack_init()</code></li>
+<li>任务启动与切换：<code>yr_task_first_switch_to()</code> 和 <code>yr_task_switch()</code></li>
+<li>位图查找：<code>yr_find_first_set()</code></li>
+</ul>
+<p>只要某个平台实现了这些接口，内核通用部分理论上就可以运行起来。</p>
+<h2 id="目录组织">目录组织</h2>
+<p>当前建议把移植层文件放在：</p>
+<pre><code class="language-text">libcpu/&lt;ISA&gt;/port_&lt;compiler&gt;.c
+libcpu/&lt;ISA&gt;/port_&lt;compiler&gt;.s
+</code></pre>
+<p>例如当前 Cortex-M3 + GCC 的实现为：</p>
+<pre><code class="language-text">libcpu/CM3/port_gcc.c
+libcpu/CM3/port_gcc.s
+</code></pre>
+<p>这样做的好处是目录结构比较直观。看到 <code>CM3</code> 就知道是 Cortex-M3 相关代码，看到 <code>gcc</code> 就知道汇编语法和内建函数是按 GCC 来写的。</p>
+<p>如果后续要支持别的平台，可以新增类似：</p>
+<pre><code class="language-text">libcpu/RISCV/port_gcc.c
+libcpu/RISCV/port_gcc.s
+</code></pre>
+<p>当然，具体目录名不一定非要这样，但最好能同时体现 ISA 和编译器。</p>
+<h2 id="中断开关">中断开关</h2>
+<p>内核中很多地方需要进入临界区，例如调度器修改就绪队列、IPC 修改阻塞队列、定时器修改链表等。</p>
+<p>当前 Cortex-M3 版本使用 <code>PRIMASK</code> 实现关中断和恢复中断：</p>
+<pre><code class="language-asm">@ yr_uint32_t yr_irq_disable(void)
+yr_irq_disable:    
+    mrs     r0, PRIMASK
+    cpsid   i
+    bx      lr
+
+@ void yr_irq_enable(yr_uint32_t disirq)
+yr_irq_enable:    
+    msr     PRIMASK, r0
+    bx      lr
+</code></pre>
+<p><code>yr_irq_disable()</code> 不是简单关中断，而是先读取当前 <code>PRIMASK</code> 并返回。之后 <code>yr_irq_enable()</code> 再把原来的值写回去。</p>
+<p>这样做的好处是支持嵌套临界区。比如外层本来已经关中断，内层再次调用 <code>yr_irq_disable()</code>，最后恢复时不会错误地把外层关掉的中断打开。</p>
+<h2 id="初始化任务栈">初始化任务栈</h2>
+<p>任务第一次运行时，不可能真的从某个“之前被切走的位置”恢复，因为它从来没有运行过。因此需要提前伪造一个上下文栈帧，让第一次切换到该任务时，看起来就像它刚刚从异常中返回一样。</p>
+<p>当前 Cortex-M3 版本定义了一个上下文结构：</p>
+<pre><code class="language-C">typedef struct yr_context_t {
+    yr_cpu_stack_t r4;
+    yr_cpu_stack_t r5;
+    yr_cpu_stack_t r6;
+    yr_cpu_stack_t r7;
+    yr_cpu_stack_t r8;
+    yr_cpu_stack_t r9;
+    yr_cpu_stack_t r10;
+    yr_cpu_stack_t r11;
+
+    yr_cpu_stack_t r0;
+    yr_cpu_stack_t r1;
+    yr_cpu_stack_t r2;
+    yr_cpu_stack_t r3;
+    yr_cpu_stack_t r12;
+    yr_cpu_stack_t lr_r14;
+    yr_cpu_stack_t pc_r15;
+    yr_cpu_stack_t psr;
+} yr_context_t;
+</code></pre>
+<p>前半部分是软件手动保存和恢复的 <code>r4-r11</code>，后半部分是 Cortex-M 异常返回时硬件会自动恢复的寄存器。</p>
+<p>初始化任务栈时，先做 8 字节对齐，再预留一个 <code>yr_context_t</code> 大小的空间：</p>
+<pre><code class="language-C">psp = (yr_uint8_t *)( ((yr_cpu_stack_t)psp) &amp; ~((8) - 1) );  
+psp -= sizeof(yr_context_t);
+pstack = (yr_context_t *)psp;
+</code></pre>
+<p>随后设置几个关键寄存器：</p>
+<pre><code class="language-C">pstack-&gt;r0 = (yr_cpu_stack_t)param;
+pstack-&gt;psr = 0x01000000UL;
+pstack-&gt;pc_r15  = (yr_cpu_stack_t)entry;
+pstack-&gt;lr_r14  = (yr_cpu_stack_t)exit;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>r0</code>：任务入口函数的第一个参数</li>
+<li><code>psr</code>：设置 Thumb 位</li>
+<li><code>pc_r15</code>：任务入口函数地址</li>
+<li><code>lr_r14</code>：任务返回后的出口函数</li>
+</ul>
+<p>这也是为什么创建任务时要传入 <code>entry</code>、<code>param</code> 和任务栈地址。</p>
+<h2 id="启动第一个任务">启动第一个任务</h2>
+<p>调度器找到第一个任务后，会调用：</p>
+<pre><code class="language-C">yr_task_first_switch_to( (yr_uint32_t)&amp;next_task-&gt;sp);
+</code></pre>
+<p>注意这里传入的是任务栈指针变量的地址，而不是栈指针本身。这样汇编代码就可以根据这个地址取到任务当前保存的 SP。</p>
+<p>当前 Cortex-M3 + GCC 版本使用 SVC 启动第一个任务：</p>
+<pre><code class="language-asm">yr_task_first_switch_to:
+    ldr r1, =NVIC_SYSPRI2
+    ldr r2, [r1]
+    ldr r3, =NVIC_PENDSV_PRI
+    orr r2, r2, r3
+    str r2, [r1]
+    cpsie i
+    svc #0
+</code></pre>
+<p>这里先把 PendSV 配成最低优先级，然后打开中断，最后触发 SVC。</p>
+<p>SVC Handler 中会把第一个任务的栈帧恢复到 PSP，并通过异常返回进入 Thread mode：</p>
+<pre><code class="language-asm">SVC_Handler:
+    ldr r1, [r0]
+    ldmia r1!, {r4-r11}
+    msr psp, r1
+
+    ldr r0, =0xFFFFFFFD
+    bx  r0
+</code></pre>
+<p><code>0xFFFFFFFD</code> 是 Cortex-M 的一种 EXC_RETURN 值，表示返回 Thread mode，并使用 PSP。</p>
+<p>从这个时刻开始，任务代码就真正跑起来了。</p>
+<h2 id="任务切换">任务切换</h2>
+<p>普通任务切换由：</p>
+<pre><code class="language-C">void yr_task_switch( yr_uint32_t from, yr_uint32_t to);
+</code></pre>
+<p>完成。</p>
+<p>这里 <code>from</code> 和 <code>to</code> 同样是任务栈指针变量的地址。</p>
+<p>在 Cortex-M 上，实际上下文切换放在 PendSV 中完成。<code>yr_task_switch()</code> 主要做三件事：</p>
+<ul>
+<li>保存旧任务 SP 指针变量地址</li>
+<li>保存新任务 SP 指针变量地址</li>
+<li>触发 PendSV</li>
+</ul>
+<pre><code class="language-asm">ldr r2, =yr_prev_task_sp_p
+str r0, [r2]
+
+ldr r2, =yr_next_task_sp_p
+str r1, [r2]
+
+ldr r2, =NVIC_INT_CTRL
+ldr r3, =NVIC_PENDSVSET
+str r3, [r2]
+</code></pre>
+<p>真正的保存与恢复在 <code>PendSV_Handler</code> 中完成：</p>
+<pre><code class="language-asm">mrs     r1, psp
+stmdb   r1!, {r4-r11}
+ldr     r0, [r0]
+str     r1, [r0]
+
+ldr     r1, =yr_next_task_sp_p
+ldr     r1, [r1]
+ldr     r1, [r1]
+
+ldmia   r1!, {r4-r11}
+msr     psp, r1
+</code></pre>
+<p>旧任务的 <code>r4-r11</code> 被压入旧任务栈，新任务的 <code>r4-r11</code> 从新任务栈中恢复。至于 <code>r0-r3</code>、<code>r12</code>、<code>lr</code>、<code>pc</code>、<code>xPSR</code>，则利用 Cortex-M 异常进入和异常返回机制处理。</p>
+<p>这也是 Cortex-M 做 RTOS 移植比较方便的地方。</p>
+<h2 id="位图查找">位图查找</h2>
+<p>调度器中使用了优先级位图，需要快速找到最低位的 1。这个能力也放在移植层：</p>
+<pre><code class="language-C">int yr_find_first_set(int value)
+{
+    return __builtin_ffs(value);
+}
+</code></pre>
+<p>当前 GCC 版本直接使用 <code>__builtin_ffs()</code>。如果换成其它编译器或其它 ISA，可以改成对应的内建函数或汇编指令。</p>
+<p>这一点在任务调度那篇文章中已经提到过：O(1) 调度不只是因为用了位图，还依赖于能快速找到位图中最低位的 1。</p>
+<h2 id="提供系统-tick">提供系统 tick</h2>
+<p>除了实现 <code>portable.h</code> 中的接口，还需要给 RTOS 提供一个周期性的系统 tick。</p>
+<p>当前配置中默认 tick 频率为：</p>
+<pre><code class="language-C">#define YR_TICK_RATE_HZ (1000)
+</code></pre>
+<p>在 STM32 的 BSP 中，一般可以在 <code>SysTick_Handler()</code> 中调用：</p>
+<pre><code class="language-C">void SysTick_Handler(void)
+{
+    HAL_IncTick();
+    yr_tick_update();
+}
+</code></pre>
+<p><code>yr_tick_update()</code> 会递增系统 tick，处理当前任务时间片，并检查软件定时器超时。</p>
+<p>因此移植到新平台时，一定要确认 tick 中断频率和 <code>YR_TICK_RATE_HZ</code> 一致。否则任务延时、周期延时、IPC 超时都会不准确。</p>
+<h2 id="接入构建系统">接入构建系统</h2>
+<p>当前根目录 <code>CMakeLists.txt</code> 会收集 <code>src/</code> 和 <code>libcpu/</code> 下的源文件：</p>
+<pre><code class="language-cmake">file(GLOB_RECURSE YUAN_RTOS_SOURCES CONFIGURE_DEPENDS
+    &quot;${CMAKE_CURRENT_SOURCE_DIR}/src/*.c&quot;
+    &quot;${CMAKE_CURRENT_SOURCE_DIR}/src/*.s&quot;
+    &quot;${CMAKE_CURRENT_SOURCE_DIR}/src/*.S&quot;
+    &quot;${CMAKE_CURRENT_SOURCE_DIR}/libcpu/*.c&quot;
+    &quot;${CMAKE_CURRENT_SOURCE_DIR}/libcpu/*.s&quot;
+    &quot;${CMAKE_CURRENT_SOURCE_DIR}/libcpu/*.S&quot;
+)
+</code></pre>
+<p>这对当前项目来说比较方便，因为新加的 <code>libcpu/&lt;ISA&gt;/port_&lt;compiler&gt;.c</code> 和 <code>.s</code> 会自动被加入构建。</p>
+<p>不过如果后续同时存在多个平台的移植层，就不能简单地把 <code>libcpu/</code> 下所有文件都编进去。否则可能会出现多个平台都定义了 <code>yr_task_switch()</code>、<code>SVC_Handler()</code>、<code>PendSV_Handler()</code> 等符号。</p>
+<p>后续更稳妥的做法是通过 CMake 选项选择目标平台，只编译对应的移植层。</p>
+<h2 id="移植时的检查清单">移植时的检查清单</h2>
+<p>移植到一个新平台时，可以按下面的顺序检查：</p>
+<ol>
+<li>基础类型是否正确，例如 <code>yr_uint32_t</code> 是否为 32 位</li>
+<li><code>yr_irq_disable()</code> 是否能保存原中断状态并关闭中断</li>
+<li><code>yr_irq_enable()</code> 是否能恢复原中断状态，而不是简单打开中断</li>
+<li>任务栈是否满足目标 ABI 的对齐要求</li>
+<li>初始栈帧是否能让任务第一次运行时进入 <code>entry(param)</code></li>
+<li>任务返回时是否能进入 <code>exit</code></li>
+<li>首任务启动后是否不再返回 <code>main</code></li>
+<li>普通任务切换是否能正确保存和恢复上下文</li>
+<li>tick 中断频率是否和 <code>YR_TICK_RATE_HZ</code> 一致</li>
+<li><code>yr_find_first_set()</code> 是否符合返回值约定，没有置位时返回 0</li>
+</ol>
+<p>这些问题中，最容易出错的一般是栈帧布局和异常返回。它们一旦写错，常见表现就是一启动调度就 HardFault，或者任务跑一会儿后栈被破坏。</p>
+<h2 id="总结">总结</h2>
+<p>Yuan RTOS 的移植工作主要分成两部分：</p>
+<ul>
+<li>实现 <code>include/portable.h</code> 中规定的平台相关接口</li>
+<li>提供符合 <code>YR_TICK_RATE_HZ</code> 的系统 tick</li>
+</ul>
+<p>当前 Cortex-M3 + GCC 版本利用了 Cortex-M 的 SVC、PendSV、PSP/MSP 和异常自动压栈机制，因此任务切换实现相对清晰。</p>
+<p>如果移植到其它架构，最关键的仍然是两点：第一，要能构造任务第一次运行所需的初始上下文；第二，要能在任务切换时保存旧任务上下文并恢复新任务上下文。只要这两点可靠，调度器、定时器和 IPC 这些通用代码就有机会正常运行起来。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">OSOC学习记录(1)：F阶段总结</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/">RTOS开发学习记录(8)：测试</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

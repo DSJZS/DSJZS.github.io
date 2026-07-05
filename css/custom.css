@@ -1,0 +1,116 @@
+body {
+  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "SimSun", serif;
+}
+h1.title {
+  font-style: normal;
+}
+h1.title::before {
+  content: "☼";
+}
+.logo img {
+  display: inline-block;
+  max-height: 2rem;
+  position: static;
+  vertical-align: middle;
+}
+@media (min-width: 768px) {
+  .logo img {
+    max-height: 4rem;
+    position: absolute;
+    top: 2em;
+  }
+}
+blockquote.alert {
+  border-left-width: 5px;
+}
+blockquote.alert-note {
+  background: #eef7ff;
+  border-left-color: #65bbee;
+}
+blockquote.alert-tip {
+  background: #f0fff0;
+  border-left-color: #55aa55;
+}
+blockquote.alert-warn {
+  background: #fff6e5;
+  border-left-color: #ffbb78;
+}
+blockquote.alert-error {
+  background: #fff0f0;
+  border-left-color: #cc3334;
+}
+
+.single blockquote:not(.alert) {
+  background: transparent;
+  border-left-width: 2px;
+  padding: 0 0 0 1em;
+}
+.giscus-comments {
+  margin-top: 2rem;
+}
+
+.archive {
+  max-width: none;
+  width: 100%;
+}
+.archive > h2 {
+  text-align: initial;
+}
+.taxonomy-list {
+  padding-left: 0;
+}
+.taxonomy-list li {
+  list-style: none;
+}
+.search-results .toc-line > a {
+  font-style: normal;
+}
+
+.log-list ul {
+  padding-left: 1.5rem;
+}
+.log-list li span {
+  display: inline-block;
+  min-width: 6.5rem;
+  color: #666;
+}
+.log-list .stats {
+  margin-top: 2rem;
+  font-size: .9em;
+  color: #666;
+  text-align: right;
+}
+
+@media (min-width: 768px) {
+  pre, table {
+    width: auto;
+    max-width: none;
+    margin-left: auto;
+  }
+}
+
+pre {
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--box-shadow);
+  background: var(--bg-block);
+}
+pre code {
+  display: block;
+  box-sizing: border-box;
+  min-width: 100%;
+  width: max-content;
+  max-width: none;
+  padding: 1em;
+  overflow: visible;
+  border: 0;
+  box-shadow: none;
+  white-space: pre;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+

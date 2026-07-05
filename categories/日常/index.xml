@@ -1,195 +1,68 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>日常 on Yuan&#39;s Blog</title>
-        <link>https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/</link>
-        <description>Recent content in 日常 on Yuan&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>OSOC学习记录(1)：F阶段总结</title>
-        <link>https://DSJZS.github.io/p/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
-        <pubDate>Wed, 22 Apr 2026 18:06:29 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
-        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
-&lt;/h2&gt;&lt;p&gt;我是在3月20号接触的OSOC项目，断断续续做了一周，也算是完成 F 阶段了，这里打算每完成一个阶段就记录一篇文章。&lt;/p&gt;
-&lt;p&gt;值得注意的是可以看到这篇文章的分类除了&lt;code&gt;教程&lt;/code&gt;和&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;。这是因为我并不打算像前面的几个系列一样，出一个类似手册或者说明性质的文章，告知读者如何快速的完成这个项目，或者每个题目的答案以及完整的解题步骤（因为自我感觉个人水平不足以教会别人，此外如果你阅读过F1部分，就知道这不是项目主办方提倡的做法）。更多的是借助这个项目说明一下自己对某些技术或者行业的看法，以及一些感想，可以说&lt;code&gt;教程&lt;/code&gt;、&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;这三者都沾一点边。&lt;/p&gt;
-&lt;p&gt;说回正题，这篇文章(和以后的文章)主要基于学习讲义，说一下我的看法。&lt;/p&gt;
-&lt;h2 id=&#34;f1&#34;&gt;F1
-&lt;/h2&gt;&lt;p&gt;F1 部分涉及如何科学地提问。这一部分我其实在大学，甚至更早之前的生活中就深有体会：很多人其实并不会提问。遇到问题时，他们不是先搜索、先尝试自己解决，而是直接去问别人。&lt;/p&gt;
-&lt;p&gt;我曾经从零开始手把手教一个人解压压缩包：从怎么下载解压软件开始，到怎么右键文件并解压。教完之后，我就再也不想理会这种完全不思考的人了。&lt;/p&gt;
-&lt;h2 id=&#34;f2f3&#34;&gt;F2、F3
-&lt;/h2&gt;&lt;p&gt;F2、F3 部分推荐了一个软件 &lt;code&gt;Logisim&lt;/code&gt;，并讲解了一些数电基础，然后一步步引导我们使用 Logisim 搭建基础的电子元件。&lt;/p&gt;
-&lt;p&gt;学完后感觉 Logisim 这个软件不错。一是开源免费，二是元件基本上该有的都有，而且字如其名，不是一些乱七八糟的型号。相比我学校要求使用的 &lt;code&gt;Multisim&lt;/code&gt; 和 &lt;code&gt;Proteus&lt;/code&gt;，不知道好到哪里去了。&lt;/p&gt;
-&lt;p&gt;此外，这部分也帮我复习了数电，加深了我对一些门电路、基本组合逻辑电路以及时序逻辑电路的理解。&lt;/p&gt;
-&lt;h2 id=&#34;f4&#34;&gt;F4
-&lt;/h2&gt;&lt;p&gt;F4 我感觉特别有趣。看完之后，我直接对汇编和机器指令祛魅了。之前总觉得这些指令特别高大上，既原始又难懂，不知道为什么要这么写。看完 F4 并跟着做任务后，我理解了程序、ISA 和 CPU 之间的关系，以及相应的状态机模型。现在只感觉它们原始，但不再觉得难懂了。和之前用 C 语言给芯片写驱动一样，归根结底也不过是查手册罢了。&lt;/p&gt;
-&lt;p&gt;还有就是加深了我对编译的理解。果然高级语言的代码就应该只“写给人看”，越容易理解越好。反正 CPU 也看不懂 C 语言之类的高级语言，它只认机器指令。很多无所谓的优化，大多数时候除了让别人看不懂以外，感觉没有任何意义。最终编译器会优化并处理成机器指令，让 CPU 看懂就行了。&lt;/p&gt;
-&lt;h2 id=&#34;f5&#34;&gt;F5
-&lt;/h2&gt;&lt;p&gt;F5 部分承接 F4 的内容，跟着完成了支持 sISA 的 sCPU，同时也体验到了“古法编程”（手搓机器指令）的痛苦，体会到了汇编语言以及高级语言的伟大之处。没有这些编程语言和编译器，给现在支持上千条指令的商业 CPU 编写程序，感觉真要“皆尧舜”才能完成了。&lt;/p&gt;
-&lt;p&gt;另外，F5 的最后给出了一个不算任务的问答：“能设计一条让 10 个数相加的指令吗？”我一开始觉得这不是挺好的吗？像 F4 章节给出的汇编指令要 8 行，如果实现了这个指令的话，一行就够了。后来我想了一下，这就和问“在 C 语言里面设计一个能让 10 个数相加的函数有用吗？”一样。如果要实现，我肯定会实现一个“n 个数相加的函数”，而不是固定 10个。所以我改变了对这个问题的看法。我觉得没有必要，ISA 中应该尽量只留通用的指令，而 CPU 中也应该尽可能舍弃不必要的功能，以降低功耗，同时给更重要的功能留出空间。&lt;/p&gt;
-&lt;h2 id=&#34;f6&#34;&gt;F6
-&lt;/h2&gt;&lt;p&gt;F6 部分在 F5 的基础上，基于 RV32I 与 RV32E 设计了一个 CPU，即 minirv。在实现 minirv 的过程中，我遇到了很多困难，也体会到了 Logisim 这个软件的局限性，不过最后还是成功显示 Logo 了！&lt;/p&gt;
-&lt;p&gt;最后讲义提到了 HDL 语言。这个好像是电子类专业的课程，我的专业不是完全的电子类，所以没怎么看。不过我问了下学弟，他说比较像 C 语言，那应该也不难，应该很快就能学会了。&lt;/p&gt;
-&lt;h2 id=&#34;总结&#34;&gt;总结
-&lt;/h2&gt;&lt;p&gt;通过 F1 的学习，我感觉到了自己对于计算机底层知识的热爱，很多东西只是看起来难，但是有机会上手之后其实也就那么一回事。最后希望自己能像 OSOC 宗旨中提到的那样，在毕业的时候获得自己设计的芯片！&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>屋里食研(2)：蒸饭</title>
-        <link>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
-        <pubDate>Mon, 16 Feb 2026 20:45:38 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
-        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
-&lt;/h2&gt;&lt;p&gt;前几天懒得做饭，又不想花钱点外卖，于是看网上的快速做饭方法，总结出用一套电饭煲快速做饭的方法。🧑‍🍳&lt;br&gt;
-鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;
-&lt;h2 id=&#34;食材准备&#34;&gt;食材准备
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;大米&lt;/li&gt;
-&lt;li&gt;老抽&lt;/li&gt;
-&lt;li&gt;生抽&lt;/li&gt;
-&lt;li&gt;各种想吃的菜&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;制作步骤&#34;&gt;制作步骤
-&lt;/h2&gt;&lt;h3 id=&#34;-淘米-&#34;&gt;① 淘米 🌾
-&lt;/h3&gt;&lt;p&gt;如果米比较干净，没有米虫啥的，可以略过这一步。&lt;br&gt;
-淘米的过程中记清楚正常煮饭时应该要加多少水，等下加东西后不好用手指测量。&lt;br&gt;
-淘米结束后尽可能把锅里的水倒出。&lt;/p&gt;
-&lt;h3 id=&#34;-加生抽和老抽-&#34;&gt;② 加生抽和老抽 ⛽︎
-&lt;/h3&gt;&lt;p&gt;先加一点生抽，用筷子搅拌，尽可能使所有的米变色，&lt;br&gt;
-然后再加老抽，同理，用筷子搅拌，尽可能使所有的米变色。&lt;br&gt;
-这一步加的量不要太多，能全部变色的量即可，尤其是老抽，不要太多。&lt;/p&gt;
-&lt;h3 id=&#34;-加入食材-&#34;&gt;③ 加入食材 🥩🥬
-&lt;/h3&gt;&lt;p&gt;这一步主要看个人爱好或者有啥可用的材料，&lt;br&gt;
-比如可以加香肠、卤肉、肉丸、蔬菜等等，稍微麻烦点可以炒个鸡蛋啥的。&lt;br&gt;
-我一般懒得做饭就直接丢一堆熟食到锅里完事。&lt;/p&gt;
-&lt;h3 id=&#34;-开煮&#34;&gt;④ 开煮！🍚
-&lt;/h3&gt;&lt;p&gt;加入平时煮饭量的水到锅里，然后用电饭煲开煮！电饭煲煮熟即可食用！&lt;/p&gt;
-&lt;h2 id=&#34;总结-&#34;&gt;总结 ☝️🤓
-&lt;/h2&gt;&lt;p&gt;这一套下来味道还行，而且方便，几乎不需要啥技巧，会用电饭煲，知道啥能吃啥不能吃就能完成。&lt;br&gt;
-值得注意的是，本人多次“仿真”外加“物理机实验”都没问题，但不代表没有BUG，也不保障能在不同“运行环境”下运行，如果按照这个开源流程“炸机”了本人概不负责。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>屋里食研(1)：炒面</title>
-        <link>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
-        <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
-        <description>&lt;h2 id=&#34;前言&#34;&gt;前言
-&lt;/h2&gt;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;
-也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;
-本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;
-&lt;h2 id=&#34;食材准备&#34;&gt;食材准备
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;手工面条(也就是成型的分开的面条)或者碱水挂面(要煮成型)&lt;/li&gt;
-&lt;li&gt;鸡蛋等配菜(看着加，本教程默认配菜只有鸡蛋)&lt;/li&gt;
-&lt;li&gt;油&lt;/li&gt;
-&lt;li&gt;老抽&lt;/li&gt;
-&lt;li&gt;盐&lt;/li&gt;
-&lt;li&gt;胡椒(可以不要)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;制作步骤&#34;&gt;制作步骤
-&lt;/h2&gt;&lt;h3 id=&#34;-将面条煮到熟-&#34;&gt;① 将面条煮到熟 🍜
-&lt;/h3&gt;&lt;p&gt;如果是成型的手工面特别简单，煮到八分熟就行，然后捞出来；如果是碱水挂面则需要煮到成型，然后看情况在粘粘前捞出(无论是那种面，煮面时可以加一点盐，这样煮面更快，煮出来的面更加劲道)。把面捞出来后倒入装满冷水的碗，然后用筷子分开粘黏的面条，等待冷却后快速沥干水分，防止成“泡面”了。最后加入老抽拌匀上色，拌的时候还可以加点食用油进一步防止面条粘黏。&lt;/p&gt;
-&lt;h3 id=&#34;-搅拌鸡蛋液-&#34;&gt;② 搅拌鸡蛋液 🥚🥄
-&lt;/h3&gt;&lt;p&gt;敲 1 ~ 2 个鸡蛋，将蛋液倒入一个碗中并用筷子或者专门的工具搅拌均匀备用。&lt;/p&gt;
-&lt;h3 id=&#34;-炒鸡蛋-&#34;&gt;③ 炒鸡蛋 🍳
-&lt;/h3&gt;&lt;p&gt;开火热锅，然后加足够的油(很关键不然粘锅)，接着加盐并倒入搅拌完成的鸡蛋液。蛋液入锅后快速用锅铲沿着一个方向搅拌蛋液弄散鸡蛋。等鸡蛋成型后关火进入下一步。&lt;/p&gt;
-&lt;h3 id=&#34;-炒面-&#34;&gt;④ 炒面 🪏
-&lt;/h3&gt;&lt;p&gt;此时锅里有上一步炒好的鸡蛋，观察锅的表面是否比较“油”，如果没有油膜必须加油(很关键不然粘锅)。倒入准备好的面条并开大火翻锅开炒！炒到差不多熟后可以根据口味自己额外加点盐或者胡椒啥的然后继续炒到完全熟之后出锅！。&lt;/p&gt;
-&lt;h2 id=&#34;总结-&#34;&gt;总结 ☝️🤓
-&lt;/h2&gt;&lt;p&gt;只能说面确实是炒出来的，本人多次“仿真”外加“物理机实验”都没问题，但不代表没有BUG，也不保障能在不同“运行环境”下运行，如果按照这个开源流程“炸机”了本人概不负责。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>网站迎来的第一个元旦🥳</title>
-        <link>https://DSJZS.github.io/p/%E7%BD%91%E7%AB%99%E8%BF%8E%E6%9D%A5%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E6%97%A6/</link>
-        <pubDate>Wed, 31 Dec 2025 23:43:52 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E7%BD%91%E7%AB%99%E8%BF%8E%E6%9D%A5%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E6%97%A6/</guid>
-        <description>&lt;h1 id=&#34;第一次元旦总结&#34;&gt;第一次元旦总结
-&lt;/h1&gt;&lt;h2 id=&#34;开场白&#34;&gt;开场白
-&lt;/h2&gt;&lt;p&gt;这个网页也是迎来了它的第一个元旦，可喜可贺(&lt;del&gt;虽然还没几天&lt;/del&gt;)，回想这一年也是经历了很多很多的事情，很难一一说清，如今就挑几件比较重要的事情来说吧&lt;/p&gt;
-&lt;h2 id=&#34;2025年的上半年&#34;&gt;2025年的上半年
-&lt;/h2&gt;&lt;p&gt;上半年最印象深刻的就是电赛了，当时选的是E题，也就是激光瞄准，四天三夜那真是累坏了，一个人干电控的活今天下来那真的是一点都没有闭眼啊，每天干活干20个小时，差点挂掉了😵，虽然最后就完成了三个基础题，不过也算有始有终吧，对平时的学习有一个交待了，也是把自己当时能干的全干了。&lt;/p&gt;
-&lt;h2 id=&#34;2025年的下半年&#34;&gt;2025年的下半年
-&lt;/h2&gt;&lt;p&gt;下半年就比较魔幻了，毕竟不打比赛了，于是到处扩展理论知识一直在各个领域犹豫不决，不知道以后干啥，最后也是在机器人、车控、物联网的等领域转来转去的😵‍💫。到现在也是终于下定决心以后干什么了，虽然不知道以后具体怎么样，但总算有一个固定的方向了吧。&lt;/p&gt;
-&lt;h2 id=&#34;总结与展望&#34;&gt;总结与展望
-&lt;/h2&gt;&lt;p&gt;如今虽说也很迷茫，但是有方向了，希望下次总结的时候有更大的进展吧!💪&lt;/p&gt;
-&lt;h2 id=&#34;结语&#34;&gt;结语
-&lt;/h2&gt;&lt;p&gt;本来打算2025年的最后一天写完然后一到元旦就发的，然而各种各样的事情耽误了(&lt;del&gt;绝对不是摸🐟&lt;/del&gt;)，延迟了几天才发&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>非前端工作者对于HTML、CSS、JavaScript的吐槽</title>
-        <link>https://DSJZS.github.io/p/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</link>
-        <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
-        <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由
-&lt;/h2&gt;&lt;p&gt;学习了ESP32的HTTP服务器示例之后，感觉这玩意挺好玩的，于是&lt;del&gt;没事找事地&lt;/del&gt;看了下前端的课程。&lt;/p&gt;
-&lt;h2 id=&#34;对前端基础工具的理解&#34;&gt;对前端基础工具的理解
-&lt;/h2&gt;&lt;p&gt;作为一个初学者(学习没一两天)，而且不打算以前端为主要工作方向的在校生，对于这方面肯定不专业，只略微的了解过HTML、CSS 和 JavaScript，以下为我当前的，个人的看法。😖&lt;/p&gt;
-&lt;h3 id=&#34;html&#34;&gt;HTML
-&lt;/h3&gt;&lt;p&gt;首先 HTML 我觉得是必须学的(至少要了解)，因为这玩意是网页的“骨架”，很大程度上决定了网页的布局，各种内容(比如文本，图片啥的)应该怎么摆。靠AI生成也行，但是很难精准作出自己想要的布局，要描写大量的文本来实现，还是得了解 h、p、a、form、input 等基础的标签还有对应的属性，方便进行微调。🤓&lt;/p&gt;
-&lt;h3 id=&#34;css&#34;&gt;CSS
-&lt;/h3&gt;&lt;p&gt;CSS 主要用于装饰，大部分内容可以靠AI完成，本人没有什么艺术细胞，自己写肯定不如AI写的顺眼，当然至少需要了解这玩意是啥，能干什么以及不能干什么，这样给AI的提示词啥的更准确，风格更接近自己想要的样子。😋&lt;/p&gt;
-&lt;h3 id=&#34;javascript&#34;&gt;JavaScript
-&lt;/h3&gt;&lt;p&gt;JavaScript 感觉必须得了解，因为它决定了网页背后的“逻辑”，如何与用户还有后端交互，个人觉得可以靠AI辅助，但是必须得懂，如果不懂可能出现比较大的问题(就像某个人完全不懂命令行，让AI生成一个涉及rm命令的操作一样，对了就对了，错了就💥了)，这种涉及执行逻辑的内容我一般不会让AI全部完成。🤔&lt;/p&gt;
-&lt;h2 id=&#34;结语&#34;&gt;结语
-&lt;/h2&gt;&lt;p&gt;前端感觉入门容易，入门之后怎么样就不懂了，你是怎么看得了?🫵&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>推荐一个开源工具👉163MusicLyrics👈</title>
-        <link>https://DSJZS.github.io/p/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
-        <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</guid>
-        <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由
-&lt;/h2&gt;&lt;p&gt;今天完善网站的音乐播放器，发现给播放器添加歌曲需要歌曲的封面图片、音乐文件、歌词文件等等，而要从网易云等网站中下载这些文件&lt;strong&gt;太麻烦了!!!&lt;/strong&gt;&lt;br&gt;
-&lt;del&gt;本着能偷懒就偷懒的原则&lt;/del&gt;，果断去网上寻找工具，找了没一会儿还真找到一个满足我所有要求的开源项目——&lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics.git&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;163MusicLyrics&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;软件的下载与安装&#34;&gt;软件的下载与安装
-&lt;/h2&gt;&lt;p&gt;Github仓库地址: &lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics.git&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;https://github.com/jitwxs/163MusicLyrics.git&lt;/a&gt;&lt;br&gt;
-参考仓库 &lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics/wiki#Downloads&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;官方Wiki的Downloads部分与Quick Start部分&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;具体的使用方法&#34;&gt;具体的使用方法
-&lt;/h2&gt;&lt;p&gt;参考仓库 &lt;a class=&#34;link&#34; href=&#34;https://github.com/jitwxs/163MusicLyrics/wiki#%e2%80%98Use%20Guide%e2%80%99&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;官方Wiki的Use Guide部分&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;结语&#34;&gt;结语
-&lt;/h2&gt;&lt;p&gt;感谢贡献163MusicLyrics项目的开源开发者们!!!&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>关于Hugo框架设置的吐槽</title>
-        <link>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
-        <pubDate>Thu, 25 Dec 2025 15:11:10 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
-        <description>&lt;h1 id=&#34;事情的缘由&#34;&gt;事情的缘由
-&lt;/h1&gt;&lt;p&gt;最近学习各种协议、组件等等，发现了很多大佬的博客，想着昨天休息，也没啥活动，于是心血来潮准备搞个个人博客网站。一开始照着&lt;a class=&#34;link&#34; href=&#34;https://www.bilibili.com/video/BV1bovfeaEtQ/?spm_id_from=333.1391.0.0&amp;amp;p=4&amp;amp;vd_source=9b2ee795ef170df3280fc7223c9f92b8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;B站上的教程&lt;/a&gt;搭建的无比顺利，搭建完之后虽然页面啥也没有，但总算能发布博客了。今天&lt;del&gt;没事找事&lt;/del&gt;看着博客的画风特别丑陋，而且按键也不符合我的习惯，于是就开始折腾Hugo框架设置。然后我的🧠就💥了。&lt;/p&gt;
-&lt;h1 id=&#34;个人的吐槽&#34;&gt;个人的吐槽
-&lt;/h1&gt;&lt;p&gt;鉴于本人的专业，完全没学过网站的设计，CCS 还有 HTML 啥的那是完全不懂啊，看着跟天书一样，在经历了4~5个小时的折磨之后，也是照猫画虎复制粘贴终于搞出来了几个基本的功能了🥲。
-以后根据需求慢慢加吧，盲目加功能还是不可取😌。&lt;/p&gt;
-</description>
-        </item>
-        <item>
-        <title>Hello World</title>
-        <link>https://DSJZS.github.io/p/hello-world/</link>
-        <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/hello-world/</guid>
-        <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;
-&lt;p&gt;我猜你肯定是看到了我的优质文章然后迫不及待的找到了我发的第一篇文章吧😎。&lt;br&gt;
-不管是不是，留下你的评论吧！让我知道你来过😉。&lt;/p&gt;
-</description>
-        </item>
-        
-    </channel>
+  <channel>
+    <title>日常 on Yuan&#39;s Blog</title>
+    <link>https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/</link>
+    <description>Recent content in 日常 on Yuan&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>成元</copyright>
+    <atom:link href="https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OSOC学习记录(1)：F阶段总结</title>
+      <link>https://DSJZS.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 22 Apr 2026 18:06:29 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;我是在3月20号接触的OSOC项目，断断续续做了一周，也算是完成 F 阶段了，这里打算每完成一个阶段就记录一篇文章。&lt;/p&gt;&#xA;&lt;p&gt;值得注意的是可以看到这篇文章的分类除了&lt;code&gt;教程&lt;/code&gt;和&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;。这是因为我并不打算像前面的几个系列一样，出一个类似手册或者说明性质的文章，告知读者如何快速的完成这个项目，或者每个题目的答案以及完整的解题步骤（因为自我感觉个人水平不足以教会别人，此外如果你阅读过F1部分，就知道这不是项目主办方提倡的做法）。更多的是借助这个项目说明一下自己对某些技术或者行业的看法，以及一些感想，可以说&lt;code&gt;教程&lt;/code&gt;、&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;这三者都沾一点边。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>屋里食研(2)：蒸饭</title>
+      <link>https://DSJZS.github.io/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
+      <pubDate>Mon, 16 Feb 2026 20:45:38 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前几天懒得做饭，又不想花钱点外卖，于是看网上的快速做饭方法，总结出用一套电饭煲快速做饭的方法。🧑‍🍳&lt;br&gt;&#xA;鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>屋里食研(1)：炒面</title>
+      <link>https://DSJZS.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
+      <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;&#xA;也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;&#xA;本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>网站迎来的第一个元旦🥳</title>
+      <link>https://DSJZS.github.io/cn/2025/12/%E7%BD%91%E7%AB%99%E8%BF%8E%E6%9D%A5%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E6%97%A6/</link>
+      <pubDate>Wed, 31 Dec 2025 23:43:52 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2025/12/%E7%BD%91%E7%AB%99%E8%BF%8E%E6%9D%A5%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E6%97%A6/</guid>
+      <description>&lt;h1 id=&#34;第一次元旦总结&#34;&gt;第一次元旦总结&lt;/h1&gt;&#xA;&lt;h2 id=&#34;开场白&#34;&gt;开场白&lt;/h2&gt;&#xA;&lt;p&gt;这个网页也是迎来了它的第一个元旦，可喜可贺(&lt;del&gt;虽然还没几天&lt;/del&gt;)，回想这一年也是经历了很多很多的事情，很难一一说清，如今就挑几件比较重要的事情来说吧&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>非前端工作者对于HTML、CSS、JavaScript的吐槽</title>
+      <link>https://DSJZS.github.io/cn/2025/12/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</link>
+      <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2025/12/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
+      <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由&lt;/h2&gt;&#xA;&lt;p&gt;学习了ESP32的HTTP服务器示例之后，感觉这玩意挺好玩的，于是&lt;del&gt;没事找事地&lt;/del&gt;看了下前端的课程。&lt;/p&gt;&#xA;&lt;h2 id=&#34;对前端基础工具的理解&#34;&gt;对前端基础工具的理解&lt;/h2&gt;&#xA;&lt;p&gt;作为一个初学者(学习没一两天)，而且不打算以前端为主要工作方向的在校生，对于这方面肯定不专业，只略微的了解过HTML、CSS 和 JavaScript，以下为我当前的，个人的看法。😖&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>推荐一个开源工具👉163MusicLyrics👈</title>
+      <link>https://DSJZS.github.io/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
+      <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</guid>
+      <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由&lt;/h2&gt;&#xA;&lt;p&gt;今天完善网站的音乐播放器，发现给播放器添加歌曲需要歌曲的封面图片、音乐文件、歌词文件等等，而要从网易云等网站中下载这些文件&lt;strong&gt;太麻烦了!!!&lt;/strong&gt;&lt;br&gt;&#xA;&lt;del&gt;本着能偷懒就偷懒的原则&lt;/del&gt;，果断去网上寻找工具，找了没一会儿还真找到一个满足我所有要求的开源项目——&lt;a href=&#34;https://github.com/jitwxs/163MusicLyrics.git&#34;&gt;163MusicLyrics&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>关于Hugo框架设置的吐槽</title>
+      <link>https://DSJZS.github.io/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
+      <pubDate>Thu, 25 Dec 2025 15:11:10 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
+      <description>&lt;h1 id=&#34;事情的缘由&#34;&gt;事情的缘由&lt;/h1&gt;&#xA;&lt;p&gt;最近学习各种协议、组件等等，发现了很多大佬的博客，想着昨天休息，也没啥活动，于是心血来潮准备搞个个人博客网站。一开始照着&lt;a href=&#34;https://www.bilibili.com/video/BV1bovfeaEtQ/?spm_id_from=333.1391.0.0&amp;amp;p=4&amp;amp;vd_source=9b2ee795ef170df3280fc7223c9f92b8&#34;&gt;B站上的教程&lt;/a&gt;搭建的无比顺利，搭建完之后虽然页面啥也没有，但总算能发布博客了。今天&lt;del&gt;没事找事&lt;/del&gt;看着博客的画风特别丑陋，而且按键也不符合我的习惯，于是就开始折腾Hugo框架设置。然后我的🧠就💥了。&lt;/p&gt;&#xA;&lt;h1 id=&#34;个人的吐槽&#34;&gt;个人的吐槽&lt;/h1&gt;&#xA;&lt;p&gt;鉴于本人的专业，完全没学过网站的设计，CCS 还有 HTML 啥的那是完全不懂啊，看着跟天书一样，在经历了4~5个小时的折磨之后，也是照猫画虎复制粘贴终于搞出来了几个基本的功能了🥲。&#xA;以后根据需求慢慢加吧，盲目加功能还是不可取😌。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello World</title>
+      <link>https://DSJZS.github.io/cn/2025/12/hello-world/</link>
+      <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2025/12/hello-world/</guid>
+      <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;&#xA;&lt;p&gt;我猜你肯定是看到了我的优质文章然后迫不及待的找到了我发的第一篇文章吧😎。&lt;br&gt;&#xA;不管是不是，留下你的评论吧！让我知道你来过😉。&lt;/p&gt;</description>
+    </item>
+  </channel>
 </rss>

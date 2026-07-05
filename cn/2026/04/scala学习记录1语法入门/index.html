@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Scala学习记录(1)：语法入门 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Scala学习记录(1)：语法入门 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近为了学习 Chisel，开始补一下 Scala 语法。
+[&amp;hellip;] 一开始我对 Scala 的印象其实很简单：语法上能看到一点 C/C&#43;&#43; 这类语言的影子，但整体写法又明显更灵活。真的上手之后才发现，它虽然也能写出很“传统”的代码，但很多地方的思路其实不太一样。比如 if 不只是流程控制语句，也可以直接当表达式返回值；函数可以像普通值一样传来传去；而且它默认鼓励你多用不可变数据。 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Scala学习记录(1)：语法入门</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-27</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/scala/" class="term-tag">[Scala]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#基础语法">基础语法</a>
+      <ul>
+        <li><a href="#语句与分号">语句与分号</a></li>
+        <li><a href="#变量与常量">变量与常量</a></li>
+        <li><a href="#条件判断">条件判断</a></li>
+      </ul>
+    </li>
+    <li><a href="#函数与代码块">函数与代码块</a>
+      <ul>
+        <li><a href="#函数定义-def">函数定义：<code>def</code></a>
+          <ul>
+            <li><a href="#无参函数">无参函数</a></li>
+            <li><a href="#重载">重载</a></li>
+            <li><a href="#递归与嵌套函数">递归与嵌套函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#代码块">代码块</a></li>
+        <li><a href="#匿名函数">匿名函数</a></li>
+        <li><a href="#命名参数与默认参数">命名参数与默认参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#集合与遍历">集合与遍历</a>
+      <ul>
+        <li><a href="#list">List</a></li>
+        <li><a href="#for-循环"><code>for</code> 循环</a></li>
+      </ul>
+    </li>
+    <li><a href="#面向对象">面向对象</a>
+      <ul>
+        <li><a href="#值-对象与实例">值、对象与实例</a></li>
+        <li><a href="#类与实例">类与实例</a></li>
+        <li><a href="#继承与-trait">继承与 <code>trait</code></a></li>
+        <li><a href="#object"><code>object</code></a></li>
+        <li><a href="#类体-主构造器与初始化">类体、主构造器与初始化</a></li>
+      </ul>
+    </li>
+    <li><a href="#代码组织-package-与-import">代码组织：<code>package</code> 与 <code>import</code></a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#资料来源">资料来源</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近为了学习 Chisel，开始补一下 Scala 语法。</p>
+<p>一开始我对 Scala 的印象其实很简单：<strong>语法上能看到一点 C/C++ 这类语言的影子，但整体写法又明显更灵活</strong>。真的上手之后才发现，它虽然也能写出很“传统”的代码，但很多地方的思路其实不太一样。比如 <code>if</code> 不只是流程控制语句，也可以直接当表达式返回值；函数可以像普通值一样传来传去；而且它默认鼓励你多用不可变数据。</p>
+<p>这篇文章主要参考 Chisel Bootcamp 的 <code>1_intro_to_scala.ipynb</code>，把其中比较基础、后续写 Chisel 时又很常见的 Scala 语法整理一下。本文重点放在“语法入门”上，所以会尽量先把语法现象讲清楚，再配一些简单例子。</p>
+<h2 id="基础语法">基础语法</h2>
+<p>这一部分先整理最基础、最先会碰到的语法：语句怎么结束、变量怎么定义、条件判断怎么写。</p>
+<h3 id="语句与分号">语句与分号</h3>
+<p>首先需要注意的是，与 C/C++ 不同，Scala 通常不需要在末尾添加分号。</p>
+<p>Scala 会在换行时自动推断语句结束。例如下面这种写法是完全正常的：</p>
+<pre><code class="language-scala">val a = 1
+val b = 2
+val c = a + b
+</code></pre>
+<p>只有在你想把多条语句写到同一行时，才需要分号：</p>
+<pre><code class="language-scala">val a = 1; val b = 2
+</code></pre>
+<p>所以对日常开发来说，可以先把 Scala 当成一种“默认不写分号”的语言来看待。</p>
+<h3 id="变量与常量">变量与常量</h3>
+<p>Scala 里最常见的两个关键字是 <code>var</code> 和 <code>val</code>：</p>
+<ul>
+<li><code>var</code>：可变变量</li>
+<li><code>val</code>：不可变值</li>
+</ul>
+<p>示例：</p>
+<pre><code class="language-scala">var numberOfKittens = 6
+val kittensPerHouse = 101
+val alphabet = &quot;abcdefghijklmnopqrstuvwxyz&quot;
+var done = false
+</code></pre>
+<p>其中 <code>numberOfKittens</code> 和 <code>done</code> 后面可以重新赋值，而 <code>kittensPerHouse</code> 和 <code>alphabet</code> 一旦创建就不能改了。</p>
+<pre><code class="language-scala">numberOfKittens += 1
+done = true
+
+// kittensPerHouse = 202
+// 这行会编译失败，因为 val 不能被重新赋值
+</code></pre>
+<p>从风格上说，<strong>Scala 更鼓励优先使用 <code>val</code>，只有确实需要修改时再用 <code>var</code></strong>。这样写的好处很直接：变量状态更少，代码更不容易绕晕自己。</p>
+<p>另外 Scala 也支持类型推断，所以很多时候不用手写类型：</p>
+<pre><code class="language-scala">val name = &quot;Scala&quot;
+val version = 3
+</code></pre>
+<p>编译器会自动推断 <code>name</code> 是 <code>String</code>，<code>version</code> 是 <code>Int</code>。当然你也可以手动标注：</p>
+<pre><code class="language-scala">val name: String = &quot;Scala&quot;
+</code></pre>
+<h3 id="条件判断">条件判断</h3>
+<p>基础的 <code>if</code> / <code>else</code> 用法和其他语言差不多：</p>
+<pre><code class="language-scala">if (numberOfKittens &gt; kittensPerHouse) {
+  println(&quot;Too many kittens!&quot;)
+}
+</code></pre>
+<p>也可以带 <code>else if</code>：</p>
+<pre><code class="language-scala">if (done) {
+  println(&quot;we are done&quot;)
+} else if (numberOfKittens &lt; kittensPerHouse) {
+  println(&quot;more kittens!&quot;)
+  numberOfKittens += 1
+} else {
+  done = true
+}
+</code></pre>
+<p>如果分支里只有一行语句，也可以省略大括号：</p>
+<pre><code class="language-scala">if (done)
+  println(&quot;we are done&quot;)
+else
+  numberOfKittens += 1
+</code></pre>
+<p>不过比起这些表面语法，更值得记住的是：<strong>Scala 里的 <code>if</code> 是有返回值的</strong>。</p>
+<p>例如：</p>
+<pre><code class="language-scala">val likelyCharactersSet =
+  if (alphabet.length == 26) &quot;english&quot;
+  else &quot;not english&quot;
+</code></pre>
+<p>这里 <code>if</code> 表达式的值，就是最终被赋给 <code>likelyCharactersSet</code> 的值。</p>
+<p>这个特性在 Scala 里非常常见。很多时候它能帮你少写一个临时变量，也让代码更像“根据条件选择一个值”，而不是“先声明，再分支赋值”。</p>
+<h2 id="函数与代码块">函数与代码块</h2>
+<p>Scala 的函数、代码块和表达式风格联系得非常紧。很多时候你会觉得自己不是在“按步骤写程序”，而是在“拼出一个结果”。这一部分把这些零散语法放到一起看，会顺很多。</p>
+<h3 id="函数定义-def">函数定义：<code>def</code></h3>
+<p>Scala 使用 <code>def</code> 定义函数：</p>
+<pre><code class="language-scala">def times2(x: Int): Int = 2 * x
+</code></pre>
+<p>这个定义可以拆开看：</p>
+<ul>
+<li><code>def</code>：声明函数</li>
+<li><code>times2</code>：函数名</li>
+<li><code>(x: Int)</code>：参数列表</li>
+<li><code>: Int</code>：返回值类型</li>
+<li><code>= 2 * x</code>：函数体</li>
+</ul>
+<p>复杂一点的函数可以写成代码块形式：</p>
+<pre><code class="language-scala">def distance(x: Int, y: Int, returnPositive: Boolean): Int = {
+  val xy = x * y
+  if (returnPositive) xy.abs else -xy.abs
+}
+</code></pre>
+<p>这里最后一行 <code>if (returnPositive) ...</code> 的结果会自动作为整个函数的返回值。也就是说，<strong>Scala 很多代码块默认“最后一行就是返回值”</strong>。</p>
+<h4 id="无参函数">无参函数</h4>
+<p>Scala 里没有参数的函数不一定非得写空括号：</p>
+<pre><code class="language-scala">def currentValue: Int = 42
+def printValue(): Unit = println(currentValue)
+</code></pre>
+<p>一般可以先这样理解这条习惯：</p>
+<ul>
+<li>不带副作用、只是取值的函数，常写成 <code>def xxx: Type</code></li>
+<li>有副作用的函数，常写成 <code>def xxx(): Type</code></li>
+</ul>
+<p>这里的“副作用”可以简单理解成打印、修改状态、读写文件之类会对外部产生影响的行为。</p>
+<h4 id="重载">重载</h4>
+<p>Scala 也支持函数重载：</p>
+<pre><code class="language-scala">def times2(x: Int): Int = 2 * x
+def times2(x: String): Int = 2 * x.toInt
+</code></pre>
+<p>调用时会根据参数类型选择对应版本：</p>
+<pre><code class="language-scala">times2(5)
+times2(&quot;7&quot;)
+</code></pre>
+<p>不过重载虽然能用，但如果一个函数被你重载得太花，读代码的人通常不会很开心。</p>
+<h4 id="递归与嵌套函数">递归与嵌套函数</h4>
+<p>函数内部还可以继续定义函数：</p>
+<pre><code class="language-scala">def asciiTriangle(rows: Int): Unit = {
+  def printRow(columns: Int): Unit = println(&quot;X&quot; * columns)
+
+  if (rows &gt; 0) {
+    printRow(rows)
+    asciiTriangle(rows - 1)
+  }
+}
+</code></pre>
+<p>这里的 <code>printRow</code> 就是定义在 <code>asciiTriangle</code> 内部的局部函数，只能在当前作用域里使用。</p>
+<p>这段代码还顺便展示了递归。<code>asciiTriangle(rows - 1)</code> 会不断调用自己，直到 <code>rows</code> 变成 <code>0</code> 为止。</p>
+<h3 id="代码块">代码块</h3>
+<p>Scala 里大括号 <code>{}</code> 的存在感很强，因为它不只是“包住几行代码”这么简单。</p>
+<p>一个代码块通常有两个关键点：</p>
+<ul>
+<li>它形成一个作用域</li>
+<li>它的最后一行可以作为整个代码块的返回值</li>
+</ul>
+<p>比如：</p>
+<pre><code class="language-scala">val result = {
+  val a = 3
+  val b = 4
+  a + b
+}
+</code></pre>
+<p>最终 <code>result</code> 的值就是 <code>7</code>。</p>
+<p>其实前面看到的很多东西，本质上都和代码块有关：</p>
+<ul>
+<li>函数体是代码块</li>
+<li><code>if</code> / <code>else</code> 分支是代码块</li>
+<li>类定义内部也是代码块</li>
+<li><code>for</code> 循环体也是代码块</li>
+</ul>
+<p>所以理解“最后一行会作为结果”这件事，对读 Scala 很重要。</p>
+<h3 id="匿名函数">匿名函数</h3>
+<p>后面如果接触 Chisel 或更偏函数式一点的 Scala 代码，匿名函数会非常常见。</p>
+<p>例如：</p>
+<pre><code class="language-scala">val intList = List(1, 2, 3)
+val stringList = intList.map { i =&gt;
+  i.toString
+}
+</code></pre>
+<p>这里的 <code>{ i =&gt; i.toString }</code> 就是一个匿名函数。</p>
+<p>可以把它理解成：</p>
+<ul>
+<li><code>map</code> 会遍历 <code>intList</code> 中每个元素</li>
+<li>每次取出一个元素，命名为 <code>i</code></li>
+<li>执行 <code>i.toString</code></li>
+<li>把结果收集成一个新的列表</li>
+</ul>
+<p>所以上面这段代码执行后，<code>stringList</code> 会变成：</p>
+<pre><code class="language-scala">List(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;)
+</code></pre>
+<p>这类写法第一次看会觉得有点抽象，但适应之后会发现它很适合描述“对一组数据逐个做同样的处理”。</p>
+<h3 id="命名参数与默认参数">命名参数与默认参数</h3>
+<p>Scala 支持在调用函数时写出参数名，这一点我感觉挺实用，特别是参数一多、或者出现多个布尔参数的时候，可读性会好不少。</p>
+<p>例如定义一个函数：</p>
+<pre><code class="language-scala">def myMethod(count: Int, wrap: Boolean, wrapValue: Int = 24): Unit = {
+  println(count, wrap, wrapValue)
+}
+</code></pre>
+<p>调用时可以这样写：</p>
+<pre><code class="language-scala">myMethod(count = 10, wrap = false, wrapValue = 23)
+</code></pre>
+<p>甚至可以交换顺序：</p>
+<pre><code class="language-scala">myMethod(wrapValue = 23, wrap = false, count = 10)
+</code></pre>
+<p>因为 <code>wrapValue</code> 有默认值，所以也可以省略：</p>
+<pre><code class="language-scala">myMethod(wrap = false, count = 10)
+</code></pre>
+<p>这时 Scala 会自动把 <code>wrapValue</code> 当成 <code>24</code>。</p>
+<p>这个语法的好处在于：<strong>当函数参数很多时，调用点本身就像一份说明文档</strong>。你不用倒回去数“第三个 <code>false</code> 到底是什么意思”。</p>
+<h2 id="集合与遍历">集合与遍历</h2>
+<p>Scala 的集合库很常用，后面读 Chisel 代码时也会不断看到各种集合操作。这里先记最基础的 <code>List</code> 和 <code>for</code>。</p>
+<h3 id="list">List</h3>
+<p>Scala 自带很丰富的集合库，<code>List</code> 是最常见的顺序集合之一。</p>
+<p>创建列表：</p>
+<pre><code class="language-scala">val list1 = List(1, 2, 3)
+val x = 7
+val y = 14
+val list2 = x :: y :: y :: Nil
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>List(1, 2, 3)</code> 是常见写法</li>
+<li><code>::</code> 表示把元素接到列表头部</li>
+<li><code>Nil</code> 表示空列表</li>
+</ul>
+<p>所以：</p>
+<pre><code class="language-scala">val list2 = 7 :: 14 :: 14 :: Nil
+</code></pre>
+<p>本质上就是构造出一个包含三个元素的列表。</p>
+<p>列表常见操作：</p>
+<pre><code class="language-scala">val list3 = list1 ++ list2
+val headOfList = list1.head
+val restOfList = list1.tail
+val third = list1(2)
+</code></pre>
+<p>它们分别表示：</p>
+<ul>
+<li><code>++</code>：拼接两个列表</li>
+<li><code>head</code>：取第一个元素</li>
+<li><code>tail</code>：去掉第一个元素后剩下的列表</li>
+<li><code>list1(2)</code>：取下标为 <code>2</code> 的元素，也就是第三个元素</li>
+</ul>
+<p>如果你后面要看 Chisel 代码，那 <code>List</code>、<code>Seq</code>、<code>Map</code> 这些集合写法基本迟早都会见到，所以这里最好先熟悉一下。</p>
+<h3 id="for-循环"><code>for</code> 循环</h3>
+<p>Scala 也有 <code>for</code>：</p>
+<pre><code class="language-scala">for (i &lt;- 0 to 7) {
+  print(i + &quot; &quot;)
+}
+</code></pre>
+<p>这里的 <code>0 to 7</code> 表示从 <code>0</code> 遍历到 <code>7</code>，<strong>右边界会包含进去</strong>。</p>
+<p>如果不想包含右边界，可以用 <code>until</code>：</p>
+<pre><code class="language-scala">for (i &lt;- 0 until 7) {
+  print(i + &quot; &quot;)
+}
+</code></pre>
+<p>这个循环实际会遍历 <code>0</code> 到 <code>6</code>。</p>
+<p>也可以指定步长：</p>
+<pre><code class="language-scala">for (i &lt;- 0 to 10 by 2) {
+  print(i + &quot; &quot;)
+}
+</code></pre>
+<p>这会输出 <code>0 2 4 6 8 10</code>。</p>
+<p>除了遍历数字范围，也可以直接遍历集合：</p>
+<pre><code class="language-scala">val randomList = List(3, 5, 8, 13)
+var listSum = 0
+
+for (value &lt;- randomList) {
+  listSum += value
+}
+</code></pre>
+<p>这和 C 里按下标访问数组不太一样，更像“把集合中的元素依次取出来使用”。</p>
+<h2 id="面向对象">面向对象</h2>
+<p>前面的内容更多是在说“Scala 语句怎么写”。这一部分则是从面向对象的角度整理 Scala。这样把相关概念放在一处，读起来会比零散记笔记顺很多。</p>
+<h3 id="值-对象与实例">值、对象与实例</h3>
+<p>Scala 是一门面向对象语言，所以类语法也很重要。</p>
+<p>不过这里的“面向对象”不能只理解成“能写 class”。更准确地说，<strong>Scala 里很多你平时看起来像“普通值”的东西，本质上也都可以当作对象来看</strong>。</p>
+<p>例如下面这些东西，在 Scala 的语境里都可以看作对象：</p>
+<ul>
+<li>用 <code>var</code> 定义出来的变量</li>
+<li>用 <code>val</code> 定义出来的值</li>
+<li>字面量，比如整数、字符串、布尔值</li>
+<li>函数本身</li>
+</ul>
+<p>也就是说，下面这些都不只是“裸数据”：</p>
+<pre><code class="language-scala">val a = 3
+val name = &quot;scala&quot;
+val flag = true
+</code></pre>
+<p>它们都带有自己的类型，也都能调用相应的方法。例如：</p>
+<pre><code class="language-scala">val name = &quot;scala&quot;
+println(name.toUpperCase)
+println(a.toString)
+</code></pre>
+<p>如果你之前主要写 C/C++，这里会有一点不太一样。C 里整数更像“原始值”；而在 Scala 里，很多值都统一放进了对象这套思路里，所以各种操作看起来会更一致。</p>
+<h3 id="类与实例">类与实例</h3>
+<p>在面向对象里，可以先记住一个最基本的关系：</p>
+<ul>
+<li><code>class</code> 是模板</li>
+<li>根据 <code>class</code> 创建出来的具体东西叫实例</li>
+</ul>
+<p>所以平时说“创建一个对象”，很多时候其实就是“创建一个类的实例”。</p>
+<p>来看一个简单例子：</p>
+<pre><code class="language-scala">class WrapCounter(counterBits: Int) {
+  val max: Long = (1 &lt;&lt; counterBits) - 1
+  var counter = 0L
+
+  def inc(): Long = {
+    counter = counter + 1
+    if (counter &gt; max) {
+      counter = 0
+    }
+    counter
+  }
+}
+</code></pre>
+<p>这个类可以这样理解：</p>
+<ul>
+<li><code>class WrapCounter(counterBits: Int)</code>：定义类，同时声明构造参数</li>
+<li><code>val max</code>、<code>var counter</code>：成员变量</li>
+<li><code>def inc()</code>：类的方法</li>
+</ul>
+<p>也就是说，<strong>类主要描述两类东西</strong>：</p>
+<ul>
+<li>这个类型内部保存哪些数据</li>
+<li>这个类型能执行哪些操作</li>
+</ul>
+<p>这和 C++ 里的类其实很像，只是 Scala 的写法通常更紧凑一些。</p>
+<p>创建实例时通常要用 <code>new</code>：</p>
+<pre><code class="language-scala">val x = new WrapCounter(2)
+</code></pre>
+<p>然后就可以调用方法：</p>
+<pre><code class="language-scala">x.inc()
+</code></pre>
+<p>这里的 <code>x</code> 就是 <code>WrapCounter</code> 这个类的一个实例。<code>x</code> 内部有自己的 <code>max</code> 和 <code>counter</code>，也可以调用自己的 <code>inc()</code> 方法。</p>
+<p>有一个 Scala 里经常出现、第一次看可能有点怪的写法是：</p>
+<pre><code class="language-scala">x inc()
+</code></pre>
+<p>也就是<strong>点号有时可以省略</strong>。这种写法在一些 DSL 里会显得比较自然，不过对入门来说，先老老实实写 <code>x.inc()</code> 会更清楚。</p>
+<h3 id="继承与-trait">继承与 <code>trait</code></h3>
+<p>Scala 里的类也可以继承别的类：</p>
+<pre><code class="language-scala">class Counter {
+  var value = 0
+
+  def inc(): Unit = {
+    value += 1
+  }
+}
+
+class FastCounter extends Counter {
+  override def inc(): Unit = {
+    value += 2
+  }
+}
+</code></pre>
+<p>这里：</p>
+<ul>
+<li><code>Counter</code> 可以理解成父类</li>
+<li><code>FastCounter</code> 是子类</li>
+<li>子类会继承父类已有的数据和方法</li>
+<li>如果想修改父类方法的行为，可以用 <code>override</code></li>
+</ul>
+<p>对你当前这个阶段来说，只要先记住：<strong><code>extends</code> 表示“在已有类型基础上继续扩展”</strong> 就够了。后面看别人封装工具类、基础组件时会经常遇到。</p>
+<p>Scala 里还有一个很常见的概念叫 <code>trait</code>。</p>
+<p>可以先把它粗略理解成“比类更轻一点、常用来复用一部分能力的结构”：</p>
+<pre><code class="language-scala">trait Printable {
+  def printName(name: String): Unit = {
+    println(name)
+  }
+}
+
+class User extends Printable
+</code></pre>
+<p>这样 <code>User</code> 就拥有了 <code>printName()</code> 这个方法。</p>
+<p>如果只从入门角度理解，我觉得可以先这样记：</p>
+<ul>
+<li><code>class</code>：更像完整的数据类型定义</li>
+<li><code>trait</code>：更像一组可复用的能力或接口</li>
+</ul>
+<p>后面看 Scala 或 Chisel 代码时，<code>trait</code> 的出场率很高，所以至少要先认得这个关键字。</p>
+<h3 id="object"><code>object</code></h3>
+<p>Scala 里还有一个容易和“对象”这个概念搞混的语法，就是 <code>object</code>。</p>
+<p>这里一定要分清楚：</p>
+<ul>
+<li>平时说“某个类创建出来的对象”，更准确地说是实例</li>
+<li>Scala 关键字 <code>object</code> 指的是<strong>单例对象</strong></li>
+</ul>
+<p>例如：</p>
+<pre><code class="language-scala">object MathTools {
+  def add(a: Int, b: Int): Int = a + b
+}
+</code></pre>
+<p>使用时不需要 <code>new</code>：</p>
+<pre><code class="language-scala">MathTools.add(1, 2)
+</code></pre>
+<p>因为 <code>object</code> 本身就只会有一份，很适合放一些工具函数、常量，或者某些全局只需要一个实例的逻辑。</p>
+<p>如果你有 C/C++ 背景，也可以暂时把它类比成“带命名空间效果的一组静态成员”，虽然这个类比不完全准确，但入门时够用了。</p>
+<h3 id="类体-主构造器与初始化">类体、主构造器与初始化</h3>
+<p>Scala 类体中不只是能写字段和方法，也能直接写普通语句：</p>
+<pre><code class="language-scala">class WrapCounter(counterBits: Int) {
+  val max: Long = (1 &lt;&lt; counterBits) - 1
+  println(s&quot;counter created with max value $max&quot;)
+}
+</code></pre>
+<p>每次创建对象时，这行 <code>println</code> 都会执行。</p>
+<p>如果从 C++ 的角度去理解，可以把 <strong>类体里那些“不是字段定义、也不是方法定义”的可执行语句</strong>，看成有点像构造对象时自动执行的初始化逻辑。</p>
+<p>不过要注意，<strong>整个类代码块本身不能直接等同于“初始化方法”</strong>，因为它同时还承担了“定义成员变量和成员方法”的作用。更准确地说，<code>class Xxx(...) { ... }</code> 这整块内容可以理解成“类定义 + 主构造器主体”。</p>
+<p>顺便这里又出现了一个常见语法：<strong>字符串插值</strong>。</p>
+<pre><code class="language-scala">val name = &quot;Scala&quot;
+println(s&quot;hello, $name&quot;)
+println(s&quot;1 + 2 = ${1 + 2}&quot;)
+</code></pre>
+<p>前面的 <code>s</code> 表示这是插值字符串，<code>$name</code> 会被替换成变量值，<code>${...}</code> 里则可以放表达式。</p>
+<h2 id="代码组织-package-与-import">代码组织：<code>package</code> 与 <code>import</code></h2>
+<p>这一部分不算最核心的语法，但实际写代码时肯定会见到。</p>
+<p>例如：</p>
+<pre><code class="language-scala">package mytools
+
+class Tool1 {
+}
+</code></pre>
+<p>如果别的文件要使用这个类，可以导入它：</p>
+<pre><code class="language-scala">import mytools.Tool1
+</code></pre>
+<p>也可以用通配形式导入整个包里的内容：</p>
+<pre><code class="language-scala">import chisel3._
+</code></pre>
+<p>这里的 <code>_</code> 很像其他语言里的 <code>*</code>。</p>
+<p>如果后面开始写 Chisel，这类导入语句几乎是天天见的，所以即使现在不深究，也要先认得。</p>
+<h2 id="总结">总结</h2>
+<p>对刚开始接触 Scala 的人来说，我觉得它最容易让人不适应的地方不是“太难”，而是<strong>很多地方虽然都能类比到别的语言，但细节思路经常不一样</strong>。</p>
+<p>这篇文章先记录了后面最容易反复见到的几类基础语法：</p>
+<ul>
+<li><code>var</code> 和 <code>val</code></li>
+<li><code>if</code> 不只是语句，也是表达式</li>
+<li><code>def</code> 定义函数，很多代码块默认最后一行就是返回值</li>
+<li><code>List</code>、<code>for</code>、<code>map</code> 这些集合相关写法</li>
+<li>类、实例、代码块、匿名函数、命名参数</li>
+</ul>
+<p>如果只是为了后面继续学 Chisel，我感觉先掌握到这个程度已经够用了。至少再看到别人的 Scala 代码时，不会只觉得“每一行都认识，但连起来不知道在干什么”。</p>
+<p>下一篇大概就可以开始继续记录更贴近 Chisel 使用场景的内容了。</p>
+<h2 id="资料来源">资料来源</h2>
+<p>本文主要参考以下资料：</p>
+<ul>
+<li>Chisel Bootcamp: <a href="https://hub.gesis.mybinder.org/user/freechipsproject-chisel-bootcamp-s3wkd8gs/lab/tree/1_intro_to_scala.ipynb">1_intro_to_scala.ipynb</a></li>
+<li>freechipsproject/chisel-bootcamp: <a href="https://github.com/freechipsproject/chisel-bootcamp">GitHub 仓库</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/">Git学习记录(1)：Git入门</a></span>
+  <span><a href="/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/">HDL学习记录(2)：Verilog常见电路实现</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

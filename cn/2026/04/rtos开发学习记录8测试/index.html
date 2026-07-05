@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(8)：测试 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(8)：测试 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="前面几篇文章主要记录了 Yuan RTOS 的任务调度、软件定时器和 IPC 机制。功能写出来之后，还需要做一些基本测试，至少要确认常见路径能跑起来，而且长时间运行不会出现明显异常。
+[&amp;hellip;] 这篇文章记录一下目前做过的初步测试，包括资源占用、队列收发测试方法和长时间运行结果。
+[&amp;hellip;] 完整代码请访问我的Github仓库，网址为：yuan-rtos。
+[&amp;hellip;] &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(8)：测试</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#测试平台">测试平台</a></li>
+    <li><a href="#资源占用">资源占用</a></li>
+    <li><a href="#初步测试方法">初步测试方法</a></li>
+    <li><a href="#检查思路">检查思路</a></li>
+    <li><a href="#最终结果">最终结果</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>前面几篇文章主要记录了 Yuan RTOS 的任务调度、软件定时器和 IPC 机制。功能写出来之后，还需要做一些基本测试，至少要确认常见路径能跑起来，而且长时间运行不会出现明显异常。</p>
+<p>这篇文章记录一下目前做过的初步测试，包括资源占用、队列收发测试方法和长时间运行结果。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的测试结果只代表当前版本和当前测试条件，后续代码修改、编译选项变化、BSP 示例变化都可能导致结果不同。</p>
+<h2 id="测试平台">测试平台</h2>
+<p>当前主要测试平台如下：</p>
+<ul>
+<li>MCU：<code>STM32F103C8T6</code></li>
+<li>内核：<code>Cortex-M3</code></li>
+<li>编译器：<code>arm-none-eabi-gcc 15.2.1</code></li>
+<li>BSP：<code>bsp/stm32f1c8</code></li>
+<li>系统 tick：<code>1000Hz</code></li>
+<li>配置：默认配置，无功能裁剪</li>
+</ul>
+<p>串口日志通过 <code>socat</code> 读取，并使用 <code>ts</code> 添加时间戳，类似如下：</p>
+<pre><code class="language-bash">sudo socat -u /dev/ttyACM0,b115200,raw,echo=0 STDOUT | ts '[%Y-%m-%d %H:%M:%.S]' | tee uart.log
+</code></pre>
+<p>这样可以同时在终端观察输出，并把日志保存到文件中，方便后续统计。</p>
+<h2 id="资源占用">资源占用</h2>
+<p>先记录一下资源占用。README 中使用“相较于不使用 Yuan RTOS 的基线程序”的增量口径进行了测试。</p>
+<p>测试条件如下：</p>
+<ul>
+<li>平台：<code>STM32F103C8T6</code></li>
+<li>编译器：<code>arm-none-eabi-gcc 15.2.1</code></li>
+<li>配置：默认配置，无功能裁剪</li>
+</ul>
+<p>优化等级 <code>-Os</code> 下：</p>
+<table>
+  <thead>
+      <tr>
+          <th>场景</th>
+          <th style="text-align: right">RAM 增量</th>
+          <th style="text-align: right">ROM 增量</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>仅内核</td>
+          <td style="text-align: right">640B</td>
+          <td style="text-align: right">2476B</td>
+      </tr>
+      <tr>
+          <td>快速上手程序</td>
+          <td style="text-align: right">1752B</td>
+          <td style="text-align: right">3216B</td>
+      </tr>
+  </tbody>
+</table>
+<p>优化等级 <code>-O3</code> 下：</p>
+<table>
+  <thead>
+      <tr>
+          <th>场景</th>
+          <th style="text-align: right">RAM 增量</th>
+          <th style="text-align: right">ROM 增量</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>仅内核</td>
+          <td style="text-align: right">640B</td>
+          <td style="text-align: right">3976B</td>
+      </tr>
+      <tr>
+          <td>快速上手程序</td>
+          <td style="text-align: right">1752B</td>
+          <td style="text-align: right">4704B</td>
+      </tr>
+  </tbody>
+</table>
+<p>可以看到，对于这个项目来说，<code>-O3</code> 主要增加的是 ROM 占用，RAM 基本不变。</p>
+<p>当前用于队列长时间测试的 BSP 固件，使用 <code>arm-none-eabi-size</code> 看到的结果如下：</p>
+<pre><code class="language-text">   text    data     bss     dec     hex filename
+  14144      12   14988   29144    71d8 rtos.elf
+</code></pre>
+<p>这里的 <code>bss</code> 比较大，主要和 BSP 示例中创建了多个任务栈、多个队列缓冲区有关。也就是说，这个数字不能简单看成内核本身的资源占用，而是“当前测试程序整体”的资源占用。</p>
+<h2 id="初步测试方法">初步测试方法</h2>
+<p>目前比较主要的测试是队列长时间收发测试。</p>
+<p>测试程序创建了 5 组队列，每组对应一个发送任务和一个接收任务。发送任务周期性递增发送整数，接收任务从队列读取整数，并统计自己已经接收了多少次。</p>
+<p>接收任务会检查并打印类似下面的信息：</p>
+<pre><code class="language-text">[INFO] queue 0 : count = 1000, receive = 1000
+[INFO] queue 1 : count = 2000, receive = 2000
+[INFO] queue 2 : count = 3000, receive = 3000
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>queue</code> 表示队列编号</li>
+<li><code>count</code> 表示接收任务已经成功接收的次数</li>
+<li><code>receive</code> 表示从队列中收到的整数值</li>
+</ul>
+<p>发送任务从 <code>1</code> 开始递增发送，因此在正常情况下，接收端的 <code>count</code> 和 <code>receive</code> 应该一直相等。</p>
+<p>为了减少串口输出压力，不是每次接收都打印，而是按不同队列设置不同打印间隔：</p>
+<ul>
+<li><code>queue 0</code>：每 1000 次打印一次</li>
+<li><code>queue 1</code>：每 2000 次打印一次</li>
+<li><code>queue 2</code>：每 3000 次打印一次</li>
+<li><code>queue 3</code>：每 4000 次打印一次</li>
+<li><code>queue 4</code>：每 5000 次打印一次</li>
+</ul>
+<p>这样既可以观察多个队列是否都在工作，也不会让串口输出过于频繁。</p>
+<h2 id="检查思路">检查思路</h2>
+<p>日志保存后，可以从几个角度检查：</p>
+<ul>
+<li>是否存在 <code>ERR</code>、<code>WARN</code>、<code>assert</code>、<code>Fault</code> 等异常关键字</li>
+<li>是否出现重复 <code>Start</code>，如果有则可能发生了复位</li>
+<li>每一行中 <code>count</code> 是否等于 <code>receive</code></li>
+<li>每个队列的打印步长是否符合预期</li>
+<li>每个队列的计数是否单调递增</li>
+<li>最后 5 个队列是否都能推进到相同的接收次数</li>
+</ul>
+<p>我使用脚本对日志进行了统计。核心不是脚本本身，而是确认日志中有没有出现“计数不一致、跳变、倒退、任务停止输出”等现象。</p>
+<h2 id="最终结果">最终结果</h2>
+<p>这次日志文件为 <code>test/uart.log</code>，记录时间如下：</p>
+<pre><code class="language-text">first=2026-04-21 11:55:48.689349
+last=2026-04-21 23:44:47.151256
+lines=97134
+</code></pre>
+<p>也就是说，测试程序连续运行了接近 11 小时 49 分钟。日志中只有一次 <code>Start</code>，没有发现重复启动迹象。</p>
+<p>队列日志统计结果如下：</p>
+<pre><code class="language-text">total_parsed=97133 mismatch=0
+queue 0 lines=42540 jumps=0 last_count=42540000 last_receive=42540000
+queue 1 lines=21270 jumps=0 last_count=42540000 last_receive=42540000
+queue 2 lines=14180 jumps=0 last_count=42540000 last_receive=42540000
+queue 3 lines=10635 jumps=0 last_count=42540000 last_receive=42540000
+queue 4 lines=8508  jumps=0 last_count=42540000 last_receive=42540000
+</code></pre>
+<p>这里可以看到：</p>
+<ul>
+<li><code>mismatch=0</code>，说明没有发现 <code>count != receive</code></li>
+<li>每个队列的 <code>jumps=0</code>，说明打印步长符合预期</li>
+<li>5 个队列最终都推进到了 <code>42540000</code></li>
+<li>没有出现明显的计数倒退或跳变</li>
+</ul>
+<p>从这个结果看，当前队列的基本收发、阻塞、唤醒、超时相关路径没有暴露出明显问题。</p>
+<p>当然，这个测试不能证明 RTOS 已经完全没有 bug。它只能说明在当前 BSP、当前负载和当前运行时间下，队列相关的主路径表现稳定。后续还需要继续补充更多测试，比如：</p>
+<ul>
+<li>信号量超时测试</li>
+<li>互斥量优先级继承测试</li>
+<li>任务删除与阻塞状态交互测试</li>
+<li>中断接口测试</li>
+<li>极限队列容量测试</li>
+<li>tick 溢出附近的定时器测试</li>
+</ul>
+<h2 id="总结">总结</h2>
+<p>目前 Yuan RTOS 的初步测试主要覆盖了资源占用和队列长时间运行。</p>
+<p>资源占用方面，内核本身增量较小，当前长测 BSP 的 RAM 占用主要来自任务栈和队列缓冲区。</p>
+<p>功能测试方面，队列长时间运行接近 12 小时，最终没有发现数据错位、跳变、复位或异常日志。这个结果不能代表完全可靠，但至少说明当前实现已经具备继续扩展和继续测试的基础。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/">RTOS开发学习记录(9)：移植</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/">RTOS开发学习记录(7)：队列</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

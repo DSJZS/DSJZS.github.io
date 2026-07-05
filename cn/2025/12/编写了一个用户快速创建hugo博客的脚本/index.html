@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>编写了一个用户快速创建Hugo博客的脚本 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="编写了一个用户快速创建Hugo博客的脚本 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就没事找事花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。
+[&amp;hellip;] 仅在 Ubuntu 24.04 下进行过测试，不保证所有的场景都没有Bug，必须在阅读脚本文件后自行决定是否使 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">编写了一个用户快速创建Hugo博客的脚本</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2025-12-24</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/linux/" class="term-tag">[Linux,</a>
+  
+  <a href="/tags/hugo/" class="term-tag">Hugo,</a>
+  
+  <a href="/tags/shell/" class="term-tag">Shell]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#脚本介绍">脚本介绍</a></li>
+    <li><a href="#主要功能">主要功能</a></li>
+    <li><a href="#使用方法">使用方法</a></li>
+    <li><a href="#脚本获取">脚本获取</a></li>
+    <li><a href="#结语">结语</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="脚本介绍">脚本介绍</h2>
+<p>今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就<del>没事找事</del>花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。</p>
+<blockquote>
+<p>仅在 Ubuntu 24.04 下进行过测试，不保证所有的场景都没有Bug，必须在阅读脚本文件后自行决定是否使用，本人接收issue但不对产生的问题负责</p>
+</blockquote>
+<h2 id="主要功能">主要功能</h2>
+<ol>
+<li>支持对Hugo博客进行增删查改这些基础操作</li>
+<li>支持对Hugo博客用Git推送到仓库(配合Github Action可以丝滑地部署)</li>
+</ol>
+<h2 id="使用方法">使用方法</h2>
+<ul>
+<li>新增博客(并且使用 vim 对其进行编辑，可选择只创建不编辑)</li>
+</ul>
+<pre><code class="language-CLI">hugo_blog -p ~/my-hugo-site/ -c &quot;我的技术分享&quot; -e vim
+</code></pre>
+<ul>
+<li>删除博客</li>
+</ul>
+<pre><code class="language-CLI">hugo_blog -p ~/my-hugo-site/ -d &quot;过时内容&quot;
+</code></pre>
+<ul>
+<li>查看博客(使用 vscode 进行编辑)</li>
+</ul>
+<pre><code class="language-CLI">hugo_blog -p ~/my-hugo-site/ -r &quot;我的技术分享&quot;
+</code></pre>
+<ul>
+<li>修改博客</li>
+</ul>
+<pre><code class="language-CLI">hugo_blog -p ~/my-hugo-site/ -w &quot;旧文章优化&quot; -e code
+</code></pre>
+<ul>
+<li>Git推送</li>
+</ul>
+<pre><code class="language-CLI">hugo_blog -p ~/my-hugo-site/ -g
+</code></pre>
+<ul>
+<li>还有其它的一些功能，具体功能可以参看脚本文件内容</li>
+</ul>
+<blockquote>
+<p>建议配合 alias 取别名使用，如下：</p>
+<pre><code>MY_BLOG_ROOT_DIR_PATH=&quot;$HOME/blog/dev/&quot;
+alias new_blog='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -c'
+alias delete_blog='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -d'
+lias write_blog='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -e code -w'
+alias read_blog='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -r'
+alias list_blogs='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -l'
+alias git_push_blogs='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -g'
+alias develop_blogs='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -t'
+</code></pre>
+<p>这样增删改查等操作基本上只用输入博客名字就行了<br>
+如果想要避免频繁的 Yes or No 选项，也可以添加 <code>-y</code> 或者 <code>-n</code> 选项来自动选择(我更推荐手动选择)</p>
+</blockquote>
+<h2 id="脚本获取">脚本获取</h2>
+<p>我已将脚本上传到我的Github仓库，可以到<a href="https://github.com/DSJZS/ygtool/tree/main/shell/hugo_blog">我的Github仓库</a>进行查看<br>
+也可以执行下述命令直接拉取我的脚本工具仓库(在仓库的 ygtool/shell/hugo_blog/ 目录下 )</p>
+<pre><code class="language-git">git clone https://github.com/DSJZS/ygtool.git
+</code></pre>
+<h2 id="结语">结语</h2>
+<p><strong>如果你有更好的想法，欢迎交流！</strong></p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/">关于Hugo框架设置的吐槽</a></span>
+  <span><a href="/cn/2025/12/hello-world/">Hello World</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

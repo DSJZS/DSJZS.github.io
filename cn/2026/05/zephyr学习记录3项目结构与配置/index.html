@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Zephyr学习记录(3)：项目结构与配置 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Zephyr学习记录(3)：项目结构与配置 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="上一篇主要记录了 west 和 manifest，那一篇更偏“工作空间层面”的理解。
+[&amp;hellip;] 这一篇继续往下走，看看真正开始写 Zephyr 应用时，工程目录通常长什么样，以及几个最常见的配置文件分别负责什么。
+[&amp;hellip;] 刚接触 Zephyr 的时候，这一块很容易看得有点乱：
+[&amp;hellip;] 把这些关系理顺之后，后面看 Kconfig、设备树、模块和自定义板级支持时 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Zephyr学习记录(3)：项目结构与配置</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-05-01</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/zephyr/" class="term-tag">[Zephyr]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#zephyr-为什么强调-应用工程">Zephyr 为什么强调“应用工程”</a></li>
+    <li><a href="#一个最小-zephyr-应用长什么样">一个最小 Zephyr 应用长什么样</a></li>
+    <li><a href="#三种常见的应用位置">三种常见的应用位置</a>
+      <ul>
+        <li><a href="#1-zephyr-repository-application">1. Zephyr repository application</a></li>
+        <li><a href="#2-zephyr-workspace-application">2. Zephyr workspace application</a></li>
+        <li><a href="#3-zephyr-freestanding-application">3. Zephyr freestanding application</a></li>
+      </ul>
+    </li>
+    <li><a href="#cmakelists-txt-构建入口"><code>CMakeLists.txt</code>：构建入口</a></li>
+    <li><a href="#prj-conf-软件功能配置"><code>prj.conf</code>：软件功能配置</a>
+      <ul>
+        <li><a href="#prj-conf-的几个实用理解"><code>prj.conf</code> 的几个实用理解</a></li>
+      </ul>
+    </li>
+    <li><a href="#app-overlay-硬件描述修改"><code>app.overlay</code>：硬件描述修改</a></li>
+    <li><a href="#version-版本信息"><code>VERSION</code>：版本信息</a></li>
+    <li><a href="#src-放应用自己的代码"><code>src/</code>：放应用自己的代码</a></li>
+    <li><a href="#boards-目录-按板卡放差异化配置"><code>boards/</code> 目录：按板卡放差异化配置</a></li>
+    <li><a href="#build-目录-构建产物和源码分离"><code>build/</code> 目录：构建产物和源码分离</a></li>
+    <li><a href="#application-config-dir-conf-file-file-suffix-这些变量怎么理解"><code>APPLICATION_CONFIG_DIR</code>、<code>CONF_FILE</code>、<code>FILE_SUFFIX</code> 这些变量怎么理解</a>
+      <ul>
+        <li><a href="#1-改配置目录">1. 改配置目录</a></li>
+        <li><a href="#2-改配置文件">2. 改配置文件</a></li>
+        <li><a href="#3-做变体构建">3. 做变体构建</a></li>
+      </ul>
+    </li>
+    <li><a href="#一个更贴近实际的推荐结构">一个更贴近实际的推荐结构</a></li>
+    <li><a href="#从项目结构过渡到构建命令">从项目结构过渡到构建命令</a></li>
+    <li><a href="#小结">小结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>上一篇主要记录了 <code>west</code> 和 <code>manifest</code>，那一篇更偏“工作空间层面”的理解。</p>
+<p>这一篇继续往下走，看看真正开始写 Zephyr 应用时，工程目录通常长什么样，以及几个最常见的配置文件分别负责什么。</p>
+<p>刚接触 Zephyr 的时候，这一块很容易看得有点乱：</p>
+<ul>
+<li><code>CMakeLists.txt</code> 是干什么的</li>
+<li><code>prj.conf</code> 和 <code>app.overlay</code> 有什么区别</li>
+<li>用户工程到底该放在 <code>zephyr/</code> 里面，还是放在工作空间外面</li>
+<li>为什么构建产物又总是在单独的 <code>build/</code> 目录里</li>
+</ul>
+<p>把这些关系理顺之后，后面看 Kconfig、设备树、模块和自定义板级支持时会顺很多。</p>
+<h2 id="zephyr-为什么强调-应用工程">Zephyr 为什么强调“应用工程”</h2>
+<p>官方文档里有一个很重要的说法：<strong>Zephyr 的构建系统是 application-centric 的。</strong></p>
+<p>我的理解是：<br>
+不是你先单独把 Zephyr “编出来”，再去链接自己的业务代码；而是<strong>由应用工程发起整个构建过程</strong>，然后把应用代码、Zephyr 内核、各类模块一起编成最终镜像。</p>
+<p>也就是说，在 Zephyr 的世界里，应用目录不是一个可有可无的例子目录，而是整个构建流程的入口。</p>
+<p>所以我们平时真正要关心的，是：</p>
+<ul>
+<li>我的应用目录里要放哪些文件</li>
+<li>这些文件怎么告诉 Zephyr “我要开什么软件功能”</li>
+<li>又怎么告诉 Zephyr “我要怎么改板子的硬件描述”</li>
+</ul>
+<h2 id="一个最小-zephyr-应用长什么样">一个最小 Zephyr 应用长什么样</h2>
+<p>官方文档给出的最小应用结构大致如下：</p>
+<pre><code class="language-text">&lt;app&gt;/
+├── CMakeLists.txt
+├── app.overlay
+├── prj.conf
+├── VERSION
+└── src/
+    └── main.c
+</code></pre>
+<p>如果把它翻译成更容易理解的话，大概就是：</p>
+<ul>
+<li><code>CMakeLists.txt</code>：告诉构建系统“这是一个 Zephyr 应用”，并把源码加进来</li>
+<li><code>prj.conf</code>：配置软件功能，也就是 Kconfig 选项</li>
+<li><code>app.overlay</code>：配置硬件描述，也就是设备树 overlay</li>
+<li><code>VERSION</code>：描述应用版本</li>
+<li><code>src/</code>：放应用自己的源代码</li>
+</ul>
+<p>这里最值得先记住的一点是：<br>
+<strong><code>prj.conf</code> 管软件功能，<code>app.overlay</code> 管硬件描述。</strong></p>
+<p>这两个文件名字经常一起出现，但职责并不一样。</p>
+<h2 id="三种常见的应用位置">三种常见的应用位置</h2>
+<p>根据官方文档，Zephyr 应用大致可以分成三类。</p>
+<h3 id="1-zephyr-repository-application">1. Zephyr repository application</h3>
+<p>也就是应用直接放在 <code>zephyr/</code> 仓库里面。</p>
+<p>最典型的例子就是官方自带的 sample：</p>
+<pre><code class="language-text">zephyrproject/
+├── .west/
+└── zephyr/
+    ├── samples/
+    │   └── hello_world/
+    └── tests/
+</code></pre>
+<p>这种方式的特点是：</p>
+<ul>
+<li>离官方代码最近</li>
+<li>看 sample、做实验时很方便</li>
+<li>但不太适合作为自己长期维护的业务工程</li>
+</ul>
+<h3 id="2-zephyr-workspace-application">2. Zephyr workspace application</h3>
+<p>也就是应用位于 west 工作空间中，但不在 <code>zephyr/</code> 仓库内部。</p>
+<p>例如：</p>
+<pre><code class="language-text">zephyrproject/
+├── .west/
+├── zephyr/
+├── modules/
+├── bootloader/
+└── applications/
+    └── app/
+</code></pre>
+<p>我觉得这类结构是最常见、也最顺手的一种。</p>
+<p>因为它有几个好处：</p>
+<ul>
+<li>应用和官方 <code>zephyr/</code> 源码分开，不容易把自己的工程和上游源码混在一起</li>
+<li>仍然处于 workspace 中，<code>west build</code>、<code>west flash</code>、<code>west debug</code> 用起来最自然</li>
+<li>后面如果要加自己的模块、私有仓库、板级目录，也更容易组织</li>
+</ul>
+<h3 id="3-zephyr-freestanding-application">3. Zephyr freestanding application</h3>
+<p>也就是应用不在 west workspace 里，而是在别的地方单独放着。</p>
+<p>例如：</p>
+<pre><code class="language-text">&lt;home&gt;/
+├── zephyrproject/
+│   ├── .west/
+│   ├── zephyr/
+│   └── modules/
+└── app/
+</code></pre>
+<p>这种方式也能用，但通常会稍微麻烦一些。</p>
+<p>因为你需要额外确保 Zephyr 安装位置能被正确找到，比如依赖 <code>ZEPHYR_BASE</code> 或其它构建配置。</p>
+<p>所以如果只是正常学习和做项目，我目前更倾向于：</p>
+<ul>
+<li>练习 sample：直接看 <code>zephyr/samples/</code></li>
+<li>自己做工程：放在 workspace 里，但不要塞进 <code>zephyr/</code> 仓库本体</li>
+</ul>
+<h2 id="cmakelists-txt-构建入口"><code>CMakeLists.txt</code>：构建入口</h2>
+<p>每个 Zephyr 应用都必须有一个 <code>CMakeLists.txt</code>。</p>
+<p>最小版本通常长这样：</p>
+<pre><code class="language-cmake">cmake_minimum_required(VERSION 3.20.0)
+
+find_package(Zephyr)
+project(my_zephyr_app)
+
+target_sources(app PRIVATE src/main.c)
+</code></pre>
+<p>这几行分别可以这样理解：</p>
+<ul>
+<li><code>cmake_minimum_required(...)</code>：声明最低 CMake 版本</li>
+<li><code>find_package(Zephyr)</code>：把 Zephyr 构建系统拉进来</li>
+<li><code>project(...)</code>：声明工程名</li>
+<li><code>target_sources(app PRIVATE ...)</code>：把应用源码加入 <code>app</code> 这个目标</li>
+</ul>
+<p>其中最关键的还是 <code>find_package(Zephyr)</code>。</p>
+<p>因为它相当于告诉 CMake：<br>
+“我不是一个普通的 CMake 小工程，我要接入 Zephyr 的整套构建逻辑。”</p>
+<p>如果只写到入门阶段，我觉得对 <code>CMakeLists.txt</code> 先抓住两件事就够了：</p>
+<ul>
+<li>它是应用构建入口</li>
+<li>它负责把你的源码挂到 Zephyr 的 <code>app</code> 目标上</li>
+</ul>
+<h2 id="prj-conf-软件功能配置"><code>prj.conf</code>：软件功能配置</h2>
+<p><code>prj.conf</code> 是应用最常见的 Kconfig 配置片段。</p>
+<p>它主要用于打开或关闭 Zephyr 的各种软件功能。</p>
+<p>比如：</p>
+<pre><code class="language-conf">CONFIG_GPIO=y
+CONFIG_SERIAL=y
+CONFIG_CONSOLE=y
+</code></pre>
+<p>这些配置的关注点是“我要什么软件能力”，例如：</p>
+<ul>
+<li>要不要 GPIO</li>
+<li>要不要串口</li>
+<li>要不要 shell</li>
+<li>要不要日志</li>
+<li>要不要某个驱动子系统</li>
+</ul>
+<p>所以当你遇到“某个 API 能不能用”“某个子系统为什么没打开”这类问题时，通常第一反应就该去看 <code>prj.conf</code>。</p>
+<h3 id="prj-conf-的几个实用理解"><code>prj.conf</code> 的几个实用理解</h3>
+<p>第一，<code>prj.conf</code> 不是最终配置文件，而是<strong>输入片段</strong>。</p>
+<p>构建时它会和板卡默认配置、SoC 配置以及其它配置来源合并，最后生成真正参与编译的配置结果。</p>
+<p>第二，<code>prj.conf</code> 默认会被自动查找。</p>
+<p>也就是说，大多数普通应用不需要额外告诉构建系统它在哪，放在应用目录下就行。</p>
+<p>第三，Zephyr 也支持额外的配置片段。</p>
+<p>例如：</p>
+<pre><code class="language-tty">west build -b stm32_min_dev@blue -- -DCONF_FILE=prj.conf
+west build -b stm32_min_dev@blue -- -DEXTRA_CONF_FILE=debug.conf
+</code></pre>
+<p>这里可以粗略理解成：</p>
+<ul>
+<li><code>CONF_FILE</code>：指定主要配置文件</li>
+<li><code>EXTRA_CONF_FILE</code>：在默认配置基础上，再额外混入一些配置</li>
+</ul>
+<p>这种方式很适合做“同一套代码，不同功能组合”的构建变体。</p>
+<h2 id="app-overlay-硬件描述修改"><code>app.overlay</code>：硬件描述修改</h2>
+<p>如果说 <code>prj.conf</code> 更偏软件配置，那 <code>app.overlay</code> 就更偏硬件配置。</p>
+<p>它用于在板卡原始 devicetree 的基础上做补充或修改。</p>
+<p>常见场景例如：</p>
+<ul>
+<li>给某个 GPIO 起别名</li>
+<li>修改某个外设节点状态</li>
+<li>指定 SPI/I2C 外设挂了什么器件</li>
+<li>配置 LED、按键、串口等硬件资源</li>
+</ul>
+<p>所以当你遇到“引脚怎么配”“这个外设实例在哪开”“板上器件在设备树里怎么描述”这类问题时，通常要看的是 overlay，而不是 <code>prj.conf</code>。</p>
+<p>这也是很多初学者最容易混淆的地方：</p>
+<ul>
+<li><code>CONFIG_...</code> 这类东西通常去 <code>prj.conf</code></li>
+<li><code>/ { ... }</code>、<code>&amp;uart1 { ... }</code>、<code>&amp;spi1 { ... }</code> 这类东西通常去 <code>app.overlay</code></li>
+</ul>
+<h2 id="version-版本信息"><code>VERSION</code>：版本信息</h2>
+<p>这个文件在刚入门时不一定每次都用得上，但官方文档把它放在最小应用结构里，说明它并不是摆设。</p>
+<p>它主要用于管理应用版本信息。</p>
+<p>如果后面工程要做：</p>
+<ul>
+<li>固件版本管理</li>
+<li>镜像签名</li>
+<li>发布流程自动化</li>
+</ul>
+<p>那 <code>VERSION</code> 往往就会开始有价值。</p>
+<p>如果只是学习阶段，可以先知道它的作用，不一定一开始就重点投入精力。</p>
+<h2 id="src-放应用自己的代码"><code>src/</code>：放应用自己的代码</h2>
+<p>官方建议把应用源码放在 <code>src/</code> 子目录下。</p>
+<p>这么做的好处很直接：</p>
+<ul>
+<li>项目文件和源码分开</li>
+<li>目录更整洁</li>
+<li>后面扩展多个源文件时更自然</li>
+</ul>
+<p>例如：</p>
+<pre><code class="language-text">app/
+├── CMakeLists.txt
+├── prj.conf
+├── app.overlay
+└── src/
+    ├── main.c
+    ├── led.c
+    └── button.c
+</code></pre>
+<p>如果后面工程再复杂一点，也完全可以继续细分：</p>
+<pre><code class="language-text">app/
+├── CMakeLists.txt
+├── prj.conf
+├── app.overlay
+├── include/
+├── src/
+│   ├── main.c
+│   ├── drivers/
+│   └── modules/
+└── boards/
+</code></pre>
+<p>只不过在 Zephyr 的语境下，<code>src/</code> 仍然是最常见、最推荐的默认入口。</p>
+<h2 id="boards-目录-按板卡放差异化配置"><code>boards/</code> 目录：按板卡放差异化配置</h2>
+<p>当一个应用需要支持多个板子时，只靠一个通用的 <code>prj.conf</code> 和一个通用的 <code>app.overlay</code> 往往不够。</p>
+<p>这时候通常会用到 <code>boards/</code> 目录来放板级差异配置。</p>
+<p>一个很典型的思路是：</p>
+<pre><code class="language-text">app/
+├── CMakeLists.txt
+├── prj.conf
+├── app.overlay
+├── boards/
+│   ├── stm32_min_dev_blue.conf
+│   ├── stm32_min_dev_blue.overlay
+│   ├── native_sim.conf
+│   └── native_sim.overlay
+└── src/
+    └── main.c
+</code></pre>
+<p>可以把它理解成：</p>
+<ul>
+<li>通用配置放在根目录的 <code>prj.conf</code> / <code>app.overlay</code></li>
+<li>某块板子独有的差异，放进 <code>boards/</code></li>
+</ul>
+<p>这样做的好处是非常明显的：</p>
+<ul>
+<li>公共逻辑不会被板级细节污染</li>
+<li>多板支持时更容易维护</li>
+<li>后面排查“为什么这个板能跑、那个板不行”时也更直观</li>
+</ul>
+<h2 id="build-目录-构建产物和源码分离"><code>build/</code> 目录：构建产物和源码分离</h2>
+<p>Zephyr 不支持 in-tree build，也就是<strong>不会把构建产物直接混写到源码树里</strong>。</p>
+<p>所以你每次构建时，都会得到一个单独的 <code>build/</code> 目录。</p>
+<p>例如：</p>
+<pre><code class="language-tty">west build -b stm32_min_dev@blue
+</code></pre>
+<p>之后应用目录下通常会出现：</p>
+<pre><code class="language-text">app/
+├── CMakeLists.txt
+├── prj.conf
+├── app.overlay
+├── src/
+└── build/
+</code></pre>
+<p>这样做的好处是：</p>
+<ul>
+<li>源码目录更干净</li>
+<li>切换配置时更容易清理和重建</li>
+<li>不会把中间文件和真正的工程文件混在一起</li>
+</ul>
+<p>这也是为什么我们在看 Zephyr 工程时，要有个习惯：<br>
+<strong>应用目录是“输入”，<code>build/</code> 目录是“输出”。</strong></p>
+<h2 id="application-config-dir-conf-file-file-suffix-这些变量怎么理解"><code>APPLICATION_CONFIG_DIR</code>、<code>CONF_FILE</code>、<code>FILE_SUFFIX</code> 这些变量怎么理解</h2>
+<p>看到这里时，很多人会开始碰到一些“不是默认文件名”的玩法。</p>
+<p>我觉得可以先把它们分成三类。</p>
+<h3 id="1-改配置目录">1. 改配置目录</h3>
+<p><code>APPLICATION_CONFIG_DIR</code> 用来指定应用配置目录。</p>
+<p>默认情况下，Zephyr 会从应用源码目录里找配置文件；如果你显式指定了 <code>APPLICATION_CONFIG_DIR</code>，那它就会改去你指定的位置找。</p>
+<p>这个能力更适合稍复杂一些的工程。<br>
+入门阶段先知道“可以改配置目录”就够了。</p>
+<h3 id="2-改配置文件">2. 改配置文件</h3>
+<p><code>CONF_FILE</code>、<code>EXTRA_CONF_FILE</code>、<code>DTC_OVERLAY_FILE</code>、<code>EXTRA_DTC_OVERLAY_FILE</code> 这些变量，主要用于指定或追加配置文件。</p>
+<p>它们的直觉理解就是：</p>
+<ul>
+<li><code>CONF_FILE</code>：主 Kconfig 片段</li>
+<li><code>EXTRA_CONF_FILE</code>：额外 Kconfig 片段</li>
+<li><code>DTC_OVERLAY_FILE</code>：主设备树 overlay</li>
+<li><code>EXTRA_DTC_OVERLAY_FILE</code>：额外 overlay</li>
+</ul>
+<p>当你要做不同产品型号、不同调试版本、不同外设组合时，这一套会很好用。</p>
+<h3 id="3-做变体构建">3. 做变体构建</h3>
+<p><code>FILE_SUFFIX</code> 用于给配置文件名自动追加后缀。</p>
+<p>例如你同时做鼠标版、键盘版两个产品变体时，就可以让同一套工程根据后缀去匹配不同的配置文件，而不是把所有差异都硬塞进一个 <code>prj.conf</code> 里。</p>
+<p>这个特性在工程变复杂之后会很有价值，但学习阶段不用一开始就上强度。</p>
+<h2 id="一个更贴近实际的推荐结构">一个更贴近实际的推荐结构</h2>
+<p>如果是我自己在 west workspace 里新开一个小项目，我会更倾向于下面这种组织方式：</p>
+<pre><code class="language-text">zephyrproject/
+├── .west/
+├── zephyr/
+├── modules/
+└── applications/
+    └── blinky_demo/
+        ├── CMakeLists.txt
+        ├── prj.conf
+        ├── app.overlay
+        ├── boards/
+        └── src/
+            └── main.c
+</code></pre>
+<p>这里的想法很简单：</p>
+<ul>
+<li><code>zephyr/</code> 继续保持官方仓库本体</li>
+<li>自己的应用放到 <code>applications/</code></li>
+<li>如果后面板级差异增多，就往 <code>boards/</code> 里收</li>
+<li>如果工程再扩大，再考虑拆 <code>include/</code>、自定义模块或者独立仓库</li>
+</ul>
+<p>这样的结构既不乱，也比较符合上一篇里说的 workspace 思路。</p>
+<h2 id="从项目结构过渡到构建命令">从项目结构过渡到构建命令</h2>
+<p>当应用目录准备好之后，构建其实就自然了。</p>
+<p>在应用目录下执行：</p>
+<pre><code class="language-tty">west build -b stm32_min_dev@blue
+</code></pre>
+<p>或者显式指定当前目录：</p>
+<pre><code class="language-tty">west build -b stm32_min_dev@blue .
+</code></pre>
+<p>这条命令背后做的事情，可以粗略理解成：</p>
+<ul>
+<li>读取 <code>CMakeLists.txt</code></li>
+<li>读取 <code>prj.conf</code> 等 Kconfig 配置</li>
+<li>读取 <code>app.overlay</code> 等设备树 overlay</li>
+<li>结合板卡定义、Zephyr 内核和模块一起生成构建系统</li>
+<li>把产物输出到 <code>build/</code></li>
+</ul>
+<p>所以项目结构并不是“看起来整齐一点”这么简单，<br>
+它实际上决定了 Zephyr 在构建时去哪里找源码、找软件配置、找硬件描述。</p>
+<h2 id="小结">小结</h2>
+<p>这一篇如果只抓主线，我觉得至少先记住下面这些点：</p>
+<ul>
+<li>Zephyr 的构建是以应用工程为中心发起的</li>
+<li><code>CMakeLists.txt</code> 是构建入口</li>
+<li><code>prj.conf</code> 主要管软件功能，也就是 Kconfig</li>
+<li><code>app.overlay</code> 主要管硬件描述，也就是 devicetree overlay</li>
+<li><code>src/</code> 一般放应用源码</li>
+<li><code>boards/</code> 很适合放不同板卡的差异配置</li>
+<li>构建产物会进入单独的 <code>build/</code> 目录，而不是混在源码里</li>
+<li>自己长期维护的应用，更推荐放在 workspace 中，但不要直接改成 <code>zephyr/</code> 仓库的一部分</li>
+</ul>
+<p>把这一层关系搞清楚之后，后面再看 Zephyr 的 Kconfig、设备树和自定义板卡，就不会只是在记零散文件名了。<br>
+你会知道每个文件是为了回答哪一类问题而存在的。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://docs.zephyrproject.org/latest/develop/application/index.html">Developing with Zephyr » Application Development</a></li>
+<li><a href="https://x-gen-lab.github.io/zephyr-learning-system/stage1-foundation/project-structure/">Zephyr RTOS 学习系统 » 项目结构与配置</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/">Zephyr学习记录(4)：用vscode进行项目开发</a></span>
+  <span><a href="/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/">Zephyr学习记录(2)：west 工具与 Manifest</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

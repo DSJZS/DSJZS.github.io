@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(5)：IPC基础 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(5)：IPC基础 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="RTOS 把程序拆成了多个任务，但任务之间并不是完全独立的。它们往往需要等待同一个资源、传递数据、通知事件、保护临界区。
+[&amp;hellip;] 这些功能一般统称为 IPC，也就是 Inter-Process Communication。虽然在单片机 RTOS 中更准确地说是任务间通信，但大家一般也沿用 IPC 这个说法。
+[&amp;hellip;] 这篇文章先记录 Yuan RTOS 中 IPC 的基础 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(5)：IPC基础</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#为什么要抽象-ipc-基础层">为什么要抽象 IPC 基础层</a></li>
+    <li><a href="#ipc-基础结构">IPC 基础结构</a></li>
+    <li><a href="#初始化-ipc-对象">初始化 IPC 对象</a></li>
+    <li><a href="#阻塞任务">阻塞任务</a></li>
+    <li><a href="#阻塞队列的插入策略">阻塞队列的插入策略</a></li>
+    <li><a href="#唤醒所有任务">唤醒所有任务</a></li>
+    <li><a href="#等待结果">等待结果</a></li>
+    <li><a href="#阻塞队列重新排序">阻塞队列重新排序</a></li>
+    <li><a href="#ipc-与定时器的关系">IPC 与定时器的关系</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>RTOS 把程序拆成了多个任务，但任务之间并不是完全独立的。它们往往需要等待同一个资源、传递数据、通知事件、保护临界区。</p>
+<p>这些功能一般统称为 IPC，也就是 Inter-Process Communication。虽然在单片机 RTOS 中更准确地说是任务间通信，但大家一般也沿用 IPC 这个说法。</p>
+<p>这篇文章先记录 Yuan RTOS 中 IPC 的基础层实现。后面的文章再分别记录信号量、互斥量和队列。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="为什么要抽象-ipc-基础层">为什么要抽象 IPC 基础层</h2>
+<p>信号量、互斥锁、队列看起来是不同的东西，但它们都有一个共同点：<strong>当条件不满足时，需要让当前任务阻塞；当条件满足时，又需要把等待任务唤醒</strong>。</p>
+<p>比如：</p>
+<ul>
+<li>获取信号量失败时，任务需要等待别人释放信号量</li>
+<li>获取互斥锁失败时，任务需要等待持锁者释放锁</li>
+<li>队列为空时，接收任务需要等待发送者写入数据</li>
+<li>队列满时，发送任务需要等待接收者取走数据</li>
+</ul>
+<p>如果每个组件都单独维护一套阻塞链表和唤醒逻辑，代码会重复很多，而且行为也容易不一致。因此 Yuan RTOS 中抽出了 <code>yr_ipc_base_t</code> 作为公共基础层。</p>
+<h2 id="ipc-基础结构">IPC 基础结构</h2>
+<p>IPC 基础对象定义如下：</p>
+<pre><code class="language-C">typedef struct yr_ipc_t {
+    yr_uint8_t is_valid;
+    yr_uint32_t flag;
+    yr_list_head_t blocked_list;
+} yr_ipc_base_t;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>is_valid</code>：表示 IPC 对象是否有效</li>
+<li><code>flag</code>：阻塞任务的排队策略</li>
+<li><code>blocked_list</code>：阻塞在该 IPC 对象上的任务链表</li>
+</ul>
+<p>目前支持两种排队策略：</p>
+<pre><code class="language-C">typedef enum yr_ipc_flag_t {
+    YR_IPC_FLAG_NONE = 0,
+    YR_IPC_FLAG_FIFO,
+    YR_IPC_FLAG_PRIO,
+} yr_ipc_flag_t;
+</code></pre>
+<p><code>YR_IPC_FLAG_FIFO</code> 表示先阻塞的任务先被唤醒，<code>YR_IPC_FLAG_PRIO</code> 表示优先级高的任务排在前面。</p>
+<p>这里仍然要注意，Yuan RTOS 中任务优先级数值越小，优先级越高。</p>
+<h2 id="初始化-ipc-对象">初始化 IPC 对象</h2>
+<p>IPC 基础对象初始化时，会设置有效标志、排队策略，并初始化阻塞链表：</p>
+<pre><code class="language-C">yr_err_t yr_ipc_init( yr_ipc_base_t *ipc_base, yr_uint32_t flag)
+{
+    ipc_base-&gt;is_valid = YR_TRUE;
+    ipc_base-&gt;flag = flag;
+    yr_list_init( &amp;ipc_base-&gt;blocked_list);
+
+    return YR_OK;
+}
+</code></pre>
+<p>信号量、互斥锁和队列内部都会调用这个函数。</p>
+<p>例如信号量中只有一个 IPC 基础对象，而队列中有两个 IPC 基础对象：一个用于发送阻塞，一个用于接收阻塞。这一点在后面的队列文章中再展开。</p>
+<h2 id="阻塞任务">阻塞任务</h2>
+<p>任务需要等待某个 IPC 对象时，会调用：</p>
+<pre><code class="language-C">yr_err_t yr_ipc_block_task( yr_ipc_base_t *ipc_base,
+                            yr_task_t *task)
+{
+    yr_sched_remove_task( task);
+    task-&gt;status = YR_TASK_STATUS_BLOCKED;
+    yr_ipc_insert_blocked_task( ipc_base, task );
+
+    return YR_OK;
+}
+</code></pre>
+<p>这个函数做了两件事情：</p>
+<ul>
+<li>把任务从调度器就绪队列中移除</li>
+<li>把任务插入 IPC 对象的阻塞队列</li>
+</ul>
+<p>任务从就绪队列移除后，调度器就不会再选择它运行。之后通常会调用 <code>yr_sched_switch()</code> 切换到其它就绪任务。</p>
+<h2 id="阻塞队列的插入策略">阻塞队列的插入策略</h2>
+<p>真正把任务插入阻塞链表的是内部函数 <code>yr_ipc_insert_blocked_task()</code>。</p>
+<p>如果使用 FIFO 策略，就直接插入链表末尾：</p>
+<pre><code class="language-C">yr_list_insert_before( &amp;ipc_base-&gt;blocked_list,
+                       &amp;task-&gt;list_node);
+</code></pre>
+<p>如果使用优先级策略，就需要按照当前优先级插入：</p>
+<pre><code class="language-C">while( plist != &amp;ipc_base-&gt;blocked_list ) {
+    yr_task_t *ptask = YR_LIST_ENTRY( plist,
+                                      yr_task_t,
+                                      list_node);
+
+    if( task-&gt;current_priority &lt; ptask-&gt;current_priority ) {
+        yr_list_insert_before( &amp;ptask-&gt;list_node,
+                               &amp;task-&gt;list_node);
+        break;
+    }
+
+    plist = plist-&gt;next;
+}
+</code></pre>
+<p>这样唤醒任务时，只需要取阻塞链表的第一个节点，就可以得到当前策略下最应该被唤醒的任务。</p>
+<h2 id="唤醒所有任务">唤醒所有任务</h2>
+<p>IPC 对象删除时，通常需要唤醒所有等待它的任务。公共函数如下：</p>
+<pre><code class="language-C">yr_err_t yr_ipc_resume_all( yr_ipc_base_t *ipc_base)
+{
+    while (!yr_list_isempty( list_head ))
+    {
+        task = YR_LIST_ENTRY( list_head-&gt;next,
+                              yr_task_t,
+                              list_node);
+
+        yr_list_delete_self(&amp;task-&gt;list_node);
+        yr_timer_stop(&amp;task-&gt;timer);
+        task-&gt;status = YR_TASK_STATUS_READY;
+        yr_task_set_msg( task,
+                         NULL,
+                         NULL,
+                         YR_TASK_MR_NONE,
+                         YR_TASK_MN_WAIT_IPC_DELETED);
+        yr_sched_insert_task( task);
+    }
+
+    return YR_OK;
+}
+</code></pre>
+<p>唤醒任务时要做几件事：</p>
+<ul>
+<li>从 IPC 阻塞链表删除任务节点</li>
+<li>停止任务等待超时用的定时器</li>
+<li>将任务状态改为 <code>READY</code></li>
+<li>设置任务的等待结果</li>
+<li>重新插入调度器就绪队列</li>
+</ul>
+<p>这里的等待结果很重要。任务被唤醒不一定表示拿到了资源，也可能是等待超时，或者 IPC 对象被删除。因此任务控制块中有一个 <code>msg_info</code> 字段，用于记录等待原因和唤醒结果。</p>
+<h2 id="等待结果">等待结果</h2>
+<p>任务控制块中有一组和等待结果相关的字段：</p>
+<pre><code class="language-C">typedef struct yr_task_msg_t {
+    void *source;
+    void *msg;
+    yr_uint8_t reason;
+    yr_uint16_t notify;
+} yr_task_msg_t;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>source</code>：阻塞来源，比如某个 IPC 对象</li>
+<li><code>msg</code>：附加消息指针</li>
+<li><code>reason</code>：阻塞原因</li>
+<li><code>notify</code>：唤醒通知类型</li>
+</ul>
+<p>常见的唤醒结果有：</p>
+<pre><code class="language-C">YR_TASK_MN_WAIT_OK
+YR_TASK_MN_WAIT_TIMEOUT
+YR_TASK_MN_WAIT_IPC_DELETED
+</code></pre>
+<p>因此任务被唤醒后，不能只看“我重新运行了”，还要看这次等待到底是成功、超时，还是等待对象被删除。</p>
+<h2 id="阻塞队列重新排序">阻塞队列重新排序</h2>
+<p>IPC 基础层还有一个接口：</p>
+<pre><code class="language-C">yr_err_t yr_ipc_reorder_blocked_task( yr_ipc_base_t *ipc_base,
+                                      yr_task_t *task)
+</code></pre>
+<p>这个函数用于在任务当前优先级发生变化时，重新整理它在 IPC 阻塞队列中的位置。</p>
+<p>为什么会有这种情况？主要是互斥锁的优先级继承可能会修改任务当前优先级。如果 IPC 对象采用优先级排队，那么任务优先级改变后，原来的链表顺序就可能不再正确。因此需要把任务从原位置摘出来，再按新优先级插回去。</p>
+<h2 id="ipc-与定时器的关系">IPC 与定时器的关系</h2>
+<p>IPC 等待和软件定时器是配合使用的。</p>
+<p>当任务等待一个 IPC 对象时，如果设置了有限等待时间，那么任务会同时：</p>
+<ul>
+<li>挂入 IPC 对象的阻塞链表</li>
+<li>启动任务自己的定时器</li>
+</ul>
+<p>如果 IPC 条件先满足，就停止定时器并设置 <code>YR_TASK_MN_WAIT_OK</code>。</p>
+<p>如果定时器先超时，就由超时回调把任务从 IPC 阻塞链表中移除，并设置 <code>YR_TASK_MN_WAIT_TIMEOUT</code>。</p>
+<p>这也是为什么 IPC 唤醒任务时需要调用 <code>yr_timer_stop()</code>，否则任务可能已经被正常唤醒了，但定时器后续又触发一次超时回调，导致状态混乱。</p>
+<h2 id="总结">总结</h2>
+<p>Yuan RTOS 的 IPC 基础层可以概括为：</p>
+<ul>
+<li>使用 <code>yr_ipc_base_t</code> 抽象公共阻塞队列</li>
+<li>支持 FIFO 和优先级两种阻塞任务排队策略</li>
+<li>阻塞任务时，将任务从调度器就绪队列移到 IPC 阻塞队列</li>
+<li>唤醒任务时，将任务从 IPC 阻塞队列移回调度器就绪队列</li>
+<li>通过 <code>msg_info</code> 记录等待原因和唤醒结果</li>
+<li>通过任务定时器支持 IPC 等待超时</li>
+</ul>
+<p>有了这个基础层，后面的信号量、互斥锁和队列就可以把重点放在各自的资源语义上，而不必重复实现阻塞与唤醒逻辑。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/">RTOS开发学习记录(6)：信号量与互斥量</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/">RTOS开发学习记录(4)：软件定时器</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

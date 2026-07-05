@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(2)：任务切换 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(2)：任务切换 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="任务切换是 RTOS 最基础的功能，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。
+[&amp;hellip;] 这篇文章记录一下如何实现 RTOS 的切换。
+[&amp;hellip;] 完整代码请访问我的Github仓库，网址为：yuan-rtos。
+[&amp;hellip;] 值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。
+[&amp;hellip;] 对于每 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(2)：任务切换</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-11</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#任务切换的原理">任务切换的原理</a></li>
+    <li><a href="#cortex-m-系列内核下的任务切换">Cortex-M 系列内核下的任务切换</a>
+      <ul>
+        <li><a href="#初始化任务">初始化任务</a></li>
+        <li><a href="#切换到第一个任务">切换到第一个任务</a></li>
+        <li><a href="#任务间的切换">任务间的切换</a></li>
+      </ul>
+    </li>
+    <li><a href="#qingkev4-内核下的任务切换">QingKeV4 内核下的任务切换</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p><strong>任务切换是 RTOS 最基础的功能</strong>，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。</p>
+<p>这篇文章记录一下如何实现 RTOS 的切换。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="任务切换的原理">任务切换的原理</h2>
+<p><strong>对于每个任务而言，执行它们时都要让它们感觉&quot;只有它们自己在运行&quot;</strong>。</p>
+<p><strong>为了实现这个效果，它们要有私有的栈空间，包括 GPR、PC、SP 在内的一些的寄存器的值也要是私有的</strong>。</p>
+<p>私有的栈空间看起来好实现，比如在C语言中给每个任务单独定义一个全局数组使用即可实现&quot;私有&quot;的属性，但是也有说法。<strong>比如很多RTOS都会将任务栈与异常栈(通俗来说就是中断栈)分开以节省空间(因为不分开，每个任务都要加大私有栈以防止中断压栈太多)</strong>，对于 Cortex-M 系列内核来说，这个天然支持，可以利用 MSP 和 PSP 这两个物理栈进行划分，但是对于其它的内核来说，可能就不好实现，需要用到一些技巧。</p>
+<p>私有的寄存器值则是看起来就不好实现，因为一个(单核)处理器一般不会有多套 PC、SP 等寄存器，我们不能说给每个任务单独分配一套寄存器。</p>
+<p>一般来说我们有两种常见的方案来保存每个任务的私有寄存器值：</p>
+<ol>
+<li>在类似&quot;任务控制块&quot;的结构体中添加对应寄存器的成员变量，在任务切换前进行保存，之后被调度重新执行时读取结构体即可。</li>
+<li>任务切换前将寄存器值压入私有栈，之后被调度重新执行时出栈读取寄存器值。</li>
+</ol>
+<p><strong>一般而言，大多数 RTOS 都选择了第二种，这篇文章也是介绍如何实现第二种</strong>。</p>
+<h2 id="cortex-m-系列内核下的任务切换">Cortex-M 系列内核下的任务切换</h2>
+<p>对于 Cortex-M 系列内核，一般使用 SVC(服务调用) 异常进入第一个任务，后续任务的切换使用 PendSV 异常完成。下面以 Cortex-M3 内核举例。</p>
+<h3 id="初始化任务">初始化任务</h3>
+<p>首先我们要定义一个寄存器值结构体，这个结构体并非用于保存寄存器值，只是用于提供偏移量，具体如下：</p>
+<pre><code class="language-C">typedef struct yr_context_t {
+    yr_cpu_stack_t r4;
+    yr_cpu_stack_t r5;
+    yr_cpu_stack_t r6;
+    yr_cpu_stack_t r7;
+    yr_cpu_stack_t r8;
+    yr_cpu_stack_t r9;
+    yr_cpu_stack_t r10;
+    yr_cpu_stack_t r11;
+
+    /* Hardware-stacked on exception entry */
+    yr_cpu_stack_t r0;
+    yr_cpu_stack_t r1;
+    yr_cpu_stack_t r2;
+    yr_cpu_stack_t r3;
+    yr_cpu_stack_t r12;
+    yr_cpu_stack_t lr_r14;
+    yr_cpu_stack_t pc_r15;
+    yr_cpu_stack_t psr;
+} yr_context_t;
+</code></pre>
+<p>对于用户给出的栈空间，按照下面的方式进行初始化：</p>
+<pre><code class="language-C">yr_uint8_t *yr_task_stack_init( void *entry, void *exit, yr_uint8_t *stackaddr)
+{
+    yr_context_t *pstack;
+    yr_uint8_t *psp;
+    yr_uint8_t i;
+
+    psp = stackaddr;
+
+    /* 8-byte align per ARM procedure call &amp; exception entry requirements. */
+    /* aligned = value &amp; ~(align - 1) */
+    psp = (yr_uint8_t *)( ((yr_cpu_stack_t)psp) &amp; ~((8) - 1) );  
+
+     /* Reserve space for initial context frame */
+    psp -= sizeof(yr_context_t);
+    pstack = (yr_context_t *)psp;
+
+    /* Clear frame area */
+    for (i = 0; i &lt; 16; i++)
+        ((yr_cpu_stack_t *)pstack)[i] = 0;
+
+    pstack-&gt;psr = 0x01000000UL;             /* Default xPSR (Thumb bit set) */
+    pstack-&gt;pc_r15  = (yr_cpu_stack_t)entry;    /* Entry point */
+    pstack-&gt;lr_r14  = (yr_cpu_stack_t)exit;     /* If thread function returns */
+
+    return psp;
+}
+</code></pre>
+<p>这个函数有三个参数，分别为：</p>
+<ul>
+<li>entry：任务进入时执行的函数</li>
+<li>exit：任务退出时执行的函数</li>
+<li>stackaddr：用户给出的栈顶指针(注意是栈顶的)</li>
+</ul>
+<p>首先我们会使用C语言将一个全0的 yr_context_t 结构体压入用户提供的栈空间，并配置好 entry 与 exit。</p>
+<p>至于为什么这么初始化，是因为我们下面切换任务时需要用到这些压入的初始化值赋给寄存器，参考下面的切换任务的介绍。</p>
+<h3 id="切换到第一个任务">切换到第一个任务</h3>
+<p>相关的函数实现如下：</p>
+<pre><code class="language-asm">@ void yr_task_first_switch_to( yr_uint32_t to)
+    .thumb_func
+yr_task_first_switch_to:
+    ldr r1, =NVIC_SYSPRI2
+    ldr r2, [r1]
+    ldr r3, =NVIC_PENDSV_PRI
+    orr r2, r2, r3
+    str r2, [r1]
+    cpsie i
+    svc #0
+
+@ SVC exception starts the first task using the PSP value pointed to by r0.
+    .thumb_func
+SVC_Handler:
+    ldr r1, [r0]              @ r1 = *(&amp;task-&gt;sp) = task-&gt;sp
+    ldmia r1!, {r4-r11}       @ restore software-saved regs
+    msr psp, r1               @ PSP now points to hw-stacked frame
+
+    ldr r0, =0xE000ED08
+    ldr r0, [r0]              @ VTOR
+    ldr r0, [r0]              @ initial MSP from vector table
+    msr msp, r0
+
+    ldr r0, =0xFFFFFFFD       @ return to Thread mode, use PSP
+    bx  r0
+</code></pre>
+<p>这段汇编代码在C语言头文件中声明如下：</p>
+<pre><code class="language-C">void yr_task_first_switch_to( yr_uint32_t to)
+</code></pre>
+<p>参数 to 为<strong>目标任务的栈顶指针的指针</strong>。</p>
+<p>函数 yr_task_first_switch_to 首先将 PendSV异常 的优先级到最低(原因参考下文)，然后触发 SVC 异常。</p>
+<p>SVC 异常是同步异常，所以触发后会立刻进入。这里要说明的是在 Cortex-M 系列内核中，异常进入时会往进入前使用的物理栈中压入 R0-R3，R12，LR，PC、XPSR 寄存器的值，退出时则会尝试从物理栈中取出这些寄存器值。</p>
+<p>Cortext-M 系列内核中一般将 MSP 用于异常栈，PSP 用于任务栈，复位后一般默认使用的物理栈为 MSP，因此这里会将寄存器值自动压入 MSP 栈。不过任务使用 PSP 栈并非 MSP 栈，所以这里压入的寄存器值我们不会用到。</p>
+<p>进入 SVC_Handler 后首先就是获取第一个任务的栈顶指针，然后使用 ldmia 操作进行类似出栈的操作，将之前压入用户栈的 yr_context_t 的前半部分依次赋给 {r4-r11}，这些值是多少了？根据 yr_task_stack_init 函数中的操作，这些寄存器值会是全 0。之后将新的栈顶指针写入 PSP。</p>
+<p>然后我们会将 MSP 通过中断向量表第一项的 __inital_sp 重置为初始值，丢弃第一个任务被调度前的调用链(这意味着我们不能再返回 main 函数了)。</p>
+<p>最后异常返回时设置 EXC_RETURN = 0xFFFFFFFD，即返回到 Thread mode，物理栈使用 PSP。</p>
+<p>前面提到异常退出时会尝试从物理栈中取出 R0-R3，R12，LR，PC、XPSR 寄存器的值，这里我们以 PSP 作为物理栈退出，所以这些值会从 PSP 栈中读取，这样 yr_context_t 结构体中的后半部分也被读取到对应的寄存器了。有没有理解为什么之前那么定义 yr_context_t 结构体与 yr_task_stack_init 函数了？</p>
+<h3 id="任务间的切换">任务间的切换</h3>
+<p>相关逻辑如下，首先是C语言部分定义了一些全局变量：</p>
+<pre><code class="language-C">yr_uint32_t yr_prev_task_sp_p; /* 切换前的任务的栈顶指针的指针 */
+yr_uint32_t yr_next_task_sp_p; /* 切换后的任务的栈顶指针的指针 */
+yr_uint32_t yr_switch_flag;    /* 切换标志，表示实际的切换进行前是否已经要求过切换 */
+</code></pre>
+<p>汇编代码部分：</p>
+<pre><code class="language-asm">@ void yr_task_switch( yr_uint32_t from, yr_uint32_t to)
+    .thumb_func
+yr_task_switch:
+    mrs r12, PRIMASK
+    cpsid i
+
+    @ 读取 yr_switch_flag 
+    @ 如果为 1 跳转到 task_reswitch
+    @ 否则置 1 继续执行
+    ldr r2, =yr_switch_flag
+    ldr r3, [r2]
+
+    cmp r3, #1
+    beq task_reswitch
+    mov r3, #1
+    str r3, [r2]
+
+    @ 修改 yr_prev_task_sp_p
+    ldr r2, =yr_prev_task_sp_p
+    str r0, [r2]
+
+task_reswitch:
+    @ 修改 yr_next_task_sp_p
+    ldr r2, =yr_next_task_sp_p
+    str r1, [r2]
+
+    msr PRIMASK, r12
+    
+    @ 触发 PendSV
+    ldr r2, =NVIC_INT_CTRL
+    ldr r3, =NVIC_PENDSVSET
+    str r3, [r2]
+    
+    bx lr
+
+    .thumb_func
+PendSV_Handler:
+    @ 保存当前中断屏蔽状态
+    mrs     r2, PRIMASK
+    cpsid   i
+ 
+    @ 如果 yr_switch_flag 为 0 直接退出，否则置 0
+    ldr     r0, =yr_switch_flag
+    ldr     r1, [r0]
+    cbz     r1, pendsv_exit
+    mov     r1, #0
+    str     r1, [r0]
+
+    ldr     r0, =yr_prev_task_sp_p
+    ldr     r1, [r0]
+    cbz     r1, switch_to_thread
+
+    @ 将 r4-r11 压入旧任务的栈中，然后将(旧任务)新的栈顶指针保存到旧任务的 sp 中
+    mrs     r1, psp
+    stmdb   r1!, {r4-r11}
+    ldr     r0, [r0]
+    str     r1, [r0]
+
+switch_to_thread:
+    @ 将 r4-r11 从新任务的栈中取出，然后将(新任务)新的栈顶指针保存到 PSP
+    ldr     r1, =yr_next_task_sp_p
+    ldr     r1, [r1]
+    ldr     r1, [r1]
+
+    ldmia   r1!, {r4-r11}
+    msr     psp, r1
+
+pendsv_exit:
+    @ 恢复中断屏蔽状态
+    msr     PRIMASK, r2
+
+    @ 把当前异常返回码 LR 改成“返回线程模式时使用 PSP”，然后执行异常返回
+    orr     lr, lr, #0x04
+    bx      lr
+</code></pre>
+<p>切换函数在C语言头文件中的声明为：</p>
+<pre><code class="language-C">void yr_task_switch( yr_uint32_t from, yr_uint32_t to)
+</code></pre>
+<p>两个参数分别为：</p>
+<ul>
+<li>from：切换前的任务的栈顶指针的指针</li>
+<li>to：切换后的任务的栈顶指针的指针</li>
+</ul>
+<p>可以看到我们是现在 yr_task_switch 中先利用屏蔽中断的功能原子的将 yr_switch_flag 置位表示要进行切换了，并以此保证 yr_prev_task_sp_p 切换前不变，然后将 from 和 to 参数的值原子的保存到 yr_prev_task_sp_p 与 yr_next_task_sp_p 中( 如果 yr_switch_flag 置位了只保存后者 )，然后触发 PendSV 异常，在 PendSV_Handler 中进行任务的切换。</p>
+<p>PendSV_Handler 中先屏蔽掉中断，防止切换被打断，确保切换是原子的，然后通过 yr_switch_flag 判断异常是不是错误的发生了，接着将旧任务的 {r4-r11} 寄存器压入旧任务的栈，新任务的 {r4-r11} 从栈中读到当前 {r4-r11} 中。至于为什么只处理 {r4-r11} ，参考之前提到的 Cortex-M 的异常压栈/出栈机制。</p>
+<p>为什么不直接在 yr_task_switch 中进行切换，而是在 PendSV_Handler 中进行切换？这是因为<strong>上下文切换应该被延后到最低优先级异常里统一完成，而不是在任意调用点立刻发生</strong>。这样做的好处是无论在那种上下文环境中(比如任务中、中断中)请求切换，最后都会统一到 PendSV_Handler 之中进行实际的切换，这样方便维护(因为我们只用确保在 PendSV_Handler 中寄存器/栈等资源适合进行切换就行了)。此外还能利用 Cortex-M 的异常压栈/出栈机制，实现切换较为方便。</p>
+<h2 id="qingkev4-内核下的任务切换">QingKeV4 内核下的任务切换</h2>
+<p>QingKeV4 内核相比于 Cortex-M 系列内核来说，实现任务切换功能较为麻烦。</p>
+<p><strong>与 Cortex-M 系列相比，QingKeV4 没有 MSP 与 PSP 之分，因此异常栈与任务栈之间的切换需要用户自己在中断中自行实现</strong>，这导致中断服务函数即使使用了栈切换函数，如果不使用汇编编写总会占用一部分的任务栈(编译器编译C语言代码时一般在执行栈切换函数之前会添加压栈指令，这是几乎是无法避免的)。<strong>与此同时还要防止中断嵌套破坏栈切换&quot;一进一出&quot;的顺序</strong>，一般而言，要么直接关闭中断嵌套(这可能破坏了一些基于中断的功能的实时性)，要么原子地设置一个标志位来判断是否进行了切换。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">RTOS开发学习记录(3)：任务调度</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">RTOS开发学习记录(1)：程序结构</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

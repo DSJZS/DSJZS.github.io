@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(4)：软件定时器 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(4)：软件定时器 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。
+[&amp;hellip;] 如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。
+[&amp;hellip;] 这篇文章记录一下 Yuan RTOS 中软件定时器的实现。 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(4)：软件定时器</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#系统-tick">系统 tick</a></li>
+    <li><a href="#定时器对象">定时器对象</a></li>
+    <li><a href="#有序链表">有序链表</a></li>
+    <li><a href="#超时检查">超时检查</a></li>
+    <li><a href="#任务延时">任务延时</a></li>
+    <li><a href="#周期延时">周期延时</a></li>
+    <li><a href="#ipc-超时">IPC 超时</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。</p>
+<p>如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。</p>
+<p>这篇文章记录一下 Yuan RTOS 中软件定时器的实现。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="系统-tick">系统 tick</h2>
+<p>软件定时器首先需要一个稳定的时间基准。在 Yuan RTOS 中，这个时间基准就是系统 tick：</p>
+<pre><code class="language-C">volatile yr_uint32_t yr_current_ticks = 0;
+</code></pre>
+<p>每次硬件定时中断到来时，需要调用：</p>
+<pre><code class="language-C">void yr_tick_update(void)
+</code></pre>
+<p>对于 Cortex-M ，一般在  <code>SysTick_Handler()</code> 中调用它。</p>
+<p><code>yr_tick_update()</code> 做的事情主要有三件：</p>
+<ul>
+<li>递增全局 tick 计数</li>
+<li>处理当前任务的时间片</li>
+<li>检查是否有软件定时器超时</li>
+</ul>
+<p>相关逻辑如下：</p>
+<pre><code class="language-C">++yr_current_ticks;
+
+--current_task-&gt;remaining_ticks;
+if( current_task-&gt;remaining_ticks == 0 ) {
+    current_task-&gt;remaining_ticks = current_task-&gt;init_ticks;
+    yr_sched_yield();
+}
+
+yr_timer_check();
+</code></pre>
+<p>也就是说，任务时间片和软件定时器都依赖同一个系统 tick。</p>
+<h2 id="定时器对象">定时器对象</h2>
+<p>Yuan RTOS 中的软件定时器结构体如下：</p>
+<pre><code class="language-C">typedef struct yr_timer_t {
+    yr_list_t list_node;
+    yr_timer_func_t timeout_func;
+    void *param;
+    yr_uint32_t init_ticks;
+    yr_uint32_t timeout_ticks;
+} yr_timer_t;
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>list_node</code>：用于挂入定时器链表</li>
+<li><code>timeout_func</code>：超时回调函数</li>
+<li><code>param</code>：传给超时回调的参数</li>
+<li><code>init_ticks</code>：定时器启动后等待多少 tick</li>
+<li><code>timeout_ticks</code>：实际超时的系统 tick 值</li>
+</ul>
+<p>定时器初始化时只会设置这些基础信息，并不会自动启动：</p>
+<pre><code class="language-C">yr_err_t yr_timer_init( yr_timer_t *timer,
+                        yr_timer_func_t func,
+                        void *param,
+                        yr_uint32_t ticks)
+{
+    yr_list_init( &amp;timer-&gt;list_node);
+
+    timer-&gt;timeout_func = func;
+    timer-&gt;param = param;
+    timer-&gt;init_ticks = ticks;
+    timer-&gt;timeout_ticks = 0;
+
+    return YR_OK;
+}
+</code></pre>
+<h2 id="有序链表">有序链表</h2>
+<p>Yuan RTOS 使用一个全局链表管理所有已经启动的软件定时器：</p>
+<pre><code class="language-C">yr_list_head_t yr_timer_list;
+</code></pre>
+<p>这个链表并不是随便插入的，而是按照超时时间从小到大排序。启动定时器时，会先计算它的绝对超时时刻：</p>
+<pre><code class="language-C">timer-&gt;timeout_ticks = yr_current_ticks + timer-&gt;init_ticks;
+</code></pre>
+<p>然后遍历定时器链表，找到第一个超时时间比自己更晚的节点，把当前定时器插到它前面：</p>
+<pre><code class="language-C">for( timer_node = yr_timer_list.next;
+     timer_node != &amp;yr_timer_list;
+     timer_node = timer_node-&gt;next ) {
+
+    yr_timer_t *ptimer = YR_LIST_ENTRY( timer_node,
+                                        yr_timer_t,
+                                        list_node);
+
+    if( (yr_int32_t)( ptimer-&gt;timeout_ticks -
+                      timer-&gt;timeout_ticks ) &gt; 0 )
+        break;
+}
+
+yr_list_insert_before( timer_node, &amp;timer-&gt;list_node);
+</code></pre>
+<p>这样做的好处是检查超时时，只需要从链表头开始检查。只要遇到第一个没超时的定时器，就可以直接停止遍历，因为后面的定时器一定更晚超时。</p>
+<h2 id="超时检查">超时检查</h2>
+<p>定时器检查函数的核心逻辑如下：</p>
+<pre><code class="language-C">while(!yr_list_isempty(&amp;yr_timer_list)) {
+    timer_node = yr_timer_list.next;
+    ptimer = YR_LIST_ENTRY( timer_node, yr_timer_t, list_node);
+
+    if( (yr_int32_t)( yr_current_ticks -
+                      ptimer-&gt;timeout_ticks ) &gt;= 0 ) {
+        yr_list_delete_self( timer_node);
+        yr_list_insert_before( &amp;timeout_list, timer_node);
+    } else {
+        break;
+    }
+}
+</code></pre>
+<p>这里有两个值得注意的地方。</p>
+<p>第一，判断超时使用的是强制转换后的有符号减法：</p>
+<pre><code class="language-C">(yr_int32_t)(yr_current_ticks - ptimer-&gt;timeout_ticks) &gt;= 0
+</code></pre>
+<p>这种写法可以在一定范围内处理 tick 溢出的情况，比直接比较两个无符号数更稳妥。</p>
+<p>第二，超时的定时器不是立刻执行回调，而是先移动到一个临时链表 <code>timeout_list</code> 中，之后再统一执行回调：</p>
+<pre><code class="language-C">while (!yr_list_isempty(&amp;timeout_list)) {
+    timer_node = timeout_list.next;
+    ptimer = YR_LIST_ENTRY(timer_node, yr_timer_t, list_node);
+
+    yr_list_delete_self(timer_node);
+
+    if (ptimer-&gt;timeout_func != NULL)
+        ptimer-&gt;timeout_func(ptimer-&gt;param);
+}
+</code></pre>
+<p>这样做是为了避免回调函数中再次操作定时器链表时破坏当前遍历过程。例如回调中可能会重新启动当前定时器，用于实现周期软件定时器。</p>
+<h2 id="任务延时">任务延时</h2>
+<p>软件定时器在 Yuan RTOS 中最直接的用途就是任务延时。每个任务控制块中都有一个定时器：</p>
+<pre><code class="language-C">yr_timer_t timer;
+</code></pre>
+<p>当任务调用 <code>yr_task_sleep_ticks()</code> 时，当前任务会被移出就绪队列，并启动自己的定时器：</p>
+<pre><code class="language-C">yr_sched_remove_task( current_task);
+current_task-&gt;status = YR_TASK_STATUS_BLOCKED;
+
+yr_timer_stop( &amp;current_task-&gt;timer);
+yr_timer_set_ticks( &amp;current_task-&gt;timer, ticks);
+yr_timer_start( &amp;current_task-&gt;timer);
+
+yr_sched_switch();
+</code></pre>
+<p>此时任务不再参与调度，直到定时器超时。</p>
+<p>任务定时器使用的默认回调是：</p>
+<pre><code class="language-C">void yr_timeout_default_func(void *param)
+</code></pre>
+<p>这个函数会把阻塞任务重新放回就绪队列：</p>
+<pre><code class="language-C">task-&gt;status = YR_TASK_STATUS_READY;
+yr_task_set_msg( task,
+                 NULL,
+                 NULL,
+                 YR_TASK_MR_NONE,
+                 YR_TASK_MN_WAIT_TIMEOUT);
+yr_sched_insert_task(task);
+</code></pre>
+<p>如果被唤醒任务的优先级高于当前任务，还会触发一次任务切换。</p>
+<h2 id="周期延时">周期延时</h2>
+<p>除了相对延时，Yuan RTOS 还实现了 <code>yr_task_sleep_until()</code>，用于周期任务：</p>
+<pre><code class="language-C">yr_err_t yr_task_sleep_until(yr_uint32_t *pre_ticks,
+                             yr_uint32_t inc_ticks)
+{
+    *pre_ticks += inc_ticks;
+
+    current_ticks = yr_get_current_ticks();
+    if ((yr_int32_t)(*pre_ticks - current_ticks) &lt;= 0)
+        return YR_OK;
+
+    sleep_ticks = *pre_ticks - current_ticks;
+    yr_task_sleep_ticks(sleep_ticks);
+
+    return YR_OK;
+}
+</code></pre>
+<p>普通的相对延时大概是“从现在开始延时多少 tick”。而周期延时是“下一次应该在某个绝对 tick 醒来”。</p>
+<p>这样可以减少任务执行时间带来的累计误差，更适合周期采样、周期打印、周期控制等场景。</p>
+<h2 id="ipc-超时">IPC 超时</h2>
+<p>软件定时器还有一个重要用途：IPC 等待超时。</p>
+<p>例如任务获取信号量失败时，如果 <code>wait_ticks</code> 不是 <code>0</code>，任务会进入 IPC 阻塞队列。如果 <code>wait_ticks</code> 也不是 <code>YR_WAIT_FOREVER</code>，则会启动当前任务的定时器：</p>
+<pre><code class="language-C">yr_ipc_block_task( &amp;sem-&gt;ipc_base, current_task);
+
+if( wait_ticks != YR_WAIT_FOREVER ) {
+    yr_timer_set_ticks( &amp;current_task-&gt;timer, wait_ticks);
+    yr_timer_start( &amp;current_task-&gt;timer);
+}
+</code></pre>
+<p>如果在超时前资源可用，则 IPC 模块会停止这个定时器，并把任务唤醒。</p>
+<p>如果先发生超时，则 <code>yr_timeout_default_func()</code> 会把任务从 IPC 的阻塞链表中删除，并设置通知状态为 <code>YR_TASK_MN_WAIT_TIMEOUT</code>。任务恢复运行后，就可以根据这个状态判断等待是否成功。</p>
+<h2 id="总结">总结</h2>
+<p>Yuan RTOS 的软件定时器实现可以概括为：</p>
+<ul>
+<li>使用系统 tick 作为时间基准</li>
+<li>所有已启动定时器挂入一个按超时时间排序的链表</li>
+<li>每次 tick 后检查链表头部已经超时的定时器</li>
+<li>使用临时链表执行超时回调，避免遍历过程中被回调破坏链表</li>
+<li>任务延时和 IPC 超时都复用了同一套定时器机制</li>
+</ul>
+<p>这种实现的优点是结构简单，代码量较少，并且便于理解。缺点是启动定时器时需要遍历链表，定时器数量很多时效率会下降。不过对于轻量化 RTOS 和小型 MCU 项目来说，这个实现已经比较够用了。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/">RTOS开发学习记录(5)：IPC基础</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">RTOS开发学习记录(3)：任务调度</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

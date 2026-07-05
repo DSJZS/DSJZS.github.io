@@ -1,161 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Wireshark on Yuan&#39;s Blog</title>
-        <link>https://DSJZS.github.io/tags/wireshark/</link>
-        <description>Recent content in Wireshark on Yuan&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-us</language>
-        <copyright>永远null的成元</copyright><atom:link href="https://DSJZS.github.io/tags/wireshark/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
-        <link>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
-        <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
-        
-        <guid>https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
-        <description>&lt;h2 id=&#34;简介&#34;&gt;简介
-&lt;/h2&gt;&lt;p&gt;第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。&lt;br&gt;
-适合了解了ARP协议的人观看🤓。&lt;/p&gt;
-&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介
-&lt;/h2&gt;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍
-&lt;/h3&gt;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;
-之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;
-与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;
-&lt;h3 id=&#34;arp帧格式&#34;&gt;ARP帧格式
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F.png&#34;
-	width=&#34;1979&#34;
-	height=&#34;579&#34;
-	srcset=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F_hu_5cf419b540ef4d24.png 480w, https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F_hu_23f19d46c717f146.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;ARP帧(Ethernet II头部)&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;341&#34;
-		data-flex-basis=&#34;820px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;本文的实验是直接监听网卡接口，收到的是Ethernet II帧，故这里给出对应的格式。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;ARP帧字段解释：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;硬件类型：硬件地址(MAC地址)的类型。对于以太网，这里为1。&lt;/li&gt;
-&lt;li&gt;协议类型：映射的协议协议地址类型。对于IPv4地址，此字段为0x0800。&lt;/li&gt;
-&lt;li&gt;硬件大小：硬件地址的字节数。对于MAC地址，应该为6。&lt;/li&gt;
-&lt;li&gt;协议大小：协议地址的字节数。对于IPv4地址，应该为4.&lt;/li&gt;
-&lt;li&gt;Op：ARP请求(1)、ARP应答(2)、RARP请求(3)、RARP应答(4)。&lt;/li&gt;
-&lt;li&gt;地址字段：用于存放发送方与接收方的硬件地址与协议地址。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;arp缓存表&#34;&gt;ARP缓存表
-&lt;/h3&gt;&lt;p&gt;这个表格维护了每个接口从IP地址到MAC地址的最新映射(每个IPv4地址对应的MAC地址)。&lt;br&gt;
-每个条目由ARP协议动态学习或者手工输入得到。&lt;br&gt;
-在 Windows/Linux 中，可以通过 &lt;code&gt;arp -a&lt;/code&gt; 指令查看。&lt;/p&gt;
-&lt;h2 id=&#34;wireshark抓包流程&#34;&gt;Wireshark抓包流程
-&lt;/h2&gt;&lt;h3 id=&#34;准备网络环境&#34;&gt;准备网络环境
-&lt;/h3&gt;&lt;p&gt;创建一个局域网，并准备包括电脑网卡接口在内的两个无线网络接口(平板、手机或者另一个电脑网卡接口等等)。确保它们都能连接上局域网。&lt;/p&gt;
-&lt;h3 id=&#34;检查arp缓存表&#34;&gt;检查ARP缓存表
-&lt;/h3&gt;&lt;p&gt;使用 &lt;code&gt;arp -a&lt;/code&gt; 指令查询当前设备的 &lt;strong&gt;ARP缓存表&lt;/strong&gt;，&lt;strong&gt;确保另一台设备不在这个表中&lt;/strong&gt;。 &lt;br&gt;
-如下所示，除了网关以外没有任何接口的记录。&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;❯ arp -a  
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&amp;gt;_gateway (192.168.102.158) 位于 66:ce:bd:27:59:a9 [ether] 在 wlo1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;如果有了另一台设备的记录(比如重复实验等情况)，可以用 &lt;code&gt;sudo arp -d &amp;lt;IPv4地址&amp;gt;&lt;/code&gt;进行删除。&lt;/p&gt;
-&lt;h3 id=&#34;查询另一台设备的ipv4地址&#34;&gt;查询另一台设备的IPv4地址
-&lt;/h3&gt;&lt;p&gt;这个操作可以通过设备的&lt;strong&gt;设置&lt;/strong&gt;软件或者AP设备(比如你的路由器)查询。&lt;br&gt;
-&lt;strong&gt;本文中另一台设备的IPv4地址为 192.168.102.112&lt;/strong&gt;，下文不在复述。&lt;/p&gt;
-&lt;h3 id=&#34;打开wireshark并抓包&#34;&gt;打开Wireshark并抓包
-&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;打开Wireshark，并在过滤器中输入&lt;code&gt;arp&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;打开虚拟终端软件，输入 &lt;code&gt;ping 192.168.102.112&lt;/code&gt;&lt;br&gt;
-(这里的IP地址由前面的&lt;a class=&#34;link&#34; href=&#34;#%e6%9f%a5%e8%af%a2%e5%8f%a6%e4%b8%80%e5%8f%b0%e8%ae%be%e5%a4%87%e7%9a%84ipv4%e5%9c%b0%e5%9d%80&#34; &gt;查询步骤&lt;/a&gt;得到).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85.jpg&#34;
-	width=&#34;2495&#34;
-	height=&#34;1364&#34;
-	srcset=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85_hu_9eacbd8311746ab9.jpg 480w, https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85_hu_5aeeb8b1ceaa7ec8.jpg 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;Wireshark抓到的ARP帧&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;182&#34;
-		data-flex-basis=&#34;439px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;最终应该会得到1对或者2对ARP帧。如上图所示(可以放大观看)。&lt;/p&gt;
-&lt;h2 id=&#34;wireshark抓包内容解析&#34;&gt;Wireshark抓包内容解析
-&lt;/h2&gt;&lt;p&gt;上一个步骤一共得到了四个ARP帧，这里分别做解释。&lt;/p&gt;
-&lt;h3 id=&#34;第一个arp帧&#34;&gt;第一个ARP帧
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7.png&#34;
-	width=&#34;1894&#34;
-	height=&#34;1006&#34;
-	srcset=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7_hu_12e96aeedd79b720.png 480w, https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7_hu_1ebcac7bfd7d8cc5.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;电脑网卡接口在局域网中广播的ARP请求&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;188&#34;
-		data-flex-basis=&#34;451px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;当执行&lt;code&gt;ping 192.168.102.112&lt;/code&gt;时。电脑的&lt;a class=&#34;link&#34; href=&#34;#arp%e7%bc%93%e5%ad%98%e8%a1%a8&#34; &gt;&lt;strong&gt;ARP缓存表&lt;/strong&gt;&lt;/a&gt;中并没有对应的条目，&lt;br&gt;
-因此为了得到 192.168.102.112 与MAC地址的映射关系，协议栈软件底层自动发送了一个ARP请求帧。
-Ethernet II头部中：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;目标地址：全1，表示广播，表示发往同一局域网中的所有接口。&lt;/li&gt;
-&lt;li&gt;源地址：为电脑网卡接口的MAC地址。&lt;/li&gt;
-&lt;li&gt;类型：为0x0806，表明这是一个ARP协议帧，载荷交由ARP协议软件处理。
-ARP协议内容：&lt;/li&gt;
-&lt;li&gt;前四个字段如&lt;a class=&#34;link&#34; href=&#34;#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f&#34; &gt;ARP帧格式&lt;/a&gt;中介绍的一样。&lt;/li&gt;
-&lt;li&gt;Op：&lt;strong&gt;为1，表示这个帧为ARP请求帧，希望得到目标接口的应答&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;后面的地址字段也和&lt;a class=&#34;link&#34; href=&#34;#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f&#34; &gt;ARP帧格式&lt;/a&gt;中介绍的一样。&lt;br&gt;
-&lt;strong&gt;值得注意的是目的硬件地址为全0，因为当前还不知道&lt;/strong&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;第二个arp帧&#34;&gt;第二个ARP帧
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7.png&#34;
-	width=&#34;1894&#34;
-	height=&#34;1006&#34;
-	srcset=&#34;https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7_hu_bf3a5f1e239121d8.png 480w, https://DSJZS.github.io/p/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7_hu_4c337d147599c218.png 1024w&#34;
-	loading=&#34;lazy&#34;
-	
-		alt=&#34;目标设备单播发往电脑网卡接口的ARP请求&#34;
-	
-	
-		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;188&#34;
-		data-flex-basis=&#34;451px&#34;
-	
-&gt;&lt;/p&gt;
-&lt;p&gt;IPv4地址为 192.168.102.112 的接口收到了电脑网卡接口广播的ARP请求，&lt;strong&gt;单播&lt;/strong&gt;进行应答。&lt;br&gt;
-Ethernet II头部中的：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;目标地址：为ARP请求发送方的MAC地址。&lt;/li&gt;
-&lt;li&gt;源地址：目标接口的MAC地址。&lt;/li&gt;
-&lt;li&gt;类型：为0x0806，表明这是一个ARP协议帧，载荷交由ARP协议软件处理。
-ARP协议内容：&lt;/li&gt;
-&lt;li&gt;前四个字段如&lt;a class=&#34;link&#34; href=&#34;#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f&#34; &gt;ARP帧格式&lt;/a&gt;中介绍的一样。&lt;/li&gt;
-&lt;li&gt;Op：&lt;strong&gt;为2，表示这个帧为ARP应答帧，是对ARP请求的应答&lt;/strong&gt;。&lt;/li&gt;
-&lt;li&gt;后面的地址字段也和&lt;a class=&#34;link&#34; href=&#34;#arp%e5%b8%a7%e6%a0%bc%e5%bc%8f&#34; &gt;ARP帧格式&lt;/a&gt;中介绍的一样。&lt;br&gt;
-电脑网卡接口收到ARP应答帧后会将其解析并作为一个动态条目加入&lt;a class=&#34;link&#34; href=&#34;#arp%e7%bc%93%e5%ad%98%e8%a1%a8&#34; &gt;&lt;strong&gt;ARP缓存表&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;第三个和第四个arp帧&#34;&gt;第三个和第四个ARP帧
-&lt;/h3&gt;&lt;p&gt;一般而言，目标设备收到ARP请求时，除了发送ARP应答，还会在&lt;a class=&#34;link&#34; href=&#34;#arp%e7%bc%93%e5%ad%98%e8%a1%a8&#34; &gt;&lt;strong&gt;ARP缓存表&lt;/strong&gt;&lt;/a&gt;中添加有关发送方的映射条目。这是一个很常见的优化举措，但这里目标设备并没有这么做。&lt;br&gt;
-当它被电脑 ping 时，它为了回复同样也需要知晓电脑网卡接口的IPv4地址与MAC地址的映射关系，但是它发送ARP应答的时候并没有记录，因此它这里也需要往电脑发送ARP请求，等待电脑网卡接口的ARP应答，这就是第三个和第四个ARP帧的由来，可以参考前两个ARP帧示例。&lt;/p&gt;
-&lt;h2 id=&#34;结语&#34;&gt;结语
-&lt;/h2&gt;&lt;p&gt;ARP协议算是比较简单的协议了，Wireshark抓包还是比较容易的，快去亲手试试吧🫵。&lt;/p&gt;
-</description>
-        </item>
-        
-    </channel>
+  <channel>
+    <title>Wireshark on Yuan&#39;s Blog</title>
+    <link>https://DSJZS.github.io/tags/wireshark/</link>
+    <description>Recent content in Wireshark on Yuan&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>成元</copyright>
+    <atom:link href="https://DSJZS.github.io/tags/wireshark/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
+      <link>https://DSJZS.github.io/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
+      <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
+      <guid>https://DSJZS.github.io/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
+    </item>
+  </channel>
 </rss>

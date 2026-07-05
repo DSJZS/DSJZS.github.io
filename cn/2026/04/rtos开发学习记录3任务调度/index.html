@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>RTOS开发学习记录(3)：任务调度 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS开发学习记录(3)：任务调度 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="上一篇文章记录了任务切换的实现。任务切换解决的是“如何从一个任务切到另一个任务”的问题，而任务调度解决的是“应该切到哪一个任务”的问题。
+[&amp;hellip;] 这篇文章记录一下 Yuan RTOS 中任务调度的实现。
+[&amp;hellip;] 完整代码请访问我的Github仓库，网址为：yuan-rtos。
+[&amp;hellip;] 值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">RTOS开发学习记录(3)：任务调度</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-22</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/rtos/" class="term-tag">[RTOS]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#调度器要解决什么问题">调度器要解决什么问题</a></li>
+    <li><a href="#优先级调度">优先级调度</a></li>
+    <li><a href="#就绪队列与位图">就绪队列与位图</a></li>
+    <li><a href="#找到最高优先级任务">找到最高优先级任务</a>
+      <ul>
+        <li><a href="#为什么这里可以认为是-o-1">为什么这里可以认为是 O(1)</a></li>
+      </ul>
+    </li>
+    <li><a href="#启动第一个任务">启动第一个任务</a></li>
+    <li><a href="#普通任务切换">普通任务切换</a></li>
+    <li><a href="#同优先级时间片轮转">同优先级时间片轮转</a></li>
+    <li><a href="#任务阻塞与重新调度">任务阻塞与重新调度</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>上一篇文章记录了任务切换的实现。任务切换解决的是“如何从一个任务切到另一个任务”的问题，而任务调度解决的是“应该切到哪一个任务”的问题。</p>
+<p>这篇文章记录一下 Yuan RTOS 中任务调度的实现。</p>
+<p>完整代码请访问我的Github仓库，网址为：<a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a>。</p>
+<p>值得注意是本文的示例代码在你阅读时可能已经进行过修改了，具体实现以仓库中代码为主。</p>
+<h2 id="调度器要解决什么问题">调度器要解决什么问题</h2>
+<p>RTOS 中往往同时存在多个任务，但单核处理器同一时刻只能执行一个任务。因此调度器至少要解决下面几个问题：</p>
+<ul>
+<li>哪些任务当前可以运行</li>
+<li>多个任务都可以运行时，应该选择谁</li>
+<li>当前任务不再适合继续运行时，如何切换到下一个任务</li>
+<li>同优先级任务之间是否需要轮流执行</li>
+</ul>
+<p>在 Yuan RTOS 中，任务有多个状态，例如 <code>INIT</code>、<code>READY</code>、<code>RUNNING</code>、<code>BLOCKED</code>、<code>SUSPENDED</code>、<code>TERMINATED</code> 等。调度器真正关心的是处于就绪队列中的任务，也就是可以被 CPU 执行的任务。</p>
+<h2 id="优先级调度">优先级调度</h2>
+<p>Yuan RTOS 采用基于优先级的调度方式，任务优先级范围如下：</p>
+<pre><code class="language-C">/* 优先级范围 [0, YR_TASK_MAX_PRIORITY) */
+#define YR_TASK_MAX_PRIORITY (32)
+</code></pre>
+<p>这里采用类似中断优先级的习惯：<strong>数值越小，优先级越高</strong>。因此优先级 <code>0</code> 最高，优先级 <code>31</code> 最低。</p>
+<p>最直接的做法是每次调度时遍历所有任务，找到优先级最高的就绪任务。不过这种方式会随着任务数量增加而变慢。对于 RTOS 来说，调度路径一般希望尽可能短，因此 Yuan RTOS 使用了“优先级位图 + 每优先级链表”的方式。</p>
+<p>核心变量如下：</p>
+<pre><code class="language-C">yr_task_t* yr_current_task;
+yr_uint32_t yr_thread_ready_priority_group;
+yr_list_head_t yr_task_priority_table[YR_TASK_MAX_PRIORITY];
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>yr_current_task</code>：当前正在运行的任务</li>
+<li><code>yr_thread_ready_priority_group</code>：就绪优先级位图</li>
+<li><code>yr_task_priority_table</code>：每个优先级对应一个双向循环链表</li>
+</ul>
+<p>也就是说，每一个优先级都有一个自己的就绪队列。如果某个优先级下存在就绪任务，那么位图中对应的 bit 就会被置 1。</p>
+<h2 id="就绪队列与位图">就绪队列与位图</h2>
+<p>任务进入就绪态时，会被插入到对应优先级的链表中：</p>
+<pre><code class="language-C">yr_err_t yr_sched_insert_task( yr_task_t* task)
+{
+    yr_list_insert_before( &amp;yr_task_priority_table[task-&gt;current_priority],
+                           &amp;task-&gt;list_node);
+
+    yr_thread_ready_priority_group |= task-&gt;priority_mask;
+
+    return YR_OK;
+}
+</code></pre>
+<p>其中 <code>task-&gt;priority_mask</code> 永远等于：</p>
+<pre><code class="language-C">1 &lt;&lt; task-&gt;current_priority
+</code></pre>
+<p>任务移出就绪队列时，则需要把链表节点删除。如果这个优先级的链表已经空了，还需要清除位图中对应的 bit：</p>
+<pre><code class="language-C">yr_err_t yr_sched_remove_task( yr_task_t* task)
+{
+    yr_list_delete_self( &amp;task-&gt;list_node);
+
+    if( yr_list_isempty(&amp;yr_task_priority_table[task-&gt;current_priority]) ) {
+        yr_thread_ready_priority_group &amp;= ~(task-&gt;priority_mask);
+    }
+
+    return YR_OK;
+}
+</code></pre>
+<p>这样调度器就不需要遍历所有任务，只需要在位图中找到最低位的 1，就能知道当前最高优先级的就绪队列在哪里。</p>
+<h2 id="找到最高优先级任务">找到最高优先级任务</h2>
+<p>调度器启动或切换时，会通过 <code>yr_find_first_set()</code> 找到位图中最低位的 1：</p>
+<pre><code class="language-C">highest_ready_priority = yr_find_first_set(yr_thread_ready_priority_group);
+highest_ready_priority -= 1;
+</code></pre>
+<p>这里需要减 1，是因为 <code>__builtin_ffs()</code> 返回的是从 1 开始的 bit 序号，如果输入为 <code>0b1</code>，返回值是 <code>1</code>，而优先级数组下标应该是 <code>0</code>。</p>
+<h3 id="为什么这里可以认为是-o-1">为什么这里可以认为是 O(1)</h3>
+<p>前面一直说通过位图可以快速找到最高优先级任务，但这里需要再说清楚一点：<strong>O(1) 的关键并不是“用了位图”这四个字，而是能够在常数时间内找到位图中最低位的 1</strong>。</p>
+<p>如果只是把就绪状态存在一个 <code>yr_uint32_t</code> 里，然后自己从 bit0 开始写一个循环挨个检查，那么最多要检查 32 次。由于当前优先级数量固定为 32，这在大 O 记号里也可以视为常数，但从实现思路上看，它仍然是“按优先级逐个扫描”。</p>
+<p>Yuan RTOS 当前的 Cortex-M3 + GCC 移植层中，<code>yr_find_first_set()</code> 是这样实现的：</p>
+<pre><code class="language-C">/* 利用编译器内建指令查找最低位的 1 */
+int yr_find_first_set(int value)
+{
+    return __builtin_ffs(value);
+}
+</code></pre>
+<p><code>__builtin_ffs()</code> 是 GCC 提供的内建函数，用于查找一个整数中最低位的置位位置。这样调度器就不需要在 C 代码中手动循环检查每一个优先级，而是把这个操作交给编译器和目标平台去优化。</p>
+<p>因此当前调度器选择下一个任务的关键路径大致是：</p>
+<ol>
+<li>通过 <code>yr_find_first_set()</code> 从就绪位图中找到最高就绪优先级</li>
+<li>用这个优先级作为下标访问 <code>yr_task_priority_table</code></li>
+<li>从对应链表头部取出第一个任务</li>
+</ol>
+<p>这几个步骤都不依赖系统中任务数量，因此可以认为调度器查找下一个任务的过程是 O(1) 的。</p>
+<p>不过这里也要注意，<code>yr_find_first_set()</code> 属于移植层接口。换到其它编译器或其它 ISA 时，不一定还叫 <code>__builtin_ffs()</code>，可能需要改成对应平台的指令或编译器内建函数。比如有些架构可以通过 CLZ、CTZ、FFS 一类指令完成类似操作；如果目标平台没有这些能力，才需要退化成软件循环查找。</p>
+<p>得到最高就绪优先级后，调度器取该链表的第一个任务作为下一个任务：</p>
+<pre><code class="language-C">next_task = YR_LIST_ENTRY(
+    yr_task_priority_table[highest_ready_priority].next,
+    yr_task_t,
+    list_node
+);
+</code></pre>
+<p>由于位图查询是常数时间的，链表取头节点也是常数时间的，因此这个调度路径比较简单，也比较适合资源较小的 MCU。</p>
+<h2 id="启动第一个任务">启动第一个任务</h2>
+<p>调度器启动时，系统中还没有真正运行的任务。<code>yr_sched_start()</code> 会先找到最高优先级的就绪任务，然后把它设置为当前任务：</p>
+<pre><code class="language-C">yr_current_task = next_task;
+next_task-&gt;status = YR_TASK_STATUS_RUNNING;
+next_task-&gt;remaining_ticks = next_task-&gt;init_ticks;
+
+yr_task_first_switch_to( (yr_uint32_t)&amp;next_task-&gt;sp);
+</code></pre>
+<p>最后通过前一篇文章介绍的 <code>yr_task_first_switch_to()</code> 进入第一个任务。</p>
+<p>这里有一个细节：内核初始化时会创建一个 idle 任务，并将其优先级设置为最低。这样只要系统中没有其它就绪任务，调度器也总能找到一个任务运行，不会出现“无任务可调度”的情况。</p>
+<h2 id="普通任务切换">普通任务切换</h2>
+<p>普通任务切换由 <code>yr_sched_switch()</code> 完成，其核心过程如下：</p>
+<pre><code class="language-C">prev_task = yr_current_task;
+next_task = YR_LIST_ENTRY(
+    yr_task_priority_table[highest_ready_priority].next,
+    yr_task_t,
+    list_node
+);
+
+if( prev_task == next_task ) {
+    return;
+}
+
+yr_current_task = next_task;
+
+if( prev_task &amp;&amp; prev_task-&gt;status == YR_TASK_STATUS_RUNNING )
+    prev_task-&gt;status = YR_TASK_STATUS_READY;
+
+next_task-&gt;status = YR_TASK_STATUS_RUNNING;
+yr_task_switch( (yr_uint32_t)&amp;prev_task-&gt;sp,
+                (yr_uint32_t)&amp;next_task-&gt;sp);
+</code></pre>
+<p>调度器只负责选择任务和更新任务状态，真正保存、恢复寄存器的工作仍然交给移植层中的 <code>yr_task_switch()</code>。这样通用调度逻辑和架构相关代码就分开了。</p>
+<h2 id="同优先级时间片轮转">同优先级时间片轮转</h2>
+<p>仅有优先级调度会带来一个问题：如果同优先级下有多个任务，那么链表前面的任务可能一直运行。为了解决这个问题，Yuan RTOS 支持同优先级任务的时间片轮转。</p>
+<p>每个任务中有两个和时间片相关的字段：</p>
+<pre><code class="language-C">yr_uint32_t init_ticks;
+yr_uint32_t remaining_ticks;
+</code></pre>
+<p>每次系统 tick 到来时，会递减当前任务的 <code>remaining_ticks</code>：</p>
+<pre><code class="language-C">--current_task-&gt;remaining_ticks;
+if( current_task-&gt;remaining_ticks == 0 ) {
+    current_task-&gt;remaining_ticks = current_task-&gt;init_ticks;
+    yr_sched_yield();
+}
+</code></pre>
+<p>当时间片耗尽时，当前任务会主动让出 CPU。<code>yr_sched_yield()</code> 会把当前任务从同优先级链表的当前位置删除，再插入到链表末尾：</p>
+<pre><code class="language-C">yr_list_delete_self( &amp;prev_task-&gt;list_node );
+yr_list_insert_before( priority_list, &amp;prev_task-&gt;list_node);
+</code></pre>
+<p>这样同优先级的其它任务就有机会运行。</p>
+<p>不过需要注意的是，时间片轮转只发生在同优先级任务之间。如果有更高优先级任务就绪，那么调度器仍然会优先选择更高优先级任务。</p>
+<h2 id="任务阻塞与重新调度">任务阻塞与重新调度</h2>
+<p>任务不一定一直处于就绪态。例如任务调用延时、等待信号量、等待队列消息时，都会进入阻塞状态。</p>
+<p>以延时为例，<code>yr_task_sleep_ticks()</code> 会把当前任务从就绪队列移除，设置为阻塞状态，并启动一个与任务绑定的定时器：</p>
+<pre><code class="language-C">yr_sched_remove_task( current_task);
+current_task-&gt;status = YR_TASK_STATUS_BLOCKED;
+
+yr_timer_set_ticks( &amp;current_task-&gt;timer, ticks);
+yr_timer_start( &amp;current_task-&gt;timer);
+
+yr_sched_switch();
+</code></pre>
+<p>任务被移出就绪队列后，就不会被调度器选中。随后调用 <code>yr_sched_switch()</code>，CPU 会切换到其它就绪任务。</p>
+<p>当定时器超时或 IPC 条件满足时，任务会重新进入就绪队列。如果新就绪任务优先级高于当前任务，则会触发一次任务切换。</p>
+<h2 id="总结">总结</h2>
+<p>Yuan RTOS 的任务调度实现可以概括为：</p>
+<ul>
+<li>使用 32 个优先级，数值越小优先级越高</li>
+<li>每个优先级维护一个双向循环链表</li>
+<li>使用位图记录哪些优先级存在就绪任务</li>
+<li>通过 <code>yr_find_first_set()</code> 快速找到最高优先级就绪队列</li>
+<li>同优先级任务通过时间片轮转依次运行</li>
+<li>阻塞、挂起、删除等操作本质上都是改变任务是否参与就绪队列</li>
+</ul>
+<p>这样做的好处是实现比较直观，同时调度路径较短，适合轻量化 RTOS。缺点是优先级数量固定为 32，并且调度策略也比较简单，不过对于当前这个项目来说已经足够使用了。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/">RTOS开发学习记录(4)：软件定时器</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/">RTOS开发学习记录(2)：任务切换</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

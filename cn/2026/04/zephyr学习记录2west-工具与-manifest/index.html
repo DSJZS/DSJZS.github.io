@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Zephyr学习记录(2)：west 工具与 Manifest - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Zephyr学习记录(2)：west 工具与 Manifest - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="上一篇把环境安装和点灯简单过了一遍，这一篇继续补 Zephyr 开发里一个绕不开的话题，也就是 west 和 manifest。
+[&amp;hellip;] 刚开始接触 Zephyr 的时候，很容易把它们看成“又一个构建命令”和“又一个配置文件”。但实际用下来会发现，它们更像是 Zephyr 工作流的骨架。
+[&amp;hellip;] 如果不理解这两个东西，后面在拉取源码、管理依赖、切换版本、构建用户工程的时 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Zephyr学习记录(2)：west 工具与 Manifest</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-04-30</span>
+
+
+</span>
+  <span class="term">
+  
+  
+  {<a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a>}
+  
+  
+  
+  
+  
+  <a href="/tags/zephyr/" class="term-tag">[Zephyr]</a>
+  
+  
+  
+  </span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#west-是什么">west 是什么</a></li>
+    <li><a href="#west-常见指令与作用">west 常见指令与作用</a>
+      <ul>
+        <li><a href="#west-init">west init</a></li>
+        <li><a href="#west-update">west update</a></li>
+        <li><a href="#west-list">west list</a></li>
+        <li><a href="#west-status">west status</a></li>
+        <li><a href="#west-diff">west diff</a></li>
+        <li><a href="#west-forall">west forall</a></li>
+        <li><a href="#west-manifest">west manifest</a></li>
+        <li><a href="#west-config">west config</a></li>
+        <li><a href="#west-topdir">west topdir</a></li>
+        <li><a href="#west-build">west build</a></li>
+        <li><a href="#west-flash">west flash</a></li>
+        <li><a href="#west-debug">west debug</a></li>
+        <li><a href="#其它说明">其它说明</a></li>
+      </ul>
+    </li>
+    <li><a href="#manifest-是什么">manifest 是什么</a></li>
+    <li><a href="#manifest-的基本格式">manifest 的基本格式</a>
+      <ul>
+        <li><a href="#remotes">remotes</a></li>
+        <li><a href="#defaults">defaults</a></li>
+        <li><a href="#group-filter">group-filter</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#self">self</a></li>
+        <li><a href="#version">version</a></li>
+      </ul>
+    </li>
+    <li><a href="#如何理解一个真实的-zephyr-west-yml">如何理解一个真实的 Zephyr west.yml</a>
+      <ul>
+        <li><a href="#先看-self">先看 self</a></li>
+        <li><a href="#再看-defaults-和-remotes">再看 defaults 和 remotes</a></li>
+        <li><a href="#再看-group-filter">再看 group-filter</a></li>
+        <li><a href="#最后看-projects">最后看 projects</a></li>
+      </ul>
+    </li>
+    <li><a href="#工作空间-west-manifest-用户项目之间的关系">工作空间、west、manifest、用户项目之间的关系</a>
+      <ul>
+        <li><a href="#工作空间-workspace">工作空间（workspace）</a></li>
+        <li><a href="#west">west</a></li>
+        <li><a href="#manifest">manifest</a></li>
+        <li><a href="#用户项目">用户项目</a></li>
+        <li><a href="#一个更贴近实际的理解">一个更贴近实际的理解</a></li>
+      </ul>
+    </li>
+    <li><a href="#小结">小结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>上一篇把环境安装和点灯简单过了一遍，这一篇继续补 Zephyr 开发里一个绕不开的话题，也就是 <code>west</code> 和 <code>manifest</code>。</p>
+<p>刚开始接触 Zephyr 的时候，很容易把它们看成“又一个构建命令”和“又一个配置文件”。但实际用下来会发现，它们更像是 Zephyr 工作流的骨架。</p>
+<p>如果不理解这两个东西，后面在拉取源码、管理依赖、切换版本、构建用户工程的时候就很容易迷糊。</p>
+<h2 id="west-是什么">west 是什么</h2>
+<p>官方文档把 <code>west</code> 描述为 Zephyr 的一个 <strong>meta-tool</strong>，也就是“元工具”。</p>
+<p>我的理解是：它不是单纯替代 <code>cmake</code> 或 <code>ninja</code> 的命令，而是站在更高一层，把 <strong>多仓库管理、工程构建、烧录、调试</strong> 这些事情统一到一个命令行入口中。</p>
+<p>也就是说，在 Zephyr 的日常开发中，<code>west</code> 主要负责下面几类事情：</p>
+<ul>
+<li>初始化工作空间</li>
+<li>根据 <code>manifest</code> 拉取和更新多个 Git 仓库</li>
+<li>调用底层构建系统去编译工程</li>
+<li>调用 runner 去烧录和调试目标板</li>
+<li>提供一些查询、配置和批量操作能力</li>
+</ul>
+<p>它的基本调用形式和 <code>git</code> 很像：</p>
+<pre><code class="language-tty">west [common-opts] &lt;command&gt; [opts] &lt;args&gt;
+</code></pre>
+<p>比如：</p>
+<pre><code class="language-tty">west init
+west update
+west build -b stm32_min_dev@blue samples/basic/blinky
+west flash
+</code></pre>
+<h2 id="west-常见指令与作用">west 常见指令与作用</h2>
+<p><code>west</code> 的命令不少，不过日常最常碰到的其实就是下面这些。</p>
+<h3 id="west-init">west init</h3>
+<p>作用是 <strong>初始化 west 工作空间</strong>。</p>
+<p>最常见的情况，就是先创建一个工作区，把 manifest 仓库放进去：</p>
+<pre><code class="language-tty">west init ~/zephyrproject
+</code></pre>
+<p>执行之后，<code>west</code> 会创建工作空间根目录，并生成 <code>.west/</code> 配置目录。</p>
+<p>如果使用官方默认仓库，通常会得到类似下面这样的结构：</p>
+<pre><code class="language-text">zephyrproject/
+├── .west/
+│   └── config
+└── zephyr/
+    └── west.yml
+</code></pre>
+<p>这里先只有工作空间和 manifest 仓库，真正的其它模块仓库还要靠 <code>west update</code> 去拉。</p>
+<h3 id="west-update">west update</h3>
+<p>作用是 <strong>根据 manifest 下载或更新项目依赖</strong>。</p>
+<pre><code class="language-tty">west update
+</code></pre>
+<p>这个命令会读取 <code>west.yml</code> 中的项目列表，然后逐个执行下面这些动作：</p>
+<ul>
+<li>本地没有仓库就克隆</li>
+<li>本地有仓库就抓取对应 revision</li>
+<li>把每个项目切到 manifest 指定的版本</li>
+</ul>
+<p>所以从直觉上看，<code>west init</code> 是“搭骨架”，<code>west update</code> 是“把肉补齐”。</p>
+<h3 id="west-list">west list</h3>
+<p>作用是 <strong>列出当前工作空间中由 west 管理的项目</strong>。</p>
+<pre><code class="language-tty">west list
+</code></pre>
+<p>这个命令很适合在你忘了工作空间里到底有哪些模块时快速确认。</p>
+<h3 id="west-status">west status</h3>
+<p>作用是 <strong>查看各个仓库的状态</strong>。</p>
+<pre><code class="language-tty">west status
+</code></pre>
+<p>它有点像对整个工作空间批量执行 <code>git status</code>。</p>
+<h3 id="west-diff">west diff</h3>
+<p>作用是 <strong>查看各个仓库的本地修改</strong>。</p>
+<pre><code class="language-tty">west diff
+</code></pre>
+<p>这个命令在你改了多个模块，又忘了自己动过哪些地方时很好用。</p>
+<h3 id="west-forall">west forall</h3>
+<p>作用是 <strong>在多个项目仓库里批量执行命令</strong>。</p>
+<pre><code class="language-tty">west forall -c &quot;git status --short&quot;
+</code></pre>
+<p>这类命令适合做统一检查，或者批量跑一些 Git 命令。</p>
+<h3 id="west-manifest">west manifest</h3>
+<p>作用是 <strong>管理和检查 manifest</strong>。</p>
+<p>例如：</p>
+<pre><code class="language-tty">west manifest --resolve
+west manifest --freeze
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>--resolve</code> 可以把 import 之后的最终 manifest 展开出来</li>
+<li><code>--freeze</code> 可以把各项目 revision 冻结成具体提交号，方便复现</li>
+</ul>
+<h3 id="west-config">west config</h3>
+<p>作用是 <strong>读取或设置 west 配置项</strong>。</p>
+<pre><code class="language-tty">west config -l
+west config manifest.path zephyr
+</code></pre>
+<p>例如 <code>manifest.path</code>、<code>manifest.file</code> 这些配置都会影响 west 去哪里找 manifest。</p>
+<h3 id="west-topdir">west topdir</h3>
+<p>作用是 <strong>输出当前工作空间根目录</strong>。</p>
+<pre><code class="language-tty">west topdir
+</code></pre>
+<p>在脚本里这个命令很方便，因为它能让你快速确认自己是不是处于某个 west workspace 之中。</p>
+<h3 id="west-build">west build</h3>
+<p>作用是 <strong>构建 Zephyr 工程</strong>。</p>
+<pre><code class="language-tty">west build -b stm32_min_dev@blue samples/basic/blinky
+</code></pre>
+<p>它本质上是在帮你组织 CMake/Ninja 相关参数，所以用户一般不需要直接手写一长串底层构建命令。</p>
+<h3 id="west-flash">west flash</h3>
+<p>作用是 <strong>把构建产物烧录到目标板</strong>。</p>
+<pre><code class="language-tty">west flash
+</code></pre>
+<p>前提当然是工程已经成功构建，并且对应板卡的 runner 配置可用。</p>
+<h3 id="west-debug">west debug</h3>
+<p>作用是 <strong>启动调试流程</strong>。</p>
+<pre><code class="language-tty">west debug
+</code></pre>
+<p>这个命令会结合目标板支持的调试方式，把 GDB、OpenOCD、J-Link 之类的流程串起来。</p>
+<h3 id="其它说明">其它说明</h3>
+<p>除了上面这些，<code>west</code> 还有 <code>compare</code>、<code>grep</code>、<code>help</code> 等命令。</p>
+<p>另外，一些文章里还会提到 <code>west attach</code>、<code>west boards</code> 这类命令。它们通常属于 Zephyr 提供的扩展命令，是否可用与具体环境、版本和扩展命令集有关。实际使用时最稳妥的方法还是直接执行：</p>
+<pre><code class="language-tty">west --help
+west &lt;command&gt; -h
+</code></pre>
+<h2 id="manifest-是什么">manifest 是什么</h2>
+<p><code>manifest</code> 可以理解成 <strong>west 工作空间的总清单</strong>。</p>
+<p>它告诉 <code>west</code>：</p>
+<ul>
+<li>需要管理哪些 Git 仓库</li>
+<li>这些仓库从哪里拉</li>
+<li>每个仓库要放到工作空间的哪个路径下</li>
+<li>每个仓库应该切到哪个 revision</li>
+<li>是否要继续导入其它 manifest</li>
+</ul>
+<p>在 Zephyr 里，manifest 文件通常就叫 <code>west.yml</code>。</p>
+<p>所以你也可以简单把它理解为：<br>
+<strong><code>west.yml</code> 决定工作空间长什么样，<code>west update</code> 负责把这个样子真正落到本地。</strong></p>
+<h2 id="manifest-的基本格式">manifest 的基本格式</h2>
+<p>manifest 本质上是一个 YAML 文件，顶层一般是 <code>manifest:</code>。</p>
+<p>不过如果只看那种“教学版极简例子”，实际遇到真正的 <code>west.yml</code> 时还是容易发懵。</p>
+<p>所以这里我直接结合一个真实的上游 Zephyr <code>west.yml</code> 来理解。它开头的核心结构大致可以概括成下面这样：</p>
+<pre><code class="language-yaml">manifest:
+  defaults:
+    remote: upstream
+
+  remotes:
+    - name: upstream
+      url-base: https://github.com/zephyrproject-rtos
+    - name: babblesim
+      url-base: https://github.com/BabbleSim
+
+  group-filter: [-babblesim, -optional, -testing]
+
+  projects:
+    - name: acpica
+      revision: 8d24867bc9c9d81c81eeac59391cda59333affd4
+      path: modules/lib/acpica
+
+    - name: hal_espressif
+      revision: 15789ec576bdb3397c6fc39542b0d9b534d98d2d
+      path: modules/hal/espressif
+      west-commands: west/west-commands.yml
+      groups:
+        - hal
+
+    - name: babblesim_base
+      remote: babblesim
+      repo-path: base
+      path: tools/bsim/components
+      revision: 1cce925c72805cfdbb6341ca8c0755c7d42699d3
+      groups:
+        - babblesim
+
+  self:
+    path: zephyr
+    west-commands: scripts/west-commands.yml
+    import: submanifests
+</code></pre>
+<p>这个例子比“教学版”更接近真实情况，因为它已经把 Zephyr 实际维护多个仓库、多个分组、扩展 west 命令的方式体现出来了。</p>
+<p>上面这些字段可以这样理解。</p>
+<h3 id="remotes">remotes</h3>
+<p>定义远程仓库地址前缀。</p>
+<p>比如：</p>
+<pre><code class="language-yaml">remotes:
+  - name: upstream
+    url-base: https://github.com/zephyrproject-rtos
+  - name: babblesim
+    url-base: https://github.com/BabbleSim
+</code></pre>
+<p>这表示当前 manifest 里至少定义了两个远程来源：</p>
+<ul>
+<li><code>upstream</code>：Zephyr 官方仓库组织</li>
+<li><code>babblesim</code>：BabbleSim 相关仓库组织</li>
+</ul>
+<p>后面 <code>projects</code> 中如果写了 <code>remote: babblesim</code>，那就表示这个项目默认从 <code>https://github.com/BabbleSim</code> 下面去找。</p>
+<h3 id="defaults">defaults</h3>
+<p>定义默认值。</p>
+<p>在这个真实示例里写的是：</p>
+<pre><code class="language-yaml">defaults:
+  remote: upstream
+</code></pre>
+<p>意思是：如果某个项目没有单独写 <code>remote</code>，那就默认从 <code>upstream</code> 这个远程来源拉。</p>
+<p>所以像下面这种项目：</p>
+<pre><code class="language-yaml">- name: acpica
+  revision: 8d24867bc9c9d81c81eeac59391cda59333affd4
+  path: modules/lib/acpica
+</code></pre>
+<p>虽然没有显式写 <code>remote: upstream</code>，但它依然会继承 <code>defaults</code> 的设置。</p>
+<h3 id="group-filter">group-filter</h3>
+<p>这个字段在很多入门文章里容易被忽略，但在真实工程里很有用。</p>
+<p>这个示例中是：</p>
+<pre><code class="language-yaml">group-filter: [-babblesim, -optional, -testing]
+</code></pre>
+<p>它的意思可以粗略理解成：<br>
+<strong>默认不启用 <code>babblesim</code>、<code>optional</code>、<code>testing</code> 这些组里的项目。</strong></p>
+<p>这样做的好处是：</p>
+<ul>
+<li>避免一上来就把所有可选仓库都拉下来</li>
+<li>减少工作空间体积</li>
+<li>降低普通开发场景下的依赖复杂度</li>
+</ul>
+<p>所以 <code>group-filter</code> 本质上是在控制“哪些项目默认参与当前工作空间”。</p>
+<h3 id="projects">projects</h3>
+<p>这是最核心的部分，用来列出需要管理的项目仓库。</p>
+<p>常见字段有：</p>
+<ul>
+<li><code>name</code>：项目名</li>
+<li><code>remote</code> 或 <code>url</code>：仓库来源</li>
+<li><code>repo-path</code>：远程仓库的实际路径名</li>
+<li><code>revision</code>：分支、tag 或具体提交</li>
+<li><code>path</code>：项目在本地工作空间里的路径</li>
+<li><code>import</code>：是否继续导入其它 manifest</li>
+<li><code>west-commands</code>：该项目是否提供额外 west 命令</li>
+<li><code>groups</code>：该项目所属分组</li>
+</ul>
+<p>例如这个示例里有一个很简单的项目：</p>
+<pre><code class="language-yaml">- name: acpica
+  revision: 8d24867bc9c9d81c81eeac59391cda59333affd4
+  path: modules/lib/acpica
+</code></pre>
+<p>这表示：</p>
+<ul>
+<li>项目名是 <code>acpica</code></li>
+<li>它没有单独写 <code>remote</code>，所以继承 <code>defaults.remote: upstream</code></li>
+<li>它会被拉到工作空间中的 <code>modules/lib/acpica</code></li>
+<li>它会被固定到指定提交 <code>8d24867...</code></li>
+</ul>
+<p>这里的 <code>revision</code> 不是 <code>main</code>，而是一个具体 commit id。<br>
+这说明 Zephyr 更关注 <strong>可复现性</strong>，也就是希望大家同步下来的是一组确定版本的依赖，而不是每次都跟着分支头乱跑。</p>
+<p>再看一个更复杂一点的例子：</p>
+<pre><code class="language-yaml">- name: babblesim_base
+  remote: babblesim
+  repo-path: base
+  path: tools/bsim/components
+  revision: 1cce925c72805cfdbb6341ca8c0755c7d42699d3
+  groups:
+    - babblesim
+</code></pre>
+<p>这段可以这样理解：</p>
+<ul>
+<li>这个项目逻辑上的名字叫 <code>babblesim_base</code></li>
+<li>它来自 <code>babblesim</code> 这个 remote</li>
+<li>远程仓库真实路径名不是 <code>babblesim_base</code>，而是 <code>base</code></li>
+<li>本地放到 <code>tools/bsim/components</code></li>
+<li>它属于 <code>babblesim</code> 组</li>
+</ul>
+<p>这里的 <code>repo-path</code> 很关键。<br>
+如果没有它，<code>west</code> 往往会默认用 <code>name</code> 去拼远程仓库地址；而有了它，就说明“显示名”和“远程仓库名”不一定相同。</p>
+<p>再看一个和 west 扩展命令相关的例子：</p>
+<pre><code class="language-yaml">- name: hal_espressif
+  revision: 15789ec576bdb3397c6fc39542b0d9b534d98d2d
+  path: modules/hal/espressif
+  west-commands: west/west-commands.yml
+  groups:
+    - hal
+</code></pre>
+<p>这说明 <code>hal_espressif</code> 这个项目除了提供代码，还额外提供了一份 <code>west</code> 命令描述文件。<br>
+也就是说，某些 <code>west</code> 命令并不一定全部内建在主程序里，也可能由某个项目通过 <code>west-commands.yml</code> 注册进来。</p>
+<h3 id="self">self</h3>
+<p><code>self</code> 描述的是 <strong>manifest 仓库自己</strong>。</p>
+<p>这个示例末尾这一段很典型：</p>
+<pre><code class="language-yaml">self:
+  path: zephyr
+  west-commands: scripts/west-commands.yml
+  import: submanifests
+</code></pre>
+<p>其中：</p>
+<ul>
+<li><code>path: zephyr</code> 表示 manifest 仓库自己就在工作空间里的 <code>zephyr/</code> 目录</li>
+<li><code>west-commands: scripts/west-commands.yml</code> 表示 Zephyr 自己也提供了一批扩展 west 命令</li>
+<li><code>import: submanifests</code> 表示还要继续导入 <code>submanifests</code> 里的其它 manifest 内容</li>
+</ul>
+<p>这一点非常重要，因为它解释了为什么你在实际环境里能用到 <code>west boards</code>、<code>west attach</code>、<code>west sdk</code> 这类命令。</p>
+<p>查看对应的 <code>scripts/west-commands.yml</code> 就会发现，Zephyr 在里面注册了很多扩展命令，比如：</p>
+<ul>
+<li><code>boards</code></li>
+<li><code>build</code></li>
+<li><code>flash</code></li>
+<li><code>debug</code></li>
+<li><code>attach</code></li>
+<li><code>sdk</code></li>
+</ul>
+<p>所以更准确地说：</p>
+<ul>
+<li><code>west</code> 本体提供基础框架</li>
+<li>Zephyr 项目再通过 <code>west-commands.yml</code> 把自己的一批命令挂进去</li>
+</ul>
+<p>这样一来，<code>west</code> 才会真正变成一个覆盖构建、烧录、调试、板卡查询等工作流的统一入口</p>
+<h3 id="version">version</h3>
+<p>可选字段，用于声明 manifest 文件格式所依赖的 west 版本特性。</p>
+<p>例如：</p>
+<pre><code class="language-yaml">version: &quot;0.10&quot;
+</code></pre>
+<p>它的作用更偏向兼容性检查，一般在简单入门阶段不一定马上用到。</p>
+<h2 id="如何理解一个真实的-zephyr-west-yml">如何理解一个真实的 Zephyr west.yml</h2>
+<p>如果只想抓住主线，我觉得可以按下面这个顺序去读：</p>
+<h3 id="先看-self">先看 self</h3>
+<p>先确认 manifest 仓库自己是谁、放在哪里。</p>
+<p>在这个示例里：</p>
+<pre><code class="language-yaml">self:
+  path: zephyr
+</code></pre>
+<p>这说明当前这个 <code>west.yml</code> 就属于 <code>zephyr</code> 仓库本身。<br>
+也就是说，你现在用的是 Zephyr 官方默认工作流，而不是“我自己的 app 仓库作为 manifest 仓库”的那种玩法。</p>
+<h3 id="再看-defaults-和-remotes">再看 defaults 和 remotes</h3>
+<p>这两块决定“默认从哪里拉仓库”。</p>
+<p>在这个示例里，默认 remote 是 <code>upstream</code>，而 <code>upstream</code> 对应的是 <code>https://github.com/zephyrproject-rtos</code>。</p>
+<p>所以大部分没特别声明来源的模块，本质上都是从 Zephyr 官方维护的仓库组织里同步下来的。</p>
+<h3 id="再看-group-filter">再看 group-filter</h3>
+<p>这决定“默认启用哪些依赖，默认跳过哪些依赖”。</p>
+<p>你这里把 <code>babblesim</code>、<code>optional</code>、<code>testing</code> 默认排除了，所以这份工作空间更偏向普通开发使用，而不是一次性把测试和仿真生态全量拉满。</p>
+<h3 id="最后看-projects">最后看 projects</h3>
+<p>这里决定“这个工作空间究竟包含哪些具体模块”。</p>
+<p>你会发现里面有很多仓库路径：</p>
+<ul>
+<li><code>modules/hal/...</code></li>
+<li><code>modules/lib/...</code></li>
+<li><code>modules/fs/...</code></li>
+<li><code>modules/crypto/...</code></li>
+<li><code>tools/...</code></li>
+</ul>
+<p>这就说明 Zephyr 并不是“一个大仓库包打天下”，而是通过 manifest 把 HAL、库、工具、测试相关仓库组织成一个统一工作空间。</p>
+<p>所以当我们执行 <code>west update</code> 时，本质上不是“更新 Zephyr 一个仓库”，而是：</p>
+<ul>
+<li>读取 <code>zephyr/west.yml</code></li>
+<li>按里面的 <code>projects</code> 列表去同步很多子仓库</li>
+<li>把它们放到 <code>modules/</code>、<code>tools/</code>、<code>bootloader/</code> 等位置</li>
+<li>并切到各自指定的 revision</li>
+</ul>
+<p>这样理解以后，再去看工作空间目录结构就不会觉得乱了，因为这些目录并不是随便摆出来的，而是 manifest 明确规定好的。</p>
+<h2 id="工作空间-west-manifest-用户项目之间的关系">工作空间、west、manifest、用户项目之间的关系</h2>
+<p>这一块其实是最容易绕晕的。</p>
+<p>我自己的理解可以总结成一句话：</p>
+<p><strong>工作空间是容器，manifest 是清单，west 是管理者，用户项目是这个容器中的一个实际工程。</strong></p>
+<p>可以先看一个简化关系图：</p>
+<pre><code class="language-text">west workspace/
+├── .west/                 &lt;- west 的工作空间配置
+├── manifest repo/         &lt;- 保存 west.yml 的仓库
+├── zephyr/                &lt;- Zephyr 内核源码
+├── modules/...            &lt;- 各类模块仓库
+├── bootloader/...         &lt;- 例如 mcuboot
+└── app/                   &lt;- 用户自己的应用工程
+</code></pre>
+<p>它们之间可以这样理解。</p>
+<h3 id="工作空间-workspace">工作空间（workspace）</h3>
+<p>工作空间就是最外层的目录。</p>
+<p>它把 <code>.west/</code>、manifest 仓库、Zephyr 源码、模块仓库、用户应用工程都收纳到一起。</p>
+<p>只要一个目录里有 <code>.west/</code>，<code>west</code> 就能把它识别成自己的工作空间。</p>
+<h3 id="west">west</h3>
+<p><code>west</code> 是操作这个工作空间的工具。</p>
+<p>它不负责“发明”依赖关系，而是 <strong>读取 manifest，再去操作 workspace 里的各个仓库</strong>。</p>
+<p>所以可以理解成：</p>
+<ul>
+<li><code>manifest</code> 决定“应该有什么”</li>
+<li><code>west</code> 负责“把它变成现实”</li>
+</ul>
+<h3 id="manifest">manifest</h3>
+<p>manifest 是工作空间的结构说明书。</p>
+<p>它描述了项目仓库集合以及它们的版本关系。</p>
+<p>当你执行 <code>west update</code> 时，<code>west</code> 就按照这个说明书把每个仓库拉到指定位置、指定 revision。</p>
+<h3 id="用户项目">用户项目</h3>
+<p>用户项目就是你自己写业务代码、应用代码的地方。</p>
+<p>它通常也是工作空间中的一个目录，可以是：</p>
+<ul>
+<li>工作空间里单独的 <code>app/</code></li>
+<li>某个独立仓库</li>
+<li>甚至就是 manifest 仓库本身的一部分</li>
+</ul>
+<p>你平时最常做的事情，一般就是在用户项目里写代码，然后让 <code>west build</code> 去结合工作空间中的 Zephyr 和各模块一起完成构建。</p>
+<h3 id="一个更贴近实际的理解">一个更贴近实际的理解</h3>
+<p>如果把它们类比成一次做饭：</p>
+<ul>
+<li>工作空间像厨房</li>
+<li>manifest 像购物清单和配方</li>
+<li>west 像负责采购和摆放食材的人</li>
+<li>用户项目像你真正要做的那道菜</li>
+</ul>
+<p>没有工作空间，东西没地方放。<br>
+没有 manifest，<code>west</code> 不知道该拿哪些仓库。<br>
+没有 <code>west</code>，你就得自己手动 clone 一堆仓库、对齐版本、处理路径。<br>
+没有用户项目，那这些依赖拉下来也只是“环境准备好了”，还没有真正的应用要构建。</p>
+<h2 id="小结">小结</h2>
+<p>学 Zephyr 的早期阶段，<code>west</code> 和 <code>manifest</code> 基本可以先抓住下面这几个点：</p>
+<ul>
+<li><code>west</code> 是 Zephyr 的统一入口，不只是构建命令</li>
+<li><code>manifest</code> 是一个 YAML 清单，用来描述多仓库依赖关系</li>
+<li><code>west init</code> 负责初始化工作空间</li>
+<li><code>west update</code> 负责按 manifest 同步各项目仓库</li>
+<li>用户项目通常位于工作空间中，并依赖 workspace 里的 Zephyr 与模块一起构建</li>
+</ul>
+<p>把这套关系想明白之后，后面再看 Zephyr 的模块组织、版本管理和自定义工程结构，就会顺很多。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://docs.zephyrproject.org/latest/develop/west/index.html">Developing with Zephyr » West (Zephyr’s meta-tool)</a></li>
+<li><a href="https://docs.zephyrproject.org/latest/develop/west/basics.html">Developing with Zephyr » West » Basics</a></li>
+<li><a href="https://docs.zephyrproject.org/latest/develop/west/built-in.html">Developing with Zephyr » West » Built-in commands</a></li>
+<li><a href="https://docs.zephyrproject.org/latest/develop/west/workspaces.html">Developing with Zephyr » West » Workspaces</a></li>
+<li><a href="https://docs.zephyrproject.org/latest/develop/west/manifest.html">Developing with Zephyr » West » West Manifests</a></li>
+<li><a href="https://x-gen-lab.github.io/zephyr-learning-system/stage1-foundation/west-tool/">Zephyr RTOS 学习系统 » west 工具核心用法</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/">Zephyr学习记录(3)：项目结构与配置</a></span>
+  <span><a href="/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/">Zephyr学习记录(1)：环境安装与点灯</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© 成元 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C&#43;&#43; on Yuan&#39;s Blog</title>
-    <link>https://DSJZS.github.io/tags/c&#43;&#43;/</link>
+    <link>https://dsjzs.github.io/tags/c&#43;&#43;/</link>
     <description>Recent content in C&#43;&#43; on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://DSJZS.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://dsjzs.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Makefile学习记录(1)：GNU Make入门</title>
-      <link>https://DSJZS.github.io/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</link>
+      <link>https://dsjzs.github.io/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</link>
       <pubDate>Tue, 28 Apr 2026 12:18:50 +0800</pubDate>
-      <guid>https://DSJZS.github.io/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://dsjzs.github.io/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前用了很久 GNU Make，但一直没有仔细整理，这篇文章整理一下相关内容。&lt;/p&gt;&#xA;&lt;p&gt;这篇会尽量同时满足两种阅读方式：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;如果是刚开始接触 Makefile，可以从头顺着看&lt;/li&gt;&#xA;&lt;li&gt;如果已经写过一些 Makefile，也可以把它当一份入门向的快速手册&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;这一篇先只讲 &lt;strong&gt;GNU Make 的基础部分&lt;/strong&gt;，重点放在：&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动</title>
-      <link>https://DSJZS.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
+      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
       <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
-      <guid>https://DSJZS.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
+      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
       <description>&lt;h2 id=&#34;i-o多路复用&#34;&gt;I/O多路复用&lt;/h2&gt;&#xA;&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;I/O 多路复用允许我们同时检查多个文件描述符，看其中任意一个是否可执行 I/O 操作&lt;/strong&gt;。其常用于并发编程。&lt;/p&gt;&#xA;&lt;p&gt;常用的 I/O 多路复用操作有以下三种：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;select：早期的 I/O 多路复用&lt;/li&gt;&#xA;&lt;li&gt;poll：对 select 的改进版&lt;/li&gt;&#xA;&lt;li&gt;epoll：Linux 环境独有的，适合大规模并发的 I/O 多路复用机制&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本人认为，小项目默认使用 poll，而在搭建于 Linux 系统的高并发的网络环境下，则推荐使用 epoll。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(4)：如何愉快(?)地交叉编译</title>
-      <link>https://DSJZS.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
-      <guid>https://DSJZS.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;随着不断地学习（&lt;del&gt;败家&lt;/del&gt;），现在我手里积攒了许多不同体系结构的设备，比如 x86_64、ARM、aarch64 等等，也是花了我不少的钱💸。&lt;/p&gt;&#xA;&lt;p&gt;平常我主要是在自己的 x86_64 电脑上写 C/C++ 代码，然后进行编译和测试，测试没问题之后，便会将程序下载到其它架构的机器上。但C/C++是&amp;quot;一次编写处处编译&amp;quot;的语言，不同架构的机器要对用对应架构的编译工具链来完成编译，如果你用系统自带的 &lt;code&gt;gcc&lt;/code&gt; 编译你的代码，那么大概率编译出来的程序只能在当前架构的机器上运行(对我来说就是x86_64)。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile</title>
-      <link>https://DSJZS.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
+      <link>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
       <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
-      <guid>https://DSJZS.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
+      <guid>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
     </item>
   </channel>

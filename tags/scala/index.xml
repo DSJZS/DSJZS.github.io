@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Scala on Yuan&#39;s Blog</title>
-    <link>https://DSJZS.github.io/tags/scala/</link>
+    <link>https://dsjzs.github.io/tags/scala/</link>
     <description>Recent content in Scala on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://DSJZS.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://dsjzs.github.io/tags/scala/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Scala学习记录(1)：语法入门</title>
-      <link>https://DSJZS.github.io/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
+      <link>https://dsjzs.github.io/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Mon, 27 Apr 2026 12:05:07 +0800</pubDate>
-      <guid>https://DSJZS.github.io/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://dsjzs.github.io/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近为了学习 Chisel，开始补一下 Scala 语法。&lt;/p&gt;&#xA;&lt;p&gt;一开始我对 Scala 的印象其实很简单：&lt;strong&gt;语法上能看到一点 C/C++ 这类语言的影子，但整体写法又明显更灵活&lt;/strong&gt;。真的上手之后才发现，它虽然也能写出很“传统”的代码，但很多地方的思路其实不太一样。比如 &lt;code&gt;if&lt;/code&gt; 不只是流程控制语句，也可以直接当表达式返回值；函数可以像普通值一样传来传去；而且它默认鼓励你多用不可变数据。&lt;/p&gt;</description>
     </item>
   </channel>

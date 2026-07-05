@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Yuan&#39;s Blog</title>
-    <link>https://DSJZS.github.io/categories/</link>
+    <link>https://dsjzs.github.io/categories/</link>
     <description>Recent content in Categories on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <lastBuildDate>Thu, 25 Dec 2025 15:32:26 +0800</lastBuildDate>
-    <atom:link href="https://DSJZS.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://dsjzs.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>教程</title>
-      <link>https://DSJZS.github.io/categories/%E6%95%99%E7%A8%8B/</link>
+      <link>https://dsjzs.github.io/categories/%E6%95%99%E7%A8%8B/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://DSJZS.github.io/categories/%E6%95%99%E7%A8%8B/</guid>
+      <guid>https://dsjzs.github.io/categories/%E6%95%99%E7%A8%8B/</guid>
       <description></description>
     </item>
     <item>
       <title>日常</title>
-      <link>https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/</link>
+      <link>https://dsjzs.github.io/categories/%E6%97%A5%E5%B8%B8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://DSJZS.github.io/categories/%E6%97%A5%E5%B8%B8/</guid>
+      <guid>https://dsjzs.github.io/categories/%E6%97%A5%E5%B8%B8/</guid>
       <description></description>
     </item>
     <item>
       <title>笔记</title>
-      <link>https://DSJZS.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
+      <link>https://dsjzs.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://DSJZS.github.io/categories/%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://dsjzs.github.io/categories/%E7%AC%94%E8%AE%B0/</guid>
       <description></description>
     </item>
   </channel>

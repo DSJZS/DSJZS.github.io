@@ -9,6 +9,20 @@
     <copyright>成元</copyright>
     <atom:link href="https://dsjzs.github.io/cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Vibe Coding开发学习记录(1)：提问到协作</title>
+      <link>https://dsjzs.github.io/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</link>
+      <pubDate>Mon, 06 Jul 2026 16:14:34 +0800</pubDate>
+      <guid>https://dsjzs.github.io/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;</description>
+    </item>
+    <item>
+      <title>博客开发记录(1)：主题的修改与功能增加</title>
+      <link>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</link>
+      <pubDate>Mon, 06 Jul 2026 12:53:28 +0800</pubDate>
+      <guid>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。近几天有空，正好更新一下站点，说说有什么变化的地方以及我的一些想法。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Zephyr学习记录(4)：用vscode进行项目开发</title>
       <link>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 03 May 2026 14:13:29 +0800</pubDate>
@@ -310,11 +324,18 @@
       <description></description>
     </item>
     <item>
+      <title>TODO</title>
+      <link>https://dsjzs.github.io/cn/todo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://dsjzs.github.io/cn/todo/</guid>
+      <description>&lt;p&gt;这个页面用于记录我的一些 TODO 事项，或许我永远不会全部完成吧&amp;hellip;&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;总之之所以放在这里公开，一是为了让大家监督我，二是希望大家给我提供建议&lt;/strong&gt;。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>关于</title>
       <link>https://dsjzs.github.io/cn/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://dsjzs.github.io/cn/about/</guid>
-      <description>&lt;p&gt;一个因为各种原因全国到处跑的&lt;del&gt;聪明伶俐&lt;/del&gt;湖北人，在各个城市充当 NPC 。作为一个刚入行的初级码农主要活跃于 &lt;a href=&#34;https://github.com/DSJZS&#34;&gt;Github&lt;/a&gt; 和 &lt;a href=&#34;https://space.bilibili.com/5477327&#34;&gt;BiliBili&lt;/a&gt; 。&lt;/p&gt;&#xA;&lt;p&gt;爱好比较少，说得出来的&lt;del&gt;正经&lt;/del&gt;爱好大概只有听音乐和玩棋牌/经营类游戏吧。进入大学后我几乎不再看电影、电视或娱乐节目，但伴随着写代码和写作会大量听歌，也爱看歌词（其实也喜欢吼两嗓子或者拿乐器演奏一下，但能力一般水平有限）。平时下班或者放假在家也会玩一下游戏王(主要是&lt;a href=&#34;https://www.konami.com/yugioh/masterduel/asia/zh-cn/&#34;&gt;MASTER DUEL&lt;/a&gt;)、&lt;a href=&#34;https://store.steampowered.com/app/294100/_RimWorld/&#34;&gt;RimWorld&lt;/a&gt;、&lt;a href=&#34;https://www.minecraft.net/&#34;&gt;Minecraft&lt;/a&gt;之类的游戏。&lt;/p&gt;</description>
+      <description>&lt;p&gt;一个因为各种原因全国到处跑的&lt;del&gt;聪明伶俐&lt;/del&gt;湖北人，在各个城市充当 NPC 。作为一个刚入行的嵌入式初级码农主要活跃于 &lt;a href=&#34;https://github.com/DSJZS&#34;&gt;Github&lt;/a&gt; 和 &lt;a href=&#34;https://space.bilibili.com/5477327&#34;&gt;BiliBili&lt;/a&gt; 。&lt;/p&gt;&#xA;&lt;p&gt;爱好比较少，说得出来的&lt;del&gt;正经&lt;/del&gt;爱好大概只有听音乐和玩棋牌/经营类游戏吧。进入大学后我几乎不再看电影、电视或娱乐节目，但伴随着写代码和写作会大量听歌，也爱看歌词（其实也喜欢吼两嗓子或者拿乐器演奏一下，但能力一般水平有限）。平时下班或者放假在家也会玩一下游戏王(主要是&lt;a href=&#34;https://www.konami.com/yugioh/masterduel/asia/zh-cn/&#34;&gt;MASTER DUEL&lt;/a&gt;)、&lt;a href=&#34;https://store.steampowered.com/app/294100/_RimWorld/&#34;&gt;RimWorld&lt;/a&gt;、&lt;a href=&#34;https://www.minecraft.net/&#34;&gt;Minecraft&lt;/a&gt;之类的游戏。&lt;/p&gt;</description>
     </item>
     <item>
       <title>搜索</title>

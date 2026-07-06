@@ -11,8 +11,9 @@
     
       
       <meta name="description" content="最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍
-[&amp;hellip;] [&amp;hellip;] 均为 32 位的通用寄存器(GPR)，用于数据操作。其中：
-[&amp;hellip;] 为栈指针，Cortex-M3 物理上拥有两个堆栈指针，任一时刻只能使用其中的一个： &amp;hellip;">
+[&amp;hellip;] Cortex-M3寄存器组
+[&amp;hellip;] 均为 32 位的通用寄存器(GPR)，用于数据操作。其中：
+[&amp;hellip;] 为栈指针，Cortex-M3 物理上拥有两个堆栈指针，任一时 &amp;hellip;">
       
     
 
@@ -53,6 +54,7 @@
       <span class="active"><a href="/cn/">日志</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
       <span class="optional"><a href="/en/about/">EN</a></span>
       
     </div>
@@ -75,8 +77,7 @@
 
 
 </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span>
-  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
 </h3>
 </div>
 
@@ -117,7 +118,7 @@
 <h2 id="前言">前言</h2>
 <p>最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍</p>
 <h2 id="寄存器组介绍">寄存器组介绍</h2>
-<p><img src="Cortex-M3%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84.jpg" alt="Cortex-M3寄存器组"></p>
+<p><img class="markdown-image" src="Cortex-M3%e5%af%84%e5%ad%98%e5%99%a8%e7%bb%84.jpg" alt="Cortex-M3寄存器组" loading="lazy" decoding="async"><span class="image-caption" hidden>Cortex-M3寄存器组</span></p>
 <h3 id="核心寄存器">核心寄存器</h3>
 <h4 id="r0-r12">R0 ~ R12</h4>
 <p>均为 32 位的通用寄存器(GPR)，用于数据操作。其中：</p>
@@ -233,9 +234,9 @@ MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ; 写通用寄存器的值到特殊功�
 <li>执行PSR（EPSR）：</li>
 </ul>
 <p>如下：</p>
-<p><img src="PSRs.jpg" alt="PSRs"></p>
+<p><img class="markdown-image" src="PSRs.jpg" alt="PSRs" loading="lazy" decoding="async"><span class="image-caption" hidden>PSRs</span></p>
 <p>xPSR：</p>
-<p><img src="xPSR.jpg" alt="xPSR"></p>
+<p><img class="markdown-image" src="xPSR.jpg" alt="xPSR" loading="lazy" decoding="async"><span class="image-caption" hidden>xPSR</span></p>
 <p>通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。<br>
 当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。</p>
 <h2 id="参考文章">参考文章</h2>
@@ -280,13 +281,13 @@ MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ; 写通用寄存器的值到特殊功�
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
-
+<script src="/js/image-caption.js" defer></script>
   
   
   <hr/>
   
   <p class="nav-bottom">
-    <span>© 成元 2025 - 2026</span>
+    <span>© Yuan Cheng 2025 - 2026</span>
     <span class="menu-bottom">
 <a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
 

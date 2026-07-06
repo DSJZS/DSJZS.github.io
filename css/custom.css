@@ -7,6 +7,10 @@ h1.title {
 h1.title::before {
   content: "☼";
 }
+
+.single .main h3 {
+  font-variant: normal;
+}
 .logo img {
   display: inline-block;
   max-height: 2rem;
@@ -94,7 +98,7 @@ blockquote.alert-error {
 .log-list ul {
   padding-left: 1.5rem;
 }
-.log-list li span {
+.log-list .log-date {
   display: inline-block;
   min-width: 6.5rem;
   color: #666;
@@ -139,3 +143,27 @@ pre code {
   overflow-wrap: normal;
 }
 
+
+.image-caption {
+  display: none;
+}
+
+.has-image-caption {
+  text-align: center;
+}
+.has-image-caption > img.markdown-image,
+.has-image-caption > a > img.markdown-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.has-image-caption > .image-caption,
+.has-image-caption > a > .image-caption {
+  display: block;
+  margin: .35em auto 1em;
+  max-width: 100%;
+  color: #666;
+  font-size: .9em;
+  line-height: 1.4;
+  text-align: center;
+}

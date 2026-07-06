@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Sun, 05 Jul 2026 21:20:11 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jul 2026 18:07:10 +0800</lastBuildDate>
     <atom:link href="https://dsjzs.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git</title>
@@ -42,6 +42,13 @@
       <link>https://dsjzs.github.io/tags/apt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://dsjzs.github.io/tags/apt/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Blog</title>
+      <link>https://dsjzs.github.io/tags/blog/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://dsjzs.github.io/tags/blog/</guid>
       <description></description>
     </item>
     <item>
@@ -210,6 +217,13 @@
       <link>https://dsjzs.github.io/tags/verilog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://dsjzs.github.io/tags/verilog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Vibe Coding</title>
+      <link>https://dsjzs.github.io/tags/vibe-coding/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://dsjzs.github.io/tags/vibe-coding/</guid>
       <description></description>
     </item>
     <item>

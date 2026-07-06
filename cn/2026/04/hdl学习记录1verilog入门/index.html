@@ -52,6 +52,7 @@
       <span class="active"><a href="/cn/">日志</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
       <span class="optional"><a href="/en/about/">EN</a></span>
       
     </div>
@@ -74,8 +75,7 @@
 
 
 </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/hdl/" class="term-tag">HDL</a><span>, </span><a href="/tags/verilog/" class="term-tag">Verilog</a><span> ]</span>
-  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/hdl/" class="term-tag">HDL</a><span>, </span><a href="/tags/verilog/" class="term-tag">Verilog</a><span> ]</span></span>
 </h3>
 </div>
 
@@ -332,7 +332,7 @@ endmodule
 endmodule
 </code></pre>
 <p><code>assign</code> 的左边是被驱动的 wire，右边是驱动源。一根 wire 通常只能有一个 driver，但可以连接到多个 sinks。</p>
-<p><img src="Wire.png" alt="Wire"></p>
+<p><img class="markdown-image" src="Wire.png" alt="Wire" loading="lazy" decoding="async"><span class="image-caption" hidden>Wire</span></p>
 <p>除了 <code>input</code> 和 <code>output</code>，还有一种端口方向是 <code>inout</code>，表示双向端口。它常见于总线型信号或三态接口：</p>
 <pre><code class="language-verilog">module top_module(
     input ena,
@@ -1374,13 +1374,13 @@ endmodule
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
-
+<script src="/js/image-caption.js" defer></script>
   
   
   <hr/>
   
   <p class="nav-bottom">
-    <span>© 成元 2025 - 2026</span>
+    <span>© Yuan Cheng 2025 - 2026</span>
     <span class="menu-bottom">
 <a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
 

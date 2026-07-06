@@ -52,6 +52,7 @@
       <span class="active"><a href="/cn/">日志</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
       <span class="optional"><a href="/en/about/">EN</a></span>
       
     </div>
@@ -74,8 +75,7 @@
 
 
 </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/device-tree/" class="term-tag">Device Tree</a><span> ]</span>
-  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/device-tree/" class="term-tag">Device Tree</a><span> ]</span></span>
 </h3>
 </div>
 
@@ -110,12 +110,12 @@
 <h2 id="linux驱动的分隔与分离思想">Linux驱动的分隔与分离思想</h2>
 <h3 id="驱动与驱动的分隔">驱动与驱动的分隔</h3>
 <p>不知道你是否有过这样的经历，在学习STM32时，我写过大量IIC设备的驱动代码。后来转到ESP32等平台时，我发现了一个问题——每个平台底层IIC控制器的驱动通常都不一样。如果按照传统的一对一模型来编写驱动，那么对于同一个设备，我几乎每个平台都要重新写一份驱动。这就导致大量的代码重复，如下所示。</p>
-<p><img src="%E4%BC%A0%E7%BB%9F%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B.png" alt="传统的IIC设备驱动模型"></p>
+<p><img class="markdown-image" src="%e4%bc%a0%e7%bb%9f%e7%9a%84IIC%e8%ae%be%e5%a4%87%e9%a9%b1%e5%8a%a8%e6%a8%a1%e5%9e%8b.png" alt="传统的IIC设备驱动模型" loading="lazy" decoding="async"><span class="image-caption" hidden>传统的IIC设备驱动模型</span></p>
 <blockquote>
 <p>对于图中的 MPU6050 而言，初始化时需要写入的寄存器值、算法等，基本上在每个平台上都是一样的，不同的只是底层 IIC 控制器的驱动代码。如果按照一对一的模型来编写，那么前面那些部分就都成了无效的重复代码。</p>
 </blockquote>
 <p><strong>不过，没有什么是加中间层解决不了的</strong>，我们可以加一个&quot;接口&quot;层，构成如下的模型。</p>
-<p><img src="%E7%8E%B0%E4%BB%A3%E7%9A%84IIC%E8%AE%BE%E5%A4%87%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B.png" alt="现代的IIC设备驱动模型"></p>
+<p><img class="markdown-image" src="%e7%8e%b0%e4%bb%a3%e7%9a%84IIC%e8%ae%be%e5%a4%87%e9%a9%b1%e5%8a%a8%e6%a8%a1%e5%9e%8b.png" alt="现代的IIC设备驱动模型" loading="lazy" decoding="async"><span class="image-caption" hidden>现代的IIC设备驱动模型</span></p>
 <blockquote>
 <p>现在MPU6050驱动与IIC控制器驱动通过一个统一的IIC接口连接起来了，一份面向IIC接口的MPU6050驱动代码可用于好几个平台，只要提供对应平台面向IIC接口的IIC控制器驱动。
 我们可以说做到了<strong>控制器驱动与设备驱动的分隔</strong>。</p>
@@ -123,7 +123,7 @@
 <h3 id="驱动与板级硬件描述的分离">驱动与板级硬件描述的分离</h3>
 <p>此外，无论是控制器驱动还是设备驱动，都需要用到一些硬件相关信息，例如引脚、中断、时钟、电源以及设备连接关系等。假如 PCB 重新设计，或者同一 SoC 存在多套开发板，导致这些板级连接信息发生变化，那么对于同一个驱动而言，就可能不得不复制出多份几乎相同的代码，仅仅为了适配不同的硬件连接方式。这同样会造成大量重复代码。</p>
 <p>为了解决这个问题，就像上面的上面<a href="#%E9%A9%B1%E5%8A%A8%E4%B8%8E%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E9%9A%94">驱动与驱动的分隔</a>一样，Linux 新加了一个&quot;中间层&quot;，将“驱动逻辑”和“板级硬件描述”尽量分离。<strong>驱动负责实现设备的控制逻辑，而设备的地址、中断、GPIO、时钟、电源等资源信息，则通过额外的硬件描述机制提供给内核，再由驱动在 probe 函数中获取和使用</strong>。Linux 中常见的模型如下图所示。</p>
-<p><img src="Linux%E6%80%BB%E7%BA%BF%E3%80%81%E9%A9%B1%E5%8A%A8%E5%92%8C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%BC%8F.png" alt="Linux总线、驱动和设备模式"></p>
+<p><img class="markdown-image" src="Linux%e6%80%bb%e7%ba%bf%e3%80%81%e9%a9%b1%e5%8a%a8%e5%92%8c%e8%ae%be%e5%a4%87%e6%a8%a1%e5%bc%8f.png" alt="Linux总线、驱动和设备模式" loading="lazy" decoding="async"><span class="image-caption" hidden>Linux总线、驱动和设备模式</span></p>
 <blockquote>
 <p><strong>现在驱动逻辑与板级硬件描述实现了解耦。驱动通常通过总线框架和固件描述接口获取设备所需的硬件资源，而不必把这些板级连接信息硬编码在驱动中</strong>。</p>
 <p>那么我们如何编写Linux可以读取的硬件信息了？在嵌入式 Linux 场景中(尤其是ARM架构)，常见的硬件描述方式主要有两类：</p>
@@ -286,13 +286,13 @@
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
-
+<script src="/js/image-caption.js" defer></script>
   
   
   <hr/>
   
   <p class="nav-bottom">
-    <span>© 成元 2025 - 2026</span>
+    <span>© Yuan Cheng 2025 - 2026</span>
     <span class="menu-bottom">
 <a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
 

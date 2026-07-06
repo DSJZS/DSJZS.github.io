@@ -54,6 +54,7 @@
       <span class="active"><a href="/cn/">日志</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
       <span class="optional"><a href="/en/about/">EN</a></span>
       
     </div>
@@ -76,8 +77,7 @@
 
 
 </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span>, </span><a href="/tags/wireshark/" class="term-tag">Wireshark</a><span> ]</span>
-  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span>, </span><a href="/tags/wireshark/" class="term-tag">Wireshark</a><span> ]</span></span>
 </h3>
 </div>
 
@@ -127,7 +127,7 @@
 之所以强调IPv4地址，是因为<strong>ARP仅用于IPv4</strong>，IPv6使用邻居发现协议。<br>
 与之相反的协议为RARP，不过其几乎已经不再被使用。</p>
 <h3 id="arp帧格式">ARP帧格式</h3>
-<p><img src="ARP%E5%B8%A7%E6%A0%BC%E5%BC%8F.png" alt="ARP帧(Ethernet II头部)"></p>
+<p><img class="markdown-image" src="ARP%e5%b8%a7%e6%a0%bc%e5%bc%8f.png" alt="ARP帧(Ethernet II头部)" loading="lazy" decoding="async"><span class="image-caption" hidden>ARP帧(Ethernet II头部)</span></p>
 <blockquote>
 <p>本文的实验是直接监听网卡接口，收到的是Ethernet II帧，故这里给出对应的格式。</p>
 </blockquote>
@@ -163,12 +163,12 @@
 <li>打开虚拟终端软件，输入 <code>ping 192.168.102.112</code><br>
 (这里的IP地址由前面的<a href="#%E6%9F%A5%E8%AF%A2%E5%8F%A6%E4%B8%80%E5%8F%B0%E8%AE%BE%E5%A4%87%E7%9A%84ipv4%E5%9C%B0%E5%9D%80">查询步骤</a>得到).</li>
 </ol>
-<p><img src="Wireshark%E5%AF%B9ARP%E5%B8%A7%E7%9A%84%E6%8A%93%E5%8C%85.jpg" alt="Wireshark抓到的ARP帧"></p>
+<p><img class="markdown-image" src="Wireshark%e5%af%b9ARP%e5%b8%a7%e7%9a%84%e6%8a%93%e5%8c%85.jpg" alt="Wireshark抓到的ARP帧" loading="lazy" decoding="async"><span class="image-caption" hidden>Wireshark抓到的ARP帧</span></p>
 <p>最终应该会得到1对或者2对ARP帧。如上图所示(可以放大观看)。</p>
 <h2 id="wireshark抓包内容解析">Wireshark抓包内容解析</h2>
 <p>上一个步骤一共得到了四个ARP帧，这里分别做解释。</p>
 <h3 id="第一个arp帧">第一个ARP帧</h3>
-<p><img src="%E7%AC%AC%E4%B8%80%E4%B8%AAARP%E5%B8%A7.png" alt="电脑网卡接口在局域网中广播的ARP请求"></p>
+<p><img class="markdown-image" src="%e7%ac%ac%e4%b8%80%e4%b8%aaARP%e5%b8%a7.png" alt="电脑网卡接口在局域网中广播的ARP请求" loading="lazy" decoding="async"><span class="image-caption" hidden>电脑网卡接口在局域网中广播的ARP请求</span></p>
 <p>当执行<code>ping 192.168.102.112</code>时。电脑的<a href="#arp%E7%BC%93%E5%AD%98%E8%A1%A8"><strong>ARP缓存表</strong></a>中并没有对应的条目，<br>
 因此为了得到 192.168.102.112 与MAC地址的映射关系，协议栈软件底层自动发送了一个ARP请求帧。
 Ethernet II头部中：</p>
@@ -183,7 +183,7 @@ ARP协议内容：</li>
 <strong>值得注意的是目的硬件地址为全0，因为当前还不知道</strong>。</li>
 </ul>
 <h3 id="第二个arp帧">第二个ARP帧</h3>
-<p><img src="%E7%AC%AC%E4%BA%8C%E4%B8%AAARP%E5%B8%A7.png" alt="目标设备单播发往电脑网卡接口的ARP请求"></p>
+<p><img class="markdown-image" src="%e7%ac%ac%e4%ba%8c%e4%b8%aaARP%e5%b8%a7.png" alt="目标设备单播发往电脑网卡接口的ARP请求" loading="lazy" decoding="async"><span class="image-caption" hidden>目标设备单播发往电脑网卡接口的ARP请求</span></p>
 <p>IPv4地址为 192.168.102.112 的接口收到了电脑网卡接口广播的ARP请求，<strong>单播</strong>进行应答。<br>
 Ethernet II头部中的：</p>
 <ul>
@@ -240,13 +240,13 @@ ARP协议内容：</li>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
-
+<script src="/js/image-caption.js" defer></script>
   
   
   <hr/>
   
   <p class="nav-bottom">
-    <span>© 成元 2025 - 2026</span>
+    <span>© Yuan Cheng 2025 - 2026</span>
     <span class="menu-bottom">
 <a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
 

@@ -52,6 +52,7 @@
       <span class="active"><a href="/cn/">日志</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
       <span class="optional"><a href="/en/about/">EN</a></span>
       
     </div>
@@ -74,8 +75,7 @@
 
 
 </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/gcc/" class="term-tag">GCC</a><span>, </span><a href="/tags/docker/" class="term-tag">Docker</a><span> ]</span>
-  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/gcc/" class="term-tag">GCC</a><span>, </span><a href="/tags/docker/" class="term-tag">Docker</a><span> ]</span></span>
 </h3>
 </div>
 
@@ -145,7 +145,7 @@ hello world
 <p>这个是最常见的一种办法，你可以下载对应架构对应的交叉编译工具链，用这个交叉编译工具链里面的<code>gcc</code>来编译程序。</p>
 <p>通过<a href="#%E6%9C%AC%E6%96%87%E7%9A%84%E6%83%85%E6%99%AF%E8%AE%BE%E5%AE%9A">情景设定</a>可知李华老师的电脑架构为 aarch64，操作系统为 Linux，那么只要下载 aarch64-linux 交叉编译工具链就行了！</p>
 <p>对应的工具链可以从 <a href="https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads">Arm GNU Toolchain Downloads</a>  网站之中获取，如下图：</p>
-<p><img src="%E5%B7%A5%E5%85%B7%E9%93%BE%E4%B8%8B%E8%BD%BD%E6%BC%94%E7%A4%BA.png" alt="工具链下载演示"></p>
+<p><img class="markdown-image" src="%e5%b7%a5%e5%85%b7%e9%93%be%e4%b8%8b%e8%bd%bd%e6%bc%94%e7%a4%ba.png" alt="工具链下载演示" loading="lazy" decoding="async"><span class="image-caption" hidden>工具链下载演示</span></p>
 <p>下载图中所示的 arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz 解压并放到对应的目录下，具体命令如下：</p>
 <pre><code class="language-shell">~$ wget https://developer.arm.com/-/media/Files/downloads/gnu/15.2.rel1/binrel/arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz
 ~$ tar -Jxvf arm-gnu-toolchain-15.2.rel1-x86_64-aarch64-none-linux-gnu.tar.xz
@@ -228,13 +228,13 @@ hello
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
-
+<script src="/js/image-caption.js" defer></script>
   
   
   <hr/>
   
   <p class="nav-bottom">
-    <span>© 成元 2025 - 2026</span>
+    <span>© Yuan Cheng 2025 - 2026</span>
     <span class="menu-bottom">
 <a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
 

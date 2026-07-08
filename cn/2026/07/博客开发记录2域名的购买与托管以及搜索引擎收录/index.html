@@ -90,7 +90,16 @@
     <li><a href="#前言">前言</a></li>
     <li><a href="#购买域名">购买域名</a></li>
     <li><a href="#托管域名">托管域名</a></li>
-    <li><a href="#设置github-pages自定义域名">设置Github Pages自定义域名</a></li>
+    <li><a href="#设置github-pages自定义域名">设置Github Pages自定义域名</a>
+      <ul>
+        <li><a href="#配置-github-pages-遇到的常见问题">配置 Github Pages 遇到的常见问题</a>
+          <ul>
+            <li><a href="#enforce-https-无法开启">Enforce HTTPS 无法开启</a></li>
+            <li><a href="#博客更新后-custom-domain-配置失效">博客更新后 Custom domain 配置失效</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
     <li><a href="#搜索引擎收录">搜索引擎收录</a></li>
     <li><a href="#总结">总结</a></li>
     <li><a href="#参考资料">参考资料</a></li>
@@ -112,7 +121,10 @@
 <p>详细的流程观看<a href="https://zhuanlan.zhihu.com/p/650147633">这篇文章</a>就行了，和上一步的推荐文章是同一个作者，都是以 NameSilo 购买域名为例。</p>
 <h2 id="设置github-pages自定义域名">设置Github Pages自定义域名</h2>
 <p>这一部也是直接照着<a href="https://qinyu.space/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/%E5%88%A9%E7%94%A8cloudflare%E5%8A%A0%E9%80%9Fgithub%E4%B8%BB%E9%A1%B5%E8%AE%BF%E9%97%AE/">这篇文章</a>做就行了。</p>
+<h3 id="配置-github-pages-遇到的常见问题">配置 Github Pages 遇到的常见问题</h3>
+<h4 id="enforce-https-无法开启">Enforce HTTPS 无法开启</h4>
 <p>如果你的 Custom domain 配置后果没有显示绿色的 <code>DNS check successful</code>，显示 <code>Domain's DNS record could not be retrieved. For more information, see documentation (lnvalidDNSError)</code> 或者 <code>Enforce HTTPS</code> 为灰色不能勾选，那么建议关闭 Cloudflare DNS 记录中的代理加速，并重新配置 Custom domain 。</p>
+<h4 id="博客更新后-custom-domain-配置失效">博客更新后 Custom domain 配置失效</h4>
 <p>如果你发现每次博客更新后，Github Pages 的 Custom domain 配置失效/不见了，参考<a href="https://www.suiyan.cc/blog/20230404212258">这篇文章</a>，在 <code>static/CNAME</code> 中写下你配置的域名。</p>
 <h2 id="搜索引擎收录">搜索引擎收录</h2>
 <p>最后一部了，依旧观看我推荐的<a href="https://www.lucaju.cn/index.php/archives/125/">这篇文章</a>即可。</p>
@@ -144,6 +156,10 @@
 <li><a href="https://me.onlyra1n.top/posts/a72e">Cloudflare DNS 托管+Github Pages HTTPS加密避坑</a></li>
 <li><a href="https://heary.cn/posts/GitHub-Pages-HTTPS%E8%AF%81%E4%B9%A6%E8%87%AA%E5%8A%A8%E7%AD%BE%E5%8F%91%E9%94%99%E8%AF%AF%E8%A7%A3%E5%86%B3/">GitHub Pages HTTPS证书自动签发错误解决 </a></li>
 <li><a href="https://sumygg.com/2018/05/28/custom-domains-on-github-pages-support-for-https/">自定义域名在Github Pages中支持通过HTTPS访问</a></li>
+</ul>
+<p>Github Pages 的 Custom domain 配置失效/不见：</p>
+<ul>
+<li><a href="https://www.suiyan.cc/blog/20230404212258">解决Github Pages自定义域名失效的问题</a></li>
 </ul>
 <p>浏览器收录：</p>
 <ul>

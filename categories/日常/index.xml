@@ -16,13 +16,6 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>博客开发记录(1)：主题的修改与功能增加</title>
-      <link>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</link>
-      <pubDate>Mon, 06 Jul 2026 12:53:28 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。近几天有空，正好更新一下站点，说说有什么变化的地方以及我的一些想法。&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>OSOC学习记录(1)：F阶段总结</title>
       <link>https://dsjzs.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
       <pubDate>Wed, 22 Apr 2026 18:06:29 +0800</pubDate>
@@ -42,13 +35,6 @@
       <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
       <guid>https://dsjzs.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;&#xA;也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;&#xA;本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>杂谈(1)：2025年总结🥳</title>
-      <link>https://dsjzs.github.io/cn/2025/12/%E6%9D%82%E8%B0%8812025%E5%B9%B4%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Wed, 31 Dec 2025 23:43:52 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2025/12/%E6%9D%82%E8%B0%8812025%E5%B9%B4%E6%80%BB%E7%BB%93/</guid>
-      <description>&lt;h1 id=&#34;第一次元旦总结&#34;&gt;第一次元旦总结&lt;/h1&gt;&#xA;&lt;h2 id=&#34;开场白&#34;&gt;开场白&lt;/h2&gt;&#xA;&lt;p&gt;这个网页也是迎来了它的第一个元旦，可喜可贺(&lt;del&gt;虽然还没几天&lt;/del&gt;)，回想这一年也是经历了很多很多的事情，很难一一说清，如今就挑几件比较重要的事情来说吧&lt;/p&gt;</description>
     </item>
     <item>
       <title>非前端工作者对于HTML、CSS、JavaScript的吐槽</title>
@@ -76,7 +62,7 @@
       <link>https://dsjzs.github.io/cn/2025/12/hello-world/</link>
       <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
       <guid>https://dsjzs.github.io/cn/2025/12/hello-world/</guid>
-      <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;&#xA;&lt;p&gt;我猜你肯定是看到了我的优质文章然后迫不及待的找到了我发的第一篇文章吧😎。&lt;br&gt;&#xA;不管是不是，留下你的评论吧！让我知道你来过😉。&lt;/p&gt;</description>
+      <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;&#xA;&lt;p&gt;我猜你肯定是看到了我的优质文章然后迫不及待的找到了我发的第一篇文章吧😎。&lt;/p&gt;&#xA;&lt;p&gt;不管是不是，留下你的评论吧！让我知道你来过😉。&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

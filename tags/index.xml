@@ -2,263 +2,263 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/</link>
+    <link>https://masterji.top/tags/</link>
     <description>Recent content in Tags on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <lastBuildDate>Wed, 08 Jul 2026 15:59:05 +0800</lastBuildDate>
-    <atom:link href="https://dsjzs.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git</title>
-      <link>https://dsjzs.github.io/tags/git/</link>
+      <link>https://masterji.top/tags/git/</link>
       <pubDate>Mon, 27 Apr 2026 19:05:23 +0800</pubDate>
-      <guid>https://dsjzs.github.io/tags/git/</guid>
+      <guid>https://masterji.top/tags/git/</guid>
       <description></description>
     </item>
     <item>
       <title>FSM</title>
-      <link>https://dsjzs.github.io/tags/fsm/</link>
+      <link>https://masterji.top/tags/fsm/</link>
       <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/tags/fsm/</guid>
+      <guid>https://masterji.top/tags/fsm/</guid>
       <description></description>
     </item>
     <item>
       <title>前端</title>
-      <link>https://dsjzs.github.io/tags/%E5%89%8D%E7%AB%AF/</link>
+      <link>https://masterji.top/tags/%E5%89%8D%E7%AB%AF/</link>
       <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
-      <guid>https://dsjzs.github.io/tags/%E5%89%8D%E7%AB%AF/</guid>
+      <guid>https://masterji.top/tags/%E5%89%8D%E7%AB%AF/</guid>
       <description></description>
     </item>
     <item>
       <title>音乐</title>
-      <link>https://dsjzs.github.io/tags/%E9%9F%B3%E4%B9%90/</link>
+      <link>https://masterji.top/tags/%E9%9F%B3%E4%B9%90/</link>
       <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
-      <guid>https://dsjzs.github.io/tags/%E9%9F%B3%E4%B9%90/</guid>
+      <guid>https://masterji.top/tags/%E9%9F%B3%E4%B9%90/</guid>
       <description></description>
     </item>
     <item>
       <title>Apt</title>
-      <link>https://dsjzs.github.io/tags/apt/</link>
+      <link>https://masterji.top/tags/apt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/apt/</guid>
+      <guid>https://masterji.top/tags/apt/</guid>
       <description></description>
     </item>
     <item>
       <title>Blog</title>
-      <link>https://dsjzs.github.io/tags/blog/</link>
+      <link>https://masterji.top/tags/blog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/blog/</guid>
+      <guid>https://masterji.top/tags/blog/</guid>
       <description></description>
     </item>
     <item>
       <title>Bluetooth</title>
-      <link>https://dsjzs.github.io/tags/bluetooth/</link>
+      <link>https://masterji.top/tags/bluetooth/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/bluetooth/</guid>
+      <guid>https://masterji.top/tags/bluetooth/</guid>
       <description></description>
     </item>
     <item>
       <title>BootLoader</title>
-      <link>https://dsjzs.github.io/tags/bootloader/</link>
+      <link>https://masterji.top/tags/bootloader/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/bootloader/</guid>
+      <guid>https://masterji.top/tags/bootloader/</guid>
       <description></description>
     </item>
     <item>
       <title>C</title>
-      <link>https://dsjzs.github.io/tags/c/</link>
+      <link>https://masterji.top/tags/c/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/c/</guid>
+      <guid>https://masterji.top/tags/c/</guid>
       <description></description>
     </item>
     <item>
       <title>C&#43;&#43;</title>
-      <link>https://dsjzs.github.io/tags/c&#43;&#43;/</link>
+      <link>https://masterji.top/tags/c&#43;&#43;/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/c&#43;&#43;/</guid>
+      <guid>https://masterji.top/tags/c&#43;&#43;/</guid>
       <description></description>
     </item>
     <item>
       <title>Device Tree</title>
-      <link>https://dsjzs.github.io/tags/device-tree/</link>
+      <link>https://masterji.top/tags/device-tree/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/device-tree/</guid>
+      <guid>https://masterji.top/tags/device-tree/</guid>
       <description></description>
     </item>
     <item>
       <title>Docker</title>
-      <link>https://dsjzs.github.io/tags/docker/</link>
+      <link>https://masterji.top/tags/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/docker/</guid>
+      <guid>https://masterji.top/tags/docker/</guid>
       <description></description>
     </item>
     <item>
       <title>Dpkg</title>
-      <link>https://dsjzs.github.io/tags/dpkg/</link>
+      <link>https://masterji.top/tags/dpkg/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/dpkg/</guid>
+      <guid>https://masterji.top/tags/dpkg/</guid>
       <description></description>
     </item>
     <item>
       <title>ESP32</title>
-      <link>https://dsjzs.github.io/tags/esp32/</link>
+      <link>https://masterji.top/tags/esp32/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/esp32/</guid>
+      <guid>https://masterji.top/tags/esp32/</guid>
       <description></description>
     </item>
     <item>
       <title>Food</title>
-      <link>https://dsjzs.github.io/tags/food/</link>
+      <link>https://masterji.top/tags/food/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/food/</guid>
+      <guid>https://masterji.top/tags/food/</guid>
       <description></description>
     </item>
     <item>
       <title>GCC</title>
-      <link>https://dsjzs.github.io/tags/gcc/</link>
+      <link>https://masterji.top/tags/gcc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/gcc/</guid>
+      <guid>https://masterji.top/tags/gcc/</guid>
       <description></description>
     </item>
     <item>
       <title>GD32</title>
-      <link>https://dsjzs.github.io/tags/gd32/</link>
+      <link>https://masterji.top/tags/gd32/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/gd32/</guid>
+      <guid>https://masterji.top/tags/gd32/</guid>
       <description></description>
     </item>
     <item>
       <title>GDB</title>
-      <link>https://dsjzs.github.io/tags/gdb/</link>
+      <link>https://masterji.top/tags/gdb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/gdb/</guid>
+      <guid>https://masterji.top/tags/gdb/</guid>
       <description></description>
     </item>
     <item>
       <title>HDL</title>
-      <link>https://dsjzs.github.io/tags/hdl/</link>
+      <link>https://masterji.top/tags/hdl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/hdl/</guid>
+      <guid>https://masterji.top/tags/hdl/</guid>
       <description></description>
     </item>
     <item>
       <title>Hugo</title>
-      <link>https://dsjzs.github.io/tags/hugo/</link>
+      <link>https://masterji.top/tags/hugo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/hugo/</guid>
+      <guid>https://masterji.top/tags/hugo/</guid>
       <description></description>
     </item>
     <item>
       <title>Linux</title>
-      <link>https://dsjzs.github.io/tags/linux/</link>
+      <link>https://masterji.top/tags/linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/linux/</guid>
+      <guid>https://masterji.top/tags/linux/</guid>
       <description></description>
     </item>
     <item>
       <title>Makefile</title>
-      <link>https://dsjzs.github.io/tags/makefile/</link>
+      <link>https://masterji.top/tags/makefile/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/makefile/</guid>
+      <guid>https://masterji.top/tags/makefile/</guid>
       <description></description>
     </item>
     <item>
       <title>MCU</title>
-      <link>https://dsjzs.github.io/tags/mcu/</link>
+      <link>https://masterji.top/tags/mcu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/mcu/</guid>
+      <guid>https://masterji.top/tags/mcu/</guid>
       <description></description>
     </item>
     <item>
       <title>Music</title>
-      <link>https://dsjzs.github.io/tags/music/</link>
+      <link>https://masterji.top/tags/music/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/music/</guid>
+      <guid>https://masterji.top/tags/music/</guid>
       <description></description>
     </item>
     <item>
       <title>OTA</title>
-      <link>https://dsjzs.github.io/tags/ota/</link>
+      <link>https://masterji.top/tags/ota/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/ota/</guid>
+      <guid>https://masterji.top/tags/ota/</guid>
       <description></description>
     </item>
     <item>
       <title>RTOS</title>
-      <link>https://dsjzs.github.io/tags/rtos/</link>
+      <link>https://masterji.top/tags/rtos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/rtos/</guid>
+      <guid>https://masterji.top/tags/rtos/</guid>
       <description></description>
     </item>
     <item>
       <title>Scala</title>
-      <link>https://dsjzs.github.io/tags/scala/</link>
+      <link>https://masterji.top/tags/scala/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/scala/</guid>
+      <guid>https://masterji.top/tags/scala/</guid>
       <description></description>
     </item>
     <item>
       <title>Shell</title>
-      <link>https://dsjzs.github.io/tags/shell/</link>
+      <link>https://masterji.top/tags/shell/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/shell/</guid>
+      <guid>https://masterji.top/tags/shell/</guid>
       <description></description>
     </item>
     <item>
       <title>STM32</title>
-      <link>https://dsjzs.github.io/tags/stm32/</link>
+      <link>https://masterji.top/tags/stm32/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/stm32/</guid>
+      <guid>https://masterji.top/tags/stm32/</guid>
       <description></description>
     </item>
     <item>
       <title>Verilog</title>
-      <link>https://dsjzs.github.io/tags/verilog/</link>
+      <link>https://masterji.top/tags/verilog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/verilog/</guid>
+      <guid>https://masterji.top/tags/verilog/</guid>
       <description></description>
     </item>
     <item>
       <title>Vibe Coding</title>
-      <link>https://dsjzs.github.io/tags/vibe-coding/</link>
+      <link>https://masterji.top/tags/vibe-coding/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/vibe-coding/</guid>
+      <guid>https://masterji.top/tags/vibe-coding/</guid>
       <description></description>
     </item>
     <item>
       <title>Wi-Fi</title>
-      <link>https://dsjzs.github.io/tags/wi-fi/</link>
+      <link>https://masterji.top/tags/wi-fi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/wi-fi/</guid>
+      <guid>https://masterji.top/tags/wi-fi/</guid>
       <description></description>
     </item>
     <item>
       <title>Wireshark</title>
-      <link>https://dsjzs.github.io/tags/wireshark/</link>
+      <link>https://masterji.top/tags/wireshark/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/wireshark/</guid>
+      <guid>https://masterji.top/tags/wireshark/</guid>
       <description></description>
     </item>
     <item>
       <title>Zephyr</title>
-      <link>https://dsjzs.github.io/tags/zephyr/</link>
+      <link>https://masterji.top/tags/zephyr/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/zephyr/</guid>
+      <guid>https://masterji.top/tags/zephyr/</guid>
       <description></description>
     </item>
     <item>
       <title>前端</title>
-      <link>https://dsjzs.github.io/tags/front/</link>
+      <link>https://masterji.top/tags/front/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/front/</guid>
+      <guid>https://masterji.top/tags/front/</guid>
       <description></description>
     </item>
     <item>
       <title>并发编程</title>
-      <link>https://dsjzs.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <link>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
   </channel>

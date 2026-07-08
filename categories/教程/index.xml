@@ -2,283 +2,283 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>教程 on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/categories/%E6%95%99%E7%A8%8B/</link>
+    <link>https://masterji.top/categories/%E6%95%99%E7%A8%8B/</link>
     <description>Recent content in 教程 on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>
-      <link>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
+      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
       <pubDate>Tue, 07 Jul 2026 14:01:34 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
+      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Vibe Coding开发学习记录(1)：提问到协作</title>
-      <link>https://dsjzs.github.io/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</link>
+      <link>https://masterji.top/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</link>
       <pubDate>Mon, 06 Jul 2026 16:14:34 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</guid>
+      <guid>https://masterji.top/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;del&gt;唉，今天澡卡弄丢了，很烦。&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;大约在 2023 年，也就是所谓的 AI 元年，我就开始接触 AI 编程了。当时和大多数人一样，我觉得它没什么用。事实上，那时的 AI 对编程来说确实帮不上什么忙，只能在 ChatGPT 这类网页聊天框里，你说一句，它回一句，编程能力也比较有限。后来之所以觉得好用，我感觉除了 AI 模型本身越来越强之外，更关键的是出现了 AI 编程代理（AI Coding Agent）这类工具。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(4)：用vscode进行项目开发</title>
-      <link>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</link>
+      <link>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 03 May 2026 14:13:29 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇文章用于记录如何使用 vscode 开发 zephyr 项目。&lt;/p&gt;&#xA;&lt;p&gt;开发板还是经典的蓝皮 STM32F103C8T6 最小系统开发板。&lt;/p&gt;&#xA;&lt;h2 id=&#34;环境搭建&#34;&gt;环境搭建&lt;/h2&gt;&#xA;&lt;p&gt;新建一个 vscode 配置文件，然后按照 zephyr 项目官方的 &lt;a href=&#34;https://docs.zephyrproject.org/latest/develop/tools/vscode.html&#34;&gt;Visual Studio Code 使用手册&lt;/a&gt; 安装插件即可。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(3)：项目结构与配置</title>
-      <link>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <link>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Fri, 01 May 2026 23:58:45 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇主要记录了 &lt;code&gt;west&lt;/code&gt; 和 &lt;code&gt;manifest&lt;/code&gt;，那一篇更偏“工作空间层面”的理解。&lt;/p&gt;&#xA;&lt;p&gt;这一篇继续往下走，看看真正开始写 Zephyr 应用时，工程目录通常长什么样，以及几个最常见的配置文件分别负责什么。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(2)：west 工具与 Manifest</title>
-      <link>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</link>
+      <link>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</link>
       <pubDate>Thu, 30 Apr 2026 14:35:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</guid>
+      <guid>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇把环境安装和点灯简单过了一遍，这一篇继续补 Zephyr 开发里一个绕不开的话题，也就是 &lt;code&gt;west&lt;/code&gt; 和 &lt;code&gt;manifest&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;刚开始接触 Zephyr 的时候，很容易把它们看成“又一个构建命令”和“又一个配置文件”。但实际用下来会发现，它们更像是 Zephyr 工作流的骨架。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(1)：环境安装与点灯</title>
-      <link>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</link>
+      <link>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</link>
       <pubDate>Thu, 30 Apr 2026 13:56:02 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</guid>
+      <guid>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近开始折腾 Zephyr 了，这篇文章就是用于介绍怎么安装并点灯。&lt;/p&gt;&#xA;&lt;p&gt;开发板还是经典的蓝皮 STM32F103C8T6 最小系统开发板。&lt;/p&gt;&#xA;&lt;h2 id=&#34;环境安装&#34;&gt;环境安装&lt;/h2&gt;&#xA;&lt;p&gt;这一块最权威的还是官方文档的 &lt;a href=&#34;https://docs.zephyrproject.org/latest/develop/getting_started/&#34;&gt;Getting Started Guide&lt;/a&gt;。照着文档中说的做就行。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Makefile学习记录(1)：GNU Make入门</title>
-      <link>https://dsjzs.github.io/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</link>
+      <link>https://masterji.top/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</link>
       <pubDate>Tue, 28 Apr 2026 12:18:50 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://masterji.top/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前用了很久 GNU Make，但一直没有仔细整理，这篇文章整理一下相关内容。&lt;/p&gt;&#xA;&lt;p&gt;这篇会尽量同时满足两种阅读方式：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;如果是刚开始接触 Makefile，可以从头顺着看&lt;/li&gt;&#xA;&lt;li&gt;如果已经写过一些 Makefile，也可以把它当一份入门向的快速手册&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;这一篇先只讲 &lt;strong&gt;GNU Make 的基础部分&lt;/strong&gt;，重点放在：&lt;/p&gt;</description>
     </item>
     <item>
       <title>Git学习记录(1)：Git入门</title>
-      <link>https://dsjzs.github.io/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</link>
+      <link>https://masterji.top/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</link>
       <pubDate>Mon, 27 Apr 2026 19:05:23 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://masterji.top/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近开始比较认真地用 Git 了。以前虽然也会 &lt;code&gt;clone&lt;/code&gt;、&lt;code&gt;add&lt;/code&gt;、&lt;code&gt;commit&lt;/code&gt;、&lt;code&gt;push&lt;/code&gt; 这些命令，但很多时候其实是“会敲，不算真懂”。尤其是遇到 &lt;code&gt;branch&lt;/code&gt;、&lt;code&gt;checkout&lt;/code&gt;、&lt;code&gt;reset&lt;/code&gt;、&lt;code&gt;rebase&lt;/code&gt; 这些命令时，脑子里经常会冒出一个问题：&lt;strong&gt;这条命令到底改了什么？改的是文件、分支，还是提交历史？&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Scala学习记录(1)：语法入门</title>
-      <link>https://dsjzs.github.io/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
+      <link>https://masterji.top/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Mon, 27 Apr 2026 12:05:07 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://masterji.top/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近为了学习 Chisel，开始补一下 Scala 语法。&lt;/p&gt;&#xA;&lt;p&gt;一开始我对 Scala 的印象其实很简单：&lt;strong&gt;语法上能看到一点 C/C++ 这类语言的影子，但整体写法又明显更灵活&lt;/strong&gt;。真的上手之后才发现，它虽然也能写出很“传统”的代码，但很多地方的思路其实不太一样。比如 &lt;code&gt;if&lt;/code&gt; 不只是流程控制语句，也可以直接当表达式返回值；函数可以像普通值一样传来传去；而且它默认鼓励你多用不可变数据。&lt;/p&gt;</description>
     </item>
     <item>
       <title>HDL学习记录(2)：Verilog常见电路实现</title>
-      <link>https://dsjzs.github.io/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</link>
+      <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</guid>
+      <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇不再整理 Verilog 语法本身，而是总结一些在 HDLBits 里反复出现、也比较有代表性的电路实现套路。&lt;/p&gt;&#xA;&lt;p&gt;目标不是把题目抄一遍，而是记住这些问题通常该怎么拆、代码一般长什么样、哪些地方最容易犯错。以后如果再碰到类似题型，应该能更快想到做法。&lt;/p&gt;</description>
     </item>
     <item>
       <title>HDL学习记录(1)：Verilog入门</title>
-      <link>https://dsjzs.github.io/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</link>
+      <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</link>
       <pubDate>Thu, 23 Apr 2026 17:47:27 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</guid>
+      <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近开始学习 Verilog 了。刚开始看的时候会觉得它和 C 语言有点像，但写了一些练习后发现，这种像主要停留在语法表面：C 更像是在描述“程序如何一步一步执行”，&lt;strong&gt;Verilog 更像是在描述“一张电路如何连接、何时更新”&lt;/strong&gt;。&lt;/p&gt;</description>
     </item>
     <item>
       <title>OSOC学习记录(1)：F阶段总结</title>
-      <link>https://dsjzs.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
+      <link>https://masterji.top/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
       <pubDate>Wed, 22 Apr 2026 18:06:29 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
+      <guid>https://masterji.top/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;我是在3月20号接触的OSOC项目，断断续续做了一周，也算是完成 F 阶段了，这里打算每完成一个阶段就记录一篇文章。&lt;/p&gt;&#xA;&lt;p&gt;值得注意的是可以看到这篇文章的分类除了&lt;code&gt;教程&lt;/code&gt;和&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;。这是因为我并不打算像前面的几个系列一样，出一个类似手册或者说明性质的文章，告知读者如何快速的完成这个项目，或者每个题目的答案以及完整的解题步骤（因为自我感觉个人水平不足以教会别人，此外如果你阅读过F1部分，就知道这不是项目主办方提倡的做法）。更多的是借助这个项目说明一下自己对某些技术或者行业的看法，以及一些感想，可以说&lt;code&gt;教程&lt;/code&gt;、&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;这三者都沾一点边。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(9)：移植</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Wed, 22 Apr 2026 11:00:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前面几篇文章主要记录了 Yuan RTOS 的通用内核逻辑，比如任务调度、软件定时器和 IPC。&lt;/p&gt;&#xA;&lt;p&gt;不过 RTOS 还有一部分代码和具体处理器、编译器强相关，比如关中断、恢复中断、任务栈初始化、第一次启动任务、任务上下文切换等。这些代码不太可能完全用一套 C 代码跑在所有平台上，因此需要单独抽出移植层。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(8)：测试</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</link>
       <pubDate>Wed, 22 Apr 2026 10:50:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前面几篇文章主要记录了 Yuan RTOS 的任务调度、软件定时器和 IPC 机制。功能写出来之后，还需要做一些基本测试，至少要确认常见路径能跑起来，而且长时间运行不会出现明显异常。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(7)：队列</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</link>
       <pubDate>Wed, 22 Apr 2026 10:40:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前两篇文章记录了 IPC 基础层、信号量和互斥量。这篇文章继续记录 Yuan RTOS 中的消息队列。&lt;/p&gt;&#xA;&lt;p&gt;消息队列用于在任务之间传递数据。相比信号量只能表达“有没有资源”或“资源数量”，队列可以真正携带一段消息内容，因此非常适合生产者消费者模型。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(6)：信号量与互斥量</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</link>
       <pubDate>Wed, 22 Apr 2026 10:30:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇文章记录了 Yuan RTOS 中 IPC 基础层的实现。它主要解决的是“任务如何阻塞”和“任务如何被唤醒”的问题。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章继续记录两个基于 IPC 基础层实现的同步对象：信号量和互斥量。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(5)：IPC基础</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Wed, 22 Apr 2026 10:20:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;RTOS 把程序拆成了多个任务，但任务之间并不是完全独立的。它们往往需要等待同一个资源、传递数据、通知事件、保护临界区。&lt;/p&gt;&#xA;&lt;p&gt;这些功能一般统称为 IPC，也就是 Inter-Process Communication。虽然在单片机 RTOS 中更准确地说是任务间通信，但大家一般也沿用 IPC 这个说法。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(4)：软件定时器</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</link>
       <pubDate>Wed, 22 Apr 2026 10:10:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。&lt;/p&gt;&#xA;&lt;p&gt;如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(3)：任务调度</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
       <pubDate>Wed, 22 Apr 2026 10:00:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇文章记录了任务切换的实现。任务切换解决的是“如何从一个任务切到另一个任务”的问题，而任务调度解决的是“应该切到哪一个任务”的问题。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章记录一下 Yuan RTOS 中任务调度的实现。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(2)：任务切换</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</link>
       <pubDate>Sat, 11 Apr 2026 23:46:40 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;任务切换是 RTOS 最基础的功能&lt;/strong&gt;，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章记录一下如何实现 RTOS 的切换。&lt;/p&gt;&#xA;&lt;p&gt;完整代码请访问我的Github仓库，网址为：&lt;a href=&#34;https://github.com/DSJZS/yuan-rtos&#34;&gt;yuan-rtos&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(1)：程序结构</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</link>
       <pubDate>Sat, 11 Apr 2026 18:17:01 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近本人在实现一个轻量化的 RTOS，本文用于说明为什么要用 RTOS、什么时候适合用 RTOS，并对几种常见的软件结构做一个简单对比。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;需要先说明一点：RTOS 并不是必须的&lt;/strong&gt;。对于很多嵌入式项目来说，简单轮询或者“轮询 + 中断”就已经足够；只有当系统复杂度上来后，RTOS 的价值才会真正体现出来。&lt;/p&gt;</description>
     </item>
     <item>
       <title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</title>
-      <link>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
+      <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
       <pubDate>Sat, 11 Apr 2026 12:31:59 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</guid>
+      <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍&lt;/p&gt;</description>
     </item>
     <item>
       <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</title>
-      <link>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
+      <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
       <pubDate>Sat, 04 Apr 2026 13:06:14 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
+      <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本文用于记录如何编写 GD32 与 STM32 的 BootLoader。&lt;/p&gt;&#xA;&lt;p&gt;为什么选择这两款？因为 STM32 可以说是资源最多的一款单片机了，而 GD32 作为其国产替代方案几乎完全兼容 STM32 的固件，两者可以放到一块来学习。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(10)：如何阅读设备树绑定文档</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
       <pubDate>Mon, 30 Mar 2026 12:23:24 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前几月学了设备树，期间一直听说有绑定文档这个东西，但是一直没看，最近有时间学习了一下如何阅读绑定文档。&lt;/p&gt;&#xA;&lt;h2 id=&#34;示例文档的来源&#34;&gt;示例文档的来源&lt;/h2&gt;&#xA;&lt;p&gt;本篇文章对照着下面这篇文章进行解读。来源为 &lt;a href=&#34;https://github.com/nxp-imx/linux-imx/tree/lf-6.12.y&#34;&gt;nxp-imx/linux-imx:if-6.12-y&lt;/a&gt; 仓库的 &lt;code&gt;Documentation/devicetree/bindings/net/can/fsl,flexcan.yaml&lt;/code&gt;。此文档描述了 FlexCAN(CAN控制器外设) 节点下的相关属性信息。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</title>
-      <link>https://dsjzs.github.io/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</link>
+      <link>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Mon, 23 Mar 2026 18:24:06 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</guid>
+      <guid>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;学习Linux驱动的途中不可避免的要使用网络工具，但是目前热门的Linux驱动教程，比如正点原子的，还在使用 iwlist 等老旧工具，于是写下这篇文章记录如何移植一些基础且较新(这里的新是相比于 iwlist 等工具)的网络工具。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(9)：构建嵌入式Linux系统</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Mon, 23 Mar 2026 17:03:06 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前刚开始学习Linux驱动照着教程手动构建嵌入式Linux系统时，发现了很多教程里使用的U-Boot、Linux Kernel、BusyBox 过于老旧，比如正点原子的Linux驱动教程。这导致很多软件难以支持，无法利用很多新特性，于是&lt;del&gt;头铁&lt;/del&gt;脱离这些老旧的教程，去网上寻找较新的教程进行手动构建。在这个过程中我收获很多，但也发现手动构建已经是&amp;quot;&lt;strong&gt;非物质文化遗产&lt;/strong&gt;&amp;ldquo;了，如今有更方便快速的方法对Linux系统进行构建，于是在了解更先进的方法后趁热打铁写下了这篇文章。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
       <pubDate>Sun, 22 Mar 2026 20:37:11 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。&lt;/p&gt;&#xA;&lt;p&gt;在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(7)：设备树基础语法</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Sat, 21 Mar 2026 23:07:12 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;学习Linux驱动，掌握使用设备树描述硬件资源的信息是一项基本功，十分重要。&lt;br&gt;&#xA;本人经过近几个月零零散散学习，大量使用以及阅读手册后，有了些许感悟，于是趁热打铁做个总结。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(6)：常见的设备接口与总线</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Sat, 21 Mar 2026 23:06:14 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近学习Linux驱动，回想起这几年打各种比赛，做各种项目，用到了一堆接口与通信协议，乱七八糟的说多也不多，说少也不少，总之这里做一下总结。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
       <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
       <description>&lt;h2 id=&#34;i-o多路复用&#34;&gt;I/O多路复用&lt;/h2&gt;&#xA;&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;I/O 多路复用允许我们同时检查多个文件描述符，看其中任意一个是否可执行 I/O 操作&lt;/strong&gt;。其常用于并发编程。&lt;/p&gt;&#xA;&lt;p&gt;常用的 I/O 多路复用操作有以下三种：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;select：早期的 I/O 多路复用&lt;/li&gt;&#xA;&lt;li&gt;poll：对 select 的改进版&lt;/li&gt;&#xA;&lt;li&gt;epoll：Linux 环境独有的，适合大规模并发的 I/O 多路复用机制&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本人认为，小项目默认使用 poll，而在搭建于 Linux 系统的高并发的网络环境下，则推荐使用 epoll。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(4)：如何愉快(?)地交叉编译</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;随着不断地学习（&lt;del&gt;败家&lt;/del&gt;），现在我手里积攒了许多不同体系结构的设备，比如 x86_64、ARM、aarch64 等等，也是花了我不少的钱💸。&lt;/p&gt;&#xA;&lt;p&gt;平常我主要是在自己的 x86_64 电脑上写 C/C++ 代码，然后进行编译和测试，测试没问题之后，便会将程序下载到其它架构的机器上。但C/C++是&amp;quot;一次编写处处编译&amp;quot;的语言，不同架构的机器要对用对应架构的编译工具链来完成编译，如果你用系统自带的 &lt;code&gt;gcc&lt;/code&gt; 编译你的代码，那么大概率编译出来的程序只能在当前架构的机器上运行(对我来说就是x86_64)。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile</title>
-      <link>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
+      <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
       <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
+      <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具</title>
-      <link>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
+      <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Tue, 17 Feb 2026 14:04:55 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
+      <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;This blog does have Super Cow Powers.&lt;br&gt;&#xA;本文会简略地介绍以下内容：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#deb&#34;&gt;.deb 软件包&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#dpkg&#34;&gt;dpkg&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#dpkg-deb&#34;&gt;dpkg-deb&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#dpkg-query&#34;&gt;dpkg-query&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#apt&#34;&gt;apt&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#aptitude&#34;&gt;aptitude&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;如果想了解详细的内容，请自行阅读对应的资料。&lt;/p&gt;&#xA;&lt;h2 id=&#34;deb&#34;&gt;.deb&lt;/h2&gt;&#xA;&lt;p&gt;.deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，&lt;strong&gt;本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等&lt;/strong&gt;。&lt;br&gt;&#xA;通过 &lt;code&gt;ar&lt;/code&gt; 命令可以查看其内部结构( code.deb 的获取方式见&lt;a href=&#34;#%E6%BC%94%E7%A4%BA%E7%94%A8%E7%9A%84-deb-%E5%8C%85&#34;&gt;备注&lt;/a&gt; )：&lt;/p&gt;</description>
     </item>
     <item>
       <title>屋里食研(2)：蒸饭</title>
-      <link>https://dsjzs.github.io/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
+      <link>https://masterji.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
       <pubDate>Mon, 16 Feb 2026 20:45:38 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
+      <guid>https://masterji.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前几天懒得做饭，又不想花钱点外卖，于是看网上的快速做饭方法，总结出用一套电饭煲快速做饭的方法。🧑‍🍳&lt;br&gt;&#xA;鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
     </item>
     <item>
       <title>屋里食研(1)：炒面</title>
-      <link>https://dsjzs.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
+      <link>https://masterji.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
       <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
+      <guid>https://masterji.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;&#xA;也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;&#xA;本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(1)：如何愉快(?)地Debug程序</title>
-      <link>https://dsjzs.github.io/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</link>
+      <link>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</link>
       <pubDate>Sun, 11 Jan 2026 18:52:26 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</guid>
+      <guid>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;又一个新系列(&lt;del&gt;坑&lt;/del&gt;)开始了！这个系列我会发布一些自己学习Linux开发过程中写下的笔记。&lt;br&gt;&#xA;第一篇笔记便是如何愉快(?)的在Linux环境下进行Debug工作(以C语言举例)。&lt;br&gt;&#xA;使用的主要工具为 systemd-coredump、GDB。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</title>
-      <link>https://dsjzs.github.io/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
+      <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 07 Jan 2026 22:00:03 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
       <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
-      <link>https://dsjzs.github.io/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
+      <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
       <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
+      <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
       <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
     </item>
     <item>
       <title>编写了一个用户快速创建Hugo博客的脚本</title>
-      <link>https://dsjzs.github.io/cn/2025/12/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/</link>
+      <link>https://masterji.top/cn/2025/12/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/</link>
       <pubDate>Wed, 24 Dec 2025 19:46:26 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2025/12/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/</guid>
+      <guid>https://masterji.top/cn/2025/12/%E7%BC%96%E5%86%99%E4%BA%86%E4%B8%80%E4%B8%AA%E7%94%A8%E6%88%B7%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BAhugo%E5%8D%9A%E5%AE%A2%E7%9A%84%E8%84%9A%E6%9C%AC/</guid>
       <description>&lt;h2 id=&#34;脚本介绍&#34;&gt;脚本介绍&lt;/h2&gt;&#xA;&lt;p&gt;今天创建第一个博客(Hello World)之后，发现部署一个新的博客需要执行诸多繁杂的命令，作为一个Linux用户，肯定是不能忍受的，必须要实现一个简化工具，于是就&lt;del&gt;没事找事&lt;/del&gt;花了一点事件编写了一个 bash shell 脚本文件，用于帮助我管理Hugo框架下的博客。&lt;/p&gt;</description>
     </item>
   </channel>

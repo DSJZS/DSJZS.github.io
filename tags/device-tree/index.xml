@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Device Tree on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/device-tree/</link>
+    <link>https://masterji.top/tags/device-tree/</link>
     <description>Recent content in Device Tree on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/device-tree/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/device-tree/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux开发学习记录(10)：如何阅读设备树绑定文档</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
       <pubDate>Mon, 30 Mar 2026 12:23:24 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前几月学了设备树，期间一直听说有绑定文档这个东西，但是一直没看，最近有时间学习了一下如何阅读绑定文档。&lt;/p&gt;&#xA;&lt;h2 id=&#34;示例文档的来源&#34;&gt;示例文档的来源&lt;/h2&gt;&#xA;&lt;p&gt;本篇文章对照着下面这篇文章进行解读。来源为 &lt;a href=&#34;https://github.com/nxp-imx/linux-imx/tree/lf-6.12.y&#34;&gt;nxp-imx/linux-imx:if-6.12-y&lt;/a&gt; 仓库的 &lt;code&gt;Documentation/devicetree/bindings/net/can/fsl,flexcan.yaml&lt;/code&gt;。此文档描述了 FlexCAN(CAN控制器外设) 节点下的相关属性信息。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
       <pubDate>Sun, 22 Mar 2026 20:37:11 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇笔记简单记录了设备树的基本用法，而这一篇笔记则更进一步，尝试从整体上梳理 Linux 驱动框架的设计思路，以及设备树在其中所扮演的角色。&lt;/p&gt;&#xA;&lt;p&gt;在初学 Linux 驱动时，很多知识点看起来是零散的：总线、设备、驱动、设备树、子系统、probe、remove……这些概念彼此交织，很容易让人只记住接口，却不清楚它们为什么会被设计成现在这个样子。实际上，这些机制背后都围绕着几个很重要的目标，例如降低耦合、提高复用性，以及将程序逻辑与硬件描述分离。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Linux开发学习记录(7)：设备树基础语法</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Sat, 21 Mar 2026 23:07:12 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;学习Linux驱动，掌握使用设备树描述硬件资源的信息是一项基本功，十分重要。&lt;br&gt;&#xA;本人经过近几个月零零散散学习，大量使用以及阅读手册后，有了些许感悟，于是趁热打铁做个总结。&lt;/p&gt;</description>
     </item>
   </channel>

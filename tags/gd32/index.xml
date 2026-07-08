@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GD32 on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/gd32/</link>
+    <link>https://masterji.top/tags/gd32/</link>
     <description>Recent content in GD32 on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/gd32/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/gd32/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</title>
-      <link>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
+      <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
       <pubDate>Sat, 11 Apr 2026 12:31:59 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</guid>
+      <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍&lt;/p&gt;</description>
     </item>
     <item>
       <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</title>
-      <link>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
+      <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
       <pubDate>Sat, 04 Apr 2026 13:06:14 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
+      <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本文用于记录如何编写 GD32 与 STM32 的 BootLoader。&lt;/p&gt;&#xA;&lt;p&gt;为什么选择这两款？因为 STM32 可以说是资源最多的一款单片机了，而 GD32 作为其国产替代方案几乎完全兼容 STM32 的固件，两者可以放到一块来学习。&lt;/p&gt;</description>
     </item>
   </channel>

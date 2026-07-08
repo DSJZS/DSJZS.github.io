@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RTOS on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/rtos/</link>
+    <link>https://masterji.top/tags/rtos/</link>
     <description>Recent content in RTOS on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/rtos/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/rtos/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>RTOS开发学习记录(9)：移植</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Wed, 22 Apr 2026 11:00:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前面几篇文章主要记录了 Yuan RTOS 的通用内核逻辑，比如任务调度、软件定时器和 IPC。&lt;/p&gt;&#xA;&lt;p&gt;不过 RTOS 还有一部分代码和具体处理器、编译器强相关，比如关中断、恢复中断、任务栈初始化、第一次启动任务、任务上下文切换等。这些代码不太可能完全用一套 C 代码跑在所有平台上，因此需要单独抽出移植层。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(8)：测试</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</link>
       <pubDate>Wed, 22 Apr 2026 10:50:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前面几篇文章主要记录了 Yuan RTOS 的任务调度、软件定时器和 IPC 机制。功能写出来之后，还需要做一些基本测试，至少要确认常见路径能跑起来，而且长时间运行不会出现明显异常。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(7)：队列</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</link>
       <pubDate>Wed, 22 Apr 2026 10:40:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前两篇文章记录了 IPC 基础层、信号量和互斥量。这篇文章继续记录 Yuan RTOS 中的消息队列。&lt;/p&gt;&#xA;&lt;p&gt;消息队列用于在任务之间传递数据。相比信号量只能表达“有没有资源”或“资源数量”，队列可以真正携带一段消息内容，因此非常适合生产者消费者模型。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(6)：信号量与互斥量</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</link>
       <pubDate>Wed, 22 Apr 2026 10:30:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇文章记录了 Yuan RTOS 中 IPC 基础层的实现。它主要解决的是“任务如何阻塞”和“任务如何被唤醒”的问题。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章继续记录两个基于 IPC 基础层实现的同步对象：信号量和互斥量。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(5)：IPC基础</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Wed, 22 Apr 2026 10:20:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;RTOS 把程序拆成了多个任务，但任务之间并不是完全独立的。它们往往需要等待同一个资源、传递数据、通知事件、保护临界区。&lt;/p&gt;&#xA;&lt;p&gt;这些功能一般统称为 IPC，也就是 Inter-Process Communication。虽然在单片机 RTOS 中更准确地说是任务间通信，但大家一般也沿用 IPC 这个说法。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(4)：软件定时器</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</link>
       <pubDate>Wed, 22 Apr 2026 10:10:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在 RTOS 中，时间相关的功能非常常见，比如任务延时、超时等待、周期执行等。&lt;/p&gt;&#xA;&lt;p&gt;如果所有地方都用忙等延时，不仅浪费 CPU，还会破坏多任务系统的意义。因此 RTOS 一般会基于系统 tick 实现一套软件定时器机制，让任务可以在等待期间进入阻塞状态，把 CPU 让给其它任务。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(3)：任务调度</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
       <pubDate>Wed, 22 Apr 2026 10:00:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇文章记录了任务切换的实现。任务切换解决的是“如何从一个任务切到另一个任务”的问题，而任务调度解决的是“应该切到哪一个任务”的问题。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章记录一下 Yuan RTOS 中任务调度的实现。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(2)：任务切换</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</link>
       <pubDate>Sat, 11 Apr 2026 23:46:40 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;任务切换是 RTOS 最基础的功能&lt;/strong&gt;，可以说如果所有功能中选一个，其余都要裁减的话，任务切换功能肯定会被留下。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章记录一下如何实现 RTOS 的切换。&lt;/p&gt;&#xA;&lt;p&gt;完整代码请访问我的Github仓库，网址为：&lt;a href=&#34;https://github.com/DSJZS/yuan-rtos&#34;&gt;yuan-rtos&lt;/a&gt;。&lt;/p&gt;</description>
     </item>
     <item>
       <title>RTOS开发学习记录(1)：程序结构</title>
-      <link>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</link>
+      <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</link>
       <pubDate>Sat, 11 Apr 2026 18:17:01 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</guid>
+      <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近本人在实现一个轻量化的 RTOS，本文用于说明为什么要用 RTOS、什么时候适合用 RTOS，并对几种常见的软件结构做一个简单对比。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;需要先说明一点：RTOS 并不是必须的&lt;/strong&gt;。对于很多嵌入式项目来说，简单轮询或者“轮询 + 中断”就已经足够；只有当系统复杂度上来后，RTOS 的价值才会真正体现出来。&lt;/p&gt;</description>
     </item>
   </channel>

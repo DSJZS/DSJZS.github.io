@@ -2,46 +2,46 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/categories/</link>
+    <link>https://masterji.top/categories/</link>
     <description>Recent content in Categories on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <lastBuildDate>Wed, 08 Jul 2026 15:59:05 +0800</lastBuildDate>
-    <atom:link href="https://dsjzs.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>教程</title>
-      <link>https://dsjzs.github.io/categories/%E6%95%99%E7%A8%8B/</link>
+      <link>https://masterji.top/categories/%E6%95%99%E7%A8%8B/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/categories/%E6%95%99%E7%A8%8B/</guid>
+      <guid>https://masterji.top/categories/%E6%95%99%E7%A8%8B/</guid>
       <description></description>
     </item>
     <item>
       <title>日常</title>
-      <link>https://dsjzs.github.io/categories/%E6%97%A5%E5%B8%B8/</link>
+      <link>https://masterji.top/categories/%E6%97%A5%E5%B8%B8/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/categories/%E6%97%A5%E5%B8%B8/</guid>
+      <guid>https://masterji.top/categories/%E6%97%A5%E5%B8%B8/</guid>
       <description></description>
     </item>
     <item>
       <title>站务</title>
-      <link>https://dsjzs.github.io/categories/%E7%AB%99%E5%8A%A1/</link>
+      <link>https://masterji.top/categories/%E7%AB%99%E5%8A%A1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/categories/%E7%AB%99%E5%8A%A1/</guid>
+      <guid>https://masterji.top/categories/%E7%AB%99%E5%8A%A1/</guid>
       <description></description>
     </item>
     <item>
       <title>笔记</title>
-      <link>https://dsjzs.github.io/categories/%E7%AC%94%E8%AE%B0/</link>
+      <link>https://masterji.top/categories/%E7%AC%94%E8%AE%B0/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/categories/%E7%AC%94%E8%AE%B0/</guid>
+      <guid>https://masterji.top/categories/%E7%AC%94%E8%AE%B0/</guid>
       <description></description>
     </item>
     <item>
       <title>随笔</title>
-      <link>https://dsjzs.github.io/categories/%E9%9A%8F%E7%AC%94/</link>
+      <link>https://masterji.top/categories/%E9%9A%8F%E7%AC%94/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://dsjzs.github.io/categories/%E9%9A%8F%E7%AC%94/</guid>
+      <guid>https://masterji.top/categories/%E9%9A%8F%E7%AC%94/</guid>
       <description></description>
     </item>
   </channel>

@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Blog on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/blog/</link>
+    <link>https://masterji.top/tags/blog/</link>
     <description>Recent content in Blog on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>
-      <link>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
+      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
       <pubDate>Tue, 07 Jul 2026 14:01:34 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
+      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
     <item>
       <title>博客开发记录(1)：主题的修改与功能增加</title>
-      <link>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</link>
+      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</link>
       <pubDate>Mon, 06 Jul 2026 12:53:28 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</guid>
+      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。近几天有空，正好更新一下站点，说说有什么变化的地方以及我的一些想法。&lt;/p&gt;</description>
     </item>
   </channel>

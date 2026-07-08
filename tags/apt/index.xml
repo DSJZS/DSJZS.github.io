@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Apt on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/apt/</link>
+    <link>https://masterji.top/tags/apt/</link>
     <description>Recent content in Apt on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/apt/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/apt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具</title>
-      <link>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
+      <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Tue, 17 Feb 2026 14:04:55 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
+      <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;This blog does have Super Cow Powers.&lt;br&gt;&#xA;本文会简略地介绍以下内容：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#deb&#34;&gt;.deb 软件包&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#dpkg&#34;&gt;dpkg&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#dpkg-deb&#34;&gt;dpkg-deb&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#dpkg-query&#34;&gt;dpkg-query&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#apt&#34;&gt;apt&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;#aptitude&#34;&gt;aptitude&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;如果想了解详细的内容，请自行阅读对应的资料。&lt;/p&gt;&#xA;&lt;h2 id=&#34;deb&#34;&gt;.deb&lt;/h2&gt;&#xA;&lt;p&gt;.deb 是 Debian 及其衍生系统(如Ubuntu)的软件包格式，&lt;strong&gt;本质上是一个 ar 归档文件，包含软件的二进制文件、配置文件、依赖信息等&lt;/strong&gt;。&lt;br&gt;&#xA;通过 &lt;code&gt;ar&lt;/code&gt; 命令可以查看其内部结构( code.deb 的获取方式见&lt;a href=&#34;#%E6%BC%94%E7%A4%BA%E7%94%A8%E7%9A%84-deb-%E5%8C%85&#34;&gt;备注&lt;/a&gt; )：&lt;/p&gt;</description>
     </item>
   </channel>

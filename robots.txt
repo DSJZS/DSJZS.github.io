@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dsjzs.github.io/sitemap.xml
+Sitemap: https://masterji.top/sitemap.xml

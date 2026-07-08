@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ESP32 on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/esp32/</link>
+    <link>https://masterji.top/tags/esp32/</link>
     <description>Recent content in ESP32 on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/esp32/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/esp32/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zephyr on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/zephyr/</link>
+    <link>https://masterji.top/tags/zephyr/</link>
     <description>Recent content in Zephyr on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/zephyr/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/zephyr/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Zephyr学习记录(4)：用vscode进行项目开发</title>
-      <link>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</link>
+      <link>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 03 May 2026 14:13:29 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</guid>
+      <guid>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇文章用于记录如何使用 vscode 开发 zephyr 项目。&lt;/p&gt;&#xA;&lt;p&gt;开发板还是经典的蓝皮 STM32F103C8T6 最小系统开发板。&lt;/p&gt;&#xA;&lt;h2 id=&#34;环境搭建&#34;&gt;环境搭建&lt;/h2&gt;&#xA;&lt;p&gt;新建一个 vscode 配置文件，然后按照 zephyr 项目官方的 &lt;a href=&#34;https://docs.zephyrproject.org/latest/develop/tools/vscode.html&#34;&gt;Visual Studio Code 使用手册&lt;/a&gt; 安装插件即可。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(3)：项目结构与配置</title>
-      <link>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
+      <link>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Fri, 01 May 2026 23:58:45 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇主要记录了 &lt;code&gt;west&lt;/code&gt; 和 &lt;code&gt;manifest&lt;/code&gt;，那一篇更偏“工作空间层面”的理解。&lt;/p&gt;&#xA;&lt;p&gt;这一篇继续往下走，看看真正开始写 Zephyr 应用时，工程目录通常长什么样，以及几个最常见的配置文件分别负责什么。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(2)：west 工具与 Manifest</title>
-      <link>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</link>
+      <link>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</link>
       <pubDate>Thu, 30 Apr 2026 14:35:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</guid>
+      <guid>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇把环境安装和点灯简单过了一遍，这一篇继续补 Zephyr 开发里一个绕不开的话题，也就是 &lt;code&gt;west&lt;/code&gt; 和 &lt;code&gt;manifest&lt;/code&gt;。&lt;/p&gt;&#xA;&lt;p&gt;刚开始接触 Zephyr 的时候，很容易把它们看成“又一个构建命令”和“又一个配置文件”。但实际用下来会发现，它们更像是 Zephyr 工作流的骨架。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Zephyr学习记录(1)：环境安装与点灯</title>
-      <link>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</link>
+      <link>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</link>
       <pubDate>Thu, 30 Apr 2026 13:56:02 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</guid>
+      <guid>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近开始折腾 Zephyr 了，这篇文章就是用于介绍怎么安装并点灯。&lt;/p&gt;&#xA;&lt;p&gt;开发板还是经典的蓝皮 STM32F103C8T6 最小系统开发板。&lt;/p&gt;&#xA;&lt;h2 id=&#34;环境安装&#34;&gt;环境安装&lt;/h2&gt;&#xA;&lt;p&gt;这一块最权威的还是官方文档的 &lt;a href=&#34;https://docs.zephyrproject.org/latest/develop/getting_started/&#34;&gt;Getting Started Guide&lt;/a&gt;。照着文档中说的做就行。&lt;/p&gt;</description>
     </item>
   </channel>

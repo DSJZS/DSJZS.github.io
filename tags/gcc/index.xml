@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GCC on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/gcc/</link>
+    <link>https://masterji.top/tags/gcc/</link>
     <description>Recent content in GCC on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/gcc/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/gcc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux开发学习记录(4)：如何愉快(?)地交叉编译</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;随着不断地学习（&lt;del&gt;败家&lt;/del&gt;），现在我手里积攒了许多不同体系结构的设备，比如 x86_64、ARM、aarch64 等等，也是花了我不少的钱💸。&lt;/p&gt;&#xA;&lt;p&gt;平常我主要是在自己的 x86_64 电脑上写 C/C++ 代码，然后进行编译和测试，测试没问题之后，便会将程序下载到其它架构的机器上。但C/C++是&amp;quot;一次编写处处编译&amp;quot;的语言，不同架构的机器要对用对应架构的编译工具链来完成编译，如果你用系统自带的 &lt;code&gt;gcc&lt;/code&gt; 编译你的代码，那么大概率编译出来的程序只能在当前架构的机器上运行(对我来说就是x86_64)。&lt;/p&gt;</description>
     </item>
   </channel>

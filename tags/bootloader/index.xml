@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>BootLoader on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/bootloader/</link>
+    <link>https://masterji.top/tags/bootloader/</link>
     <description>Recent content in BootLoader on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/bootloader/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/bootloader/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</title>
-      <link>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
+      <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
       <pubDate>Sat, 04 Apr 2026 13:06:14 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
+      <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本文用于记录如何编写 GD32 与 STM32 的 BootLoader。&lt;/p&gt;&#xA;&lt;p&gt;为什么选择这两款？因为 STM32 可以说是资源最多的一款单片机了，而 GD32 作为其国产替代方案几乎完全兼容 STM32 的固件，两者可以放到一块来学习。&lt;/p&gt;</description>
     </item>
   </channel>

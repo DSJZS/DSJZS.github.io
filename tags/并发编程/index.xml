@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>并发编程 on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+    <link>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
     <description>Recent content in 并发编程 on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动</title>
-      <link>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
+      <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
       <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
+      <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
       <description>&lt;h2 id=&#34;i-o多路复用&#34;&gt;I/O多路复用&lt;/h2&gt;&#xA;&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;&#xA;&lt;p&gt;&lt;strong&gt;I/O 多路复用允许我们同时检查多个文件描述符，看其中任意一个是否可执行 I/O 操作&lt;/strong&gt;。其常用于并发编程。&lt;/p&gt;&#xA;&lt;p&gt;常用的 I/O 多路复用操作有以下三种：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;select：早期的 I/O 多路复用&lt;/li&gt;&#xA;&lt;li&gt;poll：对 select 的改进版&lt;/li&gt;&#xA;&lt;li&gt;epoll：Linux 环境独有的，适合大规模并发的 I/O 多路复用机制&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;本人认为，小项目默认使用 poll，而在搭建于 Linux 系统的高并发的网络环境下，则推荐使用 epoll。&lt;/p&gt;</description>
     </item>
   </channel>

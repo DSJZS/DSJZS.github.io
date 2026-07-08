@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>日常 on Yuan&#39;s Blog</title>
-    <link>https://dsjzs.github.io/categories/%E6%97%A5%E5%B8%B8/</link>
+    <link>https://masterji.top/categories/%E6%97%A5%E5%B8%B8/</link>
     <description>Recent content in 日常 on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://dsjzs.github.io/categories/%E6%97%A5%E5%B8%B8/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://masterji.top/categories/%E6%97%A5%E5%B8%B8/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>
-      <link>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
+      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
       <pubDate>Tue, 07 Jul 2026 14:01:34 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://dsjzs.github.io/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
+      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
     <item>
       <title>OSOC学习记录(1)：F阶段总结</title>
-      <link>https://dsjzs.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
+      <link>https://masterji.top/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
       <pubDate>Wed, 22 Apr 2026 18:06:29 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
+      <guid>https://masterji.top/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;我是在3月20号接触的OSOC项目，断断续续做了一周，也算是完成 F 阶段了，这里打算每完成一个阶段就记录一篇文章。&lt;/p&gt;&#xA;&lt;p&gt;值得注意的是可以看到这篇文章的分类除了&lt;code&gt;教程&lt;/code&gt;和&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;。这是因为我并不打算像前面的几个系列一样，出一个类似手册或者说明性质的文章，告知读者如何快速的完成这个项目，或者每个题目的答案以及完整的解题步骤（因为自我感觉个人水平不足以教会别人，此外如果你阅读过F1部分，就知道这不是项目主办方提倡的做法）。更多的是借助这个项目说明一下自己对某些技术或者行业的看法，以及一些感想，可以说&lt;code&gt;教程&lt;/code&gt;、&lt;code&gt;笔记&lt;/code&gt;还有&lt;code&gt;日常&lt;/code&gt;这三者都沾一点边。&lt;/p&gt;</description>
     </item>
     <item>
       <title>屋里食研(2)：蒸饭</title>
-      <link>https://dsjzs.github.io/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
+      <link>https://masterji.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
       <pubDate>Mon, 16 Feb 2026 20:45:38 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
+      <guid>https://masterji.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前几天懒得做饭，又不想花钱点外卖，于是看网上的快速做饭方法，总结出用一套电饭煲快速做饭的方法。🧑‍🍳&lt;br&gt;&#xA;鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
     </item>
     <item>
       <title>屋里食研(1)：炒面</title>
-      <link>https://dsjzs.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
+      <link>https://masterji.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
       <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
+      <guid>https://masterji.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;&#xA;也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;&#xA;本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
     </item>
     <item>
       <title>非前端工作者对于HTML、CSS、JavaScript的吐槽</title>
-      <link>https://dsjzs.github.io/cn/2025/12/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</link>
+      <link>https://masterji.top/cn/2025/12/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</link>
       <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2025/12/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
+      <guid>https://masterji.top/cn/2025/12/%E9%9D%9E%E5%89%8D%E7%AB%AF%E5%B7%A5%E4%BD%9C%E8%80%85%E5%AF%B9%E4%BA%8Ehtmlcssjavascript%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
       <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由&lt;/h2&gt;&#xA;&lt;p&gt;学习了ESP32的HTTP服务器示例之后，感觉这玩意挺好玩的，于是&lt;del&gt;没事找事地&lt;/del&gt;看了下前端的课程。&lt;/p&gt;&#xA;&lt;h2 id=&#34;对前端基础工具的理解&#34;&gt;对前端基础工具的理解&lt;/h2&gt;&#xA;&lt;p&gt;作为一个初学者(学习没一两天)，而且不打算以前端为主要工作方向的在校生，对于这方面肯定不专业，只略微的了解过HTML、CSS 和 JavaScript，以下为我当前的，个人的看法。😖&lt;/p&gt;</description>
     </item>
     <item>
       <title>推荐一个开源工具👉163MusicLyrics👈</title>
-      <link>https://dsjzs.github.io/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
+      <link>https://masterji.top/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</link>
       <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</guid>
+      <guid>https://masterji.top/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</guid>
       <description>&lt;h2 id=&#34;事情的缘由&#34;&gt;事情的缘由&lt;/h2&gt;&#xA;&lt;p&gt;今天完善网站的音乐播放器，发现给播放器添加歌曲需要歌曲的封面图片、音乐文件、歌词文件等等，而要从网易云等网站中下载这些文件&lt;strong&gt;太麻烦了!!!&lt;/strong&gt;&lt;br&gt;&#xA;&lt;del&gt;本着能偷懒就偷懒的原则&lt;/del&gt;，果断去网上寻找工具，找了没一会儿还真找到一个满足我所有要求的开源项目——&lt;a href=&#34;https://github.com/jitwxs/163MusicLyrics.git&#34;&gt;163MusicLyrics&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>关于Hugo框架设置的吐槽</title>
-      <link>https://dsjzs.github.io/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
+      <link>https://masterji.top/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</link>
       <pubDate>Thu, 25 Dec 2025 15:11:10 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
+      <guid>https://masterji.top/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</guid>
       <description>&lt;h1 id=&#34;事情的缘由&#34;&gt;事情的缘由&lt;/h1&gt;&#xA;&lt;p&gt;最近学习各种协议、组件等等，发现了很多大佬的博客，想着昨天休息，也没啥活动，于是心血来潮准备搞个个人博客网站。一开始照着&lt;a href=&#34;https://www.bilibili.com/video/BV1bovfeaEtQ/?spm_id_from=333.1391.0.0&amp;amp;p=4&amp;amp;vd_source=9b2ee795ef170df3280fc7223c9f92b8&#34;&gt;B站上的教程&lt;/a&gt;搭建的无比顺利，搭建完之后虽然页面啥也没有，但总算能发布博客了。今天&lt;del&gt;没事找事&lt;/del&gt;看着博客的画风特别丑陋，而且按键也不符合我的习惯，于是就开始折腾Hugo框架设置。然后我的🧠就💥了。&lt;/p&gt;&#xA;&lt;h1 id=&#34;个人的吐槽&#34;&gt;个人的吐槽&lt;/h1&gt;&#xA;&lt;p&gt;鉴于本人的专业，完全没学过网站的设计，CCS 还有 HTML 啥的那是完全不懂啊，看着跟天书一样，在经历了4~5个小时的折磨之后，也是照猫画虎复制粘贴终于搞出来了几个基本的功能了🥲。&#xA;以后根据需求慢慢加吧，盲目加功能还是不可取😌。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Hello World</title>
-      <link>https://dsjzs.github.io/cn/2025/12/hello-world/</link>
+      <link>https://masterji.top/cn/2025/12/hello-world/</link>
       <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
-      <guid>https://dsjzs.github.io/cn/2025/12/hello-world/</guid>
+      <guid>https://masterji.top/cn/2025/12/hello-world/</guid>
       <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;&#xA;&lt;p&gt;我猜你肯定是看到了我的优质文章然后迫不及待的找到了我发的第一篇文章吧😎。&lt;/p&gt;&#xA;&lt;p&gt;不管是不是，留下你的评论吧！让我知道你来过😉。&lt;/p&gt;</description>
     </item>
   </channel>

@@ -9,9 +9,16 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>我为什么写博客？</title>
+      <link>https://masterji.top/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 11 Jul 2026 16:55:33 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇说说我为什么写博客吧。&lt;/p&gt;&#xA;&lt;p&gt;其实在 &lt;a href=&#34;https://masterji.top/cn/2025/12/hello-world/&#34;&gt;Hello World&lt;/a&gt; 那篇或者其后的几篇博客就应该说了。&lt;/p&gt;&#xA;&lt;p&gt;只不过那段时间比较混乱，心也静不下来，留不出时间去写这些。&lt;/p&gt;&#xA;&lt;p&gt;现在稍微好了点，有时间静下心来写博客了。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>诗：雨A</title>
       <link>https://masterji.top/cn/2026/07/%E8%AF%97%E9%9B%A8a/</link>
-      <pubDate>Fri, 10 Jul 2026 15:13:37 +0800</pubDate>
+      <pubDate>Fri, 10 Jul 2026 00:00:37 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E8%AF%97%E9%9B%A8a/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;才在学校淋了暴雨，又要去南方吹台风，如果回老家说不定还会被龙卷风吹？真是多灾多难啊，去哪里都要被风吹雨打&amp;hellip;&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;有感而发，写了一首诗，文采一般，没押韵啥的，只是写了我近期的一些感受，希望你们喜欢 🥰&lt;/p&gt;</description>
     </item>
@@ -356,7 +363,7 @@
       <link>https://masterji.top/cn/todo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://masterji.top/cn/todo/</guid>
-      <description>&lt;p&gt;这个页面用于记录我的一些 TODO 事项，或许我永远不会全部完成吧&amp;hellip;&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;总之之所以放在这里公开，一是为了让大家监督我，二是希望大家给我提供建议&lt;/strong&gt;。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;关于-todo&#34;&gt;关于 TODO&lt;/h2&gt;&#xA;&lt;p&gt;这个页面用于记录我的一些 TODO 事项，或许我永远不会全部完成吧&amp;hellip;&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;总之之所以放在这里公开，一是为了让大家监督我，二是希望大家给我提供建议&lt;/strong&gt;。&lt;/p&gt;</description>
     </item>
     <item>
       <title>关于</title>

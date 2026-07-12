@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Vibe Coding开发学习记录(2)：Agentic Engineering - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Vibe Coding开发学习记录(2)：Agentic Engineering - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="今天台风登陆了，外面风刮得好大，明天周一还能上班吗&amp;hellip;&amp;hellip;
+[&amp;hellip;] 这篇文章紧接上一篇文章挖的坑，详细说一下 Agentic Engineering，以及它在 Codex 中的具体实现。
+[&amp;hellip;] 上一篇文章对 Agentic Engineering 的说明十分简略，看起来就好像用了 Agentic Engineering 以后，我只需要提出需求， &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Vibe Coding开发学习记录(2)：Agentic Engineering</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-12</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/vibe-coding/" class="term-tag">Vibe Coding</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#agentic-engineering-是什么">Agentic Engineering 是什么</a></li>
+    <li><a href="#为什么提出-agentic-engineering">为什么提出 Agentic Engineering</a></li>
+    <li><a href="#怎么实现-agentic-engineering">怎么实现 Agentic Engineering</a>
+      <ul>
+        <li><a href="#agentic-engineering-的基本流程">Agentic Engineering 的基本流程</a></li>
+        <li><a href="#需要准备哪些上下文">需要准备哪些上下文</a></li>
+        <li><a href="#为-agent-提供工具">为 Agent 提供工具</a></li>
+        <li><a href="#使用-subagent-处理复杂任务">使用 Subagent 处理复杂任务</a>
+          <ul>
+            <li><a href="#为什么需要-subagent">为什么需要 Subagent</a></li>
+            <li><a href="#怎样设计-subagent">怎样设计 Subagent</a></li>
+            <li><a href="#主-agent-怎么把任务交给-subagent">主 Agent 怎么把任务交给 Subagent</a></li>
+            <li><a href="#例一-电商项目的-agent-团队">例一：电商项目的 Agent 团队</a></li>
+            <li><a href="#例二-使用-agent-团队管理博客">例二：使用 Agent 团队管理博客</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p><del>今天台风登陆了，外面风刮得好大，明天周一还能上班吗&hellip;&hellip;</del></p>
+<p>这篇文章紧接上一篇文章<a href="/cn/2026/07/vibe-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#%E9%98%B6%E6%AE%B5%E4%B8%89-agentic-engineering">挖的坑</a>，详细说一下 Agentic Engineering，以及它在 Codex 中的具体实现。</p>
+<h2 id="agentic-engineering-是什么">Agentic Engineering 是什么</h2>
+<p>上一篇文章对 Agentic Engineering 的说明十分简略，看起来就好像用了 Agentic Engineering 以后，我只需要提出需求，其他什么都不用管了。</p>
+<p><strong>其实不是的！Agentic Engineering 强不强大，取决于 Context Engineering 和 Prompt Engineering 做得好不好！</strong></p>
+<p>这不难理解。你作为一个项目经理，总不可能只说一句需求吧？</p>
+<p>比如，你说要赚钱，结果手下却跑去刑法里找赚钱门道了怎么办？肯定还是要先告诉他们遵纪守法，对吧？</p>
+<p>所以，我这里给出一个自认为比较合适的 Agentic Engineering 定义：</p>
+<blockquote>
+<p>Agentic Engineering 是一种软件开发范式，人类负责定义目标、约束条件与质量标准，AI Agent 在结构化的人类监督下，自主完成规划、编码、测试和持续演进。</p>
+</blockquote>
+<h2 id="为什么提出-agentic-engineering">为什么提出 Agentic Engineering</h2>
+<p>2026 年 2 月，提出 Vibe Coding 概念的 Andrej Karpathy 亲自按下了升级键，正式宣判 Vibe Coding 已经过时。他提出了一个全新的概念——Agentic Engineering，即智能体工程。</p>
+<p>他为什么这么做？不难想到，肯定是 Vibe Coding 的大量使用产生了麻烦。它似乎并没有想象中那么能提高生产力。</p>
+<p>Vibe Coding 的问题在于：对于大型项目，这种靠感觉写代码的方法走不远。长期使用，只会让项目充满屎山和漏洞。最后，AI 生成代码省下来的时间，可能又全部花在后期的审核和维护上。</p>
+<p>于是 Andrej Karpathy 提出了 Agentic Engineering 这个概念，寄希望于它能解决 Vibe Coding 带来的问题。</p>
+<h2 id="怎么实现-agentic-engineering">怎么实现 Agentic Engineering</h2>
+<p>本小节讲解怎么具体地实现 Agentic Engineering。</p>
+<p>因为我日常使用 Codex，所以下文都会基于 Codex 进行说明。不过，这里主要介绍工作流程和设计思路。至于怎样在 Codex 中创建、配置和调用 Subagent，我会在后续文章中单独介绍。</p>
+<h3 id="agentic-engineering-的基本流程">Agentic Engineering 的基本流程</h3>
+<p>Agentic Engineering 并不是直接把一句需求丢给 Agent，而是先让 Agent 理解项目，再让它自主完成任务。一个简化后的流程如下：</p>
+<pre><code class="language-text">准备项目上下文
+        ↓
+提出当前需求
+        ↓
+主 Agent 分析并拆分任务
+        ↓
+主 Agent 自己执行，或按需调用 Subagent
+        ↓
+审查、测试并汇总结果
+        ↓
+用户验收
+</code></pre>
+<h3 id="需要准备哪些上下文">需要准备哪些上下文</h3>
+<p>其中，最重要的前置工作就是准备上下文。</p>
+<p>Agent 不知道项目原本是怎么设计的，也不知道哪些规则不能违反。如果只说一句“增加商品收藏功能”，它就只能自己猜测技术方案、目录结构和业务规则。</p>
+<p>对于一个长期维护的项目，至少应该让 Agent 知道下面这些内容：</p>
+<table>
+  <thead>
+      <tr>
+          <th>上下文</th>
+          <th>需要说明什么</th>
+          <th>电商项目示例</th>
+          <th>博客项目示例</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>项目目标</td>
+          <td>项目是做什么的，主要面向谁</td>
+          <td>一个前后端分离的网上商城</td>
+          <td>一个使用 Hugo 搭建的个人博客</td>
+      </tr>
+      <tr>
+          <td>项目结构</td>
+          <td>重要目录、文件和内容分别放在哪里</td>
+          <td>后端位于 <code>backend/</code>，前端位于 <code>frontend/</code></td>
+          <td>中文文章位于 <code>content/cn/</code>，英文文章位于 <code>content/en/</code></td>
+      </tr>
+      <tr>
+          <td>技术或工具约束</td>
+          <td>应该使用什么，不应该使用什么</td>
+          <td>使用 MyBatis，不使用 JPA</td>
+          <td>使用 Hugo Front Matter 和标准 Markdown</td>
+      </tr>
+      <tr>
+          <td>已有规范</td>
+          <td>命名、代码风格、文本风格和现有模式</td>
+          <td>接口统一返回 <code>Result&lt;T&gt;</code>，DTO 使用 <code>XxxRequest</code> 命名</td>
+          <td>保留作者原本的口语化表达，不随意改成正式论文风格</td>
+      </tr>
+      <tr>
+          <td>业务规则</td>
+          <td>仅靠代码不一定能推断出的要求</td>
+          <td>用户必须登录后才能收藏商品</td>
+          <td>翻译时保留专有名词、链接和代码块，不擅自改动事实</td>
+      </tr>
+      <tr>
+          <td>安全边界</td>
+          <td>哪些内容不能修改，哪些操作必须先确认</td>
+          <td>不得修改生产环境配置，不得提交密钥</td>
+          <td>不得删除原文观点，不得伪造来源和引用</td>
+      </tr>
+      <tr>
+          <td>工作流程</td>
+          <td>收到任务后应该按照什么顺序工作</td>
+          <td>先确认接口，再实现前后端，最后审查和测试</td>
+          <td>先收集资料，再写作，之后审核，最后翻译</td>
+      </tr>
+      <tr>
+          <td>完成标准</td>
+          <td>怎样才算真正完成</td>
+          <td>后端测试通过，前端构建成功，接口和文档一致</td>
+          <td>Front Matter 正确，Markdown 无明显错误，链接有效，中英文内容一致</td>
+      </tr>
+  </tbody>
+</table>
+<p>这些长期不变的内容，可以整理到项目级说明文件中，例如 Codex 使用的 <code>AGENTS.md</code>。以后再提出新需求时，就不需要重新解释整个项目，只需要补充本次任务特有的目标、限制和验收标准。</p>
+<p>例如，在已经配置好项目上下文的前提下，本次 Prompt 可以只写：</p>
+<blockquote>
+<p>增加商品收藏功能。用户登录后可以收藏和取消收藏商品，并在个人中心分页查看收藏列表。请复用项目现有的登录校验和分页方式，不要修改商品表；完成后运行相关测试，并说明数据库、接口和前端分别修改了什么。</p>
+</blockquote>
+<p>所以，所谓“只需要给需求”，省略的是每次都要重复说明的项目背景，而不是省略上下文本身。</p>
+<p><strong>项目长期使用后，也应该根据 Agent 暴露出来的问题，继续补充规则、调整分工和完善验收标准</strong>。</p>
+<h3 id="为-agent-提供工具">为 Agent 提供工具</h3>
+<p>除了上下文以外，Agent 还需要具备完成任务所需的工具，例如读取文件、搜索资料、修改内容、运行测试和执行构建命令。</p>
+<p>对于 Ubuntu 等系统而言，一般类似的工具都是系统自带的。</p>
+<p>对于一些内部工具，或者 Hugo 等特殊用途工具，自行下载并添加对应的路径。</p>
+<h3 id="使用-subagent-处理复杂任务">使用 Subagent 处理复杂任务</h3>
+<p>这里不会详细介绍相关技术的具体用法，只说明它们为什么会用在 Agentic Engineering 中，以及彼此如何配合。</p>
+<h4 id="为什么需要-subagent">为什么需要 Subagent</h4>
+<p>Agentic Engineering 为什么需要 Subagent？</p>
+<p>原因主要在于 Agentic Engineering 需要收集大量上下文信息，以及将一个需求拆分为多个子任务。</p>
+<p>比如一个前后端分离项目，一个主 Agent 当然也能完成拆分，并依次处理后端、前端、测试和文档，但所有资料、中间过程和结果，仍然会堆积在同一个上下文中。</p>
+<p>任务简单还好，如果任务复杂，随着任务变大，单个上下文会越来越拥挤。Agent 更容易遗漏前面的约束，或者被大量代码、日志和文档分散注意力。</p>
+<p>所以我认为 <strong>上下文隔离是 Agentic Engineering 使用 Subagent 的主要原因。</strong> 不同的子任务在独立上下文中完成，最后只把结果交回主 Agent。</p>
+<p>除此以外，还有许多其它的优势与劣势，总结如下：</p>
+<table>
+  <thead>
+      <tr>
+          <th>项目</th>
+          <th>单 Agent</th>
+          <th>主 Agent + 多个 Subagent</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>执行方式</td>
+          <td>以串行为主</td>
+          <td>独立任务可以并行</td>
+      </tr>
+      <tr>
+          <td>上下文</td>
+          <td>所有资料和过程集中在一个上下文中</td>
+          <td>每个 Subagent 只关注自己的任务，主 Agent 主要保留计划和结果</td>
+      </tr>
+      <tr>
+          <td>专业分工</td>
+          <td>一个 Agent 同时承担多个角色</td>
+          <td>可以为不同角色配置不同规则和工具</td>
+      </tr>
+      <tr>
+          <td>审核方式</td>
+          <td>容易变成“自己写、自己审”</td>
+          <td>可以由独立的审核 Agent 重新检查</td>
+      </tr>
+      <tr>
+          <td>Token 消耗</td>
+          <td>通常更少</td>
+          <td>通常更多</td>
+      </tr>
+      <tr>
+          <td>协调成本</td>
+          <td>较低</td>
+          <td>需要处理任务交接、依赖关系和结果汇总</td>
+      </tr>
+      <tr>
+          <td>适用任务</td>
+          <td>简单修改、单一领域、小规模任务</td>
+          <td>多模块、可并行、上下文较大或需要独立审核的任务</td>
+      </tr>
+      <tr>
+          <td>角色与会话</td>
+          <td>主 Agent 持续负责整个任务</td>
+          <td>Subagent 的角色配置可以长期保留，但每次被调用的任务会话通常是临时的</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="怎样设计-subagent">怎样设计 Subagent</h4>
+<p>为了让 Subagent 真正服务于 Agentic Engineering，重点不是创建多少个 Agent，而是把每个 Agent 的职责划分清楚。</p>
+<p>一个 Subagent 至少应该说明下面这些内容：</p>
+<table>
+  <thead>
+      <tr>
+          <th>配置内容</th>
+          <th>需要回答的问题</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>角色</td>
+          <td>这个 Agent 是谁，主要负责什么</td>
+      </tr>
+      <tr>
+          <td>职责范围</td>
+          <td>哪些任务应该交给它，哪些任务不属于它</td>
+      </tr>
+      <tr>
+          <td>需要读取的上下文</td>
+          <td>它应该优先查看哪些目录、文档、规范或资料</td>
+      </tr>
+      <tr>
+          <td>工具与权限</td>
+          <td>它可以使用哪些工具，能否修改文件、运行命令或访问网络</td>
+      </tr>
+      <tr>
+          <td>输入</td>
+          <td>主 Agent 需要向它提供哪些信息</td>
+      </tr>
+      <tr>
+          <td>输出</td>
+          <td>完成后必须向主 Agent 返回什么</td>
+      </tr>
+      <tr>
+          <td>完成标准</td>
+          <td>怎样判断任务已经完成</td>
+      </tr>
+      <tr>
+          <td>禁止事项</td>
+          <td>哪些文件不能改，哪些决策不能自行做出</td>
+      </tr>
+  </tbody>
+</table>
+<p>比如为了管理博客，可以把一个 Subagent 的角色说明抽象成下面这样：</p>
+<pre><code class="language-markdown"># 角色
+
+你是博客资料收集 Agent，负责为文章查找和整理可靠资料。
+
+## 职责
+
+- 根据文章主题查找一手资料和官方文档。
+- 记录来源、发布日期、关键结论和可用于正文的事实。
+- 标出不同来源之间存在争议或无法确认的内容。
+
+## 不负责
+
+- 不直接重写整篇文章。
+- 不为了迎合文章观点而忽略相反证据。
+- 不虚构引用、链接和事实。
+
+## 输出
+
+- 按主题整理的资料摘要。
+- 每条重要结论对应的来源。
+- 需要作者进一步确认的问题。
+</code></pre>
+<p>至于这些角色在 Codex 中具体怎样创建、配置成什么文件，以及如何设置模型、工具和权限，不是本篇文章的重点，后续会单独说明。</p>
+<h4 id="主-agent-怎么把任务交给-subagent">主 Agent 怎么把任务交给 Subagent</h4>
+<p>主 Agent 相当于项目经理。收到需求后，它会先读取项目上下文，分析任务涉及哪些部分，再决定由自己完成，还是调用对应的 Subagent。</p>
+<pre><code class="language-text">用户提出需求
+        ↓
+主 Agent 分析目标、限制和影响范围
+        ↓
+拆分子任务并判断依赖关系
+        ↓
+只调用本次需要的 Subagent
+        ↓
+收集结果，安排后续任务或返工
+        ↓
+统一审查、验证并向用户汇报
+</code></pre>
+<p>主 Agent 不会每次都调用所有 Subagent。例如，只修改一句文案时，主 Agent 可以直接完成；只修改前端样式时，可能只调用前端 Agent；只有新增完整功能时，才可能同时用到后端、前端、审核和测试 Agent。</p>
+<p>如果任务之间存在依赖，也不能直接全部并行。例如，前端依赖后端接口时，可以先让后端 Agent 确定接口契约，再把接口路径、参数和返回结构交给前端 Agent。</p>
+<p>简单来说，主 Agent 负责决定：<strong>任务应该拆成什么、交给谁、按什么顺序完成，以及最终结果是否满足要求。</strong></p>
+<h4 id="例一-电商项目的-agent-团队">例一：电商项目的 Agent 团队</h4>
+<p>之前推荐的博客中作者提到了它的 SpringMall 项目，其中为 Claude Code 配置了后端开发、前端开发、代码审核、测试验证、部署和文档等多个 Agent。</p>
+<p>虽然原项目使用的是 Claude Code，但同样的思路也可以放到 Codex 中。</p>
+<table>
+  <thead>
+      <tr>
+          <th>Agent</th>
+          <th>主要职责</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>backend-dev</code></td>
+          <td>后端接口、数据库和业务逻辑</td>
+      </tr>
+      <tr>
+          <td><code>frontend-dev</code></td>
+          <td>页面、组件和接口调用</td>
+      </tr>
+      <tr>
+          <td><code>code-reviewer</code></td>
+          <td>检查代码质量、安全问题和规范一致性</td>
+      </tr>
+      <tr>
+          <td><code>test-validator</code></td>
+          <td>运行测试和构建，验证功能</td>
+      </tr>
+      <tr>
+          <td><code>doc-writer</code></td>
+          <td>更新接口文档和项目说明</td>
+      </tr>
+      <tr>
+          <td><code>devops-deploy</code></td>
+          <td>处理部署脚本和环境配置</td>
+      </tr>
+  </tbody>
+</table>
+<p>假设用户提出需求：</p>
+<blockquote>
+<p>增加商品收藏功能。用户登录后可以收藏和取消收藏商品，并在个人中心查看收藏列表。</p>
+</blockquote>
+<p>主 Agent 可以这样安排：</p>
+<pre><code class="language-text">用户提出需求
+        ↓
+主 Agent 判断需要后端、前端、文档、审核和测试
+        ↓
+backend-dev
+实现数据结构、接口和业务逻辑
+        ↓
+frontend-dev
+根据接口完成收藏按钮和收藏列表
+        ↓
+doc-writer
+更新相关文档
+        ↓
+code-reviewer
+审查前后端改动
+        ↓
+对应开发 Agent 修复问题
+        ↓
+test-validator
+运行测试和构建
+        ↓
+主 Agent 汇总结果并交给用户验收
+</code></pre>
+<p>这里没有调用 <code>devops-deploy</code>，因为当前需求不涉及部署。如果只是修改收藏按钮的样式，主 Agent 可能只需要调用 <code>frontend-dev</code>。</p>
+<h4 id="例二-使用-agent-团队管理博客">例二：使用 Agent 团队管理博客</h4>
+<p>Agentic Engineering 不一定只能用于写代码。只要任务可以拆成“规划、执行、审核和交付”，就可以使用类似的工作流。</p>
+<p>例如，可以给个人博客设计下面几个 Agent：</p>
+<table>
+  <thead>
+      <tr>
+          <th>Agent</th>
+          <th>主要职责</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>source-researcher</code></td>
+          <td>查找可靠资料，整理事实、来源和争议内容</td>
+      </tr>
+      <tr>
+          <td><code>article-writer</code></td>
+          <td>根据用户观点、文章结构和资料完善正文</td>
+      </tr>
+      <tr>
+          <td><code>style-markdown-reviewer</code></td>
+          <td>检查语法、写作风格、Markdown、Front Matter 和排版</td>
+      </tr>
+      <tr>
+          <td><code>i18n-translator</code></td>
+          <td>在原文确认后生成其他语言版本，并保持结构和术语一致</td>
+      </tr>
+  </tbody>
+</table>
+<p>主 Agent 则相当于博客的主编，负责接受需求、安排顺序、传递中间结果和组织返工。</p>
+<p>假设用户提出需求：</p>
+<blockquote>
+<p>完善一篇介绍 Agentic Engineering 的博客。保留我现在的语气和观点，补充可靠资料，检查 Markdown 格式，并在中文版确认后生成英文版。</p>
+</blockquote>
+<p>主 Agent 可以这样安排：</p>
+<pre><code class="language-text">用户提出需求
+        ↓
+主 Agent 读取博客规范、已有文章和当前草稿
+        ↓
+source-researcher
+收集并整理相关资料
+        ↓
+article-writer
+结合原稿和资料完善中文版
+        ↓
+style-markdown-reviewer
+检查语气、结构和 Markdown 格式
+        ↓
+article-writer
+根据审核意见修改
+        ↓
+用户确认中文版
+        ↓
+i18n-translator
+生成英文版
+        ↓
+style-markdown-reviewer
+检查中英文格式和术语一致性
+        ↓
+主 Agent 汇总并交付文章
+</code></pre>
+<p>同样，主 Agent 只会调用当前任务需要的角色：只改错别字时，不需要资料 Agent；只翻译已经完成的文章时，也不需要重新调用写作 Agent。</p>
+<h2 id="总结">总结</h2>
+<p>总而言之， Agentic Engineering 的出现是为了解决 Vibe Coding 的问题。</p>
+<p>它并非用户只说需求就能完成工作了，要想正确的使用它，就需要提供足够的上下文信息。</p>
+<p>除了代码编辑，博客管理等工作流它也可以完成。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>讲解 Agentic Engineering：</p>
+<ul>
+<li><a href="https://blog.ellisyuan.com/2026/06/14/vibeCoding/#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9AAgentic-Engineering-%E2%80%94%E2%80%94-AI-%E4%B8%8D%E6%98%AF%E5%B7%A5%E5%85%B7%EF%BC%8C%E6%98%AF%E9%98%9F%E5%8F%8B">从提问到协作 —— 聊聊 AI 编程的三个阶段</a></li>
+<li><a href="https://blog.csdn.net/zxc18344522713/article/details/160190504">别再说AI编程就是Vibe Coding了，Agentic Engineering才是未来</a></li>
+</ul>
+<p>Codex 官方文档：</p>
+<ul>
+<li><a href="https://developers.openai.com/codex/guides/agents-md">Custom instructions with AGENTS.md</a></li>
+<li><a href="https://developers.openai.com/codex/subagents">Subagents</a></li>
+<li><a href="https://developers.openai.com/codex/learn/best-practices">Best practices</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/">我为什么写博客？</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

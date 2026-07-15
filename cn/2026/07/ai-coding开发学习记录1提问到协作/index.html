@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Vibe Coding开发学习记录(1)：提问到协作 - Yuan&#39;s Blog</title>
-    <meta property="og:title" content="Vibe Coding开发学习记录(1)：提问到协作 - Yuan&#39;s Blog">
+    <title>AI Coding开发学习记录(1)：提问到协作 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="AI Coding开发学习记录(1)：提问到协作 - Yuan&#39;s Blog">
     
     
       
@@ -59,7 +59,7 @@
     </nav>
 
 <div class="article-meta">
-<h1 class="title">Vibe Coding开发学习记录(1)：提问到协作</h1>
+<h1 class="title">AI Coding开发学习记录(1)：提问到协作</h1>
 
 <h3 class="meta-line">
   <span>
@@ -75,7 +75,7 @@
 
 
 </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/vibe-coding/" class="term-tag">Vibe Coding</a><span> ]</span></span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span> ]</span></span>
 </h3>
 </div>
 
@@ -85,19 +85,27 @@
 
 
 
-<nav id="TableOfContents">
+<nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
     <li><a href="#前言">前言</a></li>
-    <li><a href="#vibe-coding-的概念">Vibe Coding 的概念</a></li>
-    <li><a href="#阶段一-prompt-engineering">阶段一：Prompt Engineering</a></li>
-    <li><a href="#阶段二-context-engineering">阶段二：Context Engineering</a>
+    <li><a href="#怎么让-ai-听话">怎么让 AI 听话？</a>
       <ul>
-        <li><a href="#用-agents-md-做规范">用 AGENTS.md 做规范</a></li>
-        <li><a href="#用-plan-mode-做计划">用 Plan Mode 做计划</a></li>
-        <li><a href="#上下文里具体该说些什么">上下文里具体该说些什么？</a></li>
+        <li><a href="#prompt-engineering">Prompt Engineering</a></li>
+        <li><a href="#context-engineering">Context Engineering</a>
+          <ul>
+            <li><a href="#用-agents-md-做规范">用 AGENTS.md 做规范</a></li>
+            <li><a href="#用-plan-mode-做计划">用 Plan Mode 做计划</a></li>
+            <li><a href="#上下文里具体该说些什么">上下文里具体该说些什么？</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
-    <li><a href="#阶段三-agentic-engineering">阶段三：Agentic Engineering</a></li>
+    <li><a href="#ai-coding-的几种方式">AI Coding 的几种方式</a>
+      <ul>
+        <li><a href="#vibe-coding">Vibe Coding</a></li>
+        <li><a href="#agentic-engineering">Agentic Engineering</a></li>
+      </ul>
+    </li>
     <li><a href="#使用-ai-的心智模型">使用 AI 的心智模型</a>
       <ul>
         <li><a href="#ai-不是万能的-不要默认它知道所有事情">AI 不是万能的，不要默认它知道所有事情</a></li>
@@ -115,29 +123,20 @@
 <h2 id="前言">前言</h2>
 <p><del>唉，今天澡卡弄丢了，很烦。</del></p>
 <p>大约在 2023 年，也就是所谓的 AI 元年，我就开始接触 AI 编程了。当时和大多数人一样，我觉得它没什么用。事实上，那时的 AI 对编程来说确实帮不上什么忙，只能在 ChatGPT 这类网页聊天框里，你说一句，它回一句，编程能力也比较有限。后来之所以觉得好用，我感觉除了 AI 模型本身越来越强之外，更关键的是出现了 AI 编程代理（AI Coding Agent）这类工具。</p>
-<p>说这么多，其实作为一个初级码农，我自己也并不太会用。最近结合实际使用和别人的经验，写下这篇文章记录一下：</p>
-<h2 id="vibe-coding-的概念">Vibe Coding 的概念</h2>
-<p>一切都要得从 2025 年初说起。那个搞 nanoGPT 的 Andrej Karpathy 发了条推文：</p>
-<blockquote>
-<p>There&#39;s a new kind of coding I call &lsquo;vibe coding&rsquo;, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.</p>
-</blockquote>
-<p><img class="markdown-image" src="./post.png" alt="Andrej Karpathy 原文" loading="lazy" decoding="async"><span class="image-caption" hidden>Andrej Karpathy 原文</span></p>
-<p>于是 Vibe Coding 这个概念便诞生了。简而言之， Vibe Coding 就是：你描述意图，AI 写代码，你自己沉浸在 <strong>「Vibe」</strong> 里，甚至不用去关心代码长啥样。</p>
-<p>不过每个人有每个人的用法，为什么有的人就是比某些人用的好了？我之前就一直用不好，于是就到处查方法，发现这与你会不会用 AI 关系不大，跟你走到了哪个阶段关系很大。</p>
-<p>在我看来，用 AI 编程这件事，是有三个层层递进的阶段的：</p>
-<ol>
-<li>Prompt Engineering —— 你会提问</li>
-<li>Context Engineering —— 你会喂料</li>
-<li>Agentic Engineering —— 你会协作</li>
-</ol>
-<p>下面基于 <code>Codex</code> 进行说明。</p>
-<h2 id="阶段一-prompt-engineering">阶段一：Prompt Engineering</h2>
+<p>说这么多，其实作为一个初级码农，我自己也并不太会用。最近结合实际使用和别人的经验，写下这篇文章记录一下。</p>
+<p>( 因为我目前在用 <code>Codex</code> ，所以下面都是基于 <code>Codex</code> 进行说明 )</p>
+<h2 id="怎么让-ai-听话">怎么让 AI 听话？</h2>
+<p>这个标题很多人可能觉得很奇怪，AI还能不听话？</p>
+<p>实际上这个问题十分的重要，是后面各种 AI Coding 方法的基础。</p>
+<p>AI 的听话不是你要求它计算 $1 + 1 = ?$ 它告诉你 $2$ 。而是确保在生成代码时它遵守你要求的项目架构、目录结构、命名规范等等。</p>
+<p>你要使用一些方法让他在后续一直遵守这些规则，根据这些规则乖乖的生成代码。下面会提到两种方法。</p>
+<h3 id="prompt-engineering">Prompt Engineering</h3>
 <p>Prompt Engineering，提示词工程。</p>
 <p>它的本质一句话就能说清：你说什么，AI 就干什么。AI 干得好不好，取决于你说的请不清楚，如果你说的模糊不清，它就还你一坨含含糊糊的东西；你把角色、要干啥、要啥格式、有啥限制讲明白，它就给你一份能直接用的代码。说白了就是<strong>把话说清楚</strong>这点事，没啥玄学。</p>
 <p>不过我得先泼盆冷水：这一招放到今天，其实已经有点过时了。早年间(好吧也没多早)人们会对着 ChatGPT、Claude 一句句告诉项目里应该干什么，不该干什么，遇到 xxx 情况怎么干，然后再开始要求生成具体的业务需求。</p>
 <p>为什么说这样过时了？这种 AI 网页聊天框或者 CLI 工具都有个治不好的毛病：它每开一轮新对话都是<strong>失忆</strong>的。你上个对话或者说其它机器上和他说这个项目基于 xxx ，不能干 xxx 等等，他根本就不记得。你总不能每次提问都把这一长串规矩重新抄一遍吧？抄到第三回我自己都嫌烦。</p>
 <p>所以 Prompt 这关，学会说很重要，但是他不是终点。真正让 AI 从网页玩具变成生产力的，是下一步：你得想办法，给 AI 喂对、而且让它能<strong>记住</strong>上下文。也就是你每次新开一个对话，或者换一台设备，他能记住你之前规定的一些内容。</p>
-<h2 id="阶段二-context-engineering">阶段二：Context Engineering</h2>
+<h3 id="context-engineering">Context Engineering</h3>
 <p>Context Engineering，上下文工程。</p>
 <p>核心就一句话：AI 压根不了解你的项目，你得系统性地、一次性地告诉它。</p>
 <blockquote>
@@ -181,7 +180,7 @@
   </tbody>
 </table>
 <p>那么到底应该用什么样的形式告诉它？接着看</p>
-<h3 id="用-agents-md-做规范">用 AGENTS.md 做规范</h3>
+<h4 id="用-agents-md-做规范">用 AGENTS.md 做规范</h4>
 <p>我们主要使用 <code>AGENTS.md</code> (在 Claude 中叫 <code>CLAUDE.md</code>) 来解决 AI 记不住的问题。可以先阅读 <a href="https://www.runoob.com/codex/codex-agents-md.html">Codex AGENTS.md</a> 进行了解。</p>
 <p>一般而言，处理一个新项目时，在项目根目录创建 <code>AGENTS.md</code>，把它当成 AI 的「项目说明书」。妙就妙在——这玩意儿你只用写一次，AI 每开一轮新对话都会自动读一遍。</p>
 <blockquote>
@@ -189,18 +188,27 @@
 </blockquote>
 <p><strong>不过值得注意的时，Codex 启动时所在的工作目录会对 <code>AGENTS.md</code> 的读取有影响</strong>。如果如果 Codex 是在 <code>~/project/mp/</code> 下打开的，你不能默认期待它在修改 <code>~/project/real/</code> 时自动遵守 <code>~/project/eal/AGENTS.md</code>，除非它显式读取了那个文件，或者当前工作区/上下文机制，或者当前工作区/上下文机制已经把它纳入了。</p>
 <p>使用后 <code>AGENTS.md</code> ，妈妈再也不用担心我的 AI Coding Agent 不懂我的规矩了！</p>
-<h3 id="用-plan-mode-做计划">用 Plan Mode 做计划</h3>
+<h4 id="用-plan-mode-做计划">用 Plan Mode 做计划</h4>
 <p>在 Context 中讲清楚规范还不够！还需要强迫 AI 弄清楚我到底想干什么！</p>
 <p>Codex 等 AI 编程代理一般支持 <code>Plan Mode</code>，专门用于用户告知 AI 自己想干什么。在 <code>Plan Mode</code> 下，客户列出需求后，AI 不会修改项目，而是先列出打算动哪些文件、分几步走、为啥这么改等内容。如果它不清楚细节，还会主动询问客户细节，客户可以补充 <code>Note</code> 给它。</p>
 <blockquote>
 <p>Codex 中输入 <code>/plan</code> 即可进入 <code>Plan Mode</code>。</p>
 </blockquote>
 <p>总之在这个模式下 AI 只列计划，搞清楚客户的需求，以及为了完成这个需求它要干什么，不干实际工作。客户觉得可以后，它才会真正的开始工作！</p>
-<h3 id="上下文里具体该说些什么">上下文里具体该说些什么？</h3>
+<h4 id="上下文里具体该说些什么">上下文里具体该说些什么？</h4>
 <p>前面无论是 <code>AGENTS.md</code> 还是 <code>Plan Mode</code> ，都是给 Context 补充必要的信息。</p>
 <p>很多人一听上下文就以为是多贴点代码，其实差远了！它还包括文档、代码规范、Git 约定、错误处理方式、安全红线这些软东西。这些单拎出来看好像都不那么重要，但恰恰是它们，决定了 AI 写出来的代码能不能真正长进你的项目里。</p>
 <p>我有个特别顺手的类比：这跟给新员工写 onboarding 文档一模一样。你不会傻乎乎地把整个代码库甩他脸上让他自己悟，而是告诉他<strong>项目是怎么转的、代码搁哪、规矩是啥</strong>。把 AI 当成那个聪明但啥都不知道的新人，你就知道该喂它什么了。</p>
-<h2 id="阶段三-agentic-engineering">阶段三：Agentic Engineering</h2>
+<h2 id="ai-coding-的几种方式">AI Coding 的几种方式</h2>
+<p>学会怎么利用提示词和上下文让 AI 听话后，还需要学习利用那些方式来使用 AI。</p>
+<h3 id="vibe-coding">Vibe Coding</h3>
+<p>一切都要得从 2025 年初说起。那个搞 nanoGPT 的 Andrej Karpathy 发了条推文：</p>
+<blockquote>
+<p>There&#39;s a new kind of coding I call &lsquo;vibe coding&rsquo;, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.</p>
+</blockquote>
+<p><img class="markdown-image" src="./post.png" alt="Andrej Karpathy 原文" loading="lazy" decoding="async"><span class="image-caption" hidden>Andrej Karpathy 原文</span></p>
+<p>于是 Vibe Coding 这个概念便诞生了。简而言之， Vibe Coding 就是：你描述意图，AI 写代码，你自己沉浸在 <strong>「Vibe」</strong> 里，甚至不用去关心代码长啥样。</p>
+<h3 id="agentic-engineering">Agentic Engineering</h3>
 <p>Agentic Engineering，代理工程。</p>
 <p>目前的最高阶玩法。在这个阶段，<strong>AI 不再是那个你问一句、它答一句的对话框了，而是一个能自己规划、自己执行、自己验证的 Agent</strong>。</p>
 <p>你扔给它一个需求，它会自顾自地把这一整套都走完：</p>
@@ -241,6 +249,13 @@
 </ul>
 <h2 id="总结">总结</h2>
 <p><strong>AI 编程的本质，从来不是让 AI 替你写代码，而是让你能驾驭得了更复杂的项目</strong>。</p>
+<p>在我看来，学习 AI 编程主要分三个层层递进的阶段：</p>
+<ol>
+<li>Prompt Engineering —— 你会提问</li>
+<li>Context Engineering —— 你会喂料</li>
+<li>Agentic Engineering —— 你会协作</li>
+</ol>
+<p>至于 Vibe Coding，对于现在的 AI 要求太高了，实际项目中最好不要使用，了解即可。</p>
 <p>在三个阶段中，你分别扮演者不同的角色，如下：</p>
 <table>
   <thead>
@@ -272,14 +287,16 @@
       </tr>
   </tbody>
 </table>
-<p>这三个阶段是相辅相成的，不是说处于阶段三，就不用在意阶段一的 Prompt 了！</p>
+<p>这三个阶段是相辅相成、层层递进的，不是说处于阶段三，就不用在意阶段一了！</p>
 <p>哪怕你已经用上了 Agent 团队，写好每一个 prompt 依然是你最核心的基本功。因为说到底，你给 Agent 下的那个需求，本身就是一个 prompt——地基塌了，上面盖多高都是空中楼阁。</p>
 <p>而且也不是说我学到阶段三了，就一直用阶段三的方法了，而是按事情大小选择方法，如下：</p>
 <ul>
 <li>小脚本 / 一次性的活 → Prompt 就够了，别整那些花活</li>
 <li>正经项目 / 要协作 → 老老实实上 Context</li>
 <li>复杂系统 / 长期维护 → 该请你的 Agent 团队出场了</li>
+<li></li>
 </ul>
+<p>总之，要根据实际情况，严谨地来使用 AI，不要让他随心所欲的胡乱生成，大概率过不了审核。 <del>你们也不想代码被打回来加班吧</del></p>
 <h2 id="参考资料">参考资料</h2>
 <p>Vibe Coding 技巧：</p>
 <ul>

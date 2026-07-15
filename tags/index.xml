@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Sun, 12 Jul 2026 23:32:58 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 15 Jul 2026 11:49:51 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git</title>
@@ -35,6 +35,13 @@
       <link>https://masterji.top/tags/%E9%9F%B3%E4%B9%90/</link>
       <pubDate>Thu, 25 Dec 2025 22:49:59 +0800</pubDate>
       <guid>https://masterji.top/tags/%E9%9F%B3%E4%B9%90/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI Coding</title>
+      <link>https://masterji.top/tags/ai-coding/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://masterji.top/tags/ai-coding/</guid>
       <description></description>
     </item>
     <item>
@@ -238,13 +245,6 @@
       <link>https://masterji.top/tags/verilog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://masterji.top/tags/verilog/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Vibe Coding</title>
-      <link>https://masterji.top/tags/vibe-coding/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/vibe-coding/</guid>
       <description></description>
     </item>
     <item>

@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Home on Yuan&#39;s Blog</title>
+    <title>Log on Yuan&#39;s Blog</title>
     <link>https://masterji.top/en/</link>
-    <description>Recent content in Home on Yuan&#39;s Blog</description>
+    <description>Recent content in Log on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/en/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hello World</title>
+      <link>https://masterji.top/en/2025/12/hello-world/</link>
+      <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
+      <guid>https://masterji.top/en/2025/12/hello-world/</guid>
+      <description>&lt;p&gt;Hi, this is my very first blog post. Welcome to my website!&lt;/p&gt;&#xA;&lt;p&gt;I&amp;#39;m guessing you came across one of my great posts and couldn&amp;#39;t wait to find the very first one I published, right? 😎&lt;/p&gt;&#xA;&lt;p&gt;Either way, leave a comment! Let me know you were here 😉.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Categories&amp;Tags</title>
+      <link>https://masterji.top/en/categories-tags/</link>
+      <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+      <guid>https://masterji.top/en/categories-tags/</guid>
+      <description></description>
+    </item>
     <item>
       <title>About</title>
       <link>https://masterji.top/en/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://masterji.top/en/about/</guid>
       <description>&lt;p&gt;I am a Hubei native who, for various reasons, has moved around China a lot, playing the role of an NPC in different cities. As a junior programmer who has only recently entered the field, I am mainly active on &lt;a href=&#34;https://github.com/DSJZS&#34;&gt;GitHub&lt;/a&gt; and &lt;a href=&#34;https://space.bilibili.com/5477327&#34;&gt;BiliBili&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I do not have many hobbies. The few hobbies I can name are probably listening to music and playing card, board, and management games. After entering university, I almost stopped watching movies, TV shows, and entertainment programs, but I listen to a lot of music while coding and writing, and I also enjoy reading lyrics. I sometimes sing a little or play instruments, though my ability is limited. After work or during holidays, I also play games such as Yu-Gi-Oh! (mainly &lt;a href=&#34;https://www.konami.com/yugioh/masterduel/asia/en/&#34;&gt;MASTER DUEL&lt;/a&gt;), &lt;a href=&#34;https://store.steampowered.com/app/294100/_RimWorld/&#34;&gt;RimWorld&lt;/a&gt;, and &lt;a href=&#34;https://www.minecraft.net/&#34;&gt;Minecraft&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Search</title>
+      <link>https://masterji.top/en/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://masterji.top/en/search/</guid>
+      <description>&lt;p&gt;Search is powered by fuse.js. A space means AND, &lt;code&gt;|&lt;/code&gt; means OR, and double quotes can be used to match an exact phrase.&lt;/p&gt;&#xA;&lt;style type=&#34;text/css&#34;&gt;&#xA;.main { width: 100%; }&#xA;#search-input { width: 100%; font-size: 1.2em; padding: .5em; }&#xA;.search-results b { background-color: yellow; }&#xA;.search-preview { margin-left: 2em; }&#xA;.single .main a, .single .main h2 { border-bottom: none; }&#xA;&lt;/style&gt;&#xA;&lt;input type=&#34;search&#34; id=&#34;search-input&#34;&gt;&#xA;&lt;div class=&#34;search-results&#34;&gt;&#xA;&lt;section&gt;&#xA;&lt;h2 class=&#34;toc-line&#34;&gt;&lt;a target=&#34;_blank&#34;&gt;&lt;/a&gt;&lt;span class=&#34;dots&#34;&gt;&lt;/span&gt;&lt;span class=&#34;page-num small&#34;&gt;&lt;/span&gt;&lt;/h2&gt;&#xA;&lt;div class=&#34;search-preview&#34;&gt;&lt;/div&gt;&#xA;&lt;/section&gt;&#xA;&lt;/div&gt;&#xA;&lt;script src=&#34;https://cdn.jsdelivr.net/npm/fuse.js@6.6.2&#34; defer&gt;&lt;/script&gt;&#xA;&lt;script src=&#34;https://cdn.jsdelivr.net/npm/@xiee/utils/js/fuse-search.min.js&#34; defer&gt;&lt;/script&gt;</description>
     </item>
   </channel>
 </rss>

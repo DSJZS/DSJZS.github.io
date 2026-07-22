@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>MCU开发学习记录(5)：文档的价值 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="MCU开发学习记录(5)：文档的价值 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近经常被要求写文档。
+[&amp;hellip;] 比如新增了一个功能，或者对原有功能进行了比较大的修改，往往都需要补一份对应的文档。
+[&amp;hellip;] 我一开始其实不太理解这种文档到底应该写什么，就直接把它当成了更新日志来写。
+[&amp;hellip;] 差不多就是一个字数更多、内容更详细一点的 Git Commit Log。
+[&amp;hellip;] 然后就被打回重写了，难受。
+[&amp;hellip;] 后来 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">MCU开发学习记录(5)：文档的价值</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-22</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#要写什么样的文档">要写什么样的文档</a></li>
+    <li><a href="#文档的价值">文档的价值</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近经常被要求写文档。</p>
+<p>比如新增了一个功能，或者对原有功能进行了比较大的修改，往往都需要补一份对应的文档。</p>
+<p>我一开始其实不太理解这种文档到底应该写什么，就直接把它当成了更新日志来写。</p>
+<p>差不多就是一个字数更多、内容更详细一点的 Git Commit Log。</p>
+<p><del>然后就被打回重写了，难受。</del></p>
+<p>后来才发现，貌似不是这么一回事。</p>
+<p>因此写一篇博客，简单记录一下我目前对“开发文档到底应该怎么写”的理解。</p>
+<h2 id="要写什么样的文档">要写什么样的文档</h2>
+<p>首先，不要把文档写成 Git Commit Log。</p>
+<p>这里并不是说不要写“更新了什么”，而是说：</p>
+<p><strong>不要只写更新了什么。</strong></p>
+<p>Git Commit Log 更关注的是代码本身发生了哪些变化，比如：</p>
+<ul>
+<li>修改了哪个模块。</li>
+<li>增加了什么功能。</li>
+<li>修复了什么 Bug。</li>
+<li>删除了什么逻辑。</li>
+</ul>
+<p>这些当然很重要。</p>
+<p>但是一份真正给别人看的开发文档，还应该补充更多上下文。</p>
+<p>比如：</p>
+<ul>
+<li>为什么要增加这个功能。</li>
+<li>原来存在什么问题或者需求。</li>
+<li>这个功能应该怎么使用。</li>
+<li>修改涉及了哪些模块。</li>
+<li>有没有兼容性问题。</li>
+<li>对原有功能有没有影响。</li>
+<li>有没有资源占用、性能或者其他方面的变化。</li>
+<li>使用时有什么需要特别注意的地方。</li>
+</ul>
+<p>因为别人并没有参与你的整个开发过程。</p>
+<p>你可能花了几天甚至几周研究这个问题，所以看到一句：</p>
+<blockquote>
+<p>增加 XXX 功能，修改 XXX 接口。</p>
+</blockquote>
+<p>马上就知道发生了什么。</p>
+<p>但是别人看到这句话，可能完全不知道：</p>
+<p><strong>为什么要改？改之前是什么样？改完以后怎么用？为什么一定要这么实现？</strong></p>
+<p>所以文档最重要的一件事，就是把这些你脑子里默认存在的“上下文”补充出来。</p>
+<p>最好让一个对这次修改不太熟悉的人，也能够大致看懂发生了什么。</p>
+<p>当然，也不是越详细越好。</p>
+<p>如果把每一行代码为什么这么写都塞进文档，最后写成几十页，别人可能反而懒得看。</p>
+<p>所以我目前比较倾向于：</p>
+<p><strong>让新人能够看懂背景，让熟悉项目的人能够快速找到重点。</strong></p>
+<p>该详细的地方详细，该省略的地方省略。</p>
+<h2 id="文档的价值">文档的价值</h2>
+<p>以前我对文档的理解比较简单。</p>
+<p>感觉代码都已经写在那里了，为什么还要另外写一份文档？</p>
+<p>后来才慢慢发现，代码和文档记录的其实不是完全一样的东西。</p>
+<p>代码更多记录的是：</p>
+<p><strong>“程序现在是怎么实现的。”</strong></p>
+<p>而文档还需要记录：</p>
+<p><strong>“为什么要这么实现。”</strong></p>
+<p>很多设计上的取舍，其实很难只通过代码本身看出来。</p>
+<p>比如为什么没有直接修改原有接口，而是增加了一层兼容逻辑？</p>
+<p>为什么选择多占一些内存，而不是降低性能？</p>
+<p>为什么某个看起来很奇怪的判断不能删除？</p>
+<p>这些信息如果没有被记录下来，过几个月以后，可能连当时写代码的人自己都忘了。</p>
+<p>更不用说后来接手项目的人。</p>
+<p>所以文档其实也是个人或者组织知识库的重要组成部分。</p>
+<p>代码会告诉你“现在是什么样”，而文档可以帮助你理解“为什么会变成这样”。</p>
+<p>对于长期维护的项目来说，这些信息非常重要。</p>
+<p>而且现在 AI 越来越强，好的文档还有一个新的价值：</p>
+<p><strong>它本身就是高质量的项目上下文。</strong></p>
+<p>如果一个项目拥有比较完整的设计文档、接口说明、修改记录和问题分析，那么无论是本地 AI 还是其他代码 Agent，都可以更快理解整个项目。</p>
+<p>相比直接把几十万行代码全部丢给 AI，让它自己猜历史背景，一份写得清楚的文档往往能提供更有效的信息。</p>
+<p>所以从这个角度来看：</p>
+<p><strong>好的文档，本身就是一种高质量的数据资产。</strong></p>
+<p>它不仅方便人维护项目，也能让 AI 更快地理解和协助开发。</p>
+<h2 id="总结">总结</h2>
+<p>总之，写开发文档时要意识到一件事：</p>
+<p><strong>别人没有你脑中的“上下文”。</strong></p>
+<p>你经历了需求讨论、代码阅读、Bug 调试和方案选择，所以很多事情对你来说可能已经是理所当然的。</p>
+<p>但是别人并不知道这些过程。</p>
+<p>因此文档不能只告诉别人：</p>
+<p><strong>“我改了什么。”</strong></p>
+<p>还应该尽量解释：</p>
+<p><strong>“为什么要改、怎么使用、有什么影响、需要注意什么。”</strong></p>
+<p>当然，也不要为了显得详细而写一大堆没有必要的内容。</p>
+<p>一份好的文档，应该让需要了解这件事的人能够快速获得足够的信息。</p>
+<p>公司要求写文档，通常也不是为了让你以后拿出来“复习”。</p>
+<p>更多时候是为了团队协作、知识传递和长期维护。</p>
+<p>毕竟代码写完以后，真正需要维护它的人，未必还是当初写代码的那个人。</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/">MCU开发学习记录(4)：功能的更新</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

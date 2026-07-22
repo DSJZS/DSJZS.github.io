@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>C&#43;&#43;学习记录(1)：常用 STL 汇总 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="C&#43;&#43;学习记录(1)：常用 STL 汇总 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近因为刷题和实际业务的开发，在重新整理 C&#43;&#43; 的笔记。
+[&amp;hellip;] 发现 STL 这东西平时一直在用，但很多时候只是依赖 AI 或者自动补全，没有认真了解过他们的特性。
+[&amp;hellip;] 比如 vector 为什么默认这么常用，map 和 unordered_map 到底该怎么选，list 又为什么看起来很强但实际出场率不高，这些东西如果只是记住几个接口，过一阵子还是会混。 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">C++学习记录(1)：常用 STL 汇总</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-20</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/stl/" class="term-tag">STL</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#string">string</a>
+      <ul>
+        <li><a href="#介绍与使用场景">介绍与使用场景</a></li>
+        <li><a href="#初始化方式">初始化方式</a></li>
+        <li><a href="#常用方法">常用方法</a></li>
+        <li><a href="#示例">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#pair">pair</a>
+      <ul>
+        <li><a href="#介绍与使用场景-1">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-1">初始化方式</a></li>
+        <li><a href="#常用方法-1">常用方法</a></li>
+        <li><a href="#示例-1">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#array">array</a>
+      <ul>
+        <li><a href="#介绍与使用场景-2">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-2">初始化方式</a></li>
+        <li><a href="#常用方法-2">常用方法</a></li>
+        <li><a href="#示例-2">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#vector">vector</a>
+      <ul>
+        <li><a href="#介绍与使用场景-3">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-3">初始化方式</a></li>
+        <li><a href="#常用方法-3">常用方法</a></li>
+        <li><a href="#示例-3">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#deque">deque</a>
+      <ul>
+        <li><a href="#介绍与使用场景-4">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-4">初始化方式</a></li>
+        <li><a href="#常用方法-4">常用方法</a></li>
+        <li><a href="#示例-4">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#queue">queue</a>
+      <ul>
+        <li><a href="#介绍与使用场景-5">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-5">初始化方式</a></li>
+        <li><a href="#常用方法-5">常用方法</a></li>
+        <li><a href="#示例-5">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#stack">stack</a>
+      <ul>
+        <li><a href="#介绍与使用场景-6">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-6">初始化方式</a></li>
+        <li><a href="#常用方法-6">常用方法</a></li>
+        <li><a href="#示例-6">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#map">map</a>
+      <ul>
+        <li><a href="#介绍与使用场景-7">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-7">初始化方式</a></li>
+        <li><a href="#常用方法-7">常用方法</a></li>
+        <li><a href="#示例-7">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#set">set</a>
+      <ul>
+        <li><a href="#介绍与使用场景-8">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-8">初始化方式</a></li>
+        <li><a href="#常用方法-8">常用方法</a></li>
+        <li><a href="#示例-8">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#unordered-map">unordered_map</a>
+      <ul>
+        <li><a href="#介绍与使用场景-9">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-9">初始化方式</a></li>
+        <li><a href="#常用方法-9">常用方法</a></li>
+        <li><a href="#示例-9">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#unordered-set">unordered_set</a>
+      <ul>
+        <li><a href="#介绍与使用场景-10">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-10">初始化方式</a></li>
+        <li><a href="#常用方法-10">常用方法</a></li>
+        <li><a href="#示例-10">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#tuple">tuple</a>
+      <ul>
+        <li><a href="#介绍与使用场景-11">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-11">初始化方式</a></li>
+        <li><a href="#常用方法-11">常用方法</a></li>
+        <li><a href="#示例-11">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#list">list</a>
+      <ul>
+        <li><a href="#介绍与使用场景-12">介绍与使用场景</a></li>
+        <li><a href="#初始化方式-12">初始化方式</a></li>
+        <li><a href="#常用方法-12">常用方法</a></li>
+        <li><a href="#示例-12">示例</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近因为刷题和实际业务的开发，在重新整理 C++ 的笔记。</p>
+<p>发现 STL 这东西平时一直在用，但很多时候只是依赖 AI 或者自动补全，没有认真了解过他们的特性。</p>
+<p>比如 <code>vector</code> 为什么默认这么常用，<code>map</code> 和 <code>unordered_map</code> 到底该怎么选，<code>list</code> 又为什么看起来很强但实际出场率不高，这些东西如果只是记住几个接口，过一阵子还是会混。</p>
+<p>所以这篇文章干脆把我目前最常碰到的一批 STL 类型先汇总一下。本文不追求把每个类的所有接口都列完，而是重点整理：</p>
+<ul>
+<li>它一般适合拿来干什么</li>
+<li>平时该怎么初始化</li>
+<li>最常用的方法有哪些</li>
+<li>这些方法的复杂度大概是什么水平</li>
+<li>遇到题目或者实际业务时，为什么会优先想到它</li>
+</ul>
+<p>顺序上我没有按字母排，而是按“通常上手时比较容易理解的，和我觉得更常先学到的”来排。</p>
+<h2 id="string">string</h2>
+<h3 id="介绍与使用场景">介绍与使用场景</h3>
+<p><code>std::string</code> 用来保存和处理字符串。严格来说它是 <code>std::basic_string&lt;char&gt;</code> 的常用别名，但平时基本直接把它当作字符串类型来用就行。</p>
+<ul>
+<li>业务开发里，一般用它保存用户名、文件路径、配置项、日志文本和各种普通文本。相比手写字符数组，它会自动管理内存，省心很多。</li>
+<li>算法题里，一般用它处理回文串、子串、字符统计、模拟题和各种字符串匹配问题。它支持随机访问，和 STL 算法也很好配合。</li>
+<li>如果要在头部或中间频繁插入、删除字符，就要注意它后面的字符通常需要整体移动。</li>
+</ul>
+<h3 id="初始化方式">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;string&gt;
+using namespace std;
+
+string text;
+string text1 = &quot;hello&quot;;
+string text2(&quot;hello&quot;);
+string text3(5, 'a');
+string text4(text1);
+string text5(text1, 1, 3);
+string text6(text1.begin(), text1.begin() + 3);
+</code></pre>
+<p>字符和字符串别写混：</p>
+<pre><code class="language-cpp">char ch = 'a';
+string text = &quot;abc&quot;;
+</code></pre>
+<h3 id="常用方法">常用方法</h3>
+<p>设原字符串长度为 <code>n</code>，参与操作的新内容长度为 <code>m</code>：</p>
+<ul>
+<li><code>size()</code>、<code>length()</code>、<code>empty()</code>：时间复杂度都是 <code>O(1)</code>。</li>
+<li><code>operator[]</code>、<code>at()</code>、<code>front()</code>、<code>back()</code>：访问字符都是 <code>O(1)</code>。<code>at()</code> 会检查越界，<code>operator[]</code> 不会。</li>
+<li><code>push_back()</code>：不重新分配内存时是 <code>O(1)</code>；连续追加时均摊 <code>O(1)</code>；单次最坏 <code>O(n)</code>。</li>
+<li><code>pop_back()</code>：<code>O(1)</code>。</li>
+<li><code>append()</code>、<code>operator+=</code>：至少要复制新增内容，最坏 <code>O(n + m)</code>。</li>
+<li><code>operator+</code>：会创建新字符串并复制内容，时间复杂度是 <code>O(n + m)</code>。</li>
+<li><code>insert()</code>：在中间插入通常需要移动后续字符，最坏 <code>O(n + m)</code>。</li>
+<li><code>erase(pos, count)</code>：删除后可能需要搬移剩余字符，最坏 <code>O(n)</code>。</li>
+<li><code>find()</code>、<code>rfind()</code>：如果是查找单个字符，最坏一般按 <code>O(n)</code> 理解；如果是查找长度为 <code>m</code> 的子串，标准最坏上界可按 <code>O(nm)</code> 理解，具体实现可能更快。</li>
+<li><code>substr(pos, count)</code>：要构造新字符串，复杂度和实际复制的字符数成正比。</li>
+<li><code>clear()</code>：通常按 <code>O(n)</code> 理解更安全，不要假设它一定是常数时间。</li>
+<li><code>c_str()</code>、<code>data()</code>：取底层字符指针是 <code>O(1)</code>，但字符串内容一改，之前拿到的指针可能失效。</li>
+</ul>
+<h3 id="示例">示例</h3>
+<p>拼接一个简单的问候语：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string name = &quot;小明&quot;;
+    string message = &quot;你好，&quot;;
+
+    message += name;
+    message.push_back('！');
+
+    //  输出 &quot;你好，小明&quot;
+    cout &lt;&lt; message &lt;&lt; '\n';
+}
+</code></pre>
+<p>截取文件扩展名：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string filename = &quot;notes.md&quot;;
+    string::size_type pos = filename.rfind('.');
+
+    if (pos != string::npos) {
+        string ext = filename.substr(pos + 1);
+        cout &lt;&lt; &quot;扩展名：&quot; &lt;&lt; ext &lt;&lt; '\n';
+    }
+}
+</code></pre>
+<p><code>substr()</code> 很方便，但它会生成一个新字符串。</p>
+<p>如果只是临时看一段内容，而且特别在意性能，后面可以再去了解 <code>string_view</code>。</p>
+<h2 id="pair">pair</h2>
+<h3 id="介绍与使用场景-1">介绍与使用场景</h3>
+<p><code>pair</code> 用来把两个值组合成一个整体。它不是完整容器，更像一个很轻量的“二元打包工具”。</p>
+<ul>
+<li>业务开发里，一般用它临时表示“键和值”、“名字和编号”、“坐标和状态”这类成对数据。要是字段含义已经很稳定，通常还是自己写结构体更清楚。</li>
+<li>算法题里，用得非常多。比如坐标、边权与节点、数值与下标、函数返回两个结果，这些都很适合用 <code>pair</code>。</li>
+<li>它的优点是省事，缺点也很明显：<code>first</code> 和 <code>second</code> 的语义不如成员名直观。</li>
+</ul>
+<h3 id="初始化方式-1">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;string&gt;
+#include &lt;utility&gt;
+
+std::pair&lt;int, std::string&gt; p1;
+std::pair&lt;int, std::string&gt; p2(1, &quot;apple&quot;);
+std::pair&lt;int, std::string&gt; p3{2, &quot;banana&quot;};
+auto p4 = std::make_pair(3, std::string(&quot;orange&quot;));
+</code></pre>
+<p>C++17 开始还可以让编译器推导模板参数：</p>
+<pre><code class="language-cpp">std::pair p5{4, std::string(&quot;pear&quot;)};
+</code></pre>
+<h3 id="常用方法-1">常用方法</h3>
+<p><code>pair</code> 就两个成员，所以很多操作都可以直接按常数时间理解：</p>
+<ul>
+<li><code>first</code>、<code>second</code>：访问成员是 <code>O(1)</code>。</li>
+<li><code>std::make_pair(a, b)</code>：构造一个 <code>pair</code>，结构本身可按 <code>O(1)</code> 理解，实际成本取决于成员构造或移动。</li>
+<li><code>swap(other)</code>：交换两个成员，结构层面是 <code>O(1)</code>，具体成本取决于成员类型。</li>
+<li>比较运算：按字典序比较，最多比较两个成员。若成员比较本身都是 <code>O(1)</code>，整体可按 <code>O(1)</code> 理解；如果成员本身是 <code>string</code> 这类对象，实际成本还要把成员比较开销算进去。</li>
+</ul>
+<h3 id="示例-1">示例</h3>
+<p>用 <code>pair</code> 保存商品名和数量：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+using namespace std;
+
+int main() {
+    pair&lt;string, int&gt; item{&quot;apple&quot;, 5};
+
+    cout &lt;&lt; &quot;商品：&quot; &lt;&lt; item.first &lt;&lt; '\n';
+    cout &lt;&lt; &quot;数量：&quot; &lt;&lt; item.second &lt;&lt; '\n';
+
+    item.second += 2;
+    cout &lt;&lt; &quot;更新后的数量：&quot; &lt;&lt; item.second &lt;&lt; '\n';
+}
+</code></pre>
+<p>如果数据语义已经比较复杂，<code>pair</code> 就会开始别扭：</p>
+<pre><code class="language-cpp">struct Student {
+    string name;
+    int age;
+};
+</code></pre>
+<p>这种时候通常不如直接写结构体。</p>
+<h2 id="array">array</h2>
+<h3 id="介绍与使用场景-2">介绍与使用场景</h3>
+<p><code>array</code> 是对固定长度数组的封装，长度必须在编译期确定。</p>
+<p>它和 C 风格的数组一样使用连续内存，但接口更现代一些。</p>
+<ul>
+<li>业务开发里，一般适合长度固定、含义明确的数据，比如一周 7 天的统计值、固定数量的传感器数据、固定字段的协议内容。</li>
+<li>算法题里，一般适合字母计数、方向数组、固定维度状态等场景。尤其是“长度就是 26、4、8、10 这种写死的值”时，它会比 <code>vector</code> 更直接。</li>
+<li>如果元素数量需要运行时变化，就别用 <code>array</code>，该换 <code>vector</code>。</li>
+</ul>
+<h3 id="初始化方式-2">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;array&gt;
+using namespace std;
+
+array&lt;int, 5&gt; nums{};
+array&lt;int, 5&gt; nums1{1, 2, 3, 4, 5};
+array&lt;int, 5&gt; nums2{1, 2};
+array nums3{1, 2, 3};  // C++17 起可推导
+</code></pre>
+<p>要注意，长度是类型的一部分：</p>
+<pre><code class="language-cpp">array&lt;int, 3&gt; a{};
+array&lt;int, 5&gt; b{};
+</code></pre>
+<p>这两个不是同一种类型。</p>
+<h3 id="常用方法-2">常用方法</h3>
+<p>设数组长度为 <code>N</code>：</p>
+<ul>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>operator[]</code>、<code>at()</code>、<code>front()</code>、<code>back()</code>：访问元素都是 <code>O(1)</code>。</li>
+<li><code>data()</code>：返回底层连续内存指针，<code>O(1)</code>。</li>
+<li><code>begin()</code>、<code>end()</code>：取迭代器，<code>O(1)</code>。</li>
+<li><code>fill(value)</code>：把所有元素改成同一个值，<code>O(N)</code>。</li>
+<li><code>swap(other)</code>：逐个交换元素，<code>O(N)</code>。</li>
+<li><code>array</code> 不提供 <code>push_back()</code>、<code>pop_back()</code>、<code>resize()</code>，因为长度根本不能改。</li>
+</ul>
+<h3 id="示例-2">示例</h3>
+<p>统计小写字母出现次数：</p>
+<pre><code class="language-cpp">#include &lt;array&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string text = &quot;banana&quot;;
+    array&lt;int, 26&gt; counts{};
+
+    for (char ch : text) {
+        ++counts[ch - 'a'];
+    }
+
+    cout &lt;&lt; &quot;a 出现了 &quot; &lt;&lt; counts['a' - 'a'] &lt;&lt; &quot; 次\n&quot;;
+    cout &lt;&lt; &quot;b 出现了 &quot; &lt;&lt; counts['b' - 'a'] &lt;&lt; &quot; 次\n&quot;;
+    cout &lt;&lt; &quot;n 出现了 &quot; &lt;&lt; counts['n' - 'a'] &lt;&lt; &quot; 次\n&quot;;
+}
+</code></pre>
+<p>这个场景里，字符种类固定就是 26 个，用 <code>array&lt;int, 26&gt;</code> 会比 <code>vector&lt;int&gt;(26)</code> 更能体现“长度不会变”。</p>
+<h2 id="vector">vector</h2>
+<h3 id="介绍与使用场景-3">介绍与使用场景</h3>
+<p><code>vector</code> 是动态数组，我觉得它应该是用得最多的 STL 容器之一。</p>
+<p>它的元素放在连续内存里，支持下标访问，也能在运行时动态扩容。</p>
+<p><del>终于不用纠结怎么实现动态数组了！你说是吧 C 语言？</del></p>
+<ul>
+<li>业务开发里，一般适合保存数量会变、又经常需要遍历或随机访问的数据。因为连续内存对缓存友好，所以很多时候性能表现也不错。</li>
+<li>算法题里，几乎到处都能见到它。输入数组、邻接表、动态规划状态、离散化后的结果，很多都用 <code>vector</code>。</li>
+<li>它不适合频繁在头部或中间插入、删除元素，因为这往往需要整体搬移后面的元素。</li>
+</ul>
+<h3 id="初始化方式-3">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+using namespace std;
+
+vector&lt;int&gt; nums;
+vector&lt;int&gt; nums1(5);
+vector&lt;int&gt; nums2(5, 10);
+vector&lt;int&gt; nums3{1, 2, 3, 4, 5};
+vector&lt;int&gt; nums4(nums3);
+vector&lt;int&gt; nums5(nums3.begin(), nums3.begin() + 3);
+</code></pre>
+<p>下面两种写法一定要分清：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; a(5);  // 5 个元素：0 0 0 0 0
+vector&lt;int&gt; b{5};  // 1 个元素：5
+</code></pre>
+<h3 id="常用方法-3">常用方法</h3>
+<p>设当前元素数量为 <code>n</code>：</p>
+<ul>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>operator[]</code>、<code>at()</code>、<code>front()</code>、<code>back()</code>：访问元素都是 <code>O(1)</code>。</li>
+<li><code>push_back()</code>、<code>emplace_back()</code>：连续使用时均摊 <code>O(1)</code>；单次扩容时最坏 <code>O(n)</code>。</li>
+<li><code>pop_back()</code>：<code>O(1)</code>。</li>
+<li><code>insert()</code>、<code>emplace()</code>：末尾追加可参考 <code>push_back()</code>；头部或中间插入通常最坏 <code>O(n)</code>。</li>
+<li><code>erase()</code>：删除中间或头部元素通常最坏 <code>O(n)</code>，因为后面的元素要前移。</li>
+<li><code>clear()</code>：销毁全部元素，<code>O(n)</code>。</li>
+<li><code>reserve()</code>：如果触发重新分配，需要搬移已有元素，<code>O(n)</code>。</li>
+<li><code>capacity()</code>：查看当前容量，<code>O(1)</code>。</li>
+<li><code>resize()</code>：缩小要销毁元素，增大要补新元素，还可能触发重分配；最坏可按 <code>O(n + k)</code> 理解，<code>k</code> 是新增元素数。</li>
+</ul>
+<h3 id="示例-3">示例</h3>
+<p>保存一组成绩并求总分：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; scores{80, 92, 75};
+
+    scores.push_back(88);
+    scores.push_back(95);
+
+    int total = 0;
+    for (int score : scores) {
+        total += score;
+    }
+
+    cout &lt;&lt; &quot;人数：&quot; &lt;&lt; scores.size() &lt;&lt; '\n';
+    cout &lt;&lt; &quot;总分：&quot; &lt;&lt; total &lt;&lt; '\n';
+}
+</code></pre>
+<p>如果已知大概要塞很多元素，先 <code>reserve()</code> 往往更舒服：</p>
+<pre><code class="language-cpp">vector&lt;int&gt; nums;
+nums.reserve(1000);
+
+for (int i = 0; i &lt; 1000; ++i) {
+    nums.push_back(i);
+}
+</code></pre>
+<p>反过来，如果一直从头删元素，<code>vector</code> 就不太合适：</p>
+<pre><code class="language-cpp">while (!nums.empty()) {
+    nums.erase(nums.begin());
+}
+</code></pre>
+<p>这种写法每次都可能移动大量元素，需要频繁操作两端时通常更适合 <code>deque</code>。</p>
+<h2 id="deque">deque</h2>
+<h3 id="介绍与使用场景-4">介绍与使用场景</h3>
+<p><code>deque</code> 是双端队列，可以在头部和尾部都高效地插入、删除，同时也支持下标访问。</p>
+<ul>
+<li>业务开发里，一般适合两端都可能进出数据的场景，比如任务缓冲、消息缓冲、窗口数据维护。</li>
+<li>算法题里，很常见于 BFS、单调队列、滑动窗口最大值、0-1 BFS 这类题。</li>
+<li>它和 <code>vector</code> 最大的区别之一，就是头部操作更自然；但它通常不是一整段连续内存，所以缓存局部性一般不如 <code>vector</code>。</li>
+</ul>
+<h3 id="初始化方式-4">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;deque&gt;
+using namespace std;
+
+deque&lt;int&gt; nums;
+deque&lt;int&gt; nums1(5);
+deque&lt;int&gt; nums2(5, 10);
+deque&lt;int&gt; nums3{1, 2, 3, 4, 5};
+deque&lt;int&gt; nums4(nums3);
+deque&lt;int&gt; nums5(nums3.begin(), nums3.begin() + 3);
+</code></pre>
+<h3 id="常用方法-4">常用方法</h3>
+<p>设当前元素数量为 <code>n</code>：</p>
+<ul>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>operator[]</code>、<code>at()</code>、<code>front()</code>、<code>back()</code>：访问元素都是 <code>O(1)</code>。</li>
+<li><code>push_front()</code>、<code>emplace_front()</code>、<code>push_back()</code>、<code>emplace_back()</code>：<code>O(1)</code>。</li>
+<li><code>pop_front()</code>、<code>pop_back()</code>：<code>O(1)</code>。</li>
+<li><code>insert()</code>、<code>emplace()</code>：中间插入通常最坏 <code>O(n)</code>。</li>
+<li><code>erase()</code>：中间删除通常最坏 <code>O(n)</code>；删两端元素时更建议直接用 <code>pop_front()</code> 或 <code>pop_back()</code>。</li>
+<li><code>clear()</code>：<code>O(n)</code>。</li>
+<li><code>deque</code> 不适合拿来当“一整块连续数组”使用，因为它不保证所有元素排在同一段连续内存里。</li>
+</ul>
+<h3 id="示例-4">示例</h3>
+<p>模拟一个两端都可能来人的队伍：</p>
+<pre><code class="language-cpp">#include &lt;deque&gt;
+#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    deque&lt;string&gt; passengers;
+
+    passengers.push_back(&quot;小明&quot;);
+    passengers.push_back(&quot;小红&quot;);
+    passengers.push_front(&quot;工作人员&quot;);
+
+    cout &lt;&lt; &quot;队首：&quot; &lt;&lt; passengers.front() &lt;&lt; '\n';
+    cout &lt;&lt; &quot;队尾：&quot; &lt;&lt; passengers.back() &lt;&lt; '\n';
+
+    passengers.pop_front();
+    cout &lt;&lt; &quot;工作人员离开后，队首是：&quot; &lt;&lt; passengers.front() &lt;&lt; '\n';
+}
+</code></pre>
+<p>在 BFS 这类场景里，<code>pop_front()</code> 的优势也很明显：</p>
+<pre><code class="language-cpp">deque&lt;int&gt; nodes;
+nodes.push_back(0);
+
+while (!nodes.empty()) {
+    int current = nodes.front();
+    nodes.pop_front();
+
+    // 处理 current，并把下一批节点塞到队尾
+}
+</code></pre>
+<p>如果你只是想从头删元素，又顺手用了 <code>vector::erase(begin())</code>，那大概率就是该换 <code>deque</code> 了。</p>
+<h2 id="queue">queue</h2>
+<h3 id="介绍与使用场景-5">介绍与使用场景</h3>
+<p><code>queue</code> 是队列容器适配器，遵循先进先出，也就是 FIFO。</p>
+<ul>
+<li>业务开发里，一般用它保存等待处理的任务、消息或请求，让它们按进入顺序依次处理。</li>
+<li>算法题里，一般用它做 BFS、层序遍历、模拟排队过程。</li>
+<li>它默认底层通常是 <code>deque</code>，但平时更关心的是它暴露出来的队列接口，而不是底层细节。</li>
+</ul>
+<h3 id="初始化方式-5">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;deque&gt;
+#include &lt;list&gt;
+#include &lt;queue&gt;
+
+std::queue&lt;int&gt; q1;
+std::queue&lt;int, std::list&lt;int&gt;&gt; q2;
+
+std::deque&lt;int&gt; data{10, 20, 30};
+std::queue&lt;int&gt; q3(data);
+</code></pre>
+<p>它不能直接像顺序容器那样写成初始化列表形式。</p>
+<h3 id="常用方法-5">常用方法</h3>
+<p>以下复杂度按默认底层容器 <code>deque</code> 来理解：</p>
+<ul>
+<li><code>push(value)</code>：<code>O(1)</code>。</li>
+<li><code>emplace(args...)</code>：<code>O(1)</code>。</li>
+<li><code>pop()</code>：<code>O(1)</code>，没有返回值，通常先 <code>front()</code> 再 <code>pop()</code>。</li>
+<li><code>front()</code>：访问队首，<code>O(1)</code>。</li>
+<li><code>back()</code>：访问队尾，<code>O(1)</code>。</li>
+<li><code>empty()</code>、<code>size()</code>：<code>O(1)</code>。</li>
+</ul>
+<p>如果你改了底层容器，复杂度要跟着底层容器的对应操作一起看。</p>
+<h3 id="示例-5">示例</h3>
+<p>按进入顺序处理任务：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    queue&lt;string&gt; tasks;
+
+    tasks.push(&quot;读取配置&quot;);
+    tasks.push(&quot;连接服务器&quot;);
+    tasks.push(&quot;加载数据&quot;);
+
+    while (!tasks.empty()) {
+        cout &lt;&lt; &quot;正在处理：&quot; &lt;&lt; tasks.front() &lt;&lt; '\n';
+        tasks.pop();
+    }
+}
+</code></pre>
+<p><code>queue</code> 的优势是语义非常直接，但限制也明显：它不能随机访问中间元素。要是你还想按下标看内容，那就该考虑 <code>deque</code> 或 <code>vector</code>。</p>
+<h2 id="stack">stack</h2>
+<h3 id="介绍与使用场景-6">介绍与使用场景</h3>
+<p><code>stack</code> 是栈容器适配器，遵循后进先出，也就是 LIFO。</p>
+<ul>
+<li>业务开发里，一般用来保存撤销记录、页面返回路径、表达式解析过程、需要倒着处理的临时状态。</li>
+<li>算法题里，常见于括号匹配、单调栈、模拟递归、深度优先搜索。</li>
+<li>它默认底层通常也是 <code>deque</code>，但使用时一般只通过 <code>push</code>、<code>pop</code>、<code>top</code> 这些栈接口来操作。</li>
+</ul>
+<h3 id="初始化方式-6">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;deque&gt;
+#include &lt;stack&gt;
+#include &lt;vector&gt;
+
+std::stack&lt;int&gt; s1;
+std::stack&lt;int, std::vector&lt;int&gt;&gt; s2;
+
+std::deque&lt;int&gt; data{1, 2, 3};
+std::stack&lt;int&gt; s3(data);
+</code></pre>
+<p>和 <code>queue</code> 一样，它也不支持直接写初始化列表。</p>
+<h3 id="常用方法-6">常用方法</h3>
+<p>以下复杂度按默认底层容器 <code>deque</code> 来理解：</p>
+<ul>
+<li><code>push(value)</code>：<code>O(1)</code>。</li>
+<li><code>emplace(args...)</code>：<code>O(1)</code>。</li>
+<li><code>pop()</code>：<code>O(1)</code>，没有返回值，通常先 <code>top()</code> 再 <code>pop()</code>。</li>
+<li><code>top()</code>：访问栈顶，<code>O(1)</code>。</li>
+<li><code>empty()</code>、<code>size()</code>：<code>O(1)</code>。</li>
+</ul>
+<p>如果换了底层容器，复杂度还是要跟着底层容器走。</p>
+<h3 id="示例-6">示例</h3>
+<p>用栈判断括号是否匹配：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool isValid(const string&amp; str) {
+    stack&lt;char&gt; brackets;
+
+    for (char ch : str) {
+        if (ch == '(' || ch == '[' || ch == '{') {
+            brackets.push(ch);
+            continue;
+        }
+
+        if (ch != ')' &amp;&amp; ch != ']' &amp;&amp; ch != '}') {
+            continue;
+        }
+
+        if (brackets.empty()) {
+            return false;
+        }
+
+        char left = brackets.top();
+        brackets.pop();
+
+        if ((ch == ')' &amp;&amp; left != '(') ||
+            (ch == ']' &amp;&amp; left != '[') ||
+            (ch == '}' &amp;&amp; left != '{')) {
+            return false;
+        }
+    }
+
+    return brackets.empty();
+}
+
+int main() {
+    cout &lt;&lt; boolalpha;
+    cout &lt;&lt; isValid(&quot;{[()]}&quot;) &lt;&lt; '\n';
+    cout &lt;&lt; isValid(&quot;{[(])}&quot;) &lt;&lt; '\n';
+}
+</code></pre>
+<p>这里最关键的地方就是：遇到右括号时，要优先处理最近那个还没配对的左括号，这正好就是栈擅长的顺序。</p>
+<h2 id="map">map</h2>
+<h3 id="介绍与使用场景-7">介绍与使用场景</h3>
+<p><code>map</code> 用来保存键值对，键不能重复，并且会自动按键排序。它通常可以理解成一棵平衡搜索树。</p>
+<ul>
+<li>业务开发里，一般用它做“键到值”的映射，而且还希望最终遍历时是有序的，比如按编号输出数据。</li>
+<li>算法题里，常用来统计频率、记录状态、维护动态有序映射，或者查找某个键附近的位置。</li>
+<li>如果你完全不关心顺序，只关心查找快不快，那通常还得再和 <code>unordered_map</code> 比一比。</li>
+</ul>
+<h3 id="初始化方式-7">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+std::map&lt;std::string, int&gt; m1;
+std::map&lt;std::string, int&gt; m2{
+    {&quot;apple&quot;, 3},
+    {&quot;banana&quot;, 5}
+};
+
+std::vector&lt;std::pair&lt;std::string, int&gt;&gt; items{
+    {&quot;pen&quot;, 2},
+    {&quot;book&quot;, 4}
+};
+std::map&lt;std::string, int&gt; m3(items.begin(), items.end());
+</code></pre>
+<p>也可以指定比较规则：</p>
+<pre><code class="language-cpp">#include &lt;functional&gt;
+#include &lt;map&gt;
+
+std::map&lt;int, int, std::greater&lt;int&gt;&gt; m{
+    {1, 10},
+    {3, 30},
+    {2, 20}
+};
+</code></pre>
+<h3 id="常用方法-7">常用方法</h3>
+<p>设容器里有 <code>n</code> 组键值对：</p>
+<ul>
+<li><code>insert({key, value})</code>、<code>emplace(key, value)</code>：<code>O(log n)</code>。</li>
+<li><code>insert_or_assign(key, value)</code>：插入或覆盖，<code>O(log n)</code>，需要 C++17。</li>
+<li><code>find(key)</code>、<code>count(key)</code>、<code>contains(key)</code>：<code>O(log n)</code>。<code>contains()</code> 需要 C++20。</li>
+<li><code>at(key)</code>：按键访问，<code>O(log n)</code>；键不存在会抛异常。</li>
+<li><code>operator[](key)</code>：<code>O(log n)</code>；键不存在时会直接插入一个默认值。</li>
+<li><code>erase(key)</code>：按键删除，<code>O(log n)</code>。</li>
+<li><code>erase(iterator)</code>：删单个已知位置的节点，均摊 <code>O(1)</code>。</li>
+<li><code>lower_bound(key)</code>、<code>upper_bound(key)</code>：<code>O(log n)</code>。</li>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>clear()</code>：<code>O(n)</code>。</li>
+</ul>
+<p><code>map</code> 里负责排序的是键，所以键本身不能直接改；值是可以改的。</p>
+<h3 id="示例-7">示例</h3>
+<p>统计单词出现次数：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;map&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;string&gt; words{
+        &quot;apple&quot;, &quot;banana&quot;, &quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;, &quot;apple&quot;
+    };
+
+    map&lt;string, int&gt; counts;
+    for (const string&amp; word : words) {
+        ++counts[word];
+    }
+
+    for (const auto&amp; [word, count] : counts) {
+        cout &lt;&lt; word &lt;&lt; &quot;: &quot; &lt;&lt; count &lt;&lt; '\n';
+    }
+}
+</code></pre>
+<p>这个写法很顺手，但也要记得：<code>operator[]</code> 会在键不存在时自动插入。如果你只是想查一下有没有，不想顺手把键塞进去，更适合用 <code>find()</code>、<code>contains()</code> 或 <code>at()</code>。</p>
+<h2 id="set">set</h2>
+<h3 id="介绍与使用场景-8">介绍与使用场景</h3>
+<p><code>set</code> 用来保存不重复元素，并且会自动排序。可以把它看成“只有键、没有值的有序集合”。</p>
+<ul>
+<li>业务开发里，一般适合需要去重、又希望最终结果保持有序的数据。</li>
+<li>算法题里，常用来维护动态有序集合。除了判重，还能顺手做 <code>lower_bound()</code>、<code>upper_bound()</code> 这类“找附近元素”的操作。</li>
+<li>如果你只需要去重和快速查询，不需要有序性，那也常常会拿它和 <code>unordered_set</code> 做选择。</li>
+</ul>
+<h3 id="初始化方式-8">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;set&gt;
+#include &lt;vector&gt;
+
+std::set&lt;int&gt; s1;
+std::set&lt;int&gt; s2{3, 1, 2, 2};
+
+std::vector&lt;int&gt; nums{4, 2, 5, 2};
+std::set&lt;int&gt; s3(nums.begin(), nums.end());
+</code></pre>
+<p>指定降序比较：</p>
+<pre><code class="language-cpp">#include &lt;functional&gt;
+#include &lt;set&gt;
+
+std::set&lt;int, std::greater&lt;int&gt;&gt; s{1, 3, 2};
+</code></pre>
+<h3 id="常用方法-8">常用方法</h3>
+<p>设集合里有 <code>n</code> 个元素：</p>
+<ul>
+<li><code>insert(value)</code>、<code>emplace(args...)</code>：<code>O(log n)</code>。</li>
+<li><code>find(value)</code>、<code>count(value)</code>、<code>contains(value)</code>：<code>O(log n)</code>。<code>contains()</code> 需要 C++20。</li>
+<li><code>erase(value)</code>：<code>O(log n)</code>。</li>
+<li><code>erase(iterator)</code>：删单个已知位置节点，均摊 <code>O(1)</code>。</li>
+<li><code>lower_bound(value)</code>、<code>upper_bound(value)</code>：<code>O(log n)</code>。</li>
+<li><code>begin()</code>、<code>end()</code>：取迭代器本身是 <code>O(1)</code>，遍历时元素天然有序。</li>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>clear()</code>：<code>O(n)</code>。</li>
+</ul>
+<p>需要注意，<code>set</code> 里的元素本身就是排序关键字，所以不能直接改值。真要改，只能删了再插。</p>
+<h3 id="示例-8">示例</h3>
+<p>先去重，再按从小到大输出：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;set&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; nums{4, 2, 4, 1, 3, 2};
+    set&lt;int&gt; uniqueNums(nums.begin(), nums.end());
+
+    for (int num : uniqueNums) {
+        cout &lt;&lt; num &lt;&lt; ' ';
+    }
+}
+</code></pre>
+<p>查找第一个不小于目标值的元素：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;set&gt;
+using namespace std;
+
+int main() {
+    set&lt;int&gt; scores{60, 70, 85, 90};
+
+    auto it = scores.lower_bound(80);
+    if (it != scores.end()) {
+        cout &lt;&lt; *it &lt;&lt; '\n';
+    }
+}
+</code></pre>
+<h2 id="unordered-map">unordered_map</h2>
+<h3 id="介绍与使用场景-9">介绍与使用场景</h3>
+<p><code>unordered_map</code> 用哈希表保存键值对，不按键排序，遍历顺序也不该依赖。</p>
+<ul>
+<li>业务开发里，一般适合通过某个键高频查值，比如通过用户 ID 找用户信息、通过配置名找配置内容。</li>
+<li>算法题里，更是常客。频率统计、记录下标、缓存结果、做哈希判定，很多题第一反应就是它。</li>
+<li>它平均复杂度很好，但不是稳定的最坏复杂度保证；要是你还需要有序遍历或者范围查询，就该回去考虑 <code>map</code>。</li>
+</ul>
+<h3 id="初始化方式-9">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;string&gt;
+#include &lt;unordered_map&gt;
+#include &lt;utility&gt;
+#include &lt;vector&gt;
+
+std::unordered_map&lt;std::string, int&gt; m1;
+std::unordered_map&lt;std::string, int&gt; m2{
+    {&quot;apple&quot;, 3},
+    {&quot;banana&quot;, 5}
+};
+
+std::vector&lt;std::pair&lt;std::string, int&gt;&gt; items{
+    {&quot;pen&quot;, 2},
+    {&quot;book&quot;, 4}
+};
+std::unordered_map&lt;std::string, int&gt; m3(items.begin(), items.end());
+</code></pre>
+<p>如果键是自定义类型，还得自己提供相等比较和哈希函数。</p>
+<h3 id="常用方法-9">常用方法</h3>
+<p>设容器里有 <code>n</code> 组键值对：</p>
+<ul>
+<li><code>insert({key, value})</code>、<code>emplace(key, value)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。</li>
+<li><code>insert_or_assign(key, value)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>，需要 C++17。</li>
+<li><code>find(key)</code>、<code>count(key)</code>、<code>contains(key)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。<code>contains()</code> 需要 C++20。</li>
+<li><code>at(key)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>；键不存在会抛异常。</li>
+<li><code>operator[](key)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>；键不存在会插入默认值。</li>
+<li><code>erase(key)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。</li>
+<li><code>erase(iterator)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。</li>
+<li><code>reserve(count)</code>：通常用来提前留桶位，减少重哈希次数；如果触发重哈希，平均复杂度可按 <code>O(n)</code> 理解，最坏可能到 <code>O(n^2)</code>。</li>
+<li><code>load_factor()</code>：<code>O(1)</code>。</li>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>clear()</code>：<code>O(n)</code>。</li>
+</ul>
+<p>哈希容器最要命的一点就是：平均很快，但别把“平均 <code>O(1)</code>”误记成“永远 <code>O(1)</code>”。</p>
+<h3 id="示例-9">示例</h3>
+<p>经典的“两数之和”：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; nums{2, 7, 11, 15};
+    int target = 9;
+    unordered_map&lt;int, int&gt; positions;
+
+    for (int i = 0; i &lt; static_cast&lt;int&gt;(nums.size()); ++i) {
+        int needed = target - nums[i];
+        auto it = positions.find(needed);
+
+        if (it != positions.end()) {
+            cout &lt;&lt; &quot;下标：&quot; &lt;&lt; it-&gt;second &lt;&lt; &quot; 和 &quot; &lt;&lt; i &lt;&lt; '\n';
+            break;
+        }
+
+        positions[nums[i]] = i;
+    }
+}
+</code></pre>
+<p>这个例子不需要有序性，只需要快速查有没有，因此 <code>unordered_map</code> 就很顺手。</p>
+<h2 id="unordered-set">unordered_set</h2>
+<h3 id="介绍与使用场景-10">介绍与使用场景</h3>
+<p><code>unordered_set</code> 是哈希版的集合，用来保存不重复元素，但不保证有序。</p>
+<ul>
+<li>业务开发里，一般适合保存“只需要去重和判断是否存在”的数据，比如已处理请求 ID、黑名单用户、访问过的资源。</li>
+<li>算法题里，经常用它做快速判重、访问标记、哈希去重。</li>
+<li>如果你后面还得按顺序遍历，或者做区间/邻近查找，那通常还是 <code>set</code> 更合适。</li>
+</ul>
+<h3 id="初始化方式-10">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;unordered_set&gt;
+#include &lt;vector&gt;
+
+std::unordered_set&lt;int&gt; s1;
+std::unordered_set&lt;int&gt; s2{3, 1, 2, 2};
+
+std::vector&lt;int&gt; nums{4, 2, 5, 2};
+std::unordered_set&lt;int&gt; s3(nums.begin(), nums.end());
+</code></pre>
+<p>自定义类型做键时，也一样需要自己准备比较和哈希逻辑。</p>
+<h3 id="常用方法-10">常用方法</h3>
+<p>设集合里有 <code>n</code> 个元素：</p>
+<ul>
+<li><code>insert(value)</code>、<code>emplace(args...)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。</li>
+<li><code>find(value)</code>、<code>count(value)</code>、<code>contains(value)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。<code>contains()</code> 需要 C++20。</li>
+<li><code>erase(value)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。</li>
+<li><code>erase(iterator)</code>：平均 <code>O(1)</code>，最坏 <code>O(n)</code>。</li>
+<li><code>reserve(count)</code>：作用是减少后续重复扩桶；如果触发重哈希，平均复杂度可按 <code>O(n)</code> 理解，最坏可能到 <code>O(n^2)</code>。</li>
+<li><code>load_factor()</code>：<code>O(1)</code>。</li>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>clear()</code>：<code>O(n)</code>。</li>
+</ul>
+<p>和 <code>unordered_map</code> 一样，它的“快”也是平均意义上的快，不是最坏情况保证。</p>
+<h3 id="示例-10">示例</h3>
+<p>判断数组里有没有重复元素：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;unordered_set&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; nums{1, 4, 2, 3, 4};
+    unordered_set&lt;int&gt; seen;
+
+    for (int num : nums) {
+        if (seen.find(num) != seen.end()) {
+            cout &lt;&lt; &quot;发现重复元素：&quot; &lt;&lt; num &lt;&lt; '\n';
+            break;
+        }
+
+        seen.insert(num);
+    }
+}
+</code></pre>
+<p>这个问题只关心“有没有出现过”，完全不关心顺序，所以 <code>unordered_set</code> 很合适。</p>
+<h2 id="tuple">tuple</h2>
+<h3 id="介绍与使用场景-11">介绍与使用场景</h3>
+<p><code>tuple</code> 可以把多个不同类型的值打包在一起。你可以把它理解成 <code>pair</code> 的“多元素版本”。</p>
+<ul>
+<li>业务开发里，一般用它让函数一次返回多个结果，或者临时传递几项不同类型但彼此相关的数据。要是这些字段有长期业务含义，还是定义结构体更清楚。</li>
+<li>算法题里，常用它组合状态、排序关键字、优先队列里的复合元素，比如“距离、点编号、父节点”这种东西。</li>
+<li>它方便是方便，但一旦层数深、元素多，可读性会掉得很快。</li>
+</ul>
+<h3 id="初始化方式-11">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;string&gt;
+#include &lt;tuple&gt;
+using namespace std;
+
+tuple&lt;int, string, double&gt; a{1, &quot;Alice&quot;, 95.5};
+tuple&lt;int, string, double&gt; b = make_tuple(2, &quot;Bob&quot;, 88.0);
+
+int id = 3;
+string name = &quot;Carol&quot;;
+auto c = tie(id, name);
+</code></pre>
+<p>结构化绑定也很常用：</p>
+<pre><code class="language-cpp">auto [userId, userName, score] = a;
+</code></pre>
+<p>如果想直接引用原对象，可以写引用绑定：</p>
+<pre><code class="language-cpp">auto&amp; [refId, refName, refScore] = a;
+</code></pre>
+<h3 id="常用方法-11">常用方法</h3>
+<ul>
+<li><code>get&lt;I&gt;(t)</code>：按编译期下标访问元素，通常按 <code>O(1)</code> 理解。</li>
+<li><code>get&lt;T&gt;(t)</code>：按类型访问元素，前提是这个类型在 <code>tuple</code> 里只出现一次，通常按 <code>O(1)</code> 理解。</li>
+<li><code>make_tuple(...)</code>：创建 <code>tuple</code>，结构层面可按 <code>O(1)</code> 理解，具体成本看元素构造。</li>
+<li><code>tie(...)</code>：创建引用形式的 <code>tuple</code>，常用来接收多个返回值，通常按 <code>O(1)</code> 理解。</li>
+<li><code>tuple_size&lt;T&gt;::value</code>、<code>tuple_element&lt;I, T&gt;::type</code>：编译期信息，不涉及运行时遍历。</li>
+<li>比较运算：按字典序逐项比较，若把元素个数记作 <code>k</code>，最多比较 <code>k</code> 个成员；如果各成员比较本身都是 <code>O(1)</code>，整体可按 <code>O(k)</code> 理解，否则还要把成员自己的比较成本算进去。</li>
+<li><code>swap</code>：逐项交换。若把元素个数记作 <code>k</code>，最坏 <code>O(k)</code>，具体还看每个元素的交换成本。</li>
+</ul>
+<h3 id="示例-11">示例</h3>
+<p>函数一次返回多个结果：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;tuple&gt;
+using namespace std;
+
+tuple&lt;int, string&gt; findUser() {
+    return {1001, &quot;Alice&quot;};
+}
+
+int main() {
+    auto [id, name] = findUser();
+    cout &lt;&lt; id &lt;&lt; ' ' &lt;&lt; name &lt;&lt; '\n';
+}
+</code></pre>
+<p>保存一个复合状态：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;tuple&gt;
+using namespace std;
+
+int main() {
+    tuple&lt;int, int, int&gt; state{5, 2, 3};
+    auto [distance, row, column] = state;
+
+    cout &lt;&lt; &quot;距离：&quot; &lt;&lt; distance
+         &lt;&lt; &quot;，位置：(&quot; &lt;&lt; row &lt;&lt; &quot;, &quot; &lt;&lt; column &lt;&lt; &quot;)\n&quot;;
+}
+</code></pre>
+<h2 id="list">list</h2>
+<h3 id="介绍与使用场景-12">介绍与使用场景</h3>
+<p><code>list</code> 是双向链表。它最大的特点不是“快”，而是“已知位置时，插删节点很稳”，并且不会像 <code>vector</code> 那样因为搬移元素把整段数据挪来挪去。</p>
+<ul>
+<li>业务开发里，一般适合需要长期保留迭代器、并且经常在已知位置插入或删除节点的场景。</li>
+<li>算法题里，实际使用频率通常没有 <code>vector</code>、<code>deque</code>、<code>queue</code> 那么高，但在需要链表语义、稳定迭代器、节点级操作时还是有价值。</li>
+<li>如果你只是需要头尾增删并且还想随机访问，通常 <code>deque</code> 更顺手；如果你只是普通顺序存储，通常 <code>vector</code> 还是首选。</li>
+</ul>
+<h3 id="初始化方式-12">初始化方式</h3>
+<pre><code class="language-cpp">#include &lt;list&gt;
+using namespace std;
+
+list&lt;int&gt; nums;
+list&lt;int&gt; nums1(5);
+list&lt;int&gt; nums2(5, 10);
+list&lt;int&gt; nums3{1, 2, 3, 4, 5};
+list&lt;int&gt; nums4(nums3);
+list&lt;int&gt; nums5(nums3.begin(), nums3.end());
+</code></pre>
+<h3 id="常用方法-12">常用方法</h3>
+<p>设当前元素数量为 <code>n</code>：</p>
+<ul>
+<li><code>size()</code>、<code>empty()</code>：<code>O(1)</code>。</li>
+<li><code>front()</code>、<code>back()</code>：<code>O(1)</code>。</li>
+<li><code>push_front()</code>、<code>emplace_front()</code>、<code>push_back()</code>、<code>emplace_back()</code>：<code>O(1)</code>。</li>
+<li><code>pop_front()</code>、<code>pop_back()</code>：<code>O(1)</code>。</li>
+<li><code>insert(pos, value)</code>、<code>emplace(pos, ...)</code>：如果已经有位置迭代器，插入单个元素是 <code>O(1)</code>。</li>
+<li><code>erase(pos)</code>：如果已经有目标位置迭代器，删除单个元素是 <code>O(1)</code>。</li>
+<li>查找某个值、走到第 <code>i</code> 个位置：都得沿链表慢慢走，最坏 <code>O(n)</code>。</li>
+<li><code>remove(value)</code>：遍历并删除所有等于该值的节点，<code>O(n)</code>。</li>
+<li><code>reverse()</code>：<code>O(n)</code>。</li>
+<li><code>sort()</code>：<code>O(n log n)</code>。</li>
+<li><code>clear()</code>：<code>O(n)</code>。</li>
+</ul>
+<p>这里最容易记错的一点就是：<code>list</code> 的插删是 <code>O(1)</code>，前提是你已经拿到了正确位置的迭代器。如果你还得先遍历半天找到那个位置，整体就不便宜了。</p>
+<h3 id="示例-12">示例</h3>
+<p>已知位置时在中间插入：</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;list&gt;
+using namespace std;
+
+int main() {
+    list&lt;int&gt; nums{10, 20, 30};
+
+    auto pos = nums.begin();
+    ++pos;
+
+    nums.insert(pos, 15);
+
+    for (int value : nums) {
+        cout &lt;&lt; value &lt;&lt; ' ';
+    }
+}
+</code></pre>
+<p>输出会是：</p>
+<pre><code class="language-text">10 15 20 30
+</code></pre>
+<p>但如果你每次都得先一路走过去找到位置：</p>
+<pre><code class="language-cpp">auto pos = nums.begin();
+
+for (int i = 0; i &lt; 100; ++i) {
+    ++pos;
+}
+</code></pre>
+<p>那前面的查找本身就已经是 <code>O(n)</code> 了。所以大多数普通场景下，我反而会先考虑 <code>vector</code> 或 <code>deque</code>，而不是急着上 <code>list</code>。</p>
+<h2 id="总结">总结</h2>
+<p>这一篇博客我记录了一下我刷 hot 100 中经常遇到的一些 STL 类。</p>
+<p>我感觉其实最核心的不是把接口一个个硬背下来，而是先分清楚几个问题：</p>
+<ul>
+<li>它的数据在内存里大概怎么放</li>
+<li>它擅长的是随机访问、两端操作，还是按键查找</li>
+<li>它的常见操作复杂度大概是什么水平</li>
+<li>它为什么适合当前题目，而不是“也能用但不知道为什么要用”</li>
+</ul>
+<p>如果只是给自己一个很粗的经验版结论，我目前会先这样记：</p>
+<ul>
+<li>普通顺序存储，先想 <code>vector</code></li>
+<li>固定长度，先想 <code>array</code></li>
+<li>字符串处理，先想 <code>string</code></li>
+<li>两端都要高效操作，先想 <code>deque</code></li>
+<li>先进先出用 <code>queue</code>，后进先出用 <code>stack</code></li>
+<li>要有序映射/集合，看 <code>map</code>、<code>set</code></li>
+<li>只想平均意义上的快速查找，看 <code>unordered_map</code>、<code>unordered_set</code></li>
+<li>临时打包两个值用 <code>pair</code>，多个值用 <code>tuple</code></li>
+<li><code>list</code> 不少人刚学时觉得很厉害，但真正常规开发和算法题里，很多时候并不是第一选择</li>
+</ul>
+<p>后续的话我大概会补充一下关于 <code>priority_queue</code>、<code>multiset</code>、<code>multimap</code> 之类的。</p>
+<p>至于迭代器、算法库之类的我应该会单独再开一篇博客编写。那部分和这些容器放在一起看，感觉会更完整一些。</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/%E6%AF%8F%E4%B8%AA%E4%BA%BA%E4%B8%93%E5%B1%9E%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/">每个人专属的“刻板印象”</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

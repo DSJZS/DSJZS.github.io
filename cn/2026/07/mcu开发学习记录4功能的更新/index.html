@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>MCU开发学习记录(4)：功能的更新 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="MCU开发学习记录(4)：功能的更新 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近实习中，经常需要基于某个开发板增加或者更新一些功能。
+[&amp;hellip;] 真实项目中的开发逻辑，和自己写个人项目时其实有很大的不同。
+[&amp;hellip;] 个人项目一般比较随心所欲，项目规模也不会特别大。想改一个功能时，很多时候觉得哪里不顺手就直接改了，甚至顺手把周围的代码一起重构掉。
+[&amp;hellip;] 但真实项目一般规模更大，涉及的模块更多，很多代码之间也存在依赖关系，往往牵一发而动全 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">MCU开发学习记录(4)：功能的更新</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-22</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#项目增加功能的逻辑">项目增加功能的逻辑</a>
+      <ul>
+        <li><a href="#修改少便是美">修改少便是美</a></li>
+        <li><a href="#占用资源要少">占用资源要少</a></li>
+        <li><a href="#及时记录">及时记录</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近实习中，经常需要基于某个开发板增加或者更新一些功能。</p>
+<p>真实项目中的开发逻辑，和自己写个人项目时其实有很大的不同。</p>
+<p>个人项目一般比较随心所欲，项目规模也不会特别大。想改一个功能时，很多时候觉得哪里不顺手就直接改了，甚至顺手把周围的代码一起重构掉。</p>
+<p>但真实项目一般规模更大，涉及的模块更多，很多代码之间也存在依赖关系，往往牵一发而动全身。</p>
+<p>不能为了实现自己的某个需求，就大面积修改原有代码。</p>
+<p>很多时候为了兼容之前已经存在的功能，反而需要做出一些取舍，保留原来的逻辑，再额外增加一些兼容处理。</p>
+<h2 id="项目增加功能的逻辑">项目增加功能的逻辑</h2>
+<h3 id="修改少便是美">修改少便是美</h3>
+<p>首先，对于已经存在并且稳定运行的功能，除非你明确知道其中存在某个 Bug，或者当前任务本身就是修复这一部分，否则不要随便修改原有逻辑。</p>
+<p>至少在不了解代码背景的情况下，应该先默认：</p>
+<blockquote>
+<p><strong>当前这段代码是有原因才这样写的</strong> 。改了就会出 Bug !</p>
+</blockquote>
+<p>不要看到一个判断觉得“这里好像可以简化”，就直接删掉或者重写。</p>
+<p>因为有些看起来多余的判断，可能正是为了兼容某个旧版本、特殊硬件或者历史需求而存在的。</p>
+<p>如果确实需要修改，最好先确认这段代码的用途，必要时询问原来的提交者或者熟悉这一模块的人。</p>
+<p>新增功能时，也应该尽量复用现有代码，在原有逻辑的基础上做最小范围的修改。</p>
+<p>能增加一个判断解决，就不要重写整个函数。</p>
+<p>能复用已有接口，就不要重新造一套类似的逻辑。</p>
+<p>修改范围越大，需要重新测试的内容就越多，也越容易引入新的 Bug。</p>
+<p><del>之前就是把公司项目当个人项目写了，让我修个 Bug，我一口气改了六百多行。</del></p>
+<p><del>最后喜提加班重写。</del></p>
+<p>当然，“修改少”也不是说永远不能重构。</p>
+<p>如果原有设计本身确实存在严重问题，或者已经影响后续开发，那么该改还是要改。</p>
+<p>只是这种大范围修改最好作为一个明确的重构任务来做，而不是在增加一个小功能的时候顺手把半个模块都改了。</p>
+<h3 id="占用资源要少">占用资源要少</h3>
+<p>新增功能时，还需要特别注意资源消耗。</p>
+<p>对于 MCU 来说，比较常见的资源主要包括：</p>
+<ul>
+<li><code>PSRAM</code></li>
+<li><code>SRAM</code></li>
+<li><code>FLASH</code></li>
+<li>线程栈</li>
+<li>堆内存</li>
+<li>硬件外设和其他有限资源</li>
+</ul>
+<p>如果增加一个功能后，资源占用出现了比较明显的变化，就应该及时记录并说明。</p>
+<p>因为 MCU 和 PC 上运行的软件不一样。</p>
+<p>PC 上多占几十 MB 内存，很多时候可能并没有什么明显影响。</p>
+<p>但 MCU 的资源通常比较有限，而且这些资源不是你一个功能独占的，而是整个系统、整个团队共同使用的。</p>
+<p>如果为了实现自己的一个功能，一下子占用了大量内存或者 FLASH，可能会导致其他模块没有足够的资源可用，甚至让后续功能根本加不进去。</p>
+<p>所以不能只关注：</p>
+<blockquote>
+<p><strong>“这个功能能不能跑起来。”</strong></p>
+</blockquote>
+<p>还要关注：</p>
+<blockquote>
+<p><strong>“为了让它跑起来，我到底付出了多少资源成本。”</strong></p>
+</blockquote>
+<p>如果资源增长明显，最好及时和其他人沟通，确认这个成本是否可以接受，有没有更节省资源的实现方案。</p>
+<p><del>有一次就是加了一个厂家的第三方库，FLASH 直接大了 1 MB，差点出问题。</del></p>
+<p>尤其是在嵌入式项目里，一个第三方库、一个新的缓存区，甚至几个尺寸比较大的静态数组，都可能带来非常明显的资源变化。</p>
+<p>所以增加功能之后，最好顺手看一下编译结果、Map 文件或者项目提供的资源统计信息。</p>
+<h3 id="及时记录">及时记录</h3>
+<p>每次增加一个功能或者修复一个 Bug，都应该及时做好版本记录。</p>
+<p>最基本的就是使用 Git 提交代码。</p>
+<p>不要连续改很多天，最后所有内容堆在一个提交里面。</p>
+<p>比较合理的方式是按照功能或者修改目的拆分提交，让每个提交尽量表达清楚：</p>
+<blockquote>
+<p><strong>这一次到底改了什么，为什么要改。</strong></p>
+</blockquote>
+<p>这样以后出现问题时，也更方便使用 <code>git diff</code>、<code>git log</code>、<code>git bisect</code> 等工具追踪问题来源。</p>
+<p>除了 Git 提交之外，比较重要的修改最好还要留下相应的说明文档或者更新记录。</p>
+<p>例如记录：</p>
+<ul>
+<li>为什么要增加这个功能。</li>
+<li>原来的实现有什么问题。</li>
+<li>具体采用了什么解决方案。</li>
+<li>修改了哪些模块。</li>
+<li>是否会影响原有功能。</li>
+<li>增加了多少 <code>PSRAM</code>、<code>SRAM</code>、<code>FLASH</code> 等资源占用。</li>
+<li>有没有需要特别注意的兼容问题。</li>
+</ul>
+<p>Git 主要记录的是：</p>
+<blockquote>
+<p><strong>“代码改了什么。”</strong></p>
+</blockquote>
+<p>而文档更适合记录：</p>
+<blockquote>
+<p><strong>“为什么要这样改。”</strong></p>
+</blockquote>
+<p>这两种信息其实都很重要。</p>
+<p>因为过一段时间之后，很多时候你重新看到自己写的代码，连自己都不一定记得当初为什么这么写。</p>
+<p>更别说其他接手这部分代码的人了。</p>
+<h2 id="总结">总结</h2>
+<p>在真实项目中增加功能，和自己写个人项目最大的区别之一，就是不能只考虑：</p>
+<blockquote>
+<p><strong>“我这个功能能不能实现。”</strong></p>
+</blockquote>
+<p>还要考虑它对整个项目造成的影响。</p>
+<p>每次更新最好尽量兼容原有功能，减少不必要的修改范围。</p>
+<p>能小改就不要大改，尤其不要为了增加一个小功能，顺手重构一大片原本正常工作的代码。</p>
+<p>同时还要注意资源占用的变化。</p>
+<p>如果 <code>PSRAM</code>、<code>SRAM</code>、<code>FLASH</code> 等资源出现明显增长，要及时记录，并和其他人沟通这个成本是否可以接受。</p>
+<p>最后，每次修改都应该及时使用 Git 提交，并留下必要的更新记录。</p>
+<p>简单来说就是：</p>
+<blockquote>
+<p><strong>少改、少占、留记录。</strong></p>
+</blockquote>
+<p>先保证原来的东西不会坏，再考虑怎么把新的东西加进去。</p>
+<p>个人项目可以随心所欲一点。</p>
+<p>但在真实项目里，很多时候“能改”并不代表“应该改”。</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%B4%A9%E6%BA%83%E7%9A%84%E8%B0%83%E8%AF%95/">MCU开发学习记录(3)：崩溃的调试</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

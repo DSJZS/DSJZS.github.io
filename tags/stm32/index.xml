@@ -9,6 +9,20 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/tags/stm32/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>MCU开发学习记录(4)：功能的更新</title>
+      <link>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</link>
+      <pubDate>Wed, 22 Jul 2026 14:52:46 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近实习中，经常需要基于某个开发板增加或者更新一些功能。&lt;/p&gt;&#xA;&lt;p&gt;真实项目中的开发逻辑，和自己写个人项目时其实有很大的不同。&lt;/p&gt;&#xA;&lt;p&gt;个人项目一般比较随心所欲，项目规模也不会特别大。想改一个功能时，很多时候觉得哪里不顺手就直接改了，甚至顺手把周围的代码一起重构掉。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MCU开发学习记录(3)：崩溃的调试</title>
+      <link>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%B4%A9%E6%BA%83%E7%9A%84%E8%B0%83%E8%AF%95/</link>
+      <pubDate>Wed, 22 Jul 2026 10:20:38 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%B4%A9%E6%BA%83%E7%9A%84%E8%B0%83%E8%AF%95/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近经常遇到各种各样的 Bug，有些只是逻辑不正常，还有一些会直接导致 MCU 进入 HardFault 等异常，整个程序基本卡死。&lt;/p&gt;&#xA;&lt;p&gt;因此最近需要频繁进行调试，想办法找到 Bug 到底是从哪里冒出来的。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</title>
       <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
       <pubDate>Sat, 11 Apr 2026 12:31:59 +0800</pubDate>

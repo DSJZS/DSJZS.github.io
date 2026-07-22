@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>MCU开发学习记录(3)：崩溃的调试 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="MCU开发学习记录(3)：崩溃的调试 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近经常遇到各种各样的 Bug，有些只是逻辑不正常，还有一些会直接导致 MCU 进入 HardFault 等异常，整个程序基本卡死。
+[&amp;hellip;] 因此最近需要频繁进行调试，想办法找到 Bug 到底是从哪里冒出来的。
+[&amp;hellip;] 逻辑 Bug 倒还好说，至少程序通常还能继续运行，可以打日志、看变量，一点一点缩小问题范围。
+[&amp;hellip;] 真正麻烦的是程序直接崩掉。 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">MCU开发学习记录(3)：崩溃的调试</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-22</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#前提">前提</a></li>
+    <li><a href="#方法">方法</a>
+      <ul>
+        <li><a href="#调试器">调试器</a></li>
+        <li><a href="#hardfault-等异常-串口">HardFault 等异常 + 串口</a></li>
+        <li><a href="#转储文件">转储文件</a></li>
+        <li><a href="#强大的-ai">强大的 AI</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近经常遇到各种各样的 Bug，有些只是逻辑不正常，还有一些会直接导致 MCU 进入 HardFault 等异常，整个程序基本卡死。</p>
+<p>因此最近需要频繁进行调试，想办法找到 Bug 到底是从哪里冒出来的。</p>
+<p>逻辑 Bug 倒还好说，至少程序通常还能继续运行，可以打日志、看变量，一点一点缩小问题范围。</p>
+<p>真正麻烦的是程序直接崩掉。</p>
+<p>所以这篇就简单记录一下，我目前知道或者实际用过的一些 MCU 调试方法。</p>
+<h2 id="前提">前提</h2>
+<p><strong>前提是做好备份！</strong></p>
+<p>比如利用 Git 单独开一个 <code>fix</code> 分支，专门用来调试和修复当前的问题。</p>
+<p>总之，在开始修 Bug 前，最好保留：</p>
+<ul>
+<li>Bug 能稳定复现的原始版本。</li>
+<li>一个确认没有这个 Bug 的旧版本。</li>
+<li>调试过程中每一个比较关键的修改版本。</li>
+</ul>
+<p>每次修改后，也要记得及时用 Git 或者其他方式保存。</p>
+<p>不然改着改着，Bug 突然消失了，结果你自己都不知道到底是哪一处修改把它修好的，那就有点尴尬了。</p>
+<p>更糟糕的是，原来的 Bug 没找到，又因为调试过程中到处乱改代码，引入了一个新的 Bug。</p>
+<p>所以修 Bug 的第一步，可能不是马上开始改代码，而是先保证自己<strong>随时可以回到问题出现时的现场</strong>。</p>
+<h2 id="方法">方法</h2>
+<p>下面是我目前知晓的一些调试方法。</p>
+<h3 id="调试器">调试器</h3>
+<p>这个应该是最直接、最好用的办法了。</p>
+<p>一般人学习 STM32 的时候，肯定接触过类似 <code>ST-LINK</code> 这样的调试器，再配合 GDB、OpenOCD 或者 IDE 自带的调试功能，就可以进行断点、单步执行、查看变量、寄存器、内存、调用栈等操作。</p>
+<p>程序卡在哪里，哪个变量突然变成了奇怪的值，函数是怎么一层一层调用过来的，很多问题都可以直接看到。</p>
+<p>所以这里就不详细介绍了。</p>
+<p>你如果能搜到这篇文章，大概至少也是入门水平了，应该不需要我从“什么是断点”开始讲起。</p>
+<p>总之：</p>
+<p><strong>有条件用调试器的时候，优先用调试器。</strong></p>
+<p>它能保留最多的现场信息，通常也是定位问题最方便的方法。</p>
+<h3 id="hardfault-等异常-串口">HardFault 等异常 + 串口</h3>
+<p>但是有的时候，因为硬件条件、接口占用、设备已经装机或者其他各种各样的原因，就是没办法一直挂着调试器。</p>
+<p>这个时候如果程序出现问题，就只能尽量依靠串口日志，以及 MCU 的异常处理机制来留下线索了。</p>
+<p>串口最基本的用途当然就是输出日志。</p>
+<p>比如：</p>
+<ul>
+<li>当前执行到了哪里。</li>
+<li>某个变量的值是多少。</li>
+<li>某个函数有没有执行。</li>
+<li>某个状态什么时候发生了变化。</li>
+</ul>
+<p>对于普通的逻辑 Bug，这些日志往往已经很好用了。</p>
+<p>而如果程序发生了更严重的错误，比如非法访问内存、执行了错误的指令地址，Cortex-M 内核可能会进入 <code>HardFault</code>、<code>MemManage</code>、<code>BusFault</code>、<code>UsageFault</code> 等异常处理流程。</p>
+<p>这个时候可以在异常处理函数里尽量保存并输出一些关键现场信息，例如：</p>
+<ul>
+<li><code>PC</code>：出错时正在执行或者即将执行的位置。</li>
+<li><code>LR</code>：链接寄存器，可以辅助判断调用来源。</li>
+<li><code>SP</code>：当前栈指针。</li>
+<li><code>R0 ~ R12</code> 等通用寄存器。</li>
+<li><code>xPSR</code>。</li>
+<li><code>CFSR</code>、<code>HFSR</code>、<code>MMFAR</code>、<code>BFAR</code> 等 Fault 状态寄存器。</li>
+<li>当前线程、任务或者调用栈相关信息。</li>
+</ul>
+<p>拿到这些地址以后，再配合<strong>发生崩溃时对应版本的 <code>*.elf</code> 文件</strong>，就可以使用 <code>addr2line</code>、GDB 等工具把地址解析到具体的函数、源文件甚至代码行。</p>
+<p>例如 <code>addr2line</code> 本质上就是利用 ELF 中的符号和调试信息，把：</p>
+<pre><code class="language-text">0x1032e115
+</code></pre>
+<p>这种看起来完全不知道是什么东西的地址，转换成类似：</p>
+<pre><code class="language-text">xxx_function
+src/xxx.c:123
+</code></pre>
+<p>这样的信息。</p>
+<p>当然，前提是 ELF 必须和设备当时运行的固件对应。</p>
+<p>代码重新编译过以后，函数地址很可能已经发生变化。拿一个新版本的 ELF 去分析旧版本程序留下来的崩溃地址，很可能直接查歪。</p>
+<p>所以这也再次证明了前面为什么要强调：</p>
+<p><strong>一定要保留出问题版本对应的固件和 ELF。</strong></p>
+<p><del>比较麻烦，如果不能用调试器，还是丢给 <a href="#%E5%BC%BA%E5%A4%A7%E7%9A%84-ai">AI</a> 吧……</del></p>
+<h3 id="转储文件">转储文件</h3>
+<p>如果系统本身支持保存 Crash Dump、Core Dump 或者类似的崩溃信息，那调试起来通常会方便很多。</p>
+<p>所谓转储，本质上就是尽可能把程序崩溃那一刻的“现场”保存下来。</p>
+<p>里面可能包括：</p>
+<ul>
+<li>CPU 寄存器。</li>
+<li>当前线程信息。</li>
+<li>调用栈。</li>
+<li>一部分 RAM。</li>
+<li>Fault 状态寄存器。</li>
+<li>任务列表。</li>
+<li>其他和系统有关的运行状态。</li>
+</ul>
+<p>具体能保存多少，就看系统本身实现到了什么程度。</p>
+<p>有些系统会生成比较完整的转储文件，有些 MCU 项目可能只是把寄存器、栈和关键内存保存到 Flash，之后再导出来分析。</p>
+<p>拿到转储以后，通常不需要重新连接当时出问题的设备，也不一定需要调试器。</p>
+<p>只要保留了<strong>对应版本的 <code>*.elf</code> 文件</strong>，再配合 GDB、<code>addr2line</code> 或者厂商提供的分析工具，就可以进行离线分析。</p>
+<p>不过这里要注意一点：</p>
+<p>并不是随便拿一个“dump 文件”就能直接执行：</p>
+<pre><code class="language-bash">gdb xxx.elf xxx.dump
+</code></pre>
+<p>然后什么都自动恢复出来。</p>
+<p>这取决于转储文件的格式。</p>
+<p>如果系统生成的是 GDB 能识别的 Core Dump，自然可以直接加载；如果只是自己保存的一段寄存器和内存数据，就可能还需要脚本、专用工具或者手动指定内存地址进行分析。</p>
+<p>所以“转储文件”更准确地说，是一种<strong>保存崩溃现场的方法</strong>，至于具体怎么读取，要看项目和系统的实现。</p>
+<p><del>经常被遗忘的方法，主要是获取和分析流程有时候确实挺麻烦。</del></p>
+<h3 id="强大的-ai">强大的 AI</h3>
+<p>如今 AI 已经比 2023 年那时候强大太多了。</p>
+<p>尤其是在代码分析和调试方面，它已经不仅仅是“根据一段报错猜原因”。</p>
+<p>如果能给它足够的信息，比如：</p>
+<ul>
+<li>Fault 日志。</li>
+<li>寄存器值。</li>
+<li>调用栈。</li>
+<li><code>*.map</code> 文件。</li>
+<li><code>*.elf</code> 文件。</li>
+<li>对应的源码。</li>
+<li>修改前后的 Git diff。</li>
+<li>系统日志。</li>
+</ul>
+<p>现在很多 AI Agent 已经可以主动调用 <code>addr2line</code>、<code>objdump</code>、GDB 等工具，把地址解析成函数，再结合源码继续往下追。</p>
+<p>有时候你只看到：</p>
+<pre><code class="language-text">PC = 0x1032e115
+LR = 0x10136639
+</code></pre>
+<p>完全不知道发生了什么。</p>
+<p>AI 可以先解析地址，再检查对应函数，然后结合寄存器值、调用关系和最近的代码修改，快速帮你缩小范围。</p>
+<p>对于自己不熟悉的大型项目，这一点尤其有用。</p>
+<p>因为很多时候最困难的不是“怎么修”，而是：</p>
+<p><strong>我甚至不知道应该从哪一个文件开始看。</strong></p>
+<p>当然，AI 也不是万能的。</p>
+<p>如果给它的信息不完整，比如 ELF 和实际运行版本对不上、日志缺失、Bug 无法稳定复现，它一样可能分析错。</p>
+<p>所以比较靠谱的方式还是：</p>
+<p><strong>让工具负责留下现场，让 AI 帮你整理和分析现场，人最后负责判断结果是否合理。</strong></p>
+<p><del>学 AI 就行了，前面的都不用学（bushi）</del></p>
+<h2 id="总结">总结</h2>
+<p>遇到普通的逻辑 Bug 其实还好。</p>
+<p>只要设备上的程序没有彻底崩溃，还能输出日志，就可以通过打印变量、增加日志、对比代码修改等方式一点一点排查。</p>
+<p>最麻烦的还是程序直接崩溃。</p>
+<p>比如进入 HardFault 后，正常业务逻辑已经无法继续执行，这个时候能留下来的现场信息非常有限。</p>
+<p>因此最好提前做好异常处理和崩溃信息保存机制。</p>
+<p>至少应该知道怎么获取：</p>
+<ul>
+<li>出错时的 <code>PC</code>、<code>LR</code> 等关键寄存器。</li>
+<li>Fault 状态寄存器。</li>
+<li>调用栈或者栈内存。</li>
+<li>对应版本的 <code>*.elf</code> 和 <code>*.map</code> 文件。</li>
+</ul>
+<p>然后学会使用 <code>addr2line</code>、GDB 等工具，把这些看起来毫无意义的地址重新对应到源码上。</p>
+<p>调试器当然最好用。</p>
+<p>没有调试器，就尽量靠日志、Fault 信息和转储留下现场。</p>
+<p>实在看不懂，还可以把这些东西交给 AI 帮忙分析。</p>
+<p>不过说到底，调试工具再强，也只是 Bug 出现之后用来救火的。</p>
+<p>真正最需要关注的还是代码质量。</p>
+<p><strong>不出 Bug 才是最好的调试方法。</strong></p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/">MCU开发学习记录(4)：功能的更新</a></span>
+  <span><a href="/cn/2026/07/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%B8%B8%E7%94%A8-stl-%E6%B1%87%E6%80%BB/">C++学习记录(1)：常用 STL 汇总</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

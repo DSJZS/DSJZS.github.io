@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Wed, 22 Jul 2026 09:58:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 00:13:33 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git</title>
@@ -42,6 +42,13 @@
       <link>https://masterji.top/tags/ai-coding/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://masterji.top/tags/ai-coding/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Algorithm</title>
+      <link>https://masterji.top/tags/algorithm/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://masterji.top/tags/algorithm/</guid>
       <description></description>
     </item>
     <item>

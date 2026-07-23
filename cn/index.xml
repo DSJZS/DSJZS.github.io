@@ -9,6 +9,13 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/cn/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>LeetCode Hot 100</title>
+      <link>https://masterji.top/cn/2026/07/leetcode-hot-100/</link>
+      <pubDate>Fri, 24 Jul 2026 00:01:51 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/leetcode-hot-100/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;h2 id=&#34;题型导航&#34;&gt;题型导航&lt;/h2&gt;&#xA;&lt;h3 id=&#34;回溯&#34;&gt;回溯&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.cn/problems/generate-parentheses/&#34;&gt;22. 括号生成&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.cn/problems/combination-sum/&#34;&gt;39. 组合总和&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;动态规划&#34;&gt;动态规划&lt;/h3&gt;&#xA;&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;</description>
+    </item>
+    <item>
       <title>MCU开发学习记录(5)：文档的价值</title>
       <link>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</link>
       <pubDate>Wed, 22 Jul 2026 15:53:12 +0800</pubDate>

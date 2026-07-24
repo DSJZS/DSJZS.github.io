@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>AI Coding开发学习记录(3)：Codex 的关键功能使用说明 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="AI Coding开发学习记录(3)：Codex 的关键功能使用说明 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="之前的 Agentic Engineering 博客提到了 Subagent 等技术，这篇博客用于讲解这些功能怎么使用。
+[&amp;hellip;] 我现在学 AI Coding 比学 Coding 还认真🙃
+[&amp;hellip;] Codex APP 和 Codex CLI 都是默认支持创建 Subagent 的。
+[&amp;hellip;] 不过 Subagent 不会自动创建，必须明确告知 Codex 要 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">AI Coding开发学习记录(3)：Codex 的关键功能使用说明</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-13</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span>, </span><a href="/tags/codex/" class="term-tag">Codex</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#subagent">Subagent</a>
+      <ul>
+        <li><a href="#介绍以及简单使用">介绍以及简单使用</a></li>
+        <li><a href="#自定义-subagent">自定义 Subagent</a>
+          <ul>
+            <li><a href="#基础配置">基础配置</a></li>
+            <li><a href="#subagent-配置">Subagent 配置</a></li>
+            <li><a href="#bug-说明与解决方案">Bug 说明与解决方案</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#mcp">MCP</a></li>
+    <li><a href="#skill">Skill</a></li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>之前的<a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/"> Agentic Engineering 博客</a>提到了 Subagent 等技术，这篇博客用于讲解这些功能怎么使用。</p>
+<p><del>我现在学 AI Coding 比学 Coding 还认真🙃</del></p>
+<h2 id="subagent">Subagent</h2>
+<h3 id="介绍以及简单使用">介绍以及简单使用</h3>
+<p>Codex APP 和 Codex CLI 都是默认支持创建 Subagent 的。</p>
+<p>不过 Subagent 不会自动创建，必须明确告知 Codex 要几个、每个干什么等自定义内容才会创建。</p>
+<p><strong>每个 Subagent 的生存周期由主 Agent 和 Codex Runtime 自行管理</strong>。当然用户也可以通过提示词等方式主动控制。</p>
+<p>比如我要分析一个博客开发目录，可以输入如下的提示词：</p>
+<pre><code>不做任何修改。
+
+使用三个 Subagents 并行分析
+
+第一个 Agent 负责分析博客架构。
+
+第二个 Agent 负责分析文章风格。
+
+第三个 Agent 负责分析国际化部分如何。
+
+三个 Agent 都完成任务后，主 Agent 汇总一份博客报告，简单介绍当前博客，并列出它当前的问题。
+</code></pre>
+<p>这里主 Agent 会创建三个 Agent 并行完成任务。</p>
+<h3 id="自定义-subagent">自定义 Subagent</h3>
+<p>很多时候 Codex 的 Agent 自动创建的 Subagent 不满足我们实际的业务需求，而且每次可能都不一样。</p>
+<p>所以实际的项目中一般需要我们使用自定义 Subagent 。</p>
+<p>详细资料参考 <a href="https://learn.chatgpt.com/docs/config-file/config-reference">Configuration Reference</a> 和 <a href="https://learn.chatgpt.com/docs/agent-configuration/subagents?surface=app">Subagents</a> 。</p>
+<p>下文介绍最基础的部分。</p>
+<h4 id="基础配置">基础配置</h4>
+<p>有两种方式：</p>
+<ul>
+<li>全局配置，配置文件位于： <code>~/.codex/config.toml</code> 。<br>用于提供默认配置 。<br>还有下文提到的线程数、深度限制。</li>
+<li>项目级配置，配置文件位于： <code>&lt;project&gt;/.codex/config.toml</code> 。<br>用于配置当前项目专用 Subagent 。</li>
+</ul>
+<p>为了让 Codex 受监管地创建 Subagent 。一般会在 <code>~/.codex/config.toml</code> 等地方田间如下的内容：</p>
+<pre><code>[agents]
+max_threads = 6
+max_depth = 1
+</code></pre>
+<p>这两个字段分别为：</p>
+<ul>
+<li>max_threads - 最大线程数，每个 Subagent 要单独开个线程，相当于规定了最多并行几个 Subagent。</li>
+<li>max_depth：最大深度，表示最多嵌套几层 Subagent。一般为 1，避免嵌套过多。</li>
+</ul>
+<h4 id="subagent-配置">Subagent 配置</h4>
+<p>同样分两种位置存放：</p>
+<ul>
+<li>全局定义，配置文件位于： <code>~/.codex/agents/&lt;name&gt;.toml</code> 。<br>用于定义默认 Subagent 。</li>
+<li>项目级定义，配置文件位于： <code>&lt;project&gt;/.codex/agents/&lt;name&gt;.toml</code> 。<br>用于定义当前项目专用 Subagent 。</li>
+</ul>
+<p>定义一个新的 Subagent 。格式大概如下：</p>
+<pre><code>name = &quot;Agent 名称&quot;
+description = &quot;什么时候适合调用这个 Agent&quot;
+developer_instructions = &quot;Agent 的角色、职责、工作边界和输出要求&quot;
+
+model = &quot;可选，指定使用的模型&quot;
+model_reasoning_effort = &quot;可选，指定推理强度&quot;
+sandbox_mode = &quot;可选，指定文件和命令权限&quot;
+</code></pre>
+<h4 id="bug-说明与解决方案">Bug 说明与解决方案</h4>
+<p>目前 GPT 5.5/5.6 貌似会有 Bug 无法读取自定义配置。</p>
+<p>创建 Subagent 会走内部的工具，而非用户的配置。</p>
+<p>目前貌似最方便的办法就是给降到 GPT 5.4 启动 Codex ，命令为：</p>
+<pre><code class="language-CLI">codex -m gpt-5.4
+</code></pre>
+<p>貌似还有其它的办法，见<a href="https://www.bilibili.com/video/BV16hTc6xEpF/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">这个视频</a>下的第一个评论回复，如图：</p>
+<p><img class="markdown-image" src="./%e8%af%84%e8%ae%ba%e5%8c%ba%e6%88%aa%e5%9b%be.png" alt="评论区截图" loading="lazy" decoding="async"><span class="image-caption" hidden>评论区截图</span></p>
+<p>我还没尝试过，我目前的方案是主 Agent 为 GPT 5.4 ，Subagent 为 GPT 5.6 。</p>
+<p>感觉这个方案还行，毕竟干活的主要还是 Subagent ，而主 Agent 只起到调度的作用。</p>
+<h2 id="mcp">MCP</h2>
+<p><code>&lt;待补充&gt;</code></p>
+<h2 id="skill">Skill</h2>
+<p><code>&lt;待补充&gt;</code></p>
+<h2 id="总结">总结</h2>
+<p>Codex 的功能真多啊，只能说多问 AI ，多看手册吧。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV16hTc6xEpF/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【Codex实战】手摸手教你多Agent协同开发</a></li>
+<li><a href="https://www.bilibili.com/video/BV1TtL161EPw/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">Codex Subagents 零基础小白保姆级教程、自定义 Subagent实战指南、ChatGPT</a></li>
+<li><a href="https://www.bilibili.com/video/BV16hTc6xEpF/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【Codex实战】手摸手教你多Agent协同开发</a></li>
+<li><a href="https://www.bilibili.com/video/BV1BVEs6LENZ/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【【2026最新Codex】Codex保姆级完整教程-Codex新手保姆级教程-最强AI助手！从入门到进阶，22分钟速通Codex！【附教程文档安装包】】</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/07/%E4%B8%8A%E6%89%8B%E4%B9%8B%E5%90%8E%E6%89%8D%E7%9C%8B%E8%A7%81%E5%8E%89%E5%AE%B3/">上手之后，才看见厉害</a></span>
+  <span><a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/">AI Coding开发学习记录(2)：Agentic Engineering</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/alt-title.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="/js/image-caption.js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

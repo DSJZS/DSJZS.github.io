@@ -9,6 +9,13 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Markdown学习记录(1)：基础语法</title>
+      <link>https://masterji.top/cn/2026/07/markdown%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Fri, 24 Jul 2026 16:02:33 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/markdown%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前提到过要写一个 Markdown 语法总结，但是一直没写。&lt;/p&gt;&#xA;&lt;p&gt;一是 Markdown 已经熟悉的不能再熟悉了，写了感觉很无聊。&lt;/p&gt;&#xA;&lt;p&gt;二是最近事情多了，把这件事情忘记了。&lt;/p&gt;&#xA;&lt;p&gt;&lt;del&gt;绝对不是偷懒，懒得写 🤐&lt;/del&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>LeetCode Hot 100</title>
       <link>https://masterji.top/cn/2026/07/leetcode-hot-100/</link>
       <pubDate>Fri, 24 Jul 2026 00:01:51 +0800</pubDate>

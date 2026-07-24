@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Markdown学习记录(1)：基础语法 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Markdown学习记录(1)：基础语法 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="之前提到过要写一个 Markdown 语法总结，但是一直没写。
+[&amp;hellip;] 一是 Markdown 已经熟悉的不能再熟悉了，写了感觉很无聊。
+[&amp;hellip;] 二是最近事情多了，把这件事情忘记了。
+[&amp;hellip;] 绝对不是偷懒，懒得写 🤐
+[&amp;hellip;] # text ## text ### text #### text ##### text ###### text 这里 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">Markdown学习记录(1)：基础语法</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-24</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/markdown/" class="term-tag">Markdown</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#语法">语法</a>
+      <ul>
+        <li><a href="#文字编辑">文字编辑</a>
+          <ul>
+            <li><a href="#标题">标题</a></li>
+            <li><a href="#高亮">高亮</a></li>
+            <li><a href="#加粗">加粗</a></li>
+            <li><a href="#斜体">斜体</a></li>
+            <li><a href="#删除线">删除线</a></li>
+          </ul>
+        </li>
+        <li><a href="#链接">链接</a></li>
+        <li><a href="#列表">列表</a>
+          <ul>
+            <li><a href="#无序列表-bullet-list">无序列表(Bullet List)</a></li>
+            <li><a href="#有序列表-numbered-list">有序列表(Numbered List)</a></li>
+            <li><a href="#待办事项-可选框">待办事项(可选框)</a></li>
+          </ul>
+        </li>
+        <li><a href="#引用-quote">引用(Quote)</a></li>
+        <li><a href="#图片">图片</a></li>
+        <li><a href="#表格">表格</a></li>
+        <li><a href="#注释-footnote">注释(footnote)</a></li>
+        <li><a href="#标注-callout">标注(callout)</a></li>
+        <li><a href="#代码相关">代码相关</a>
+          <ul>
+            <li><a href="#代码行">代码行</a></li>
+            <li><a href="#代码块">代码块</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>之前提到过要写一个 Markdown 语法总结，但是一直没写。</p>
+<p>一是 Markdown 已经熟悉的不能再熟悉了，写了感觉很无聊。</p>
+<p>二是最近事情多了，把这件事情忘记了。</p>
+<p><del>绝对不是偷懒，懒得写 🤐</del></p>
+<h2 id="语法">语法</h2>
+<h3 id="文字编辑">文字编辑</h3>
+<h4 id="标题">标题</h4>
+<pre><code class="language-Markdown"># text
+## text
+### text
+#### text
+##### text
+###### text
+</code></pre>
+<p>这里 <code>#</code> 的数量表示了标题的级别，一般最多支持六级标题。</p>
+<h4 id="高亮">高亮</h4>
+<pre><code class="language-Markdown">==text==
+</code></pre>
+<p>这个高亮看平台是否支持。</p>
+<p>很多平台我看着不支持。</p>
+<h4 id="加粗">加粗</h4>
+<pre><code class="language-Markdown">**text**
+__text__
+</code></pre>
+<p>加粗有两种写法，如上。</p>
+<h4 id="斜体">斜体</h4>
+<pre><code class="language-Markdown">*斜体*
+_斜体_
+</code></pre>
+<p>斜体有两种写法，如上。</p>
+<h4 id="删除线">删除线</h4>
+<pre><code class="language-Markdown">~~text~~
+</code></pre>
+<p>删除线的写法如上。</p>
+<p>我的博客给删除线的显示效果修改成黑幕了，如下。</p>
+<p><del>秘密</del></p>
+<p>我觉得这样的效果比较好，也比较方便。</p>
+<h3 id="链接">链接</h3>
+<pre><code class="language-Markdown">[text](uri)
+[text](#topic)
+</code></pre>
+<p>链接提供类似超链接的作用。</p>
+<p>可以跳转到一个 <code>uri</code> 或者本文的某个标题或者组合起来也行。</p>
+<h3 id="列表">列表</h3>
+<h4 id="无序列表-bullet-list">无序列表(Bullet List)</h4>
+<pre><code class="language-Markdown">- item 1
+- item 2
+	- item 2-1
+	- item 2-2 
+		- item 2-2-1
+</code></pre>
+<p>无序列表不分前后，可以依靠缩进表示上下关系。</p>
+<h4 id="有序列表-numbered-list">有序列表(Numbered List)</h4>
+<pre><code class="language-Markdown">1. item1
+2. item2
+	1. item 2-1
+	2. item 2-2
+		1. item 2-2-1
+</code></pre>
+<p>有序列表分前后，可以依靠缩进表示上下关系。</p>
+<h4 id="待办事项-可选框">待办事项(可选框)</h4>
+<pre><code class="language-Markdown">- [ ] task 1
+- [ ] task 2
+	- [ ] task 2-1
+	- [ ] task 2-2
+		- [x] task 2-2-1
+</code></pre>
+<p><code>[ ]</code> 左右方括号中间一个空格表示不选择。</p>
+<p><code>[x]</code> 左右方括号中间一个 <code>x</code> 或者 <code>X</code> 表示选择。</p>
+<p>可以依靠缩进表示上下关系。</p>
+<h3 id="引用-quote">引用(Quote)</h3>
+<pre><code class="language-Markdown">&gt; quote 1
+&gt; quote 2
+&gt; &gt; quote 2-1
+&gt; &gt; quote 2-2
+&gt; &gt; &gt; quote 2-2-1
+</code></pre>
+<p>可以依靠缩进表示上下关系。</p>
+<p>我在博客中一般用于引用一个具体的作品或者表示某人说的话。</p>
+<h3 id="图片">图片</h3>
+<pre><code class="language-Markdown">![text](/path/to/image)
+</code></pre>
+<p><code>text</code> 表示插入图片的描述文本，根据平台的不同，处理方式也不同。一般显示在图片下方。
+<code>/path/to/image</code> 表示图片资源的路径。</p>
+<h3 id="表格">表格</h3>
+<pre><code class="language-Markdown">| head 1 | head 2 | head 3 |
+| ------ | ------ | ------ |
+| 123    | 456    | 789    |
+| 321    | 654    | 987    |
+</code></pre>
+<p>第一行是每列的 head 文本，第二行固定为 <code>-</code> 。</p>
+<p>后面几行为每列的具体内容。</p>
+<h3 id="注释-footnote">注释(footnote)</h3>
+<pre><code class="language-Markdown">注释[^1]
+[^1]: this is a footnote
+</code></pre>
+<p>注释文本在<strong>编辑</strong>的过程中不一定要在最下方。</p>
+<p>但是最终的<strong>显示</strong>效果，其会自动编排在文章的最下方。</p>
+<p>还有一些其它的注释语法，不过不通用，这里不介绍了。</p>
+<h3 id="标注-callout">标注(callout)</h3>
+<pre><code class="language-Markdown">&gt; [!NOTE] title
+&gt; text 1  
+&gt; text 2
+</code></pre>
+<p>这种标注一般看平台，每个平台的规则不太一样。</p>
+<p>比如 <code>NOTE</code> 大部分平台都支持，但是其它比如 <code>Example</code> 之类的可能就有问题。</p>
+<p>这里不多介绍，建议查询对应的文档。</p>
+<p>比如 Obsidian 就有<a href="https://help.obsidian.md/callouts">官方文档</a>介绍它支持那些。</p>
+<h3 id="代码相关">代码相关</h3>
+<h4 id="代码行">代码行</h4>
+<pre><code class="language-Markdown">`code`
+</code></pre>
+<h4 id="代码块">代码块</h4>
+<pre><code class="language-Markdown">code 1
+code 2
+code 3
+code 4
+</code></pre>
+<p>这个不好演示，因为我前面的演示都是基于代码块的。</p>
+<p>只能说先写三个 ` ，然后然后接着写一个 text。</p>
+<p>然后写几行文本，最后一行再写三个 ` 。</p>
+<h2 id="总结">总结</h2>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/leetcode-hot-100/">LeetCode Hot 100</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

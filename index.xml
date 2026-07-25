@@ -44,6 +44,13 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近经常遇到各种各样的 Bug，有些只是逻辑不正常，还有一些会直接导致 MCU 进入 HardFault 等异常，整个程序基本卡死。&lt;/p&gt;&#xA;&lt;p&gt;因此最近需要频繁进行调试，想办法找到 Bug 到底是从哪里冒出来的。&lt;/p&gt;</description>
     </item>
     <item>
+      <title>未完成的草稿，不完美的自己</title>
+      <link>https://masterji.top/cn/2026/07/%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E8%8D%89%E7%A8%BF%E4%B8%8D%E5%AE%8C%E7%BE%8E%E7%9A%84%E8%87%AA%E5%B7%B1/</link>
+      <pubDate>Tue, 21 Jul 2026 22:35:39 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E8%8D%89%E7%A8%BF%E4%B8%8D%E5%AE%8C%E7%BE%8E%E7%9A%84%E8%87%AA%E5%B7%B1/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;自从开始写博客后，我发现了一个奇怪的现象。&lt;/p&gt;&#xA;&lt;p&gt;那就是，我的大部分想法最后都变成了草稿，而我不知道该怎么写完它们。&lt;/p&gt;&#xA;&lt;p&gt;我似乎曾经因为某个想法，以此为标题创建了一篇博客，但现在就是写不出来了。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>C&#43;&#43;学习记录(1)：常用 STL 汇总</title>
       <link>https://masterji.top/cn/2026/07/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%B8%B8%E7%94%A8-stl-%E6%B1%87%E6%80%BB/</link>
       <pubDate>Mon, 20 Jul 2026 00:00:00 +0800</pubDate>

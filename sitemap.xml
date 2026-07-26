@@ -2,14 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/</loc>
+    <lastmod>2026-07-26T23:33:28+08:00</lastmod>
+  </url><url>
     <loc>https://masterji.top/categories/</loc>
-    <lastmod>2026-07-25T22:25:49+08:00</lastmod>
+    <lastmod>2026-07-26T23:33:28+08:00</lastmod>
+  </url><url>
+    <loc>https://masterji.top/tags/</loc>
+    <lastmod>2026-07-26T23:33:28+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/2026/07/markdown%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</loc>
     <lastmod>2026-07-24T17:24:25+08:00</lastmod>
-  </url><url>
-    <loc>https://masterji.top/tags/</loc>
-    <lastmod>2026-07-25T22:25:49+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/2026/07/leetcode-hot-100/</loc>
     <lastmod>2026-07-24T00:21:10+08:00</lastmod>
@@ -24,7 +27,7 @@
     <lastmod>2026-07-22T15:50:57+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/2026/07/%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E8%8D%89%E7%A8%BF%E4%B8%8D%E5%AE%8C%E7%BE%8E%E7%9A%84%E8%87%AA%E5%B7%B1/</loc>
-    <lastmod>2026-07-25T22:25:49+08:00</lastmod>
+    <lastmod>2026-07-26T19:34:30+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/2026/07/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%B8%B8%E7%94%A8-stl-%E6%B1%87%E6%80%BB/</loc>
     <lastmod>2026-07-22T15:50:57+08:00</lastmod>
@@ -189,10 +192,7 @@
     <lastmod>2026-07-08T18:39:50+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/2025/12/%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%BC%80%E6%BA%90%E5%B7%A5%E5%85%B7163musiclyrics/</loc>
-    <lastmod>2026-07-08T18:39:50+08:00</lastmod>
-  </url><url>
-    <loc>https://masterji.top/tags/%E9%9F%B3%E4%B9%90/</loc>
-    <lastmod>2026-07-08T18:39:50+08:00</lastmod>
+    <lastmod>2026-07-26T19:34:30+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/</loc>
     <lastmod>2026-07-08T18:39:50+08:00</lastmod>
@@ -321,7 +321,7 @@
     <lastmod>2026-04-06T18:51:03+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/cn/todo/</loc>
-    <lastmod>2026-07-24T17:24:25+08:00</lastmod>
+    <lastmod>2026-07-26T23:33:28+08:00</lastmod>
   </url><url>
     <loc>https://masterji.top/tags/verilog/</loc>
     <lastmod>2026-04-25T21:29:10+08:00</lastmod>

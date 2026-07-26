@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？ - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？ - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="前面几章提到过，上下文和提示词十分关键。
+[&amp;hellip;] 你要提供足够多的信息，AI Agent 才能理解你的需求，并知道该如何完成它。
+[&amp;hellip;] 你不能在完全没有提供使用场景、安全边界和其他限制的情况下，直接对它说：
+[&amp;hellip;] 帮我用 xxx 生成一个 yyy。
+[&amp;hellip;] 这样生成出来的结果，大概率不会符合你的预期。
+[&amp;hellip;] 因为当 AI &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+<div class="article-meta">
+<h1 class="title">AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？</h1>
+
+<h3 class="meta-line">
+  <span>
+
+<span class="author">成元</span>
+
+
+
+
+
+
+<span class="date">2026-07-26</span>
+
+
+</span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#为什么不直接使用-plan-mode">为什么不直接使用 Plan Mode？</a></li>
+    <li><a href="#怎么问">怎么问？</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>前面几章提到过，上下文和提示词十分关键。</p>
+<p>你要提供足够多的信息，AI Agent 才能理解你的需求，并知道该如何完成它。</p>
+<p>你不能在完全没有提供使用场景、安全边界和其他限制的情况下，直接对它说：</p>
+<blockquote>
+<p>帮我用 xxx 生成一个 yyy。</p>
+</blockquote>
+<p>这样生成出来的结果，大概率不会符合你的预期。</p>
+<p>因为当 AI Agent 无法确定某些细节应该如何实现时，它往往会“自以为是”地替你补充，并按照它认为合理的方式继续完成任务。</p>
+<p>于是，你只能一次又一次地要求它修改或者实现 zzz。</p>
+<p>直到最后，你可能会发现：需求还没有完成，token 却已经快用完了。</p>
+<p>但是很多时候，道理我都懂，我就是不知道应该提供哪些信息。</p>
+<p>毕竟我不是什么具有“几十年功力的老师傅”，只是一个刚刚入门的菜鸟。</p>
+<p>我自己完全不懂架构之类的东西，该怎么向 AI 描述一个完整的方案呢？</p>
+<p>以前遇到不会的问题，使用的“古法”是“找度娘”。</p>
+<p>而现在，我们还可以直接询问 AI，比如 ChatGPT、DeepSeek 之类的工具。</p>
+<p>先把自己的问题问明白，从对话中得到一个比较满意的方案，再让 AI Agent 根据这个方案真正开始干活儿。</p>
+<h2 id="为什么不直接使用-plan-mode">为什么不直接使用 Plan Mode？</h2>
+<p>有人可能会问：</p>
+<blockquote>
+<p>为什么不直接使用 Agent 的 <code>Plan Mode</code>？</p>
+<p>让它帮我制订计划不就行了吗？为什么还要先单独询问方案？</p>
+</blockquote>
+<p>关于这一点，我的看法是：<code>Plan Mode</code> 更适合处理一个已经相对明确的任务。</p>
+<p>也就是说，你最好先弄清楚自己要解决的是什么问题、大致有哪些限制，以及希望得到什么结果，然后再开启 <code>Plan Mode</code>，让 Agent 根据这些信息制订具体的执行计划。</p>
+<p>如果你自己对需求还完全不了解，就直接进入 <code>Plan Mode</code>，可能会遇到几个问题：</p>
+<ol>
+<li>你可能看不懂它生成的 Plan，也无法判断这个 Plan 是否合理。甚至它最终要实现的东西，可能根本不符合你的真实需求。</li>
+<li>Agent 在制订计划的过程中，可能会询问一些实现细节。但由于你自己也不了解相关内容，可能连它在问什么都看不懂，更不知道该怎么回答。</li>
+</ol>
+<p>说到底，<code>Plan Mode</code> 同样需要根据上下文和提示词生成 Plan。</p>
+<p>但你现在遇到的问题，恰恰就是不知道应该提供什么上下文，也不知道提示词里应该写什么。</p>
+<p>在这种情况下，与其立刻让 Agent 制订执行计划，不如先在普通对话中把问题问明白。</p>
+<h2 id="怎么问">怎么问？</h2>
+<p>其实方法和前面提到的内容差不多，核心还是一句话：</p>
+<blockquote>
+<p><strong>不能只向 AI 索要结果，却不提供必要的信息。</strong></p>
+</blockquote>
+<p>比如，不能只说：</p>
+<blockquote>
+<p>给我一个实现 xxx 的方案。</p>
+</blockquote>
+<p>因为仅凭这一句话，AI 并不知道这个功能会用在什么地方，也不知道你已经做了什么、遇到了哪些问题，以及最终想达到怎样的效果。</p>
+<p>因此，在询问方案时，可以尽量提供下面这些信息：</p>
+<ul>
+<li><strong>使用场景</strong>：这个功能会在什么环境中使用，主要解决什么问题。</li>
+<li><strong>当前情况</strong>：现在已经实现了什么，项目大概是什么结构。</li>
+<li><strong>尝试过的方案</strong>：之前用过哪些方法，为什么没有达到预期。</li>
+<li><strong>已经遇到的问题</strong>：目前的瓶颈、报错或者不合理的地方是什么。</li>
+<li><strong>限制条件</strong>：性能、内存、平台、时间、安全边界或者兼容性方面有哪些要求。</li>
+<li><strong>最终目标</strong>：你希望最后得到什么结果，最关注哪些指标。</li>
+</ul>
+<p>当然，并不是每次都必须机械地把这些内容全部写一遍。</p>
+<p>你知道多少就先说多少，暂时不知道的地方也可以明确告诉 AI：</p>
+<blockquote>
+<p>我对这一部分不太了解，请先帮我分析还缺少哪些必要信息，不要直接给出最终方案。</p>
+</blockquote>
+<p>这样一来，AI 就不只是回答问题，也可以反过来帮你梳理需求。</p>
+<p>在对话过程中，遇到不明白的地方也不要直接跳过。</p>
+<p>如果 AI 给出的方案里出现了自己看不懂的概念，可以继续追问：</p>
+<blockquote>
+<p>为什么要这样设计？</p>
+</blockquote>
+<blockquote>
+<p>这个方案解决了什么问题？</p>
+</blockquote>
+<blockquote>
+<p>还有没有更简单的实现方式？</p>
+</blockquote>
+<blockquote>
+<p>如果不这样做，会产生什么后果？</p>
+</blockquote>
+<blockquote>
+<p>这个方案是否满足我前面提到的限制？</p>
+</blockquote>
+<p>一直问到自己能够大致理解方案的思路、优缺点和适用范围，再考虑让 AI Agent 真正开始修改项目。</p>
+<p>这里的重点并不是一定要把自己问成一个专家，而是至少要达到下面的程度：</p>
+<blockquote>
+<p>我知道这个方案大概要做什么，为什么这样做，以及最终结果是否符合我的需求。</p>
+</blockquote>
+<p>如果连这些都无法判断，就很难对 AI Agent 的工作进行 <code>review</code>。</p>
+<h2 id="总结">总结</h2>
+<p>如果自己还没有弄清楚需求，就不要急着直接进入 <code>Plan Mode</code>，更不要立刻让 AI Agent 开始修改代码。</p>
+<p>可以先在普通对话中描述场景、现状、问题、限制和最终目标，让 AI 帮助自己分析可行的方案。</p>
+<p>遇到看不懂或者不确定的地方，就继续追问，直到自己能够基本理解这个方案，并确认它符合预期。</p>
+<p>之后，再把已经讨论清楚的内容交给 <code>Plan Mode</code>，让 Agent 制订具体的执行计划并开始干活。</p>
+<p>大概可以分成下面几个阶段：</p>
+<blockquote>
+<p>描述问题 → 补充信息 → 讨论方案 → 理解并确认方案 → 进入 <code>Plan Mode</code> → 执行并 <code>review</code></p>
+</blockquote>
+<p>先询问方案，并不是要求自己提前弄懂所有技术细节。</p>
+<p>恰恰相反，这是在自己不懂的时候，先借助 AI 把问题逐渐问明白。</p>
+<p>否则，即使 AI Agent 最终交付了一堆看起来很完整的代码，你也可能无法判断它是否可靠、是否符合预期，以及是否埋下了新的问题。</p>
+<p>说到底，AI Agent 可以帮你干活，但不能代替你确认自己到底想要什么。</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/markdown%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">Markdown学习记录(1)：基础语法</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

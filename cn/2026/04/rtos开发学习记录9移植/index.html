@@ -59,13 +59,15 @@
     </div>
     </nav>
 
+
 <div class="article-meta">
 <h1 class="title">RTOS开发学习记录(9)：移植</h1>
 
 <h3 class="meta-line">
   <span>
+  
+  
 
-<span class="author">成元</span>
 
 
 
@@ -73,9 +75,14 @@
 
 
 <span class="date">2026-04-22</span>
+<span class="meta-sep"> / </span>
+<span class="word-count">约 2804 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 6 分钟</span>
 
 
-</span>
+  
+  </span>
   <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
 </h3>
 </div>
@@ -346,6 +353,19 @@ msr     psp, r1
 </ul>
 <p>当前 Cortex-M3 + GCC 版本利用了 Cortex-M 的 SVC、PendSV、PSP/MSP 和异常自动压栈机制，因此任务切换实现相对清晰。</p>
 <p>如果移植到其它架构，最关键的仍然是两点：第一，要能构造任务第一次运行所需的初始上下文；第二，要能在任务切换时保存旧任务上下文并恢复新任务上下文。只要这两点可靠，调度器、定时器和 IPC 这些通用代码就有机会正常运行起来。</p>
+
+
+
+
+
+
+
+<hr>
+<div class="post-tailnote small">
+  <p>文章作者：成元<br>上次更新：2026-07-08</p>
+</div>
+
+
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">OSOC学习记录(1)：F阶段总结</a></span>

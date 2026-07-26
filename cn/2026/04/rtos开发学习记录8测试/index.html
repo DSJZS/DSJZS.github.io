@@ -60,13 +60,15 @@
     </div>
     </nav>
 
+
 <div class="article-meta">
 <h1 class="title">RTOS开发学习记录(8)：测试</h1>
 
 <h3 class="meta-line">
   <span>
+  
+  
 
-<span class="author">成元</span>
 
 
 
@@ -74,9 +76,14 @@
 
 
 <span class="date">2026-04-22</span>
+<span class="meta-sep"> / </span>
+<span class="word-count">约 1755 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 4 分钟</span>
 
 
-</span>
+  
+  </span>
   <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
 </h3>
 </div>
@@ -249,6 +256,19 @@ queue 4 lines=8508  jumps=0 last_count=42540000 last_receive=42540000
 <p>目前 Yuan RTOS 的初步测试主要覆盖了资源占用和队列长时间运行。</p>
 <p>资源占用方面，内核本身增量较小，当前长测 BSP 的 RAM 占用主要来自任务栈和队列缓冲区。</p>
 <p>功能测试方面，队列长时间运行接近 12 小时，最终没有发现数据错位、跳变、复位或异常日志。这个结果不能代表完全可靠，但至少说明当前实现已经具备继续扩展和继续测试的基础。</p>
+
+
+
+
+
+
+
+<hr>
+<div class="post-tailnote small">
+  <p>文章作者：成元<br>上次更新：2026-07-08</p>
+</div>
+
+
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/">RTOS开发学习记录(9)：移植</a></span>

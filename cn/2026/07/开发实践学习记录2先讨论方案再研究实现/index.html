@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>开发实践学习记录(2)：先讨论方案，再研究实现 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="开发实践学习记录(2)：先讨论方案，再研究实现 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近做了很多无用功，因此写一篇博客记录一下，也算是给自己一个教训。
+[&amp;hellip;] 前段时间，我被要求实现一个效果 C，同时拿到了一个 Demo 作为参考。
+[&amp;hellip;] Demo 中采用的方案是：
+[&amp;hellip;] A -&amp;gt; B -&amp;gt; C
+[&amp;hellip;] 看上去似乎挺不错的。
+[&amp;hellip;] 一段时间后，我把这套方案移植到了指定的设备上。但是经过测试，最 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+
+<div class="article-meta">
+<h1 class="title">开发实践学习记录(2)：先讨论方案，再研究实现</h1>
+
+<h3 class="meta-line">
+  <span>
+  
+  
+
+
+
+
+
+
+
+<span class="date">2026-07-28</span>
+<span class="meta-sep"> / </span>
+<span class="word-count">约 1368 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 3 分钟</span>
+
+
+  
+  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#问题出在哪里">问题出在哪里？</a></li>
+    <li><a href="#应该怎么做">应该怎么做？</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>最近做了很多无用功，因此写一篇博客记录一下，也算是给自己一个教训。</p>
+<p>前段时间，我被要求实现一个效果 C，同时拿到了一个 Demo 作为参考。</p>
+<p>Demo 中采用的方案是：</p>
+<blockquote>
+<p>A -&gt; B -&gt; C</p>
+</blockquote>
+<p>看上去似乎挺不错的。</p>
+<p>一段时间后，我把这套方案移植到了指定的设备上。但是经过测试，最后得到的数据并不太好看。</p>
+<p>于是有人问：</p>
+<blockquote>
+<p>A -&gt; B 这一步能不能省略，直接走 B -&gt; C？</p>
+</blockquote>
+<p>当时我也没有认真研究过，只是感觉理论上应该可行，于是就直接开始实现了。</p>
+<p>最后做出来的效果确实不错，测试数据也很好看。</p>
+<p>但是，它又产生了新的问题。</p>
+<p>由于 B 存在一些限制，比如无法压缩、传输带宽不够等，反正最后发现它不能直接作为输入。</p>
+<p>于是，我又开始测试：</p>
+<blockquote>
+<p>D -&gt; C</p>
+</blockquote>
+<p>结果这个方案最后也炸了。</p>
+<p>兜兜转转一圈，最后还是回到了最开始的方案</p>
+<blockquote>
+<p>A -&gt; B -&gt; C</p>
+</blockquote>
+<p>最后在这套方案的基础上勉强优化一下，凑合着使用。</p>
+<p>前面做的很多工作，基本都白费了。</p>
+<h2 id="问题出在哪里">问题出在哪里？</h2>
+<p>回头来看，最大的问题就是：在真正开始实现之前，没有先对齐需求，也没有认真调研哪些方案是合理的。</p>
+<p>最开始拿到 Demo 后，我几乎是直接照着它的方案进行移植，没有先确认这套方案是否适合目标设备。</p>
+<p>后来发现数据不好看，又在没有充分分析的情况下，凭感觉切换到了另一个方案。</p>
+<p>每次都是先投入时间实现，做完以后才发现存在新的限制，然后再换一个方向重新开始。</p>
+<p>整个过程中，我其实并不清楚每个方案的可行性，也没有提前整理清楚它们分别会受到哪些条件限制。</p>
+<p>最后的结果就是：花费了大量时间，实现了好几套最终无法使用的方案。</p>
+<h2 id="应该怎么做">应该怎么做？</h2>
+<p>在真正开始实现一个功能之前，应该先尽可能收集资料，弄清楚需求和限制，再讨论有哪些可行的方案。</p>
+<p>比如，可以先询问 AI 获取一些思路。具体方法可以参考我<a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/">之前的博客</a>。</p>
+<p>当然，AI 给出的内容也不能直接当成最终结论，只能作为一种参考。遇到关键问题，还是要结合项目实际情况进行验证。</p>
+<p>除此之外，也应该多和同事沟通。</p>
+<p>尤其是对项目更加熟悉的人，可能提前就知道某些方案为什么不可行，或者知道设备上存在哪些不容易发现的限制。</p>
+<p>与其自己花几天时间把方案完整实现出来，再发现走不通，不如提前花一点时间讨论一下。</p>
+<p>如果经过分析后，发现现有条件下确实无法实现需求，也应该及时向领导汇报。</p>
+<p>需要说明当前存在哪些限制、为什么原方案不可行，以及是否存在其他替代方案。</p>
+<p>不要明知道任务可能无法完成，却还是闷头实现到最后。</p>
+<p><del>你也不想天天加班，最后才发现自己做出来的东西根本不能用吧。</del></p>
+<p>当然，讨论方案并不代表完全不能写代码。</p>
+<p>有些问题只靠分析无法确定，还是需要通过实际测试来验证。</p>
+<p>不过，这时候应该只实现最少的必要逻辑，先做一个小型测试，验证方案中最关键、最不确定的部分。</p>
+<p>这样即使方案最终不可行，损失的也只是一小段测试代码，而不是一整套已经实现完的逻辑。</p>
+<p><del>同时也好给领导交差，领导可不好糊弄啊</del></p>
+<h2 id="总结">总结</h2>
+<p>总之，在开始实现一件事情之前，应该先和相关人员对齐需求，并讨论大致的方案。</p>
+<p>不要等到功能已经全部做完以后，才拿着结果去和别人讨论。</p>
+<p>对于不确定的部分，可以先实现少量必要逻辑，进行一些小规模测试，验证最关键的假设。</p>
+<p>确认方案可行以后，再逐步补充完整实现。</p>
+<p>因为在开发初期，需求、资源限制和技术方案都可能发生变化。</p>
+<p>如果一开始就投入大量时间完成全部逻辑，后期很可能因为各种原因进行大改，甚至整套推翻重做。</p>
+<p>先讨论，再验证，最后才是完整实现。</p>
+<p>这样或许不能保证一次就选对方案，但至少可以少做一些无用功。</p>
+
+
+
+
+
+
+
+<hr>
+<div class="post-tailnote small">
+  <p>文章作者：成元<br>上次更新：2026-07-29</p>
+</div>
+
+
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/">AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

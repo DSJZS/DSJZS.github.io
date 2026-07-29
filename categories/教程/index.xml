@@ -9,6 +9,13 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>开发实践学习记录(2)：先讨论方案，再研究实现</title>
+      <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 28 Jul 2026 09:36:40 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近做了很多无用功，因此写一篇博客记录一下，也算是给自己一个教训。&lt;/p&gt;&#xA;&lt;p&gt;前段时间，我被要求实现一个效果 C，同时拿到了一个 Demo 作为参考。&lt;/p&gt;&#xA;&lt;p&gt;Demo 中采用的方案是：&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/</link>
       <pubDate>Sun, 26 Jul 2026 22:11:16 +0800</pubDate>
@@ -30,10 +37,10 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;h2 id=&#34;题型导航&#34;&gt;题型导航&lt;/h2&gt;&#xA;&lt;h3 id=&#34;回溯&#34;&gt;回溯&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.cn/problems/generate-parentheses/&#34;&gt;22. 括号生成&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://leetcode.cn/problems/combination-sum/&#34;&gt;39. 组合总和&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;动态规划&#34;&gt;动态规划&lt;/h3&gt;&#xA;&lt;h2 id=&#34;总结&#34;&gt;总结&lt;/h2&gt;</description>
     </item>
     <item>
-      <title>MCU开发学习记录(5)：文档的价值</title>
-      <link>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</link>
+      <title>开发实践学习记录(1)：文档的价值</title>
+      <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</link>
       <pubDate>Wed, 22 Jul 2026 15:53:12 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</guid>
+      <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近经常被要求写文档。&lt;/p&gt;&#xA;&lt;p&gt;比如新增了一个功能，或者对原有功能进行了比较大的修改，往往都需要补一份对应的文档。&lt;/p&gt;&#xA;&lt;p&gt;我一开始其实不太理解这种文档到底应该写什么，就直接把它当成了更新日志来写。&lt;/p&gt;</description>
     </item>
     <item>

@@ -156,10 +156,10 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;del&gt;唉，今天澡卡弄丢了，很烦。&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;大约在 2023 年，也就是所谓的 AI 元年，我就开始接触 AI 编程了。当时和大多数人一样，我觉得它没什么用。事实上，那时的 AI 对编程来说确实帮不上什么忙，只能在 ChatGPT 这类网页聊天框里，你说一句，它回一句，编程能力也比较有限。后来之所以觉得好用，我感觉除了 AI 模型本身越来越强之外，更关键的是出现了 AI 编程代理（AI Coding Agent）这类工具。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>博客开发记录(1)：主题的修改与功能增加</title>
-      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</link>
+      <title>博客开发记录(1)：主题修改、功能增加与我的一些心里话</title>
+      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0%E4%B8%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</link>
       <pubDate>Mon, 06 Jul 2026 12:53:28 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/</guid>
+      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0%E4%B8%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。近几天有空，正好更新一下站点，说说有什么变化的地方以及我的一些想法。&lt;/p&gt;</description>
     </item>
     <item>

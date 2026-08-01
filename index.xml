@@ -9,6 +9,13 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>正计时专注法</title>
+      <link>https://masterji.top/cn/2026/08/%E6%AD%A3%E8%AE%A1%E6%97%B6%E4%B8%93%E6%B3%A8%E6%B3%95/</link>
+      <pubDate>Sat, 01 Aug 2026 23:19:27 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E6%AD%A3%E8%AE%A1%E6%97%B6%E4%B8%93%E6%B3%A8%E6%B3%95/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前，我一直使用番茄钟来帮助自己学习和工作。&lt;/p&gt;&#xA;&lt;p&gt;但是，番茄钟是基于倒计时的。经常是我还没有做完一件事情，或者还没有休息好，计时器就突然响了。&lt;/p&gt;&#xA;&lt;p&gt;这会打断我原本的节奏，有时候反而让我觉得有些烦躁。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>开发实践学习记录(2)：先讨论方案，再研究实现</title>
       <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Tue, 28 Jul 2026 09:36:40 +0800</pubDate>
@@ -79,10 +86,10 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近因为刷题和实际业务的开发，在重新整理 C++ 的笔记。&lt;/p&gt;&#xA;&lt;p&gt;发现 STL 这东西平时一直在用，但很多时候只是依赖 AI 或者自动补全，没有认真了解过他们的特性。&lt;/p&gt;&#xA;&lt;p&gt;比如 &lt;code&gt;vector&lt;/code&gt; 为什么默认这么常用，&lt;code&gt;map&lt;/code&gt; 和 &lt;code&gt;unordered_map&lt;/code&gt; 到底该怎么选，&lt;code&gt;list&lt;/code&gt; 又为什么看起来很强但实际出场率不高，这些东西如果只是记住几个接口，过一阵子还是会混。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>每个人专属的“刻板印象”</title>
-      <link>https://masterji.top/cn/2026/07/%E6%AF%8F%E4%B8%AA%E4%BA%BA%E4%B8%93%E5%B1%9E%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</link>
+      <title>谈谈小圈子里别人对我的“刻板印象”</title>
+      <link>https://masterji.top/cn/2026/07/%E8%B0%88%E8%B0%88%E5%B0%8F%E5%9C%88%E5%AD%90%E9%87%8C%E5%88%AB%E4%BA%BA%E5%AF%B9%E6%88%91%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</link>
       <pubDate>Thu, 16 Jul 2026 00:52:28 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E6%AF%8F%E4%B8%AA%E4%BA%BA%E4%B8%93%E5%B1%9E%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</guid>
+      <guid>https://masterji.top/cn/2026/07/%E8%B0%88%E8%B0%88%E5%B0%8F%E5%9C%88%E5%AD%90%E9%87%8C%E5%88%AB%E4%BA%BA%E5%AF%B9%E6%88%91%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;从小到大，尤其是在上学的时候，我一直长期和同一群人待在一起，时间久了，也没觉得这有什么特别的。&lt;/p&gt;&#xA;&lt;p&gt;但是开始实习以后，周围的环境变了，我的感受也变得很不一样。&lt;/p&gt;</description>
     </item>
     <item>

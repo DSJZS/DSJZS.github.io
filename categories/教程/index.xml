@@ -72,18 +72,18 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近因为刷题和实际业务的开发，在重新整理 C++ 的笔记。&lt;/p&gt;&#xA;&lt;p&gt;发现 STL 这东西平时一直在用，但很多时候只是依赖 AI 或者自动补全，没有认真了解过他们的特性。&lt;/p&gt;&#xA;&lt;p&gt;比如 &lt;code&gt;vector&lt;/code&gt; 为什么默认这么常用，&lt;code&gt;map&lt;/code&gt; 和 &lt;code&gt;unordered_map&lt;/code&gt; 到底该怎么选，&lt;code&gt;list&lt;/code&gt; 又为什么看起来很强但实际出场率不高，这些东西如果只是记住几个接口，过一阵子还是会混。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>AI Coding开发学习记录(3)：Codex 的关键功能使用说明</title>
-      <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E7%9A%84%E5%85%B3%E9%94%AE%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</link>
+      <title>AI Coding开发学习记录(3)：Codex 常用功能指南</title>
+      <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/</link>
       <pubDate>Mon, 13 Jul 2026 10:39:31 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E7%9A%84%E5%85%B3%E9%94%AE%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前的&lt;a href=&#34;https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/&#34;&gt; Agentic Engineering 博客&lt;/a&gt;提到了 Subagent 等技术，这篇博客用于讲解这些功能怎么使用。&lt;/p&gt;&#xA;&lt;p&gt;&lt;del&gt;我现在学 AI Coding 比学 Coding 还认真🙃&lt;/del&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;subagent&#34;&gt;Subagent&lt;/h2&gt;&#xA;&lt;h3 id=&#34;介绍以及简单使用&#34;&gt;介绍以及简单使用&lt;/h3&gt;&#xA;&lt;p&gt;Codex APP 和 Codex CLI 都是默认支持创建 Subagent 的。&lt;/p&gt;&#xA;&lt;p&gt;不过 Subagent 不会自动创建，必须明确告知 Codex 要几个、每个干什么等自定义内容才会创建。&lt;/p&gt;</description>
+      <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前的&lt;a href=&#34;https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/&#34;&gt;Agentic Engineering&lt;/a&gt;博客提到了 Subagent 等技术。&lt;/p&gt;&#xA;&lt;p&gt;这篇博客主要讲这些 AI Agent 的一些常用功能该怎么用。因为我主要用 Codex，而且主要用的是 IDE 插件和 CLI，所以这篇文章的实际操作内容也会以 Codex CLI 和 Codex IDE 插件为主。&lt;/p&gt;</description>
     </item>
     <item>
       <title>AI Coding开发学习记录(2)：Agentic Engineering</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/</link>
       <pubDate>Sun, 12 Jul 2026 19:11:43 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;del&gt;今天台风登陆了，外面风刮得好大，明天周一还能上班吗&amp;hellip;&amp;hellip;&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;这篇文章紧接上一篇文章&lt;a href=&#34;https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#agentic-engineering&#34;&gt;挖的坑&lt;/a&gt;，详细说一下 Agentic Engineering，以及它在 Codex 中的具体实现。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;del&gt;今天台风登陆了，外面风刮得好大，明天周一还能上班吗&amp;hellip;&amp;hellip;&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;这篇文章紧接上一篇文章&lt;a href=&#34;https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#agentic-engineering&#34;&gt;挖的坑&lt;/a&gt;，详细说一下 Agentic Engineering。&lt;/p&gt;&#xA;&lt;p&gt;本文主要还是介绍与提供思路，填上一篇博客的坑。不会完整的讲述如何在 AI Agent，比如 Codex 中如何配置，那是下一篇博客的任务。&lt;/p&gt;</description>
     </item>
     <item>
       <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>

@@ -11,8 +11,9 @@
     
       
       <meta name="description" content="今天台风登陆了，外面风刮得好大，明天周一还能上班吗&amp;hellip;&amp;hellip;
-[&amp;hellip;] 这篇文章紧接上一篇文章挖的坑，详细说一下 Agentic Engineering，以及它在 Codex 中的具体实现。
-[&amp;hellip;] 上一篇文章对 Agentic Engineering 的说明十分简略，看起来就好像用了 Agentic Engineering 以后，我只需要提出需求， &amp;hellip;">
+[&amp;hellip;] 这篇文章紧接上一篇文章挖的坑，详细说一下 Agentic Engineering。
+[&amp;hellip;] 本文主要还是介绍与提供思路，填上一篇博客的坑。不会完整的讲述如何在 AI Agent，比如 Codex 中如何配置，那是下一篇博客的任务。
+[&amp;hellip;] 又挖了一个坑 &amp;hellip;">
       
     
 
@@ -79,7 +80,7 @@
 
 <span class="date">2026-07-12</span>
 <span class="meta-sep"> / </span>
-<span class="word-count">约 7456 字</span>
+<span class="word-count">约 7317 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 15 分钟</span>
 
@@ -110,7 +111,7 @@
           <ul>
             <li><a href="#为什么需要-subagent">为什么需要 Subagent</a></li>
             <li><a href="#怎样设计-subagent">怎样设计 Subagent</a></li>
-            <li><a href="#主-agent-怎么把任务交给-subagent">主 Agent 怎么把任务交给 Subagent</a></li>
+            <li><a href="#main-agent-怎么把任务交给-subagent">Main Agent 怎么把任务交给 Subagent</a></li>
             <li><a href="#例一-电商项目的-agent-团队">例一：电商项目的 Agent 团队</a></li>
             <li><a href="#例二-使用-agent-团队管理博客">例二：使用 Agent 团队管理博客</a></li>
           </ul>
@@ -131,7 +132,9 @@
 
 <h2 id="前言">前言</h2>
 <p><del>今天台风登陆了，外面风刮得好大，明天周一还能上班吗&hellip;&hellip;</del></p>
-<p>这篇文章紧接上一篇文章<a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#agentic-engineering">挖的坑</a>，详细说一下 Agentic Engineering，以及它在 Codex 中的具体实现。</p>
+<p>这篇文章紧接上一篇文章<a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#agentic-engineering">挖的坑</a>，详细说一下 Agentic Engineering。</p>
+<p>本文主要还是介绍与提供思路，填上一篇博客的坑。不会完整的讲述如何在 AI Agent，比如 Codex 中如何配置，那是下一篇博客的任务。</p>
+<p><del>又挖了一个坑</del></p>
 <h2 id="agentic-engineering-是什么">Agentic Engineering 是什么</h2>
 <p>上一篇文章对 Agentic Engineering 的说明十分简略，看起来就好像用了 Agentic Engineering 以后，我只需要提出需求，其他什么都不用管了。</p>
 <p><strong>其实不是的！Agentic Engineering 强不强大，取决于 Context Engineering 和 Prompt Engineering 做得好不好！</strong></p>
@@ -148,16 +151,16 @@
 <p>于是 Andrej Karpathy 提出了 Agentic Engineering 这个概念，寄希望于它能解决 Vibe Coding 带来的问题。</p>
 <h2 id="怎么实现-agentic-engineering">怎么实现 Agentic Engineering</h2>
 <p>本小节讲解怎么具体地实现 Agentic Engineering。</p>
-<p>因为我日常使用 Codex，所以下文都会基于 Codex 进行说明。不过，这里主要介绍工作流程和设计思路。至于怎样在 Codex 中创建、配置和调用 Subagent，我会在后续文章中单独介绍。</p>
+<p>因为我日常使用 Codex，所以设置实际操作的内容会基于 Codex 进行说明。不过，这里主要介绍工作流程和设计思路。至于怎样在 Codex 中创建、配置和调用 Subagent，我会在后续文章中单独介绍。</p>
 <h3 id="agentic-engineering-的基本流程">Agentic Engineering 的基本流程</h3>
 <p>Agentic Engineering 并不是直接把一句需求丢给 Agent，而是先让 Agent 理解项目，再让它自主完成任务。一个简化后的流程如下：</p>
 <pre><code class="language-text">准备项目上下文
         ↓
 提出当前需求
         ↓
-主 Agent 分析并拆分任务
+Main Agent 分析并拆分任务
         ↓
-主 Agent 自己执行，或按需调用 Subagent
+Main Agent 自己执行，或按需调用 Subagent
         ↓
 审查、测试并汇总结果
         ↓
@@ -259,61 +262,10 @@
 <h4 id="为什么需要-subagent">为什么需要 Subagent</h4>
 <p>Agentic Engineering 为什么需要 Subagent？</p>
 <p>原因主要在于 Agentic Engineering 需要收集大量上下文信息，以及将一个需求拆分为多个子任务。</p>
-<p>比如一个前后端分离项目，一个主 Agent 当然也能完成拆分，并依次处理后端、前端、测试和文档，但所有资料、中间过程和结果，仍然会堆积在同一个上下文中。</p>
+<p>比如一个前后端分离项目，一个 Main Agent 当然也能完成拆分，并依次处理后端、前端、测试和文档，但所有资料、中间过程和结果，仍然会堆积在同一个上下文中。</p>
 <p>任务简单还好，如果任务复杂，随着任务变大，单个上下文会越来越拥挤。Agent 更容易遗漏前面的约束，或者被大量代码、日志和文档分散注意力。</p>
-<p>所以我认为 <strong>上下文隔离是 Agentic Engineering 使用 Subagent 的主要原因。</strong> 不同的子任务在独立上下文中完成，最后只把结果交回主 Agent。</p>
-<p>除此以外，还有许多其它的优势与劣势，总结如下：</p>
-<table>
-  <thead>
-      <tr>
-          <th>项目</th>
-          <th>单 Agent</th>
-          <th>主 Agent + 多个 Subagent</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td>执行方式</td>
-          <td>以串行为主</td>
-          <td>独立任务可以并行</td>
-      </tr>
-      <tr>
-          <td>上下文</td>
-          <td>所有资料和过程集中在一个上下文中</td>
-          <td>每个 Subagent 只关注自己的任务，主 Agent 主要保留计划和结果</td>
-      </tr>
-      <tr>
-          <td>专业分工</td>
-          <td>一个 Agent 同时承担多个角色</td>
-          <td>可以为不同角色配置不同规则和工具</td>
-      </tr>
-      <tr>
-          <td>审核方式</td>
-          <td>容易变成“自己写、自己审”</td>
-          <td>可以由独立的审核 Agent 重新检查</td>
-      </tr>
-      <tr>
-          <td>Token 消耗</td>
-          <td>通常更少</td>
-          <td>通常更多</td>
-      </tr>
-      <tr>
-          <td>协调成本</td>
-          <td>较低</td>
-          <td>需要处理任务交接、依赖关系和结果汇总</td>
-      </tr>
-      <tr>
-          <td>适用任务</td>
-          <td>简单修改、单一领域、小规模任务</td>
-          <td>多模块、可并行、上下文较大或需要独立审核的任务</td>
-      </tr>
-      <tr>
-          <td>角色与会话</td>
-          <td>主 Agent 持续负责整个任务</td>
-          <td>Subagent 的角色配置可以长期保留，但每次被调用的任务会话通常是临时的</td>
-      </tr>
-  </tbody>
-</table>
+<p>所以我认为 <strong>上下文隔离是 Agentic Engineering 使用 Subagent 的主要原因。</strong> 不同的子任务在独立上下文中完成，最后只把结果交回 Main Agent。</p>
+<p>除此以外，还有许多其它的优势与劣势，比如并行完成任务更快，消耗 Token 更多之类的，这里不多说。</p>
 <h4 id="怎样设计-subagent">怎样设计 Subagent</h4>
 <p>为了让 Subagent 真正服务于 Agentic Engineering，<strong>重点不是创建多少个 Agent，而是把每个 Agent 的职责划分清楚</strong>。</p>
 <p>一个 Subagent 可以从说明下面这些内容入手。</p>
@@ -343,11 +295,11 @@
       </tr>
       <tr>
           <td>输入</td>
-          <td>主 Agent 需要向它提供哪些信息</td>
+          <td>Main Agent 需要向它提供哪些信息</td>
       </tr>
       <tr>
           <td>输出</td>
-          <td>完成后必须向主 Agent 返回什么</td>
+          <td>完成后必须向 Main Agent 返回什么</td>
       </tr>
       <tr>
           <td>完成标准</td>
@@ -383,11 +335,11 @@
 - 需要作者进一步确认的问题。
 </code></pre>
 <p>至于这些角色在 Codex 中具体怎样创建、配置成什么文件，以及如何设置模型、工具和权限，不是本篇文章的重点，后续会单独说明。</p>
-<h4 id="主-agent-怎么把任务交给-subagent">主 Agent 怎么把任务交给 Subagent</h4>
-<p>主 Agent 相当于项目经理。收到需求后，它会先读取项目上下文，分析任务涉及哪些部分，再决定由自己完成，还是调用对应的 Subagent。</p>
+<h4 id="main-agent-怎么把任务交给-subagent">Main Agent 怎么把任务交给 Subagent</h4>
+<p>Main Agent 相当于项目经理。收到需求后，它会先读取项目上下文，分析任务涉及哪些部分，再决定由自己完成，还是调用对应的 Subagent。</p>
 <pre><code class="language-text">用户提出需求
         ↓
-主 Agent 分析目标、限制和影响范围
+Main Agent 分析目标、限制和影响范围
         ↓
 拆分子任务并判断依赖关系
         ↓
@@ -397,9 +349,9 @@
         ↓
 统一审查、验证并向用户汇报
 </code></pre>
-<p>主 Agent 不会每次都调用所有 Subagent。例如，只修改一句文案时，主 Agent 可以直接完成；只修改前端样式时，可能只调用前端 Agent；只有新增完整功能时，才可能同时用到后端、前端、审核和测试 Agent。</p>
+<p>Main Agent 不会每次都调用所有 Subagent。例如，只修改一句文案时，Main Agent 可以直接完成；只修改前端样式时，可能只调用前端 Agent；只有新增完整功能时，才可能同时用到后端、前端、审核和测试 Agent。</p>
 <p>如果任务之间存在依赖，也不能直接全部并行。例如，前端依赖后端接口时，可以先让后端 Agent 确定接口契约，再把接口路径、参数和返回结构交给前端 Agent。</p>
-<p>简单来说，主 Agent 负责决定：<strong>任务应该拆成什么、交给谁、按什么顺序完成，以及最终结果是否满足要求。</strong></p>
+<p>简单来说，Main Agent 负责决定：<strong>任务应该拆成什么、交给谁、按什么顺序完成，以及最终结果是否满足要求。</strong></p>
 <h4 id="例一-电商项目的-agent-团队">例一：电商项目的 Agent 团队</h4>
 <p>之前推荐的博客中，作者介绍了自己的 SpringMall 项目。这个项目为 Claude Code 配置了后端开发、前端开发、代码审核、测试验证、部署和文档等多个 Agent，让不同 Agent 分别处理自己擅长的任务。</p>
 <p>虽然原项目使用的是 Claude Code，但这种多 Agent 分工和协作的思路，同样可以应用到 Codex 中。</p>
@@ -441,11 +393,11 @@
 <blockquote>
 <p>增加商品收藏功能。用户登录后可以收藏和取消收藏商品，并在个人中心查看收藏列表。</p>
 </blockquote>
-<p>主 Agent 可以先分析这个需求涉及哪些模块，再根据依赖关系安排不同 Agent 执行：</p>
+<p>Main Agent 可以先分析这个需求涉及哪些模块，再根据依赖关系安排不同 Agent 执行：</p>
 <pre><code class="language-text">用户需求
     │
     ▼
-主 Agent
+Main Agent
 理解需求 / 分解任务 / 判断所需角色
     │
     ▼
@@ -473,14 +425,14 @@ test-validator
 运行测试和构建 / 验证功能
     │
     ▼
-主 Agent
+Main Agent
 汇总结果 / 检查任务完成情况
     │
     ▼
 交给用户验收
 </code></pre>
 <p>这里没有调用 <code>devops-deploy</code>，因为当前需求并不涉及部署。</p>
-<p>同样，主 Agent 也不会为了使用 Agent 而调用所有角色，而是根据实际任务动态选择。例如，如果只是修改收藏按钮的样式，可能只需要调用 <code>frontend-dev</code>；如果只是补充接口文档，则可能只需要调用 <code>doc-writer</code>。</p>
+<p>同样，Main Agent 也不会为了使用 Agent 而调用所有角色，而是根据实际任务动态选择。例如，如果只是修改收藏按钮的样式，可能只需要调用 <code>frontend-dev</code>；如果只是补充接口文档，则可能只需要调用 <code>doc-writer</code>。</p>
 <p>也就是说，Agent 团队更像是一组可以按需调用的专业角色，而不是每次任务都必须完整执行一遍的固定流水线。</p>
 <h4 id="例二-使用-agent-团队管理博客">例二：使用 Agent 团队管理博客</h4>
 <p>Agentic Engineering 不一定只能用于写代码。只要一个任务能够拆分成不同职责，并且这些职责之间存在明确的输入、输出和协作关系，就可以使用类似的 Agent 工作流。</p>
@@ -498,79 +450,79 @@ test-validator
           <td>理解需求、维护作者上下文、规划任务、综合资料、正文写作与最终修改</td>
       </tr>
       <tr>
-          <td><code>source-researcher</code></td>
+          <td><code>source_researcher</code></td>
           <td>搜索资料、提取证据、保留原始来源、标注局限</td>
       </tr>
       <tr>
-          <td><code>idea-explorer</code></td>
+          <td><code>idea_explorer</code></td>
           <td>发散观点、问题和角度，不替作者决定最终观点</td>
       </tr>
       <tr>
-          <td><code>fact-checker</code></td>
+          <td><code>fact_checker</code></td>
           <td>核对事实、引用、推论和资料使用</td>
       </tr>
       <tr>
-          <td><code>style-reviewer</code></td>
+          <td><code>style_reviewer</code></td>
           <td>检查是否符合博客原有语气和风格，只提出修改建议</td>
       </tr>
       <tr>
-          <td><code>markdown-reviewer</code></td>
+          <td><code>markdown_reviewer</code></td>
           <td>检查 Hugo、Markdown、Front Matter 等格式规范</td>
       </tr>
       <tr>
-          <td><code>i18n-translator</code></td>
+          <td><code>i18n_translator</code></td>
           <td>在中文定稿后生成英文版</td>
       </tr>
       <tr>
-          <td><code>section-writer</code></td>
+          <td><code>section_writer</code></td>
           <td>可选角色，只用于独立章节、候选版本或上下文相对自包含的写作任务</td>
       </tr>
   </tbody>
 </table>
-<p>主 Agent 相当于博客的主编和主笔。</p>
+<p>Main Agent 相当于博客的主编和主笔。</p>
 <p>它不仅负责接受需求和调度其他 Agent，还负责维护完整的作者上下文，包括文章原本想表达什么、作者已经写了什么、资料应该如何使用，以及最终哪些内容应该保留、修改或删除。</p>
 <p>假设用户提出需求：</p>
 <blockquote>
 <p>完善一篇介绍 Agentic Engineering 的博客。保留我现在的语气和观点，补充可靠资料，检查 Markdown 格式，并在中文版确认后生成英文版。</p>
 </blockquote>
-<p>主 Agent 可以这样安排：</p>
+<p>Main Agent 可以这样安排：</p>
 <pre><code class="language-text">用户需求
     │
     ▼
-主 Agent
+Main Agent
 理解需求 / 读取规范 / 分解任务
     │
     ▼
-source-researcher
+source_researcher
 收集资料 / 提取证据 / 保留来源
     │
     ▼
-主 Agent
+Main Agent
 筛选资料 / 确定结构和写作方向
     │
-    ├──► section-writer A ──┐
-    ├──► section-writer B ──┼──► 返回局部草稿
-    └──► section-writer C ──┘
+    ├──► section_writer A ──┐
+    ├──► section_writer B ──┼──► 返回局部草稿
+    └──► section_writer C ──┘
                 │
                 ▼
-主 Agent
+Main Agent
 整合 / 衔接 / 重写 / 完善正文
     │
     ▼
 审核 Agents
-fact-checker
-style-reviewer
-markdown-reviewer
+fact_checker
+style_reviewer
+markdown_reviewer
     │
     ▼
-主 Agent
+Main Agent
 汇总审核结果 / 修改定稿
     │
     ▼
 用户确认中文版
     │
     ▼
-i18n-translator
+i18n_translator
 生成英文版
     │
     ▼
@@ -578,12 +530,12 @@ i18n-translator
 检查格式 / 术语 / 中英文一致性
     │
     ▼
-主 Agent
+Main Agent
 最终检查 / 交付文章
 </code></pre>
-<p>其中，<code>section-writer</code> 并不是默认负责整篇文章，而是一个可以按需调用的并行写手。</p>
-<p>当文章包含多个相对独立的章节时，可以让多个 <code>section-writer</code> 同时生成不同章节的草稿。例如技术教程、资料型长文，或者由多个独立主题组成的文章，都比较适合这种方式。</p>
-<p>这些 Agent 生成的内容仍然只是局部草稿。最终需要由主 Agent 统一整合、删减、衔接和重写，避免不同章节之间出现内容重复、观点冲突、术语不统一或者明显的多人写作痕迹。</p>
+<p>其中，<code>section_writer</code> 并不是默认负责整篇文章，而是一个可以按需调用的并行写手。</p>
+<p>当文章包含多个相对独立的章节时，可以让多个 <code>section_writer</code> 同时生成不同章节的草稿。例如技术教程、资料型长文，或者由多个独立主题组成的文章，都比较适合这种方式。</p>
+<p>这些 Agent 生成的内容仍然只是局部草稿。最终需要由 Main Agent 统一整合、删减、衔接和重写，避免不同章节之间出现内容重复、观点冲突、术语不统一或者明显的多人写作痕迹。</p>
 <p><strong>如果文章本身具有很强的连续性，例如随笔、个人经历、观点形成过程或者情绪变化，则通常不适合拆给多个写作 Agent</strong>。</p>
 <p>这类文章的重点往往不是单独某一章写得是否完整，而是作者的思路如何一步步发展：</p>
 <pre><code class="language-text">经历或灵感
@@ -599,28 +551,28 @@ i18n-translator
 完成表达
 </code></pre>
 <p>如果把这个过程拆给多个 Agent，容易因为反复传递和压缩上下文，使作者原本连续的思路、语气和表达方式被削弱。</p>
-<p>因此，这类文章通常更适合由主 Agent 直接负责正文写作，只把资料搜索、事实核查和风格检查等相对独立的任务交给 Subagent。</p>
-<p>同样，主 Agent 只会调用当前任务真正需要的角色：</p>
+<p>因此，这类文章通常更适合由 Main Agent 直接负责正文写作，只把资料搜索、事实核查和风格检查等相对独立的任务交给 Subagent。</p>
+<p>同样，Main Agent 只会调用当前任务真正需要的角色：</p>
 <ul>
-<li>只改错别字或格式时，不需要调用资料 Agent 和写作 Agent。</li>
-<li>只核查文章中的事实时，可以只调用 <code>fact-checker</code>。</li>
-<li>文章没有适合并行拆分的章节时，不需要调用 <code>section-writer</code>。</li>
-<li>只翻译已经完成并确认的文章时，可以直接调用 <code>i18n-translator</code>。</li>
-<li>对随笔类文章，主 Agent 通常直接负责正文写作，只把资料搜索、事实核查和风格检查等相对独立的任务交给 Subagent。</li>
+<li>只改错别字或格式时，不需要调用 <code>source_researcher</code> 和 <code>section_writer</code>。</li>
+<li>只核查文章中的事实时，可以只调用 <code>fact_checker</code>。</li>
+<li>文章没有适合并行拆分的章节时，不需要调用 <code>section_writer</code>。</li>
+<li>只翻译已经完成并确认的文章时，可以直接调用 <code>i18n_translator</code>。</li>
+<li>对随笔类文章，Main Agent 通常直接负责正文写作，只把资料搜索、事实核查和风格检查等相对独立的任务交给 Subagent。</li>
 </ul>
-<p>因此，这套分工并不是一条固定的流水线，而是由主 Agent 根据文章类型和当前任务动态组合：</p>
-<pre><code class="language-text">主 Agent
-    ├── 探索：source-researcher / idea-explorer
-    ├── 并行生产：section-writer
-    ├── 审核：fact-checker / style-reviewer / markdown-reviewer
-    └── 转换：i18n-translator
+<p>因此，这套分工并不是一条固定的流水线，而是由 Main Agent 根据文章类型和当前任务动态组合：</p>
+<pre><code class="language-text">Main Agent
+    ├── 探索：source_researcher / idea_explorer
+    ├── 并行生产：section_writer
+    ├── 审核：fact_checker / style_reviewer / markdown_reviewer
+    └── 转换：i18n_translator
 
-主 Agent 始终负责：
+Main Agent 始终负责：
 理解上下文 → 做出取舍 → 整合内容 → 最终写作和定稿
 </code></pre>
 <p>这种分工可以减少多次上下文传递带来的信息损耗。</p>
-<p>例如，如果采用“资料 Agent 总结一次 → 主 Agent 再转述一次 → 写作 Agent 再理解一次”的流水线，原始资料和作者意图可能会在多次转换中逐渐被压缩。</p>
-<p>现在的分工则让主 Agent 始终掌握完整上下文，把搜索、并行处理、审核和翻译等相对独立的任务交给 Subagent，在降低信息损耗的同时，也保留了多 Agent 协作在专业分工和并行执行方面的优势。</p>
+<p>例如，如果采用“<code>source_researcher</code> 总结一次 → Main Agent 再转述一次 → <code>section_writer</code> 再理解一次”的流水线，原始资料和作者意图可能会在多次转换中逐渐被压缩。</p>
+<p>现在的分工则让 Main Agent 始终掌握完整上下文，把搜索、并行处理、审核和翻译等相对独立的任务交给 Subagent，在降低信息损耗的同时，也保留了多 Agent 协作在专业分工和并行执行方面的优势。</p>
 <h2 id="总结">总结</h2>
 <p>总而言之， Agentic Engineering 的出现是为了解决 Vibe Coding 的问题。</p>
 <p>它并非用户只说需求就能完成工作了，要想正确的使用它，就需要提供足够的上下文信息。</p>
@@ -643,112 +595,112 @@ i18n-translator
 
 ## 1. 项目目标
 
-* 项目是做什么的：
-* 主要面向谁：
-* 当前主要目标：
-* 最重要的结果是什么：
+- 项目是做什么的：
+- 主要面向谁：
+- 当前主要目标：
+- 最重要的结果是什么：
 
 ## 2. 项目结构
 
-* 重要目录：
-* 重要文件：
-* 各目录和文件分别负责什么：
-* 新增内容应该放在哪里：
-* 修改前需要优先查看哪些文件：
+- 重要目录：
+- 重要文件：
+- 各目录和文件分别负责什么：
+- 新增内容应该放在哪里：
+- 修改前需要优先查看哪些文件：
 
 ## 3. 技术或工具约束
 
-* 必须使用：
-* 优先使用：
-* 不应使用：
-* 版本或环境要求：
-* 特殊工具、格式或框架要求：
+- 必须使用：
+- 优先使用：
+- 不应使用：
+- 版本或环境要求：
+- 特殊工具、格式或框架要求：
 
 ## 4. 已有规范
 
 ### 命名规范
 
-* 文件命名：
-* 目录命名：
-* 变量、类型、接口或文章命名：
+- 文件命名：
+- 目录命名：
+- 变量、类型、接口或文章命名：
 
 ### 结构规范
 
-* 代码或文章应该如何组织：
-* 标题、章节或模块结构：
-* 已有模式应如何保持：
+- 代码或文章应该如何组织：
+- 标题、章节或模块结构：
+- 已有模式应如何保持：
 
 ### 风格规范
 
-* 代码风格：
-* 文本或写作风格：
-* 排版和格式要求：
-* 不应擅自改变的风格：
+- 代码风格：
+- 文本或写作风格：
+- 排版和格式要求：
+- 不应擅自改变的风格：
 
 ## 5. 业务规则
 
-* 仅靠代码、文件或目录无法直接推断出的业务规则：
-* 特殊状态、流程或权限规则：
-* 数据之间的关系：
-* 多语言、同步或兼容规则：
-* 其他必须知道的项目约定：
+- 仅靠代码、文件或目录无法直接推断出的业务规则：
+- 特殊状态、流程或权限规则：
+- 数据之间的关系：
+- 多语言、同步或兼容规则：
+- 其他必须知道的项目约定：
 
 ## 6. 安全边界
 
 ### 不得修改
 
-*
-*
+-
+-
 
 ### 不得删除
 
-*
-*
+-
+-
 
 ### 不得虚构或猜测
 
-*
-*
+-
+-
 
 ### 高风险操作
 
 以下操作必须谨慎处理：
 
-*
-*
+-
+-
 
 ### 敏感信息
 
-* 不得提交：
-* 不得输出：
-* 不得记录：
+- 不得提交：
+- 不得输出：
+- 不得记录：
 
 ## 7. 决策与确认边界
 
 ### Agent 可以自行决定
 
-* 明显错误的修正。
-* 不影响原意和行为的小范围调整。
-* 符合现有规范的常规实现。
-*
+- 明显错误的修正。
+- 不影响原意和行为的小范围调整。
+- 符合现有规范的常规实现。
+-
 
 ### 必须先确认
 
 以下情况不得擅自决定：
 
-* 改变核心需求、观点或业务逻辑。
-* 大规模删除或重构。
-* 修改重要数据结构、接口或公共约定。
-* 存在多个合理方案且影响明显。
-* 资料、事实或需求存在冲突。
-*
-*
+- 改变核心需求、观点或业务逻辑。
+- 大规模删除或重构。
+- 修改重要数据结构、接口或公共约定。
+- 存在多个合理方案且影响明显。
+- 资料、事实或需求存在冲突。
+-
+-
 
 ### 不确定时
 
-* 不要猜测。
-* 优先检查已有项目内容和规则。
-* 仍无法确认时，明确指出不确定点。
+- 不要猜测。
+- 优先检查已有项目内容和规则。
+- 仍无法确认时，明确指出不确定点。
 
 ## 8. 工作流程
 
@@ -773,46 +725,46 @@ i18n-translator
 
 负责：
 
-* 理解用户最终目标。
-* 拆分任务。
-* 判断是否需要调用 Subagent。
-* 协调不同 Agent 的执行顺序。
-* 汇总不同 Agent 的结果。
-* 处理不同 Agent 之间的冲突。
-* 对最终结果负责。
+- 理解用户最终目标。
+- 拆分任务。
+- 判断是否需要调用 Subagent。
+- 协调不同 Agent 的执行顺序。
+- 汇总不同 Agent 的结果。
+- 处理不同 Agent 之间的冲突。
+- 对最终结果负责。
 
 ### `&lt;agent_name&gt;`
 
 负责：
 
-*
-*
+-
+-
 
 不负责：
 
-*
-*
+-
+-
 
 ### `&lt;agent_name&gt;`
 
 负责：
 
-*
-*
+-
+-
 
 不负责：
 
-*
-*
+-
+-
 
 ### 协作原则
 
-* 不要求每次任务都调用所有 Agent。
-* 只在职责匹配时调用对应 Agent。
-* 不同 Agent 的职责尽量避免重叠。
-* Agent 返回结果后，由 Main Agent 负责整合。
-* Subagent 必须遵守当前项目适用的 `AGENTS.md`。
-* 如 Subagent 的一般规则与本文件明确规则冲突，以本文件为准。
+- 不要求每次任务都调用所有 Agent。
+- 只在职责匹配时调用对应 Agent。
+- 不同 Agent 的职责尽量避免重叠。
+- Agent 返回结果后，由 Main Agent 负责整合。
+- Subagent 必须遵守当前项目适用的 `AGENTS.md`。
+- 如 Subagent 的一般规则与本文件明确规则冲突，以本文件为准。
 
 ## 10. 完成标准
 
@@ -820,47 +772,47 @@ i18n-translator
 
 ### 内容或实现
 
-* 需求已经完成。
-* 没有明显遗漏。
-* 没有无关修改。
-* 没有破坏已有行为或内容。
+- 需求已经完成。
+- 没有明显遗漏。
+- 没有无关修改。
+- 没有破坏已有行为或内容。
 
 ### 规范
 
-* 符合项目结构和命名规范。
-* 符合代码、文本或排版规范。
-* 符合业务规则和安全边界。
+- 符合项目结构和命名规范。
+- 符合代码、文本或排版规范。
+- 符合业务规则和安全边界。
 
 ### 验证
 
-* 必要测试已经执行。
-* 必要构建、检查或审查已经完成。
-* 已处理明显错误和警告。
-* 外部链接、引用或依赖在需要时已经确认。
+- 必要测试已经执行。
+- 必要构建、检查或审查已经完成。
+- 已处理明显错误和警告。
+- 外部链接、引用或依赖在需要时已经确认。
 
 ### 一致性
 
-* 代码、文档、接口或多语言内容保持一致。
-* 修改没有造成明显冲突。
-* 已同步需要同步的相关内容。
+- 代码、文档、接口或多语言内容保持一致。
+- 修改没有造成明显冲突。
+- 已同步需要同步的相关内容。
 
 ### 最终确认
 
-* 无法确认的信息已经明确指出。
-* 需要用户决定的问题已经列出。
-* 不为了追求“更完善”而无限继续扩展任务。
+- 无法确认的信息已经明确指出。
+- 需要用户决定的问题已经列出。
+- 不为了追求“更完善”而无限继续扩展任务。
 
 ## 通用原则
 
-* 本文件是项目规则的主要来源。
-* 修改项目规则时，优先更新本文件。
-* Subagent 配置应根据本文件同步维护。
-* 修改前先理解现有内容，不要脱离上下文重新设计。
-* 优先进行最小必要修改。
-* 保持已有项目风格和模式。
-* 不确定的信息不要猜测。
-* 不要为了优化而擅自改变用户明确表达的需求、观点或意图。
-* 当任务已经满足完成标准时，应停止继续扩展。
+- 本文件是项目规则的主要来源。
+- 修改项目规则时，优先更新本文件。
+- Subagent 配置应根据本文件同步维护。
+- 修改前先理解现有内容，不要脱离上下文重新设计。
+- 优先进行最小必要修改。
+- 保持已有项目风格和模式。
+- 不确定的信息不要猜测。
+- 不要为了优化而擅自改变用户明确表达的需求、观点或意图。
+- 当任务已经满足完成标准时，应停止继续扩展。
 </code></pre>
 
 
@@ -871,13 +823,13 @@ i18n-translator
 
 <hr>
 <div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-20</p>
+  <p>文章作者：成元<br>上次更新：2026-08-02</p>
 </div>
 
 
 
 <nav class="post-nav fullwidth">
-  <span>&larr; <a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E7%9A%84%E5%85%B3%E9%94%AE%E5%8A%9F%E8%83%BD%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">AI Coding开发学习记录(3)：Codex 的关键功能使用说明</a></span>
+  <span>&larr; <a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/">AI Coding开发学习记录(3)：Codex 常用功能指南</a></span>
   <span><a href="/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/">我为什么写博客？</a> &rarr;</span>
 </nav>
 <hr>

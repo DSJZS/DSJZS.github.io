@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>AI Coding开发学习记录(3)：Codex 常用功能指南 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="AI Coding开发学习记录(3)：Codex 常用功能指南 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="之前的Agentic Engineering博客提到了 Subagent 等技术。
+[&amp;hellip;] 这篇博客主要讲这些 AI Agent 的一些常用功能该怎么用。因为我主要用 Codex，而且主要用的是 IDE 插件和 CLI，所以这篇文章的实际操作内容也会以 Codex CLI 和 Codex IDE 插件为主。
+[&amp;hellip;] 不过我不会全讲。有些功能比较鸡肋，我就略过，只说一些我 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+
+<div class="article-meta">
+<h1 class="title">AI Coding开发学习记录(3)：Codex 常用功能指南</h1>
+
+<h3 class="meta-line">
+  <span>
+  
+  
+
+
+
+
+
+
+
+<span class="date">2026-07-13</span>
+<span class="meta-sep"> / </span>
+<span class="word-count">约 6204 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 13 分钟</span>
+
+
+  
+  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span>, </span><a href="/tags/codex/" class="term-tag">Codex</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#steer">Steer</a></li>
+    <li><a href="#plan-mode">Plan Mode</a></li>
+    <li><a href="#agents-md">AGENTS.md</a></li>
+    <li><a href="#mcp">MCP</a>
+      <ul>
+        <li><a href="#管理-mcp">管理 MCP</a>
+          <ul>
+            <li><a href="#例子-github-mcp">例子：Github MCP</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#skills">Skills</a>
+      <ul>
+        <li><a href="#开启-skills-功能">开启 Skills 功能</a></li>
+        <li><a href="#管理-skills">管理 Skills</a>
+          <ul>
+            <li><a href="#例子-早餐推荐">例子：早餐推荐</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#skills-vs-mcp">Skills VS MCP</a></li>
+    <li><a href="#subagent">Subagent</a>
+      <ul>
+        <li><a href="#配置-subagent">配置 Subagent</a>
+          <ul>
+            <li><a href="#multiagent-v1">MultiAgent v1</a></li>
+            <li><a href="#multiagent-v2">MultiAgent v2</a></li>
+          </ul>
+        </li>
+        <li><a href="#自定义-subagent">自定义 Subagent</a>
+          <ul>
+            <li><a href="#管理自定义-subagent">管理自定义 Subagent</a></li>
+            <li><a href="#bug-说明与解决方案">Bug 说明与解决方案</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#结语">结语</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>之前的<a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/">Agentic Engineering</a>博客提到了 Subagent 等技术。</p>
+<p>这篇博客主要讲这些 AI Agent 的一些常用功能该怎么用。因为我主要用 Codex，而且主要用的是 IDE 插件和 CLI，所以这篇文章的实际操作内容也会以 Codex CLI 和 Codex IDE 插件为主。</p>
+<p>不过我不会全讲。有些功能比较鸡肋，我就略过，只说一些我自己经常用的。</p>
+<p><del>我现在学 AI Coding 比学 Coding 还认真🙃</del></p>
+<h2 id="steer">Steer</h2>
+<p>Steer 一般翻译为“引导”，对 Codex 而言，就是在任务执行的<strong>中途</strong>给它补充信息加以引导，但是<strong>不中断</strong>当前任务的运行。</p>
+<p>在 Codex IDE 插件等图形化工具中，如果当前对话里的任务正在执行，你后续发的消息到底是直接引导当前任务，还是先进入排队状态，取决于当前界面和设置。如果不想按默认行为走，一般也可以在界面里手动切换。</p>
+<p>而在 Codex CLI 中，如果当前对话下任务正在执行，按 <code>Enter</code> 发送就是引导，按 <code>Tab</code> 发送就是排队。</p>
+<h2 id="plan-mode">Plan Mode</h2>
+<p>Plan Mode 一般翻译为“计划模式”，顾名思义，让 Agent 进入计划模式，本质上就是先帮我们把某个任务的计划列出来。</p>
+<p>在之前我写的 <a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#%E7%94%A8-plan-mode-%E5%81%9A%E8%AE%A1%E5%88%92">提问到协作</a> 中我曾经提到过这个功能。</p>
+<p>如果你对 Agent 的执行流程不放心，可以先开启计划模式，让 Agent 先列出一个计划。你可以不断修改这个计划，或者回答 Agent 对细节的追问，直到自己满意为止。确定计划没问题后，再让 Agent 按这个计划继续执行。</p>
+<p>我认为计划模式本质上就是一种补充上下文信息的方式，也是上下文工程的一部分，目的就是让 AI 能够更加明确你的意图。</p>
+<p>在 Codex IDE 插件等图形化工具中，一般是点击对话框左下方的 “+” 按钮，然后选择“计划模式”；有些界面也支持直接输入 <code>/plan</code>，或者用 <code>Shift+Tab</code> 切进去。</p>
+<p>在 Codex CLI 中，则是在对话框输入 <code>/plan</code> 并按回车。</p>
+<h2 id="agents-md">AGENTS.md</h2>
+<p>这个我在<a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#%E7%94%A8-agents-md-%E5%81%9A%E8%A7%84%E8%8C%83">提问到协作</a>中也提到过。</p>
+<p>AGENTS.md 也是 Codex 上下文工程里很重要的一部分。你可以把它理解成给 AI 准备的一份项目说明书。</p>
+<p>不过这里有个边界要注意：它不是你一改完，当前正在跑的会话就一定会立刻全量重读。</p>
+<p>更稳妥的理解是：Codex 一般会在新一轮任务，或者新会话开始时，重新整理这一轮要遵守的说明。所以如果你刚改了 <code>AGENTS.md</code>，最好重新开一轮。另外，Codex 启动时所在的工作目录也会影响它实际读到哪些 <code>AGENTS.md</code>。如果 Codex 是在 <code>~/project/mp/</code> 下打开的，你不能默认期待它在修改 <code>~/project/real/</code> 时自动遵守 <code>~/project/real/AGENTS.md</code>，除非它显式读取了那个文件，或者当前工作区/上下文机制已经把它纳入了。</p>
+<h2 id="mcp">MCP</h2>
+<p>MCP 一般翻译为“模型上下文协议”，是一种<strong>工具调用</strong>机制。</p>
+<p>MCP 可以理解为 Agent 和工具服务之间的一套调用约定。这个工具服务可以是本地的（很多页面里会写成大写的 <code>STDIO</code>，本质上就是 <code>stdio</code>，也就是标准输入输出），也可以是远程的（通过流式 HTTP）。</p>
+<p>MCP 作为标准协议，把各家 Agent 接工具的方式稍微统一了一些。现在一个写好的 MCP 工具，市面上很多 Agent 都能比较轻松地接进去。</p>
+<p>与此同时，MCP 也让功能可以从 Agent 里解耦出来，不必完全内置在 Agent 本体里，便于单独维护。</p>
+<h3 id="管理-mcp">管理 MCP</h3>
+<p>在 Codex IDE 插件等图形化工具中，打开“设置”菜单，选中“MCP 服务器”选项卡，点击“添加服务器”就可以创建新的 MCP 服务。</p>
+<blockquote>
+<p>这里再稍微重复一下。新建页面里那个经常写成全大写的 <code>STDIO</code>，很多人一开始其实没看出来，它说的就是 <code>stdio</code>。如果你学过 C 语言，也可以直接把它联想到“标准输入输出”那套东西：说白了就是通过标准输入输出和本地程序交互。至于流式 HTTP，说白了就是和远程服务器通信。很多厂家提供的 MCP 服务都是远程的，好处是省事，不用自己额外安装工具；坏处就是服务商说关就关，而且你的数据也可能被它收集。</p>
+</blockquote>
+<p>如果你主要用 Codex CLI，更推荐直接用 <code>codex mcp add</code>、<code>codex mcp list</code> 和 <code>codex mcp login</code> 来管理。<code>/mcp</code> 更适合在当前会话里查看可用的 MCP 服务和工具；当然，你也可以直接去 <code>~/.codex/config.toml</code> 里手动改。</p>
+<h4 id="例子-github-mcp">例子：Github MCP</h4>
+<p>如果想让 Codex 支持对 GitHub 的操作，比如读写 Issue、查看仓库信息等，就得先接一个 GitHub 相关的 MCP 服务。这个东西并不是只有一种写法，本地 <code>STDIO</code> 方案和远程 MCP 都有人在用。</p>
+<p>如果你接的是很多旧资料里常见的本地 <code>STDIO</code> 方案，配置可能会长这样：</p>
+<pre><code class="language-toml">[mcp_servers.github]
+command = &quot;npx&quot;
+args = [&quot;-y&quot;, &quot;@anthropic/mcp-server-github&quot;]
+enabled = true
+startup_timeout_sec = 15
+tool_timeout_sec = 60
+bearer_token_env_var = &quot;GITHUB_PAT_TOKEN&quot;
+</code></pre>
+<p>如果你接的是远程 MCP 服务，那么也可能会写成：</p>
+<pre><code class="language-toml">[mcp_servers.github]
+url = &quot;https://api.githubcopilot.com/mcp/&quot;
+bearer_token_env_var = &quot;GITHUB_PAT_TOKEN&quot;
+</code></pre>
+<p>这两种都不是错的，主要看你接的是哪一类服务。前者是本地起服务，后者是直接连远程地址。至于认证，如果服务方要求你用 PAT 或 OAuth，就按它的要求去配。更省事一点的话，也可以直接用 <code>codex mcp add</code> 去加。</p>
+<h2 id="skills">Skills</h2>
+<p>Skills 一般翻译为“技能”，是一种<strong>渐近式披露</strong>提示词的机制。</p>
+<p>一个 Skill 大致可以分成三个部分：</p>
+<ul>
+<li>元数据（Metadata）。会优先加载，主要告诉模型这个 Skill 是干什么的、什么时候该用。</li>
+<li>指令（Instructions）。按需加载，是 Skill 的正文部分。</li>
+<li>资源（Resources）。按需加载，用来放一些辅助文件。</li>
+</ul>
+<p>用户发任务给 Agent 时，Agent 会先把本地能扫描到的 Skill 元数据提取出来，形成一个技能列表，一并发给大模型。大模型如果觉得某个 Skill 适合当前任务，Agent 才会进一步把这个 Skill 的指令部分发给它。</p>
+<p>因为元数据一般占得少，不怎么浪费 Token；而且只有模型判断需要时，详细指令才会继续加载，所以 Skill 才会被说成是按需加载、渐近式披露的提示词机制。</p>
+<p>至于资源，它们不会像元数据那样预加载，但在 Skill 真正执行时，可能会按需读进上下文，或者直接被调用。</p>
+<h3 id="开启-skills-功能">开启 Skills 功能</h3>
+<p>如果你看的还是比较老的资料，可能会见到有人在 <code>~/.codex/config.toml</code> 里这样开 Skills：</p>
+<pre><code class="language-toml">[features]
+skills = true
+</code></pre>
+<p>不过这更像是旧版本的历史配置。现在的新版本一般默认就支持 Skills，不需要你再额外打开。</p>
+<h3 id="管理-skills">管理 Skills</h3>
+<p>新增一个 Skill 其实很简单。</p>
+<p>Skill 一般是以文件夹的形式组织的，不过这个文件夹不能乱放。就我当前这套环境来说，我平时主要用这两个位置：</p>
+<ul>
+<li>全局的，<code>~/.codex/skills/skill-name</code></li>
+<li>项目的，<code>/path/to/project/.codex/skills/skill-name</code></li>
+</ul>
+<p>不过有些手册或资料里，你也可能会看到 <code>.agents/skills</code> 这种写法。所以最稳妥的办法，还是以你自己当前客户端实际能识别到的路径为准。</p>
+<p><strong>每个 Skill 文件夹下必须要有一个 <code>SKILL.md</code> 文件用于存放元数据和指令</strong>，其余的文件统称资源（比如脚本、文档、图片等），如下：</p>
+<pre><code class="language-Markdown">my-skill/
+├── SKILL.md
+├── assets/         # 图片等资源
+├── references/     # 文档
+└── scripts/        # 脚本
+    └── helper.py
+</code></pre>
+<p><code>SKILL.md</code> 的格式如下：</p>
+<pre><code class="language-Markdown">---
+name: Skill 的名字
+description: Skill 的调用时机(这个比较关键)
+---
+
+指令部分
+</code></pre>
+<p>上面模板里用 6 个 <code>-</code> 包起来的部分就是元数据。</p>
+<p>写好 Skill 后，重启 Codex，输入 <code>/skills</code>，看看能不能在技能列表里看到它。</p>
+<p>不过很多时候我们也不会自己从零写，而是直接去 GitHub 拉别人现成的，比如 <a href="https://github.com/mattpocock/skills.git">mattpocock/skills</a>。</p>
+<h4 id="例子-早餐推荐">例子：早餐推荐</h4>
+<p>比如有时候我不知道每天早餐吃什么比较好，就可以写一个全局的 Skill 来辅助我这个选择困难症患者挑选。</p>
+<p>创建 <code>~/.codex/skills/挑选早餐/SKILL.md</code>，并写入：</p>
+<pre><code class="language-Markdown">---
+name: 挑选早餐
+description: 当用户不知道早上吃什么的时候，为用户提供推荐早餐
+---
+我是一个湖北武汉人，你是我的早餐推荐助手，以下是一些武汉本地的早点，挑选 3～5 个早点给我。请用中文输出。
+
+- 热干面
+- 三鲜豆皮
+- 面窝
+- 鲜鱼糊汤粉
+- 烧梅
+- 油饼包烧梅
+- 牛肉粉
+- 牛肉面
+- 汤包
+- 生煎包
+- 鸡冠饺
+- 汽水包
+- 糯米包油条
+- 糯米鸡
+- 欢喜坨
+- 米粑
+- 锅贴
+- 水饺
+- 抄手
+- 包子
+- 油条
+- 糊米酒
+- 蛋酒
+- 清酒
+- 豆浆
+- 绿豆汤
+- 稀饭
+</code></pre>
+<p>然后重启 Codex，输入“我不知道早上吃什么比较好”，Codex 就会给你输出推荐，如下：</p>
+<pre><code class="language-Markdown">今天早上可以这样吃，比较稳妥：
+
+1. 热干面 + 豆浆
+    经典搭配，顶饱，咸香配清爽，早上很合适。
+
+2. 三鲜豆皮 + 糊米酒
+    豆皮更有层次，糊米酒暖胃，适合想吃得丰富一点。
+
+3. 牛肉粉
+    如果你今天想吃热乎、扎实一点，这个最稳。
+
+4. 汤包 + 稀饭
+    想吃得清淡些就选这个，舒服，不容易腻。
+
+5. 糯米包油条
+    非常顶饿，适合上午事情多、怕饿得快。
+
+如果你懒得选，我直接替你定一个：热干面 + 豆浆。
+</code></pre>
+<h2 id="skills-vs-mcp">Skills VS MCP</h2>
+<p>它们两个看起来很像，实际上是两个不同的概念，侧重点不太一样，见下表：</p>
+<table>
+  <thead>
+      <tr>
+          <th>类型</th>
+          <th>侧重点</th>
+          <th>类比</th>
+          <th>Token 消耗</th>
+          <th>核心主体</th>
+          <th>编写难度</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Skill</td>
+          <td>提示词</td>
+          <td>带目录的说明书</td>
+          <td>低</td>
+          <td>Markdown 文件</td>
+          <td>低</td>
+      </tr>
+      <tr>
+          <td>MCP</td>
+          <td>工具调用</td>
+          <td>标准化工具箱</td>
+          <td>高</td>
+          <td>MCP server / 工具服务</td>
+          <td>高</td>
+      </tr>
+  </tbody>
+</table>
+<p>Skills 主要负责按需、渐近地披露提示词，而 MCP 主要负责把工具接进来。</p>
+<p>不知道什么时候用哪个，可以参考下面这张快速判断表：</p>
+<table>
+  <thead>
+      <tr>
+          <th>问题</th>
+          <th>更适合</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Agent 缺少访问某个系统的能力</td>
+          <td>MCP</td>
+      </tr>
+      <tr>
+          <td>需要获取实时或私有数据</td>
+          <td>MCP</td>
+      </tr>
+      <tr>
+          <td>涉及认证和授权</td>
+          <td>MCP</td>
+      </tr>
+      <tr>
+          <td>需要执行外部写操作</td>
+          <td>MCP</td>
+      </tr>
+      <tr>
+          <td>已有工具，但执行流程不稳定</td>
+          <td>Skill</td>
+      </tr>
+      <tr>
+          <td>需要遵循固定步骤</td>
+          <td>Skill</td>
+      </tr>
+      <tr>
+          <td>需要固定输出格式</td>
+          <td>Skill</td>
+      </tr>
+      <tr>
+          <td>需要复用模板、规范和示例</td>
+          <td>Skill</td>
+      </tr>
+      <tr>
+          <td>需要“访问系统并按固定流程处理”</td>
+          <td>MCP + Skill</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="subagent">Subagent</h2>
+<p>之前在 <a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/#%E4%BD%BF%E7%94%A8-subagent-%E5%A4%84%E7%90%86%E5%A4%8D%E6%9D%82%E4%BB%BB%E5%8A%A1">Agentic Engineering</a> 博客中其实已经有个详细的描述了，如果你没有看过，可以去那篇文章参考一下。</p>
+<p>我认为使用 Subagent 本质上就是为了做上下文隔离，防止复杂任务撑爆 Main Agent。</p>
+<p>关于 Subagent 的优势与劣势，我的总结如下：</p>
+<table>
+  <thead>
+      <tr>
+          <th>项目</th>
+          <th>单 Agent</th>
+          <th>Main Agent + 多个 Subagent</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>执行方式</td>
+          <td>以串行为主</td>
+          <td>独立任务可以并行</td>
+      </tr>
+      <tr>
+          <td>上下文</td>
+          <td>所有资料和过程集中在一个上下文中</td>
+          <td>每个 Subagent 只关注自己的任务，Main Agent 主要保留计划和结果</td>
+      </tr>
+      <tr>
+          <td>专业分工</td>
+          <td>一个 Agent 同时承担多个角色</td>
+          <td>可以为不同角色配置不同规则和工具</td>
+      </tr>
+      <tr>
+          <td>审核方式</td>
+          <td>容易变成“自己写、自己审”</td>
+          <td>可以由独立的审核 Agent 重新检查</td>
+      </tr>
+      <tr>
+          <td>Token 消耗</td>
+          <td>通常更少</td>
+          <td>通常更多</td>
+      </tr>
+      <tr>
+          <td>协调成本</td>
+          <td>较低</td>
+          <td>需要处理任务交接、依赖关系和结果汇总</td>
+      </tr>
+      <tr>
+          <td>适用任务</td>
+          <td>简单修改、单一领域、小规模任务</td>
+          <td>多模块、可并行、上下文较大或需要独立审核的任务</td>
+      </tr>
+      <tr>
+          <td>角色与会话</td>
+          <td>Main Agent 持续负责整个任务</td>
+          <td>Subagent 的角色配置可以长期保留，但每次被调用的任务会话通常是临时的</td>
+      </tr>
+  </tbody>
+</table>
+<p>Codex App、Codex CLI 和 IDE 插件现在都支持 Subagent。</p>
+<p>不过最稳的触发方式，还是你明确告诉 Codex 要几个、每个干什么。除此以外，如果 <code>AGENTS.md</code> 或 Skill 里已经把委派规则写得很清楚，Codex 也可能自己触发 Subagent。</p>
+<p><strong>每个 Subagent 一般都是临时的，什么时候创建、什么时候结束，通常由 Main Agent 和 Codex 自己管理</strong>。当然用户也可以通过提示词等方式主动控制。</p>
+<p>比如我要分析一个博客开发目录，可以输入如下的提示词：</p>
+<pre><code>不做任何修改。
+
+使用三个 Subagent 并行分析
+
+第一个 Subagent 负责分析博客架构。
+
+第二个 Subagent 负责分析文章风格。
+
+第三个 Subagent 负责分析国际化部分如何。
+
+三个 Subagent 都完成任务后，Main Agent 汇总一份博客报告，简单介绍当前博客，并列出它当前的问题。
+</code></pre>
+<p>这里 Main Agent 会创建三个 Subagent 并行完成任务。</p>
+<h3 id="配置-subagent">配置 Subagent</h3>
+<p>这里需要先区分 MultiAgent v1 和 MultiAgent v2。</p>
+<p>它们并不是同一套配置换了几个字段名，而是两套不同的多 Agent 实现。Codex 会根据模型目录中的配置和功能开关选择使用哪一套，所以即使 Codex 客户端版本没有变化，只是切换了模型，实际使用的配置也可能不一样。</p>
+<p>配置文件根据作用域分为两个位置：</p>
+<ul>
+<li>全局的，<code>~/.codex/config.toml</code>。<br>用于提供默认配置和并发设置。</li>
+<li>项目的，<code>&lt;project&gt;/.codex/config.toml</code>。<br>用于给当前项目覆写这些默认值。</li>
+</ul>
+<h4 id="multiagent-v1">MultiAgent v1</h4>
+<p>MultiAgent v1 使用 <code>[agents]</code>：</p>
+<pre><code class="language-toml">[agents]
+max_threads = 6
+max_depth = 1
+</code></pre>
+<p>这就是 v1 明确支持的写法，并不是配置错误。</p>
+<ul>
+<li><code>max_threads</code>：最多可以同时打开多少个 Subagent 线程。</li>
+<li><code>max_depth</code>：Subagent 最多可以继续嵌套创建多少层 Subagent。一般设置为 <code>1</code>，避免 Subagent 继续创建 Subagent。</li>
+</ul>
+<h4 id="multiagent-v2">MultiAgent v2</h4>
+<p>MultiAgent v2 使用 <code>[features.multi_agent_v2]</code>，例如：</p>
+<pre><code class="language-toml">[features.multi_agent_v2]
+enabled = true
+max_concurrent_threads_per_session = 7
+hide_spawn_agent_metadata = false
+tool_namespace = &quot;agents&quot;
+</code></pre>
+<ul>
+<li><code>enabled</code>：为没有在模型目录中明确指定 MultiAgent 版本的模型启用 v2。模型目录已经明确指定版本时，以模型目录为准。</li>
+<li><code>max_concurrent_threads_per_session</code>：当前会话树允许同时存在的线程总数，包含 Main Agent。因此设置为 <code>7</code> 时，最多可以同时运行 1 个 Main Agent 和 6 个 Subagent。</li>
+<li><code>hide_spawn_agent_metadata</code>：是否向 Main Agent 隐藏 <code>agent_type</code>、<code>model</code>、<code>reasoning_effort</code> 等创建参数。需要让 Main Agent 选择多个自定义 Subagent 时，应设置为 <code>false</code>。</li>
+<li><code>tool_namespace</code>：设置 v2 多 Agent 工具使用的命名空间。这里使用 <code>agents</code>，用于避开 GPT-5.6 保留的 <code>collaboration</code> 命名空间冲突。</li>
+</ul>
+<p>v2 不再使用 <code>max_depth</code>，这个字段只负责限制 v1 的嵌套深度，在 v2 中会被忽略。如果不希望 v2 的 Subagent 继续创建 Subagent，可以在 Subagent 的 <code>developer_instructions</code> 或 <code>AGENTS.md</code> 中写入禁止规则，不过这种方式属于提示词约束，不是 v1 中 <code>max_depth</code> 那样的运行时硬限制。</p>
+<p>我现在使用的 Codex CLI 0.145.0 中，模型目录为 GPT-5.6 Sol 和 GPT-5.6 Terra 指定了 v2，而 GPT-5.6 Luna 仍然使用 v1。GPT-5.4 和 GPT-5.5 没有在模型目录中强制指定版本，会继续受到本地功能开关等配置影响。不过这个映射也会随着更新发生变化，例如 Codex CLI 0.142.5 的模型目录就曾经为 GPT-5.5 指定 v2。</p>
+<p>所以配置 Subagent 时，不能只看 Codex 的版本，还要确认当前模型实际选择的是 MultiAgent v1 还是 v2。也不要把两套配置混在一起使用，否则很容易出现配置已经写了，但实际没有生效的情况。</p>
+<h3 id="自定义-subagent">自定义 Subagent</h3>
+<p>很多时候，通用 Subagent 并不完全贴合实际项目，而且每次任务想要的职责划分也可能不一样。</p>
+<p>所以实际项目里，一般还是得自己定义一套 Subagent。</p>
+<h4 id="管理自定义-subagent">管理自定义 Subagent</h4>
+<p>根据作用域，同样分两种位置存放：</p>
+<ul>
+<li>全局的，<code>~/.codex/agents/&lt;name&gt;.toml</code>。<br>用于定义你自己的通用 Subagent。</li>
+<li>项目的，<code>&lt;project&gt;/.codex/agents/&lt;name&gt;.toml</code>。<br>用于定义当前项目专用 Subagent。</li>
+</ul>
+<p>一个最基础的 Subagent 配置大概长这样：</p>
+<pre><code>name = &quot;Agent 名称&quot;
+description = &quot;什么时候适合调用这个 Agent&quot;
+developer_instructions = &quot;Agent 的角色、职责、工作边界和输出要求&quot;
+
+model = &quot;可选，指定使用的模型&quot;
+model_reasoning_effort = &quot;可选，指定推理强度&quot;
+sandbox_mode = &quot;可选，指定文件和命令权限&quot;
+</code></pre>
+<h4 id="bug-说明与解决方案">Bug 说明与解决方案</h4>
+<p>目前 GPT 5.5/5.6 貌似会有 Bug 无法读取自定义配置。</p>
+<p>创建 Subagent 会走内部的工具，而非用户的配置。</p>
+<p>目前貌似最方便的办法就是给降到 GPT 5.4 启动 Codex ，命令为：</p>
+<pre><code class="language-CLI">codex -m gpt-5.4
+</code></pre>
+<p>貌似还有其它的办法，见<a href="https://www.bilibili.com/video/BV16hTc6xEpF/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">这个视频</a>下的第一个评论回复，如图：</p>
+<p><img class="markdown-image" src="./%e8%af%84%e8%ae%ba%e5%8c%ba%e6%88%aa%e5%9b%be.png" alt="评论区截图" loading="lazy" decoding="async"><span class="image-caption" hidden>评论区截图</span></p>
+<p>我还没尝试过，我目前的方案是 Main Agent 为 GPT 5.4 ，Subagent 为 GPT 5.6 。</p>
+<p>感觉这个方案还行，毕竟干活的主要还是 Subagent ，而 Main Agent 只起到调度的作用。</p>
+<h2 id="结语">结语</h2>
+<p>不得不感叹这群玩 AI 的搞出来的概念真是多。什么“渐近式披露”了之类的，每隔几周或者更快的时间就可能会搞出一个新概念。</p>
+<p>感觉现在只要是和写程序相关的工作，已经很难离开 AI 了。无论你是新手还是大佬，是干互联网的，还是干嵌入式之类的，据我所知几乎都在用 AI，每天挂着刷几千行也很常见。</p>
+<p>可以说如果你不用，那么你的产出就上不去，然后就被淘汰，被公司扫地出门了。</p>
+<p>所以这些新的概念我们要学，虽然不一定用得上，但是要有所了解。</p>
+<p>后续应该还会出一篇 MCP 和 Skills 的收集推荐博客吧。最近被好友推荐了一些 Skills，感觉还不错。</p>
+<h2 id="参考资料">参考资料</h2>
+<p>这里的资料比较乱，可能有重复。可以按需观看，并非需要全部看完。</p>
+<p>AI Agent 相关概念：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1ojfDBSEPv/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【闪客】一口气拆穿Skill/MCP/RAG/Agent/OpenClaw底层逻辑</a></li>
+</ul>
+<p>Codex 的使用：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1BVEs6LENZ/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【【2026最新Codex】Codex保姆级完整教程-Codex新手保姆级教程-最强AI助手！从入门到进阶，22分钟速通Codex！【附教程文档安装包】】</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Kk9kBAEJv/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">Codex (APP) 保姆级全攻略，海量实战教程， 一期精通Codex</a></li>
+<li><a href="https://www.cnblogs.com/knqiufan/p/20094616">Codex CLI 完全使用手册：从入门到精通</a></li>
+<li><a href="https://learn.chatgpt.com/docs/config-file/config-reference">Configuration Reference</a></li>
+</ul>
+<p>Skills：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1HuiyBQE9G/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【Agent Skills (Claude Skills) 详细攻略，一期视频精通】</a></li>
+<li><a href="https://github.com/mattpocock/skills.git">mattpocock/skills</a></li>
+</ul>
+<p>MCP：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1AnQNYxEsy/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【MCP是啥？技术原理是什么？一个视频搞懂MCP的一切。Windows系统配置MCP，Cursor Cline使用MCP】</a></li>
+</ul>
+<p>Subagent：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV16hTc6xEpF/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">【Codex实战】手摸手教你多Agent协同开发</a></li>
+<li><a href="https://www.bilibili.com/video/BV1TtL161EPw/?share_source=copy_web&amp;vd_source=2c22fcb2df198ddace36c3512bfb0ccf">Codex Subagents 零基础小白保姆级教程、自定义 Subagent实战指南、ChatGPT</a></li>
+<li><a href="https://learn.chatgpt.com/docs/agent-configuration/subagents?surface=app">Subagents</a></li>
+<li><a href="https://linux.do/t/topic/2578075">〖拯救 5.6 Sol（1）〗开箱即用、快速高效、减少上下文腐烂的 Codex 子代理实践</a></li>
+<li><a href="https://linux.do/t/topic/2591214/10">codex 只能开 4 个子代理怎么解决？config 改 max_threads=16 也没用？</a></li>
+</ul>
+
+
+
+
+
+
+
+<hr>
+<div class="post-tailnote small">
+  <p>文章作者：成元<br>上次更新：2026-08-03</p>
+</div>
+
+
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/07/%E4%B8%8A%E6%89%8B%E4%B9%8B%E5%90%8E%E6%89%8D%E7%9C%8B%E8%A7%81%E5%8E%89%E5%AE%B3/">上手之后，才看见厉害</a></span>
+  <span><a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/">AI Coding开发学习记录(2)：Agentic Engineering</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/alt-title.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="/js/image-caption.js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

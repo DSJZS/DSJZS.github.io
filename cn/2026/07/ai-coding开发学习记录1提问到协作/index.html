@@ -78,7 +78,7 @@
 
 <span class="date">2026-07-06</span>
 <span class="meta-sep"> / </span>
-<span class="word-count">约 3265 字</span>
+<span class="word-count">约 3267 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 7 分钟</span>
 
@@ -189,14 +189,14 @@
       </tr>
   </tbody>
 </table>
-<p>那么到底应该用什么样的形式告诉它？接着看</p>
+<p>那么到底应该用什么样的形式告诉它？接着看。</p>
 <h4 id="用-agents-md-做规范">用 AGENTS.md 做规范</h4>
 <p>我们主要使用 <code>AGENTS.md</code> (在 Claude 中叫 <code>CLAUDE.md</code>) 来解决 AI 记不住的问题。可以先阅读 <a href="https://www.runoob.com/codex/codex-agents-md.html">Codex AGENTS.md</a> 进行了解。</p>
 <p>一般而言，处理一个新项目时，在项目根目录创建 <code>AGENTS.md</code>，把它当成 AI 的「项目说明书」。妙就妙在——这玩意儿你只用写一次，AI 每开一轮新对话都会自动读一遍。</p>
 <blockquote>
 <p><code>/init</code>  可用于让 AI 根据当前架构，在项目根目录自动创建一个 AGENTS.md 供 Codex 读取。不过生成后建议检查并追加相关信息，以免疏漏。</p>
 </blockquote>
-<p><strong>不过值得注意的时，Codex 启动时所在的工作目录会对 <code>AGENTS.md</code> 的读取有影响</strong>。如果如果 Codex 是在 <code>~/project/mp/</code> 下打开的，你不能默认期待它在修改 <code>~/project/real/</code> 时自动遵守 <code>~/project/eal/AGENTS.md</code>，除非它显式读取了那个文件，或者当前工作区/上下文机制，或者当前工作区/上下文机制已经把它纳入了。</p>
+<p><strong>不过值得注意的时，Codex 启动时所在的工作目录会对 <code>AGENTS.md</code> 的读取有影响</strong>。如果如果 Codex 是在 <code>~/project/mp/</code> 下打开的，你不能默认期待它在修改 <code>~/project/real/</code> 时自动遵守 <code>~/project/real/AGENTS.md</code>，除非它显式读取了那个文件，或者当前工作区/上下文机制，或者当前工作区/上下文机制已经把它纳入了。</p>
 <p>使用后 <code>AGENTS.md</code> ，妈妈再也不用担心我的 AI Coding Agent 不懂我的规矩了！</p>
 <h4 id="用-plan-mode-做计划">用 Plan Mode 做计划</h4>
 <p>在 Context 中讲清楚规范还不够！还需要强迫 AI 弄清楚我到底想干什么！</p>
@@ -324,7 +324,7 @@
 
 <hr>
 <div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-15</p>
+  <p>文章作者：成元<br>上次更新：2026-08-02</p>
 </div>
 
 

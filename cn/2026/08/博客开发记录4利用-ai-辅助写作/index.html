@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>博客开发记录(4)：利用 AI 辅助写作 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="博客开发记录(4)：利用 AI 辅助写作 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="刚过去的 7 月，我发了不少文章。大部分内容仍然是我自己用键盘敲出来的，少数已经开始让 AI 参与编辑和整理。我也是在这个过程中才发现，写一篇博客，最耗时的部分有时候反而不是技术内容。
+[&amp;hellip;] 比如一篇介绍 FFmpeg 的文章，我查博客、官方手册和文档，处理技术内容可能只需要半天。可是，改标点、修语病、整理标题和排版，反而可能还要花一天，甚至两天。发布以后，又要不断维护。我的语文成 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+
+<div class="article-meta">
+<h1 class="title">博客开发记录(4)：利用 AI 辅助写作</h1>
+
+<h3 class="meta-line">
+  <span>
+  
+  
+
+
+
+
+
+
+
+<span class="date">2026-08-09</span>
+<span class="meta-sep"> / </span>
+<span class="word-count">约 2011 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 5 分钟</span>
+
+
+  
+  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span>, </span><a href="/categories/%E7%AB%99%E5%8A%A1/" class="term-cat">站务</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/blog/" class="term-tag">Blog</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#ai-参与后还算自己写吗">AI 参与后还算自己写吗</a></li>
+    <li><a href="#ai-适合接手哪些环节">AI 适合接手哪些环节</a>
+      <ul>
+        <li><a href="#让-ai-帮忙收集资料">让 AI 帮忙收集资料</a></li>
+        <li><a href="#用语音输入代替打字">用语音输入代替打字</a></li>
+        <li><a href="#把整理和审核交给-ai">把整理和审核交给 AI</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>刚过去的 7 月，我发了不少文章。大部分内容仍然是我自己用键盘敲出来的，少数已经开始让 AI 参与编辑和整理。我也是在这个过程中才发现，写一篇博客，最耗时的部分有时候反而不是技术内容。</p>
+<p>比如一篇介绍 FFmpeg 的文章，我查博客、官方手册和文档，处理技术内容可能只需要半天。可是，改标点、修语病、整理标题和排版，反而可能还要花一天，甚至两天。发布以后，又要不断维护。我的语文成绩一直不太好，再加上以前这些事情全得自己手动处理，所以我写博客一直比较慢。</p>
+<p>最近我在网上看了不少博客，想知道别人是怎么写文章的。我发现，不少博主都在用 AI 提高写作效率。语病、标点和排版可以让 AI 帮忙整理。一时不知道怎么组织语言，也可以先写出或说出大概内容，再让 AI 逐句整理，最后由自己审核。</p>
+<p>经过一段时间的学习和使用，我发现自己的写作效率确实提高了。原本可能要折腾一两天的事情，配合 AI 后，或许半天不到就能完成。</p>
+<h2 id="ai-参与后还算自己写吗">AI 参与后还算自己写吗</h2>
+<p>用 AI 写文章时，经常会遇到一个问题：这还算是你自己写的吗？这和用 AI 编程有点像。无论是 Vibe Coding，还是 Agentic Engineering，只要 AI 参与了，别人就可能问，作品究竟是不是你自己完成的。</p>
+<p>我觉得，只要文章写的还是自己的想法、经历和判断，AI 只是帮忙收集资料和整理语句，那么它仍然算自己的作品。</p>
+<p>如果只是让 AI 从网上搜集别人的文章，然后拼成一篇新文章，自己看都不看，也没有加入自己的想法和理解，甚至没有说明资料来源，那就不能算自己写的。这种做法和抄作业差不多，抄完以后，自己该是啥样还是啥样，没有任何进步，而且“老师”甚至懒得看你的作业。</p>
+<p>所以，关键不是文章有没有 AI 参与，而是里面还有没有你自己的理解与思考。</p>
+<h2 id="ai-适合接手哪些环节">AI 适合接手哪些环节</h2>
+<p>我目前想到的用法主要分成三部分：收集资料、提高输入效率，以及整理文章。</p>
+<h3 id="让-ai-帮忙收集资料">让 AI 帮忙收集资料</h3>
+<p>以前找资料，主要是用浏览器搜别人的博客、官方手册和文档，或者在终端使用 <code>man</code> 命令查资料。反正都是自己搜、自己找。现在，可以让具备联网搜索能力的 AI 帮忙查找资料、整理链接和生成摘要，找资料方便了不少。</p>
+<p>不过，AI 找到的资料，自己肯定还是要看。毕竟我们是在学东西，不是抄作业。尤其是技术文章，最好打开原始来源，优先阅读官方文档，不能只看 AI 的总结。</p>
+<p>现在是 AI 时代，学习一个库时，没必要再像以前“古法编程”那样，先把每个 API 都学一遍。先弄清它能做什么、有什么优劣、适合什么场景，以及怎么和其他库配合就够了。具体的 API 细节，真要用时再查文档或问 AI。不过，涉及关键逻辑、安全和性能的内容，自己还是得看懂和验证。</p>
+<h3 id="用语音输入代替打字">用语音输入代替打字</h3>
+<p>以前要表达自己的想法，我可能会先用键盘敲出大纲，再一点点润色。现在，我可以直接把想法说出来，再让 AI 整理。对我来说，说话的速度比打字快很多。语音输入带来的“啊”“呃”和其他口癖，也可以让 AI 在后续整理时帮我删掉。只要明确要求，AI 还可以保留一些口语化特征，避免文章整理完以后全是 AI 味。</p>
+<p>我感觉，这也能锻炼自己的表达能力。无论是以前在学校，还是最近实习时，我经常想表达一件事，可同学或同事却听不懂我在说什么。现在用语音“写”博客，正好可以练习怎么描述一个 Bug，怎么介绍一个功能。</p>
+<h3 id="把整理和审核交给-ai">把整理和审核交给 AI</h3>
+<p>我的中文一直不太好。写博客时，我感觉自己只会用逗号、句号、问号，顶多再加一个感叹号。而且就连逗号和句号，有时候也用不明白。一句话明明已经写完了，我却还在用逗号。现在，这些问题都可以先让 AI 帮忙处理。读起来不顺、看着别扭或者标点不对，都可以逐句整理。</p>
+<p>我还可以把规则写进 Skill，明确哪些口语习惯要保留，哪些“啊”“呃”需要删掉，同时让不同的 Agent 检查事实、文风、Markdown 和 Front Matter。</p>
+<p>不过，AI 审核的结果也不一定对。尤其是资料和引用，还是要打开原始链接确认。最后的文章也必须自己再看一遍，不能把审核这件事完全交出去。</p>
+<h2 id="总结">总结</h2>
+<p>这篇文章主要记录我这几天摸索出来的 AI 辅助写作方法，其中不少思路来自下面那篇参考文章。那篇文章从语音输入讲到逐句整理，又讲到如何利用 Skill 保留自己的风格，把口语稿整理成可以发布的文章。作者还给出了具体例子，我感觉特别有参考价值。</p>
+<p>虽然我和他写的主题不一样，但思路是相通的。AI 最有用的地方，不是替我生成一篇文章，而是帮我处理那些重复、琐碎又耗时的环节。这也是我第一次主要靠语音输入写完一篇博客。这样一路说下来，我的思路确实没那么容易断。</p>
+<p>以前打字时，我经常需要停下来找字。因为我现在的主力机是 Ubuntu，系统默认使用 IBus 输入法框架，输入中文时特别难受，经常要找半天字词，思路很容易被打断。语音输入避开了这个问题，同时也能锻炼我描述问题和介绍事物的能力。</p>
+<p><del>输入法的问题，以后有空再折腾一下，说不定还能再写一篇博客。又挖了一个坑 🕳</del></p>
+<p>另一方面，折腾这套写作流程也让我真正用上了之前学过的 Skills 和 Subagent，做到了学以致用。</p>
+<p>总之，这套方法对我确实有用，提高了我的写作效率。</p>
+<p>最后感谢参考文章的作者，给了我不少启发。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.xiaoming.io/ai-writing-workflow/">AI 神助攻，写作效率提升 10 倍</a></li>
+</ul>
+
+
+
+
+
+
+
+<hr>
+<div class="post-tailnote small">
+  <p>文章作者：成元<br>上次更新：2026-08-09</p>
+</div>
+
+
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/08/%E8%83%83%E7%97%85%E7%B3%96%E6%B0%B4%E4%B8%8E%E5%8E%8B%E5%8A%9B/">胃病、糖水与压力</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

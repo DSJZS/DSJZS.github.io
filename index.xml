@@ -9,6 +9,13 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>博客开发记录(5)：获取 RSS 以订阅博客</title>
+      <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Tue, 11 Aug 2026 10:39:51 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近发现了很多大佬的博客，内容都十分有意思，对我也有很大帮助。&lt;/p&gt;&#xA;&lt;p&gt;之前，我都是收藏他们博客的首页，然后在浏览器的收藏夹中进行整理。后来发现这种方法效率有点低，因为即使博客更新了，浏览器也不会提醒我。我只能手动打开收藏夹中的网站，逐个检查有没有更新。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>博客开发记录(4)：利用 AI 辅助写作</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</link>
       <pubDate>Sun, 09 Aug 2026 19:26:36 +0800</pubDate>

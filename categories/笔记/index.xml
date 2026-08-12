@@ -9,6 +9,13 @@
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Android开发学习记录(2)：Kotlin 语法入门</title>
+      <link>https://masterji.top/cn/2026/08/android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 12 Aug 2026 10:35:02 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/android%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;根据&lt;a href=&#34;https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn&#34;&gt;官方教程&lt;/a&gt;，学习 Android 原生开发的第一步是了解 Kotlin 的基础语法，因此这里写一篇 Kotlin 学习笔记。&lt;/p&gt;&#xA;&lt;p&gt;本文主要参考 Android 开发者官网提供的&lt;a href=&#34;https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn&#34;&gt;官方教程&lt;/a&gt;。如果时间充足，建议直接学习官方教程。本文是对其中基础语法的精简总结，更适合快速入门或复习时查阅。&lt;/p&gt;&#xA;&lt;p&gt;本文默认你学过 C 或 C++ 中的至少一种，部分内容会以它们作为参考进行说明。&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>博客开发记录(5)：获取 RSS 以订阅博客</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Tue, 11 Aug 2026 10:39:51 +0800</pubDate>

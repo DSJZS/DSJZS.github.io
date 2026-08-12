@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Android开发学习记录(2)：Kotlin 语法入门 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Android开发学习记录(2)：Kotlin 语法入门 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="根据官方教程，学习 Android 原生开发的第一步是了解 Kotlin 的基础语法，因此这里写一篇 Kotlin 学习笔记。
+[&amp;hellip;] 本文主要参考 Android 开发者官网提供的官方教程。如果时间充足，建议直接学习官方教程。本文是对其中基础语法的精简总结，更适合快速入门或复习时查阅。
+[&amp;hellip;] 本文默认你学过 C 或 C&#43;&#43; 中的至少一种，部分内容会以它们作为参考进行 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+
+<div class="article-meta">
+<h1 class="title">Android开发学习记录(2)：Kotlin 语法入门</h1>
+
+<h3 class="meta-line">
+  <span>
+  
+  
+
+
+
+
+
+
+
+<span class="date">2026-08-12</span>
+<span class="meta-sep"> / </span>
+<span class="word-count">约 2404 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 5 分钟</span>
+
+
+  
+  </span>
+  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/android/" class="term-tag">Android</a><span>, </span><a href="/tags/kotlin/" class="term-tag">Kotlin</a><span> ]</span></span>
+</h3>
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav class="fullwidth twocolumn" id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#hello-world">Hello World</a></li>
+    <li><a href="#程序的入口">程序的入口</a></li>
+    <li><a href="#函数">函数</a>
+      <ul>
+        <li><a href="#定义并调用函数">定义并调用函数</a></li>
+        <li><a href="#形参写法与只读特性">形参写法与只读特性</a></li>
+        <li><a href="#看懂函数签名">看懂函数签名</a></li>
+        <li><a href="#使用具名实参">使用具名实参</a></li>
+        <li><a href="#设置默认实参">设置默认实参</a></li>
+        <li><a href="#函数的代码风格">函数的代码风格</a></li>
+      </ul>
+    </li>
+    <li><a href="#添加新的语句">添加新的语句</a></li>
+    <li><a href="#变量">变量</a>
+      <ul>
+        <li><a href="#常见数据类型">常见数据类型</a></li>
+        <li><a href="#声明变量">声明变量</a></li>
+        <li><a href="#使用类型推断">使用类型推断</a></li>
+        <li><a href="#在字符串中插入变量">在字符串中插入变量</a></li>
+        <li><a href="#区分-val-与-var">区分 <code>val</code> 与 <code>var</code></a></li>
+        <li><a href="#与-运算符"><code>++</code> 与 <code>--</code> 运算符</a></li>
+        <li><a href="#变量的代码风格">变量的代码风格</a></li>
+      </ul>
+    </li>
+    <li><a href="#注释">注释</a></li>
+    <li><a href="#结语">结语</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+
+
+
+<h2 id="前言">前言</h2>
+<p>根据<a href="https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn">官方教程</a>，学习 Android 原生开发的第一步是了解 Kotlin 的基础语法，因此这里写一篇 Kotlin 学习笔记。</p>
+<p>本文主要参考 Android 开发者官网提供的<a href="https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn">官方教程</a>。如果时间充足，建议直接学习官方教程。本文是对其中基础语法的精简总结，更适合快速入门或复习时查阅。</p>
+<p>本文默认你学过 C 或 C++ 中的至少一种，部分内容会以它们作为参考进行说明。</p>
+<p>题外话，Kotlin 的读音接近“cot-lin”，用中文注音的话就是“科特林”。</p>
+<p>话不多说，打开 <a href="https://play.kotlinlang.org/#eyJ2ZXJzaW9uIjoiMi40LjEwIiwicGxhdGZvcm0iOiJqYXZhIiwiYXJncyI6IiIsIm5vbmVNYXJrZXJzIjp0cnVlLCJ0aGVtZSI6ImlkZWEiLCJjb2RlIjoiLyoqXG4gKiBZb3UgY2FuIGVkaXQsIHJ1biwgYW5kIHNoYXJlIHRoaXMgY29kZS5cbiAqIHBsYXkua290bGlubGFuZy5vcmdcbiAqL1xuZnVuIG1haW4oKSB7XG4gICAgcHJpbnRsbihcIkhlbGxvLCB3b3JsZCEhIVwiKVxufSIsImNvbXBpbGVyQXJndW1lbnRzIjp7fX0=">Kotlin 园地</a>，开始学习吧！</p>
+<h2 id="hello-world">Hello World</h2>
+<p>先从经典的 Hello World 程序开始：</p>
+<pre><code class="language-kotlin">fun main() {
+    println(&quot;Hello, world!&quot;)
+}
+</code></pre>
+<p>运行后会输出：</p>
+<pre><code class="language-text">Hello, world!
+</code></pre>
+<p>和 C/C++ 中的输出函数类似，<code>println()</code> 会输出括号中的内容，并在末尾换行。</p>
+<h2 id="程序的入口">程序的入口</h2>
+<p>和 C/C++ 一样，可独立运行的 Kotlin 应用程序以 <code>main()</code> 函数作为入口，程序会从这里开始执行。具体写法可以参考上面的 <a href="#hello-world">Hello World</a> 程序。</p>
+<p>不过值得注意的是，Android 应用由系统启动，通常不需要开发者自己编写 <code>main()</code> 函数。</p>
+<h2 id="函数">函数</h2>
+<h3 id="定义并调用函数">定义并调用函数</h3>
+<p>Kotlin 中的函数和 C/C++ 类似，只是使用 <code>fun</code> 关键字，并将返回值类型写在形参列表后面：</p>
+<pre><code class="language-kotlin">fun functionName(parameterName: ParameterType): ReturnType {
+    // 函数体
+    return value
+}
+</code></pre>
+<p>如果函数没有需要返回的结果，可以省略返回值类型，此时默认为 <code>Unit</code>。它和 C/C++ 中的 <code>void</code> 用途相近，也不需要写 <code>return</code> 语句。</p>
+<p>函数调用方式和 C/C++ 基本相同：</p>
+<pre><code class="language-kotlin">fun main() {
+    sayHello()
+}
+
+fun sayHello() {
+    println(&quot;Hello!&quot;)
+}
+</code></pre>
+<h3 id="形参写法与只读特性">形参写法与只读特性</h3>
+<p>形参和实参的概念与 C/C++ 相同。不同的是，Kotlin 需要将形参写成 <code>名称: 类型</code>，而且形参是只读的，不能在函数体内重新赋值。它的工作方式类似于使用 <a href="#%E5%8C%BA%E5%88%86-val-%E4%B8%8E-var"><code>val</code></a> 声明的变量。</p>
+<p>下面的函数接收 <code>name</code> 和 <code>age</code> 两个形参，并返回一个 <code>String</code>：</p>
+<pre><code class="language-kotlin">fun main() {
+    println(birthdayGreeting(&quot;Rover&quot;, 5))
+    println(birthdayGreeting(&quot;Rex&quot;, 2))
+}
+
+fun birthdayGreeting(name: String, age: Int): String {
+    val nameGreeting = &quot;Happy Birthday, $name!&quot;
+    val ageGreeting = &quot;You are now $age years old!&quot;
+    return &quot;$nameGreeting\n$ageGreeting&quot;
+}
+</code></pre>
+<p>这里的 <code>birthdayGreeting()</code> 接收两个形参并返回一个 <code>String</code>，整体用法和 C/C++ 中的函数相近。</p>
+<h3 id="看懂函数签名">看懂函数签名</h3>
+<p>函数名称及其形参统称为“函数签名”，例如：</p>
+<pre><code class="language-kotlin">fun birthdayGreeting(name: String, age: Int)
+</code></pre>
+<p>了解这个术语即可，阅读代码和文档时经常会遇到。</p>
+<h3 id="使用具名实参">使用具名实参</h3>
+<p>C/C++ 调用函数时，实参顺序要与形参列表保持一致。参数较多时，需要逐个确认它们的对应关系，有时比较麻烦。</p>
+<p>Kotlin 可以使用“具名实参”，也就是在调用函数时写出形参名称。使用具名实参后，可以调整实参顺序，代码的含义也会更清楚：</p>
+<pre><code class="language-kotlin">println(birthdayGreeting(age = 2, name = &quot;Rex&quot;))
+println(birthdayGreeting(name = &quot;Rex&quot;, age = 2))
+</code></pre>
+<h3 id="设置默认实参">设置默认实参</h3>
+<p>Kotlin 可以直接为形参设置默认值。调用函数时没有传入对应的实参，就会使用这个默认值：</p>
+<pre><code class="language-kotlin">fun birthdayGreeting(name: String = &quot;Rover&quot;, age: Int): String {
+    return &quot;Happy Birthday, $name! You are now $age years old!&quot;
+}
+</code></pre>
+<p>当带有默认值的形参位于没有默认值的形参前面时，可以配合<a href="#%E4%BD%BF%E7%94%A8%E5%85%B7%E5%90%8D%E5%AE%9E%E5%8F%82">具名实参</a>，只传入必需的实参：</p>
+<pre><code class="language-kotlin">println(birthdayGreeting(age = 5))
+println(birthdayGreeting(&quot;Rex&quot;, 2))
+</code></pre>
+<h3 id="函数的代码风格">函数的代码风格</h3>
+<p>下面是一些和函数有关的代码风格：</p>
+<ul>
+<li>函数名称应采用驼峰命名法，并且应该是动词或动词短语。</li>
+<li>每个语句都应单独占一行。</li>
+<li>左花括号应出现在函数开始行的末尾。</li>
+<li>左花括号前应有一个空格。</li>
+<li>请勿使用制表符缩进代码，而应输入 4 个空格。</li>
+<li>右花括号应在函数体最后一行代码之后单独占一行，并与函数开头的 <code>fun</code> 关键字对齐。</li>
+</ul>
+<p>这么做主要是为了提高代码的可读性，并在大型项目协作中保持一致。具体格式可以参考 <a href="#hello-world">Hello World</a> 中的代码。</p>
+<p>完整说明可以查看 Google 制定的 <a href="https://developer.android.google.cn/kotlin/style-guide?hl=zh-cn">Android Kotlin 样式指南</a>。</p>
+<h2 id="添加新的语句">添加新的语句</h2>
+<p><strong>按照 Kotlin 的代码风格，每个语句都应该单独占一行。</strong> 如果要新增语句，就在函数体中另起一行：</p>
+<pre><code class="language-kotlin">fun main() {
+    println(&quot;Hello, Android!&quot;)
+    println(&quot;Hello, Android!&quot;)
+}
+</code></pre>
+<p>不使用分号时，不能把两个语句直接写在同一行：</p>
+<pre><code class="language-kotlin">fun main() {
+    println(&quot;Hello, Android!&quot;) println(&quot;Hello, Android!&quot;) // 编译错误
+}
+</code></pre>
+<p>Kotlin 的分号是可选的。如果一定要把多个语句写在同一行，可以使用分号分隔，但官方代码风格建议尽量省略分号，并让每个语句单独占一行。</p>
+<h2 id="变量">变量</h2>
+<p>Kotlin 变量的基本概念和 C/C++ 相同，主要区别在于声明方式、类型推断以及 <code>val</code> 和 <code>var</code>。</p>
+<h3 id="常见数据类型">常见数据类型</h3>
+<p>下面是一些常见的 Kotlin 数据类型：</p>
+<table>
+  <thead>
+      <tr>
+          <th>Kotlin 数据类型</th>
+          <th>可包含的数据类型</th>
+          <th>字面量值示例</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>String</code></td>
+          <td>文本</td>
+          <td><code>&quot;Add contact&quot;</code><br><code>&quot;Search&quot;</code><br><code>&quot;Sign in&quot;</code></td>
+      </tr>
+      <tr>
+          <td><code>Int</code></td>
+          <td>整数</td>
+          <td><code>32</code><br><code>1293490</code><br><code>-59281</code></td>
+      </tr>
+      <tr>
+          <td><code>Double</code></td>
+          <td>小数</td>
+          <td><code>2.0</code><br><code>501.0292</code><br><code>-31723.99999</code></td>
+      </tr>
+      <tr>
+          <td><code>Float</code></td>
+          <td>小数（不如 <code>Double</code> 精确），数字末尾带有 <code>f</code> 或 <code>F</code></td>
+          <td><code>5.0f</code><br><code>-1630.209f</code><br><code>1.2940278F</code></td>
+      </tr>
+      <tr>
+          <td><code>Boolean</code></td>
+          <td><code>true</code> 或 <code>false</code>。当只有两个可能的值时，可使用此数据类型。<code>true</code> 和 <code>false</code> 是 Kotlin 中的关键字。</td>
+          <td><code>true</code><br><code>false</code></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="声明变量">声明变量</h3>
+<p>Kotlin 使用 <code>val</code> 或 <code>var</code> 声明变量，类型写在变量名称后面：</p>
+<pre><code class="language-kotlin">val variableName: Type = initialValue
+</code></pre>
+<pre><code class="language-kotlin">fun main() {
+    val count: Int = 2
+
+    // 输出 2
+    println(count)
+}
+</code></pre>
+<p><code>val</code> 用于声明只读变量，<code>var</code> 用于声明可以重新赋值的变量，具体区别见<a href="#%E5%8C%BA%E5%88%86-val-%E4%B8%8E-var">区分 <code>val</code> 与 <code>var</code></a>。</p>
+<h3 id="使用类型推断">使用类型推断</h3>
+<p>Kotlin 支持类型推断。声明变量时如果提供了初始值，通常可以省略类型。因此，<a href="#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F">声明变量</a>中的代码可以简写为：</p>
+<pre><code class="language-kotlin">val count = 2
+</code></pre>
+<p>如果没有提供初始值，就必须指定类型，并在使用变量前完成初始化：</p>
+<pre><code class="language-kotlin">val count: Int
+count = 2
+println(count)
+</code></pre>
+<h3 id="在字符串中插入变量">在字符串中插入变量</h3>
+<pre><code class="language-kotlin">fun main() {
+    val count: Int = 2
+
+    // 输出 You have 2 unread messages.
+    println(&quot;You have $count unread messages.&quot;)
+}
+</code></pre>
+<p>Kotlin 支持字符串模板。使用 <code>$变量名</code> 可以直接将变量值插入字符串中。</p>
+<p>如果要插入更复杂的表达式，就需要使用 <code>${表达式}</code> 的形式。例如：</p>
+<pre><code class="language-kotlin">fun main() {
+    val unreadCount = 5
+    val readCount = 100
+
+    // 输出 You have 105 total messages in your inbox.
+    println(&quot;You have ${unreadCount + readCount} total messages in your inbox.&quot;)
+}
+</code></pre>
+<h3 id="区分-val-与-var">区分 <code>val</code> 与 <code>var</code></h3>
+<p>这是 Kotlin 与 C/C++ 差异比较明显的地方：</p>
+<ul>
+<li><code>val</code> 用于声明只读变量，完成初始化后不能重新赋值。</li>
+<li><code>var</code> 用于声明可变变量，之后可以重新赋值。</li>
+</ul>
+<pre><code class="language-kotlin">fun main() {
+    var count = 2
+    count = 3
+    println(count)
+}
+</code></pre>
+<p>需要注意，<code>val</code> 只保证变量不能指向另一个值，并不代表它引用的对象一定不可修改。</p>
+<p>Kotlin 建议默认使用 <code>val</code>，只有确实需要重新赋值时才使用 <code>var</code>，以减少变量被意外修改的情况。</p>
+<h3 id="与-运算符"><code>++</code> 与 <code>--</code> 运算符</h3>
+<p>Kotlin 也支持 <code>++</code> 与 <code>--</code> 运算符，但只能用于可以重新赋值的变量：</p>
+<pre><code class="language-kotlin">var count = 2
+count++
+count--
+</code></pre>
+<h3 id="变量的代码风格">变量的代码风格</h3>
+<ul>
+<li>变量名称应采用驼峰命名法，并以小写字母开头。</li>
+<li>在变量声明中指定数据类型时，应在冒号后面添加一个空格。</li>
+<li>赋值运算符 <code>=</code>、加号 <code>+</code>、减号 <code>-</code>、乘号 <code>*</code>、除号 <code>/</code> 等二元运算符的前后应有空格。</li>
+<li>编写复杂程序时，建议每行不要超过 100 个字符，避免阅读代码时频繁水平滚动。</li>
+</ul>
+<h2 id="注释">注释</h2>
+<p>Kotlin 的单行注释和多行注释写法与 C/C++ 相同：</p>
+<pre><code class="language-kotlin">// 注释 1
+
+/* 注释 2
+ * 注释 3
+ * 注释 4
+ */
+</code></pre>
+<p>Kotlin 的多行注释还可以嵌套，这一点与 C/C++ 不同：</p>
+<pre><code class="language-kotlin">/* 外层注释
+    /* 内层注释 */
+ */
+</code></pre>
+<h2 id="结语">结语</h2>
+<p>不得不说，Android 官网提供的教程真是把读者当小朋友来教，看电子书竟然看出了上课的感觉。</p>
+<p>我挺喜欢这种教学方式。初学者可以跟着教程慢慢学习，有基础的人也可以快速跳过说明，只看强调的重点。</p>
+<p><a href="https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn">官方教程</a>最后提供的<a href="https://developer.android.google.cn/codelabs/basic-android-kotlin-compose-intro-kotlin-practice-problems?hl=zh-cn&amp;continue=https%3A%2F%2Fdeveloper.android.google.cn%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-1%3Fhl%3Dzh-cn%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-intro-kotlin-practice-problems#0">Kotlin 基础练习题</a>也不错，难度适中，正好用来巩固理解。如果你是初学者，了解完 Kotlin 的基础语法后，建议做一下这些题目，加深对变量和函数的理解。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn">Kotlin 编程简介</a></li>
+<li><a href="https://developer.android.google.cn/kotlin/style-guide?hl=zh-cn">Kotlin 样式指南</a></li>
+<li><a href="https://kotlinlang.org/docs/basic-syntax.html">Kotlin 基础语法</a></li>
+<li><a href="https://kotlinlang.org/docs/functions.html">Kotlin 函数</a></li>
+<li><a href="https://developer.android.google.cn/codelabs/basic-android-kotlin-compose-intro-kotlin-practice-problems?hl=zh-cn&amp;continue=https%3A%2F%2Fdeveloper.android.google.cn%2Fcourses%2Fpathways%2Fandroid-basics-compose-unit-1-pathway-1%3Fhl%3Dzh-cn%23codelab-https%3A%2F%2Fdeveloper.android.com%2Fcodelabs%2Fbasic-android-kotlin-compose-intro-kotlin-practice-problems#0">练习题：Kotlin 基础知识</a></li>
+</ul>
+
+
+
+
+
+
+
+<hr>
+<div class="post-tailnote small">
+  <p>文章作者：成元<br>上次更新：2026-08-12</p>
+</div>
+
+
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/">博客开发记录(5)：获取 RSS 以订阅博客</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/math-code.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

@@ -7,7 +7,7 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Sun, 09 Aug 2026 20:26:04 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 13:18:07 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git</title>
@@ -42,6 +42,13 @@
       <link>https://masterji.top/tags/algorithm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://masterji.top/tags/algorithm/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Android</title>
+      <link>https://masterji.top/tags/android/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://masterji.top/tags/android/</guid>
       <description></description>
     </item>
     <item>
@@ -168,6 +175,13 @@
       <link>https://masterji.top/tags/hugo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://masterji.top/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Kotlin</title>
+      <link>https://masterji.top/tags/kotlin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://masterji.top/tags/kotlin/</guid>
       <description></description>
     </item>
     <item>

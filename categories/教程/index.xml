@@ -13,7 +13,7 @@
       <link>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Wed, 12 Aug 2026 10:35:02 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;根据&lt;a href=&#34;https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn&#34;&gt;官方教程&lt;/a&gt;，学习 Android 原生开发的第一步是了解 Kotlin 的基础语法，因此这里写一篇 Kotlin 学习笔记。&lt;/p&gt;&#xA;&lt;p&gt;本文主要参考 Android 开发者官网提供的&lt;a href=&#34;https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn&#34;&gt;官方教程&lt;/a&gt;。如果时间充足，建议直接学习官方教程。本文是对其中基础语法的精简总结，更适合快速入门或复习时查阅。&lt;/p&gt;&#xA;&lt;p&gt;本文默认你学过 C 或 C++ 中的至少一种，部分内容会以它们作为参考进行说明。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;根据&lt;a href=&#34;https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn&#34;&gt;官方教程&lt;/a&gt;，学习 Android 原生开发的第一步是了解 Kotlin 的基础语法，因此这里写一篇 Kotlin 学习笔记。&lt;/p&gt;&#xA;&lt;p&gt;本文主要参考 Android 开发者官网提供的&lt;a href=&#34;https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-1?hl=zh-cn&#34;&gt;官方教程&lt;/a&gt;。如果时间充足，建议直接学习官方教程。本文是对其中基础语法的精简总结，更适合快速入门或者供“古法编程爱好者们”复习 Kotlin 语法时查阅。&lt;/p&gt;&#xA;&lt;p&gt;本文默认你学过 C 或 C++ 中的至少一种，部分内容会以它们作为参考进行说明。当然这并非意味着我认为万物起源于 C/C++，我这么说只是为了方便大家理解，实际上每种语言都有其擅长和不擅长的领域。我们经常放在一起说的 C 和 C++，两者也有很大的区别，更别提其它编成语言了。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Android应用开发学习记录(1)：相关概念初步了解</title>

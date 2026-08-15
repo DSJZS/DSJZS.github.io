@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Git学习记录(1)：Git入门 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Git学习记录(1)：Git入门 - Yuan&#39;s Blog">
     
@@ -40,6 +41,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -49,7 +52,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -61,32 +67,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Git学习记录(1)：Git入门</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-27</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-27</span><span class="meta-sep"> / </span>
 <span class="word-count">约 11727 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 24 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/git/" class="term-tag">Git</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/git/" class="term-tag">Git</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -97,97 +102,96 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#一条最小的-git-工作流">一条最小的 Git 工作流</a></li>
-    <li><a href="#git-到底在管理什么">Git 到底在管理什么</a></li>
-    <li><a href="#先搞清楚三个区域">先搞清楚三个区域</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#一条最小的-git-工作流"><span class="toc-link-label">一条最小的 Git 工作流</span></a></li>
+    <li><a href="#git-到底在管理什么"><span class="toc-link-label">Git 到底在管理什么</span></a></li>
+    <li><a href="#先搞清楚三个区域"><span class="toc-link-label">先搞清楚三个区域</span></a>
       <ul>
-        <li><a href="#git-status-和-git-log"><code>git status</code> 和 <code>git log</code></a></li>
-        <li><a href="#git-status-到底该怎么看"><code>git status</code> 到底该怎么看</a></li>
-        <li><a href="#git-log-到底该怎么看"><code>git log</code> 到底该怎么看</a></li>
+        <li><a href="#git-status-和-git-log"><span class="toc-link-label"><code>git status</code> 和 <code>git log</code></span></a></li>
+        <li><a href="#git-status-到底该怎么看"><span class="toc-link-label"><code>git status</code> 到底该怎么看</span></a></li>
+        <li><a href="#git-log-到底该怎么看"><span class="toc-link-label"><code>git log</code> 到底该怎么看</span></a></li>
       </ul>
     </li>
-    <li><a href="#文中提到的命令如果忘了-怎么继续查">文中提到的命令如果忘了，怎么继续查</a></li>
-    <li><a href="#从零开始的本地操作">从零开始的本地操作</a>
+    <li><a href="#文中提到的命令如果忘了-怎么继续查"><span class="toc-link-label">文中提到的命令如果忘了，怎么继续查</span></a></li>
+    <li><a href="#从零开始的本地操作"><span class="toc-link-label">从零开始的本地操作</span></a>
       <ul>
-        <li><a href="#添加到暂存区">添加到暂存区</a></li>
-        <li><a href="#提交">提交</a></li>
-        <li><a href="#修改-commit-message">修改 commit message</a></li>
-        <li><a href="#为什么修改旧-message-会有风险">为什么修改旧 message 会有风险</a></li>
-        <li><a href="#从暂存区移除-但保留修改">从暂存区移除，但保留修改</a></li>
-        <li><a href="#从暂存区移除-同时丢弃修改">从暂存区移除，同时丢弃修改</a></li>
+        <li><a href="#添加到暂存区"><span class="toc-link-label">添加到暂存区</span></a></li>
+        <li><a href="#提交"><span class="toc-link-label">提交</span></a></li>
+        <li><a href="#修改-commit-message"><span class="toc-link-label">修改 commit message</span></a></li>
+        <li><a href="#为什么修改旧-message-会有风险"><span class="toc-link-label">为什么修改旧 message 会有风险</span></a></li>
+        <li><a href="#从暂存区移除-但保留修改"><span class="toc-link-label">从暂存区移除，但保留修改</span></a></li>
+        <li><a href="#从暂存区移除-同时丢弃修改"><span class="toc-link-label">从暂存区移除，同时丢弃修改</span></a></li>
       </ul>
     </li>
-    <li><a href="#分支-head-与当前所在位置">分支、<code>HEAD</code> 与当前所在位置</a></li>
-    <li><a href="#分支的创建-切换与提交">分支的创建、切换与提交</a>
+    <li><a href="#分支-head-与当前所在位置"><span class="toc-link-label">分支、<code>HEAD</code> 与当前所在位置</span></a></li>
+    <li><a href="#分支的创建-切换与提交"><span class="toc-link-label">分支的创建、切换与提交</span></a>
       <ul>
-        <li><a href="#git-checkout-b"><code>git checkout -b</code></a></li>
-        <li><a href="#checkout-到底在切什么"><code>checkout</code> 到底在切什么</a></li>
+        <li><a href="#git-checkout-b"><span class="toc-link-label"><code>git checkout -b</code></span></a></li>
+        <li><a href="#checkout-到底在切什么"><span class="toc-link-label"><code>checkout</code> 到底在切什么</span></a></li>
       </ul>
     </li>
-    <li><a href="#合并两条开发线">合并两条开发线</a>
+    <li><a href="#合并两条开发线"><span class="toc-link-label">合并两条开发线</span></a>
       <ul>
-        <li><a href="#merge"><code>merge</code></a></li>
-        <li><a href="#fast-forward">Fast-forward</a></li>
-        <li><a href="#rebase"><code>rebase</code></a></li>
-        <li><a href="#merge-和-rebase-的区别"><code>merge</code> 和 <code>rebase</code> 的区别</a></li>
+        <li><a href="#merge"><span class="toc-link-label"><code>merge</code></span></a></li>
+        <li><a href="#fast-forward"><span class="toc-link-label">Fast-forward</span></a></li>
+        <li><a href="#rebase"><span class="toc-link-label"><code>rebase</code></span></a></li>
+        <li><a href="#merge-和-rebase-的区别"><span class="toc-link-label"><code>merge</code> 和 <code>rebase</code> 的区别</span></a></li>
       </ul>
     </li>
-    <li><a href="#撤销-回退与改历史">撤销、回退与改历史</a>
+    <li><a href="#撤销-回退与改历史"><span class="toc-link-label">撤销、回退与改历史</span></a>
       <ul>
-        <li><a href="#git-reset"><code>git reset</code></a></li>
-        <li><a href="#reset-之后-原来的提交是不是就没了"><code>reset</code> 之后，原来的提交是不是就没了</a></li>
-        <li><a href="#想找回-reset-之前的位置怎么办">想找回 <code>reset</code> 之前的位置怎么办</a></li>
-        <li><a href="#那旧提交会永久保留吗">那旧提交会永久保留吗</a></li>
-        <li><a href="#checkout-commit-id-和-reset-commit-id-到底是什么关系"><code>checkout &lt;commit-id&gt;</code> 和 <code>reset &lt;commit-id&gt;</code> 到底是什么关系</a></li>
-        <li><a href="#git-revert"><code>git revert</code></a></li>
-        <li><a href="#这几个命令怎么粗略区分">这几个命令怎么粗略区分</a></li>
+        <li><a href="#git-reset"><span class="toc-link-label"><code>git reset</code></span></a></li>
+        <li><a href="#reset-之后-原来的提交是不是就没了"><span class="toc-link-label"><code>reset</code> 之后，原来的提交是不是就没了</span></a></li>
+        <li><a href="#想找回-reset-之前的位置怎么办"><span class="toc-link-label">想找回 <code>reset</code> 之前的位置怎么办</span></a></li>
+        <li><a href="#那旧提交会永久保留吗"><span class="toc-link-label">那旧提交会永久保留吗</span></a></li>
+        <li><a href="#checkout-commit-id-和-reset-commit-id-到底是什么关系"><span class="toc-link-label"><code>checkout &lt;commit-id&gt;</code> 和 <code>reset &lt;commit-id&gt;</code> 到底是什么关系</span></a></li>
+        <li><a href="#git-revert"><span class="toc-link-label"><code>git revert</code></span></a></li>
+        <li><a href="#这几个命令怎么粗略区分"><span class="toc-link-label">这几个命令怎么粗略区分</span></a></li>
       </ul>
     </li>
-    <li><a href="#标签-给某个提交起一个稳定名字">标签：给某个提交起一个稳定名字</a>
+    <li><a href="#标签-给某个提交起一个稳定名字"><span class="toc-link-label">标签：给某个提交起一个稳定名字</span></a>
       <ul>
-        <li><a href="#常见的-tag-用法">常见的 <code>tag</code> 用法</a></li>
-        <li><a href="#轻量标签和附注标签">轻量标签和附注标签</a></li>
-        <li><a href="#tag-和-branch-的区别"><code>tag</code> 和 <code>branch</code> 的区别</a></li>
-        <li><a href="#标签与远程仓库">标签与远程仓库</a></li>
+        <li><a href="#常见的-tag-用法"><span class="toc-link-label">常见的 <code>tag</code> 用法</span></a></li>
+        <li><a href="#轻量标签和附注标签"><span class="toc-link-label">轻量标签和附注标签</span></a></li>
+        <li><a href="#tag-和-branch-的区别"><span class="toc-link-label"><code>tag</code> 和 <code>branch</code> 的区别</span></a></li>
+        <li><a href="#标签与远程仓库"><span class="toc-link-label">标签与远程仓库</span></a></li>
       </ul>
     </li>
-    <li><a href="#远程仓库-fetch-pull-push">远程仓库：<code>fetch</code>、<code>pull</code>、<code>push</code></a>
+    <li><a href="#远程仓库-fetch-pull-push"><span class="toc-link-label">远程仓库：<code>fetch</code>、<code>pull</code>、<code>push</code></span></a>
       <ul>
-        <li><a href="#git-fetch"><code>git fetch</code></a></li>
-        <li><a href="#git-pull"><code>git pull</code></a></li>
-        <li><a href="#git-push"><code>git push</code></a></li>
+        <li><a href="#git-fetch"><span class="toc-link-label"><code>git fetch</code></span></a></li>
+        <li><a href="#git-pull"><span class="toc-link-label"><code>git pull</code></span></a></li>
+        <li><a href="#git-push"><span class="toc-link-label"><code>git push</code></span></a></li>
       </ul>
     </li>
-    <li><a href="#子模块-在一个仓库里引用另一个仓库">子模块：在一个仓库里引用另一个仓库</a>
+    <li><a href="#子模块-在一个仓库里引用另一个仓库"><span class="toc-link-label">子模块：在一个仓库里引用另一个仓库</span></a>
       <ul>
-        <li><a href="#为什么会需要-submodule">为什么会需要 submodule</a></li>
-        <li><a href="#添加子模块">添加子模块</a></li>
-        <li><a href="#克隆和更新带子模块的仓库">克隆和更新带子模块的仓库</a></li>
-        <li><a href="#子模块仓库更新后-主项目怎么跟上">子模块仓库更新后，主项目怎么跟上</a></li>
-        <li><a href="#在子模块里开发时要注意什么">在子模块里开发时要注意什么</a></li>
+        <li><a href="#为什么会需要-submodule"><span class="toc-link-label">为什么会需要 submodule</span></a></li>
+        <li><a href="#添加子模块"><span class="toc-link-label">添加子模块</span></a></li>
+        <li><a href="#克隆和更新带子模块的仓库"><span class="toc-link-label">克隆和更新带子模块的仓库</span></a></li>
+        <li><a href="#子模块仓库更新后-主项目怎么跟上"><span class="toc-link-label">子模块仓库更新后，主项目怎么跟上</span></a></li>
+        <li><a href="#在子模块里开发时要注意什么"><span class="toc-link-label">在子模块里开发时要注意什么</span></a></li>
       </ul>
     </li>
-    <li><a href="#快速手册">快速手册</a>
+    <li><a href="#快速手册"><span class="toc-link-label">快速手册</span></a>
       <ul>
-        <li><a href="#新建或获取仓库">新建或获取仓库</a></li>
-        <li><a href="#查看状态与历史">查看状态与历史</a></li>
-        <li><a href="#查看帮助">查看帮助</a></li>
-        <li><a href="#暂存与取消暂存">暂存与取消暂存</a></li>
-        <li><a href="#提交与修改提交信息">提交与修改提交信息</a></li>
-        <li><a href="#分支操作">分支操作</a></li>
-        <li><a href="#合并与整理历史">合并与整理历史</a></li>
-        <li><a href="#撤销与回退">撤销与回退</a></li>
-        <li><a href="#标签">标签</a></li>
-        <li><a href="#远程同步">远程同步</a></li>
-        <li><a href="#子模块">子模块</a></li>
+        <li><a href="#新建或获取仓库"><span class="toc-link-label">新建或获取仓库</span></a></li>
+        <li><a href="#查看状态与历史"><span class="toc-link-label">查看状态与历史</span></a></li>
+        <li><a href="#查看帮助"><span class="toc-link-label">查看帮助</span></a></li>
+        <li><a href="#暂存与取消暂存"><span class="toc-link-label">暂存与取消暂存</span></a></li>
+        <li><a href="#提交与修改提交信息"><span class="toc-link-label">提交与修改提交信息</span></a></li>
+        <li><a href="#分支操作"><span class="toc-link-label">分支操作</span></a></li>
+        <li><a href="#合并与整理历史"><span class="toc-link-label">合并与整理历史</span></a></li>
+        <li><a href="#撤销与回退"><span class="toc-link-label">撤销与回退</span></a></li>
+        <li><a href="#标签"><span class="toc-link-label">标签</span></a></li>
+        <li><a href="#远程同步"><span class="toc-link-label">远程同步</span></a></li>
+        <li><a href="#子模块"><span class="toc-link-label">子模块</span></a></li>
       </ul>
     </li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+    <li><a href="#参考文章"><span class="toc-link-label">参考文章</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -1185,19 +1189,6 @@ git submodule sync --recursive
 <li><a href="https://git-scm.com/docs/git-submodule/zh_HANS-CN">git-submodule 官方文档</a></li>
 <li><a href="https://git-scm.com/docs/git-tag/zh_HANS-CN">git-tag 官方文档</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/">Makefile学习记录(1)：GNU Make入门</a></span>

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>AI Coding开发学习记录(3)：Codex 常用功能指南 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="AI Coding开发学习记录(3)：Codex 常用功能指南 - Yuan&#39;s Blog">
     
@@ -41,6 +42,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -50,7 +53,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -62,32 +68,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">AI Coding开发学习记录(3)：Codex 常用功能指南</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-07-13</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-07-13</span><span class="meta-sep"> / </span>
 <span class="word-count">约 6204 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 13 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span>, </span><a href="/tags/codex/" class="term-tag">Codex</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span>, </span><a href="/tags/codex/" class="term-tag">Codex</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -98,51 +103,50 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#steer">Steer</a></li>
-    <li><a href="#plan-mode">Plan Mode</a></li>
-    <li><a href="#agents-md">AGENTS.md</a></li>
-    <li><a href="#mcp">MCP</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#steer"><span class="toc-link-label">Steer</span></a></li>
+    <li><a href="#plan-mode"><span class="toc-link-label">Plan Mode</span></a></li>
+    <li><a href="#agents-md"><span class="toc-link-label">AGENTS.md</span></a></li>
+    <li><a href="#mcp"><span class="toc-link-label">MCP</span></a>
       <ul>
-        <li><a href="#管理-mcp">管理 MCP</a>
+        <li><a href="#管理-mcp"><span class="toc-link-label">管理 MCP</span></a>
           <ul>
-            <li><a href="#例子-github-mcp">例子：Github MCP</a></li>
+            <li><a href="#例子-github-mcp"><span class="toc-link-label">例子：Github MCP</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#skills">Skills</a>
+    <li><a href="#skills"><span class="toc-link-label">Skills</span></a>
       <ul>
-        <li><a href="#开启-skills-功能">开启 Skills 功能</a></li>
-        <li><a href="#管理-skills">管理 Skills</a>
+        <li><a href="#开启-skills-功能"><span class="toc-link-label">开启 Skills 功能</span></a></li>
+        <li><a href="#管理-skills"><span class="toc-link-label">管理 Skills</span></a>
           <ul>
-            <li><a href="#例子-早餐推荐">例子：早餐推荐</a></li>
+            <li><a href="#例子-早餐推荐"><span class="toc-link-label">例子：早餐推荐</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#skills-vs-mcp">Skills VS MCP</a></li>
-    <li><a href="#subagent">Subagent</a>
+    <li><a href="#skills-vs-mcp"><span class="toc-link-label">Skills VS MCP</span></a></li>
+    <li><a href="#subagent"><span class="toc-link-label">Subagent</span></a>
       <ul>
-        <li><a href="#配置-subagent">配置 Subagent</a>
+        <li><a href="#配置-subagent"><span class="toc-link-label">配置 Subagent</span></a>
           <ul>
-            <li><a href="#multiagent-v1">MultiAgent v1</a></li>
-            <li><a href="#multiagent-v2">MultiAgent v2</a></li>
+            <li><a href="#multiagent-v1"><span class="toc-link-label">MultiAgent v1</span></a></li>
+            <li><a href="#multiagent-v2"><span class="toc-link-label">MultiAgent v2</span></a></li>
           </ul>
         </li>
-        <li><a href="#自定义-subagent">自定义 Subagent</a>
+        <li><a href="#自定义-subagent"><span class="toc-link-label">自定义 Subagent</span></a>
           <ul>
-            <li><a href="#管理自定义-subagent">管理自定义 Subagent</a></li>
-            <li><a href="#bug-说明与解决方案">Bug 说明与解决方案</a></li>
+            <li><a href="#管理自定义-subagent"><span class="toc-link-label">管理自定义 Subagent</span></a></li>
+            <li><a href="#bug-说明与解决方案"><span class="toc-link-label">Bug 说明与解决方案</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#结语">结语</a></li>
-    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -547,19 +551,6 @@ sandbox_mode = &quot;可选，指定文件和命令权限&quot;
 <li><a href="https://linux.do/t/topic/2578075">〖拯救 5.6 Sol（1）〗开箱即用、快速高效、减少上下文腐烂的 Codex 子代理实践</a></li>
 <li><a href="https://linux.do/t/topic/2591214/10">codex 只能开 4 个子代理怎么解决？config 改 max_threads=16 也没用？</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-08-03</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/07/%E4%B8%8A%E6%89%8B%E4%B9%8B%E5%90%8E%E6%89%8D%E7%9C%8B%E8%A7%81%E5%8E%89%E5%AE%B3/">上手之后，才看见厉害</a></span>

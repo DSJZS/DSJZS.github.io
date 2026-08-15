@@ -8,6 +8,7 @@
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/categories/%E7%AB%99%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>博客开发记录(5)：获取 RSS 以订阅博客</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</link>
@@ -15,6 +16,7 @@
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近发现了很多大佬的博客，内容都十分有意思，对我也有很大帮助。&lt;/p&gt;&#xA;&lt;p&gt;之前，我都是收藏他们博客的首页，然后在浏览器的收藏夹中进行整理。后来发现这种方法效率有点低，因为即使博客更新了，浏览器也不会提醒我。我只能手动打开收藏夹中的网站，逐个检查有没有更新。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>博客开发记录(4)：利用 AI 辅助写作</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</link>
@@ -22,6 +24,7 @@
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;刚过去的 7 月，我发了不少文章。大部分内容仍然是我自己用键盘敲出来的，少数已经开始让 AI 参与编辑和整理。我也是在这个过程中才发现，写一篇博客，最耗时的部分有时候反而不是技术内容。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>
       <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
@@ -29,6 +32,7 @@
       <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>博客开发记录(1)：主题修改、功能增加与我的一些心里话</title>
       <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0%E4%B8%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</link>
@@ -36,5 +40,6 @@
       <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0%E4%B8%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。近几天有空，正好更新一下站点，说说有什么变化的地方以及我的一些想法。&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

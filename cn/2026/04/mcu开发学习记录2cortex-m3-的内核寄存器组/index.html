@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="MCU开发学习记录(2)：Cortex-M3 的内核寄存器组 - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-11</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-11</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2035 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 5 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,30 +104,29 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#寄存器组介绍">寄存器组介绍</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#寄存器组介绍"><span class="toc-link-label">寄存器组介绍</span></a>
       <ul>
-        <li><a href="#核心寄存器">核心寄存器</a>
+        <li><a href="#核心寄存器"><span class="toc-link-label">核心寄存器</span></a>
           <ul>
-            <li><a href="#r0-r12">R0 ~ R12</a></li>
-            <li><a href="#r13-sp">R13(SP)</a></li>
-            <li><a href="#r14-lr">R14(LR)</a></li>
-            <li><a href="#r15-pc">R15(PC)</a></li>
+            <li><a href="#r0-r12"><span class="toc-link-label">R0 ~ R12</span></a></li>
+            <li><a href="#r13-sp"><span class="toc-link-label">R13(SP)</span></a></li>
+            <li><a href="#r14-lr"><span class="toc-link-label">R14(LR)</span></a></li>
+            <li><a href="#r15-pc"><span class="toc-link-label">R15(PC)</span></a></li>
           </ul>
         </li>
-        <li><a href="#特殊寄存器">特殊寄存器</a>
+        <li><a href="#特殊寄存器"><span class="toc-link-label">特殊寄存器</span></a>
           <ul>
-            <li><a href="#control">CONTROL</a></li>
-            <li><a href="#primask-faultmask-basepri">PRIMASK、FAULTMASK、BASEPRI</a></li>
-            <li><a href="#psrs-xpsr">PSRs/xPSR</a></li>
+            <li><a href="#control"><span class="toc-link-label">CONTROL</span></a></li>
+            <li><a href="#primask-faultmask-basepri"><span class="toc-link-label">PRIMASK、FAULTMASK、BASEPRI</span></a></li>
+            <li><a href="#psrs-xpsr"><span class="toc-link-label">PSRs/xPSR</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#参考文章"><span class="toc-link-label">参考文章</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -254,19 +258,6 @@ MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ; 写通用寄存器的值到特殊功�
 <li><a href="https://www.cnblogs.com/utank/p/11238218.html">Cortex-M3 R0~R15寄存器组 &amp; 特殊功能寄存器组</a></li>
 <li><a href="https://blog.csdn.net/tilblackout/article/details/128191341">ARM基础(1)：Cortex-M3的核心寄存器和特殊寄存器</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">RTOS开发学习记录(1)：程序结构</a></span>

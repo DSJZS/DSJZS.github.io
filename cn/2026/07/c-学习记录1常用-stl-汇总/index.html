@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>C&#43;&#43;学习记录(1)：常用 STL 汇总 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="C&#43;&#43;学习记录(1)：常用 STL 汇总 - Yuan&#39;s Blog">
     
@@ -41,6 +42,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -50,7 +53,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -62,32 +68,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">C++学习记录(1)：常用 STL 汇总</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-07-20</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-07-20</span><span class="meta-sep"> / </span>
 <span class="word-count">约 10076 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 21 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/stl/" class="term-tag">STL</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/stl/" class="term-tag">STL</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -98,115 +103,114 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#string">string</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#string"><span class="toc-link-label">string</span></a>
       <ul>
-        <li><a href="#介绍与使用场景">介绍与使用场景</a></li>
-        <li><a href="#初始化方式">初始化方式</a></li>
-        <li><a href="#常用方法">常用方法</a></li>
-        <li><a href="#示例">示例</a></li>
+        <li><a href="#介绍与使用场景"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#pair">pair</a>
+    <li><a href="#pair"><span class="toc-link-label">pair</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-1">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-1">初始化方式</a></li>
-        <li><a href="#常用方法-1">常用方法</a></li>
-        <li><a href="#示例-1">示例</a></li>
+        <li><a href="#介绍与使用场景-1"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-1"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-1"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-1"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#array">array</a>
+    <li><a href="#array"><span class="toc-link-label">array</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-2">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-2">初始化方式</a></li>
-        <li><a href="#常用方法-2">常用方法</a></li>
-        <li><a href="#示例-2">示例</a></li>
+        <li><a href="#介绍与使用场景-2"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-2"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-2"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-2"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#vector">vector</a>
+    <li><a href="#vector"><span class="toc-link-label">vector</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-3">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-3">初始化方式</a></li>
-        <li><a href="#常用方法-3">常用方法</a></li>
-        <li><a href="#示例-3">示例</a></li>
+        <li><a href="#介绍与使用场景-3"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-3"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-3"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-3"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#deque">deque</a>
+    <li><a href="#deque"><span class="toc-link-label">deque</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-4">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-4">初始化方式</a></li>
-        <li><a href="#常用方法-4">常用方法</a></li>
-        <li><a href="#示例-4">示例</a></li>
+        <li><a href="#介绍与使用场景-4"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-4"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-4"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-4"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#queue">queue</a>
+    <li><a href="#queue"><span class="toc-link-label">queue</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-5">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-5">初始化方式</a></li>
-        <li><a href="#常用方法-5">常用方法</a></li>
-        <li><a href="#示例-5">示例</a></li>
+        <li><a href="#介绍与使用场景-5"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-5"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-5"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-5"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#stack">stack</a>
+    <li><a href="#stack"><span class="toc-link-label">stack</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-6">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-6">初始化方式</a></li>
-        <li><a href="#常用方法-6">常用方法</a></li>
-        <li><a href="#示例-6">示例</a></li>
+        <li><a href="#介绍与使用场景-6"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-6"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-6"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-6"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#map">map</a>
+    <li><a href="#map"><span class="toc-link-label">map</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-7">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-7">初始化方式</a></li>
-        <li><a href="#常用方法-7">常用方法</a></li>
-        <li><a href="#示例-7">示例</a></li>
+        <li><a href="#介绍与使用场景-7"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-7"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-7"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-7"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#set">set</a>
+    <li><a href="#set"><span class="toc-link-label">set</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-8">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-8">初始化方式</a></li>
-        <li><a href="#常用方法-8">常用方法</a></li>
-        <li><a href="#示例-8">示例</a></li>
+        <li><a href="#介绍与使用场景-8"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-8"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-8"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-8"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#unordered-map">unordered_map</a>
+    <li><a href="#unordered-map"><span class="toc-link-label">unordered_map</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-9">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-9">初始化方式</a></li>
-        <li><a href="#常用方法-9">常用方法</a></li>
-        <li><a href="#示例-9">示例</a></li>
+        <li><a href="#介绍与使用场景-9"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-9"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-9"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-9"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#unordered-set">unordered_set</a>
+    <li><a href="#unordered-set"><span class="toc-link-label">unordered_set</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-10">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-10">初始化方式</a></li>
-        <li><a href="#常用方法-10">常用方法</a></li>
-        <li><a href="#示例-10">示例</a></li>
+        <li><a href="#介绍与使用场景-10"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-10"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-10"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-10"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#tuple">tuple</a>
+    <li><a href="#tuple"><span class="toc-link-label">tuple</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-11">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-11">初始化方式</a></li>
-        <li><a href="#常用方法-11">常用方法</a></li>
-        <li><a href="#示例-11">示例</a></li>
+        <li><a href="#介绍与使用场景-11"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-11"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-11"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-11"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#list">list</a>
+    <li><a href="#list"><span class="toc-link-label">list</span></a>
       <ul>
-        <li><a href="#介绍与使用场景-12">介绍与使用场景</a></li>
-        <li><a href="#初始化方式-12">初始化方式</a></li>
-        <li><a href="#常用方法-12">常用方法</a></li>
-        <li><a href="#示例-12">示例</a></li>
+        <li><a href="#介绍与使用场景-12"><span class="toc-link-label">介绍与使用场景</span></a></li>
+        <li><a href="#初始化方式-12"><span class="toc-link-label">初始化方式</span></a></li>
+        <li><a href="#常用方法-12"><span class="toc-link-label">常用方法</span></a></li>
+        <li><a href="#示例-12"><span class="toc-link-label">示例</span></a></li>
       </ul>
     </li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -1085,19 +1089,6 @@ for (int i = 0; i &lt; 100; ++i) {
 </ul>
 <p>后续的话我大概会补充一下关于 <code>priority_queue</code>、<code>multiset</code>、<code>multimap</code> 之类的。</p>
 <p>至于迭代器、算法库之类的我应该会单独再开一篇博客编写。那部分和这些容器放在一起看，感觉会更完整一些。</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-22</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/07/%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E8%8D%89%E7%A8%BF%E4%B8%8D%E5%AE%8C%E7%BE%8E%E7%9A%84%E8%87%AA%E5%B7%B1/">未完成的草稿，不完美的自己</a></span>

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Linux开发学习记录(5)：I/O多路复用技术与信号驱动 - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Linux开发学习记录(5)：I/O多路复用技术与信号驱动</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-03-17</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-03-17</span><span class="meta-sep"> / </span>
 <span class="word-count">约 6714 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 14 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="term-tag">并发编程</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span>, </span><a href="/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" class="term-tag">并发编程</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,67 +104,66 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#i-o多路复用">I/O多路复用</a>
+    <li><a href="#i-o多路复用"><span class="toc-link-label">I/O多路复用</span></a>
       <ul>
-        <li><a href="#介绍">介绍</a></li>
-        <li><a href="#select">select</a>
+        <li><a href="#介绍"><span class="toc-link-label">介绍</span></a></li>
+        <li><a href="#select"><span class="toc-link-label">select</span></a>
           <ul>
-            <li><a href="#函数原型">函数原型</a></li>
-            <li><a href="#参数说明">参数说明</a></li>
-            <li><a href="#文件描述符集合操作">文件描述符集合操作</a></li>
-            <li><a href="#timeval-结构体"><code>timeval</code> 结构体</a></li>
-            <li><a href="#返回值">返回值</a></li>
-            <li><a href="#使用要点">使用要点</a></li>
+            <li><a href="#函数原型"><span class="toc-link-label">函数原型</span></a></li>
+            <li><a href="#参数说明"><span class="toc-link-label">参数说明</span></a></li>
+            <li><a href="#文件描述符集合操作"><span class="toc-link-label">文件描述符集合操作</span></a></li>
+            <li><a href="#timeval-结构体"><span class="toc-link-label"><code>timeval</code> 结构体</span></a></li>
+            <li><a href="#返回值"><span class="toc-link-label">返回值</span></a></li>
+            <li><a href="#使用要点"><span class="toc-link-label">使用要点</span></a></li>
           </ul>
         </li>
-        <li><a href="#poll">poll</a>
+        <li><a href="#poll"><span class="toc-link-label">poll</span></a>
           <ul>
-            <li><a href="#函数原型-1">函数原型</a></li>
-            <li><a href="#事件掩码">事件掩码</a></li>
-            <li><a href="#输入事件">输入事件</a></li>
-            <li><a href="#输出事件">输出事件</a></li>
-            <li><a href="#返回信息">返回信息</a></li>
-            <li><a href="#其余信息">其余信息</a></li>
-            <li><a href="#返回值-1">返回值</a></li>
-            <li><a href="#与-select-的主要区别">与 <code>select()</code> 的主要区别</a></li>
+            <li><a href="#函数原型-1"><span class="toc-link-label">函数原型</span></a></li>
+            <li><a href="#事件掩码"><span class="toc-link-label">事件掩码</span></a></li>
+            <li><a href="#输入事件"><span class="toc-link-label">输入事件</span></a></li>
+            <li><a href="#输出事件"><span class="toc-link-label">输出事件</span></a></li>
+            <li><a href="#返回信息"><span class="toc-link-label">返回信息</span></a></li>
+            <li><a href="#其余信息"><span class="toc-link-label">其余信息</span></a></li>
+            <li><a href="#返回值-1"><span class="toc-link-label">返回值</span></a></li>
+            <li><a href="#与-select-的主要区别"><span class="toc-link-label">与 <code>select()</code> 的主要区别</span></a></li>
           </ul>
         </li>
-        <li><a href="#epoll">epoll</a>
+        <li><a href="#epoll"><span class="toc-link-label">epoll</span></a>
           <ul>
-            <li><a href="#介绍-1">介绍</a></li>
-            <li><a href="#epoll-系统调用">epoll 系统调用</a></li>
-            <li><a href="#深入-epoll-语义-兴趣列表到底关联什么">深入 epoll 语义(兴趣列表到底关联什么)</a></li>
-            <li><a href="#epoll-边缘触发">epoll 边缘触发</a></li>
-            <li><a href="#注意事项">注意事项</a></li>
+            <li><a href="#介绍-1"><span class="toc-link-label">介绍</span></a></li>
+            <li><a href="#epoll-系统调用"><span class="toc-link-label">epoll 系统调用</span></a></li>
+            <li><a href="#深入-epoll-语义-兴趣列表到底关联什么"><span class="toc-link-label">深入 epoll 语义(兴趣列表到底关联什么)</span></a></li>
+            <li><a href="#epoll-边缘触发"><span class="toc-link-label">epoll 边缘触发</span></a></li>
+            <li><a href="#注意事项"><span class="toc-link-label">注意事项</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#i-o-信号驱动">I/O 信号驱动</a>
+    <li><a href="#i-o-信号驱动"><span class="toc-link-label">I/O 信号驱动</span></a>
       <ul>
-        <li><a href="#介绍-2">介绍</a></li>
-        <li><a href="#使用步骤">使用步骤</a></li>
-        <li><a href="#何时发送-i-o-就绪-信号">何时发送“I/O 就绪”信号</a></li>
-        <li><a href="#优化信号驱动-i-o">优化信号驱动 I/O</a>
+        <li><a href="#介绍-2"><span class="toc-link-label">介绍</span></a></li>
+        <li><a href="#使用步骤"><span class="toc-link-label">使用步骤</span></a></li>
+        <li><a href="#何时发送-i-o-就绪-信号"><span class="toc-link-label">何时发送“I/O 就绪”信号</span></a></li>
+        <li><a href="#优化信号驱动-i-o"><span class="toc-link-label">优化信号驱动 I/O</span></a>
           <ul>
-            <li><a href="#siginfo-t-中的关键字段"><code>siginfo_t</code> 中的关键字段</a></li>
-            <li><a href="#信号队列溢出处理">信号队列溢出处理</a></li>
-            <li><a href="#同步接收信号-避免信号处理例程">同步接收信号（避免信号处理例程）</a></li>
+            <li><a href="#siginfo-t-中的关键字段"><span class="toc-link-label"><code>siginfo_t</code> 中的关键字段</span></a></li>
+            <li><a href="#信号队列溢出处理"><span class="toc-link-label">信号队列溢出处理</span></a></li>
+            <li><a href="#同步接收信号-避免信号处理例程"><span class="toc-link-label">同步接收信号（避免信号处理例程）</span></a></li>
           </ul>
         </li>
-        <li><a href="#多线程程序中的信号驱动-i-o">多线程程序中的信号驱动 I/O</a></li>
-        <li><a href="#注意事项-1">注意事项</a></li>
+        <li><a href="#多线程程序中的信号驱动-i-o"><span class="toc-link-label">多线程程序中的信号驱动 I/O</span></a></li>
+        <li><a href="#注意事项-1"><span class="toc-link-label">注意事项</span></a></li>
       </ul>
     </li>
-    <li><a href="#设备驱动的支持">设备驱动的支持</a>
+    <li><a href="#设备驱动的支持"><span class="toc-link-label">设备驱动的支持</span></a>
       <ul>
-        <li><a href="#多路复用">多路复用</a></li>
-        <li><a href="#事件驱动">事件驱动</a></li>
+        <li><a href="#多路复用"><span class="toc-link-label">多路复用</span></a></li>
+        <li><a href="#事件驱动"><span class="toc-link-label">事件驱动</span></a></li>
       </ul>
     </li>
   </ul>
 </nav>
-
 
 
 <h2 id="i-o多路复用">I/O多路复用</h2>
@@ -884,19 +888,6 @@ static struct file_operations xxx_ops = {
 	return xxx_fasync(-1, filp, 0); /* 删除异步通知 */ 
 }
 </code></pre>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/">Linux开发学习记录(6)：常见的设备接口与总线</a></span>

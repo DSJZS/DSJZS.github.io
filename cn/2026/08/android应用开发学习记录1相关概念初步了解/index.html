@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Android应用开发学习记录(1)：相关概念初步了解 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Android应用开发学习记录(1)：相关概念初步了解 - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Android应用开发学习记录(1)：相关概念初步了解</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-08-12</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-08-12</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2189 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 5 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/android/" class="term-tag">Android</a><span>, </span><a href="/tags/kotlin/" class="term-tag">Kotlin</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/android/" class="term-tag">Android</a><span>, </span><a href="/tags/kotlin/" class="term-tag">Kotlin</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,22 +104,21 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#android-应用开发与系统开发">Android 应用开发与系统开发</a></li>
-    <li><a href="#android-原生应用开发">Android 原生应用开发</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#android-应用开发与系统开发"><span class="toc-link-label">Android 应用开发与系统开发</span></a></li>
+    <li><a href="#android-原生应用开发"><span class="toc-link-label">Android 原生应用开发</span></a>
       <ul>
-        <li><a href="#java-与-kotlin">Java 与 Kotlin</a></li>
-        <li><a href="#界面与构建脚本">界面与构建脚本</a></li>
-        <li><a href="#老项目与新项目的常见技术栈">老项目与新项目的常见技术栈</a></li>
+        <li><a href="#java-与-kotlin"><span class="toc-link-label">Java 与 Kotlin</span></a></li>
+        <li><a href="#界面与构建脚本"><span class="toc-link-label">界面与构建脚本</span></a></li>
+        <li><a href="#老项目与新项目的常见技术栈"><span class="toc-link-label">老项目与新项目的常见技术栈</span></a></li>
       </ul>
     </li>
-    <li><a href="#flutter-等跨端方案">Flutter 等跨端方案</a></li>
-    <li><a href="#这个系列使用-kotlin">这个系列使用 Kotlin</a></li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#flutter-等跨端方案"><span class="toc-link-label">Flutter 等跨端方案</span></a></li>
+    <li><a href="#这个系列使用-kotlin"><span class="toc-link-label">这个系列使用 Kotlin</span></a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -231,19 +235,6 @@
 <li><a href="https://flutter.dev/">Flutter</a></li>
 <li><a href="https://reactnative.dev/">React Native</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-08-14</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/">Android应用开发学习记录(2)：Kotlin 语法入门</a></span>

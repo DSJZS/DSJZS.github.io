@@ -7,8 +7,8 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Wed, 12 Aug 2026 13:18:07 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Git</title>
       <link>https://masterji.top/tags/git/</link>
@@ -16,6 +16,7 @@
       <guid>https://masterji.top/tags/git/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>FSM</title>
       <link>https://masterji.top/tags/fsm/</link>
@@ -23,6 +24,7 @@
       <guid>https://masterji.top/tags/fsm/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>前端</title>
       <link>https://masterji.top/tags/%E5%89%8D%E7%AB%AF/</link>
@@ -30,6 +32,7 @@
       <guid>https://masterji.top/tags/%E5%89%8D%E7%AB%AF/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>AI Coding</title>
       <link>https://masterji.top/tags/ai-coding/</link>
@@ -37,6 +40,7 @@
       <guid>https://masterji.top/tags/ai-coding/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Algorithm</title>
       <link>https://masterji.top/tags/algorithm/</link>
@@ -44,6 +48,7 @@
       <guid>https://masterji.top/tags/algorithm/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Android</title>
       <link>https://masterji.top/tags/android/</link>
@@ -51,6 +56,7 @@
       <guid>https://masterji.top/tags/android/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Apt</title>
       <link>https://masterji.top/tags/apt/</link>
@@ -58,6 +64,7 @@
       <guid>https://masterji.top/tags/apt/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Blog</title>
       <link>https://masterji.top/tags/blog/</link>
@@ -65,6 +72,7 @@
       <guid>https://masterji.top/tags/blog/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Bluetooth</title>
       <link>https://masterji.top/tags/bluetooth/</link>
@@ -72,6 +80,7 @@
       <guid>https://masterji.top/tags/bluetooth/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>BootLoader</title>
       <link>https://masterji.top/tags/bootloader/</link>
@@ -79,6 +88,7 @@
       <guid>https://masterji.top/tags/bootloader/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>C</title>
       <link>https://masterji.top/tags/c/</link>
@@ -86,6 +96,7 @@
       <guid>https://masterji.top/tags/c/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>C&#43;&#43;</title>
       <link>https://masterji.top/tags/c&#43;&#43;/</link>
@@ -93,6 +104,7 @@
       <guid>https://masterji.top/tags/c&#43;&#43;/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Codex</title>
       <link>https://masterji.top/tags/codex/</link>
@@ -100,6 +112,7 @@
       <guid>https://masterji.top/tags/codex/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Device Tree</title>
       <link>https://masterji.top/tags/device-tree/</link>
@@ -107,6 +120,7 @@
       <guid>https://masterji.top/tags/device-tree/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Docker</title>
       <link>https://masterji.top/tags/docker/</link>
@@ -114,6 +128,7 @@
       <guid>https://masterji.top/tags/docker/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Dpkg</title>
       <link>https://masterji.top/tags/dpkg/</link>
@@ -121,6 +136,7 @@
       <guid>https://masterji.top/tags/dpkg/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>ESP32</title>
       <link>https://masterji.top/tags/esp32/</link>
@@ -128,6 +144,7 @@
       <guid>https://masterji.top/tags/esp32/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>FFmpeg</title>
       <link>https://masterji.top/tags/ffmpeg/</link>
@@ -135,6 +152,7 @@
       <guid>https://masterji.top/tags/ffmpeg/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Food</title>
       <link>https://masterji.top/tags/food/</link>
@@ -142,6 +160,7 @@
       <guid>https://masterji.top/tags/food/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>GCC</title>
       <link>https://masterji.top/tags/gcc/</link>
@@ -149,6 +168,7 @@
       <guid>https://masterji.top/tags/gcc/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>GD32</title>
       <link>https://masterji.top/tags/gd32/</link>
@@ -156,6 +176,7 @@
       <guid>https://masterji.top/tags/gd32/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>GDB</title>
       <link>https://masterji.top/tags/gdb/</link>
@@ -163,6 +184,7 @@
       <guid>https://masterji.top/tags/gdb/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>HDL</title>
       <link>https://masterji.top/tags/hdl/</link>
@@ -170,6 +192,7 @@
       <guid>https://masterji.top/tags/hdl/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Hugo</title>
       <link>https://masterji.top/tags/hugo/</link>
@@ -177,6 +200,7 @@
       <guid>https://masterji.top/tags/hugo/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Kotlin</title>
       <link>https://masterji.top/tags/kotlin/</link>
@@ -184,6 +208,7 @@
       <guid>https://masterji.top/tags/kotlin/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Life</title>
       <link>https://masterji.top/tags/life/</link>
@@ -191,6 +216,7 @@
       <guid>https://masterji.top/tags/life/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Linux</title>
       <link>https://masterji.top/tags/linux/</link>
@@ -198,6 +224,7 @@
       <guid>https://masterji.top/tags/linux/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Makefile</title>
       <link>https://masterji.top/tags/makefile/</link>
@@ -205,6 +232,7 @@
       <guid>https://masterji.top/tags/makefile/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Markdown</title>
       <link>https://masterji.top/tags/markdown/</link>
@@ -212,6 +240,7 @@
       <guid>https://masterji.top/tags/markdown/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>MCU</title>
       <link>https://masterji.top/tags/mcu/</link>
@@ -219,6 +248,7 @@
       <guid>https://masterji.top/tags/mcu/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Music</title>
       <link>https://masterji.top/tags/music/</link>
@@ -226,6 +256,7 @@
       <guid>https://masterji.top/tags/music/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>OTA</title>
       <link>https://masterji.top/tags/ota/</link>
@@ -233,6 +264,7 @@
       <guid>https://masterji.top/tags/ota/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Poem</title>
       <link>https://masterji.top/tags/poem/</link>
@@ -240,6 +272,7 @@
       <guid>https://masterji.top/tags/poem/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>RTOS</title>
       <link>https://masterji.top/tags/rtos/</link>
@@ -247,6 +280,7 @@
       <guid>https://masterji.top/tags/rtos/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Scala</title>
       <link>https://masterji.top/tags/scala/</link>
@@ -254,6 +288,7 @@
       <guid>https://masterji.top/tags/scala/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>SDL</title>
       <link>https://masterji.top/tags/sdl/</link>
@@ -261,6 +296,7 @@
       <guid>https://masterji.top/tags/sdl/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Shell</title>
       <link>https://masterji.top/tags/shell/</link>
@@ -268,6 +304,7 @@
       <guid>https://masterji.top/tags/shell/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>STL</title>
       <link>https://masterji.top/tags/stl/</link>
@@ -275,6 +312,7 @@
       <guid>https://masterji.top/tags/stl/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>STM32</title>
       <link>https://masterji.top/tags/stm32/</link>
@@ -282,6 +320,7 @@
       <guid>https://masterji.top/tags/stm32/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Verilog</title>
       <link>https://masterji.top/tags/verilog/</link>
@@ -289,6 +328,7 @@
       <guid>https://masterji.top/tags/verilog/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Wi-Fi</title>
       <link>https://masterji.top/tags/wi-fi/</link>
@@ -296,6 +336,7 @@
       <guid>https://masterji.top/tags/wi-fi/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Wireshark</title>
       <link>https://masterji.top/tags/wireshark/</link>
@@ -303,6 +344,7 @@
       <guid>https://masterji.top/tags/wireshark/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>Zephyr</title>
       <link>https://masterji.top/tags/zephyr/</link>
@@ -310,6 +352,7 @@
       <guid>https://masterji.top/tags/zephyr/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>前端</title>
       <link>https://masterji.top/tags/front/</link>
@@ -317,6 +360,7 @@
       <guid>https://masterji.top/tags/front/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>并发编程</title>
       <link>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
@@ -324,5 +368,6 @@
       <guid>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
+    
   </channel>
 </rss>

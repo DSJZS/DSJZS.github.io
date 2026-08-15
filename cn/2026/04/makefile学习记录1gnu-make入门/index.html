@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Makefile学习记录(1)：GNU Make入门 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Makefile学习记录(1)：GNU Make入门 - Yuan&#39;s Blog">
     
@@ -43,6 +44,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -52,7 +55,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -64,32 +70,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Makefile学习记录(1)：GNU Make入门</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-28</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-28</span><span class="meta-sep"> / </span>
 <span class="word-count">约 9011 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 18 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/makefile/" class="term-tag">Makefile</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/makefile/" class="term-tag">Makefile</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/c&#43;&#43;/" class="term-tag">C&#43;&#43;</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -100,84 +105,83 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#先有一个整体印象">先有一个整体印象</a></li>
-    <li><a href="#最小的使用流程">最小的使用流程</a></li>
-    <li><a href="#一条最简单的-makefile">一条最简单的 Makefile</a></li>
-    <li><a href="#一条规则到底长什么样">一条规则到底长什么样</a></li>
-    <li><a href="#make-到底是怎么判断-要不要重新构建-的">Make 到底是怎么判断“要不要重新构建”的</a></li>
-    <li><a href="#为什么通常要把-编译-和-链接-分开">为什么通常要把“编译”和“链接”分开</a></li>
-    <li><a href="#默认目标是谁">默认目标是谁</a></li>
-    <li><a href="#make-默认会找哪个-makefile"><code>make</code> 默认会找哪个 Makefile</a></li>
-    <li><a href="#先看一个稍微完整一点的例子">先看一个稍微完整一点的例子</a></li>
-    <li><a href="#用变量减少重复">用变量减少重复</a></li>
-    <li><a href="#和-可以先粗略怎么区分"><code>=</code> 和 <code>:=</code> 可以先粗略怎么区分</a></li>
-    <li><a href="#给变量一个-默认值"><code>?=</code>：给变量一个“默认值”</a></li>
-    <li><a href="#命令行也可以直接覆盖变量">命令行也可以直接覆盖变量</a></li>
-    <li><a href="#gnu-make-内置了很多隐式规则">GNU Make 内置了很多隐式规则</a></li>
-    <li><a href="#常见的内置变量">常见的内置变量</a></li>
-    <li><a href="#自动变量-把-当前这条规则里的东西-拿出来用">自动变量：把“当前这条规则里的东西”拿出来用</a></li>
-    <li><a href="#用模式规则一次处理一批-c-o">用模式规则一次处理一批 <code>.c -&gt; .o</code></a></li>
-    <li><a href="#一个更像日常项目的入门版-makefile">一个更像日常项目的入门版 Makefile</a></li>
-    <li><a href="#phony-是什么-为什么-clean-常常要配它"><code>.PHONY</code> 是什么，为什么 <code>clean</code> 常常要配它</a></li>
-    <li><a href="#make-clean-为什么不会默认执行"><code>make clean</code> 为什么不会默认执行</a></li>
-    <li><a href="#依赖不一定都是-重建条件">依赖不一定都是“重建条件”</a></li>
-    <li><a href="#通配符和-wildcard">通配符和 <code>wildcard</code></a></li>
-    <li><a href="#几个很实用的-make-命令行选项">几个很实用的 <code>make</code> 命令行选项</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#先有一个整体印象"><span class="toc-link-label">先有一个整体印象</span></a></li>
+    <li><a href="#最小的使用流程"><span class="toc-link-label">最小的使用流程</span></a></li>
+    <li><a href="#一条最简单的-makefile"><span class="toc-link-label">一条最简单的 Makefile</span></a></li>
+    <li><a href="#一条规则到底长什么样"><span class="toc-link-label">一条规则到底长什么样</span></a></li>
+    <li><a href="#make-到底是怎么判断-要不要重新构建-的"><span class="toc-link-label">Make 到底是怎么判断“要不要重新构建”的</span></a></li>
+    <li><a href="#为什么通常要把-编译-和-链接-分开"><span class="toc-link-label">为什么通常要把“编译”和“链接”分开</span></a></li>
+    <li><a href="#默认目标是谁"><span class="toc-link-label">默认目标是谁</span></a></li>
+    <li><a href="#make-默认会找哪个-makefile"><span class="toc-link-label"><code>make</code> 默认会找哪个 Makefile</span></a></li>
+    <li><a href="#先看一个稍微完整一点的例子"><span class="toc-link-label">先看一个稍微完整一点的例子</span></a></li>
+    <li><a href="#用变量减少重复"><span class="toc-link-label">用变量减少重复</span></a></li>
+    <li><a href="#和-可以先粗略怎么区分"><span class="toc-link-label"><code>=</code> 和 <code>:=</code> 可以先粗略怎么区分</span></a></li>
+    <li><a href="#给变量一个-默认值"><span class="toc-link-label"><code>?=</code>：给变量一个“默认值”</span></a></li>
+    <li><a href="#命令行也可以直接覆盖变量"><span class="toc-link-label">命令行也可以直接覆盖变量</span></a></li>
+    <li><a href="#gnu-make-内置了很多隐式规则"><span class="toc-link-label">GNU Make 内置了很多隐式规则</span></a></li>
+    <li><a href="#常见的内置变量"><span class="toc-link-label">常见的内置变量</span></a></li>
+    <li><a href="#自动变量-把-当前这条规则里的东西-拿出来用"><span class="toc-link-label">自动变量：把“当前这条规则里的东西”拿出来用</span></a></li>
+    <li><a href="#用模式规则一次处理一批-c-o"><span class="toc-link-label">用模式规则一次处理一批 <code>.c -&gt; .o</code></span></a></li>
+    <li><a href="#一个更像日常项目的入门版-makefile"><span class="toc-link-label">一个更像日常项目的入门版 Makefile</span></a></li>
+    <li><a href="#phony-是什么-为什么-clean-常常要配它"><span class="toc-link-label"><code>.PHONY</code> 是什么，为什么 <code>clean</code> 常常要配它</span></a></li>
+    <li><a href="#make-clean-为什么不会默认执行"><span class="toc-link-label"><code>make clean</code> 为什么不会默认执行</span></a></li>
+    <li><a href="#依赖不一定都是-重建条件"><span class="toc-link-label">依赖不一定都是“重建条件”</span></a></li>
+    <li><a href="#通配符和-wildcard"><span class="toc-link-label">通配符和 <code>wildcard</code></span></a></li>
+    <li><a href="#几个很实用的-make-命令行选项"><span class="toc-link-label">几个很实用的 <code>make</code> 命令行选项</span></a>
       <ul>
-        <li><a href="#make-n-只看会执行什么-不真正执行"><code>make -n</code>：只看会执行什么，不真正执行</a></li>
-        <li><a href="#make-b-强制全部重建"><code>make -B</code>：强制全部重建</a></li>
-        <li><a href="#make-d-和-make-trace-排查-make-到底在想什么"><code>make -d</code> 和 <code>make --trace</code>：排查 Make 到底在想什么</a></li>
-        <li><a href="#make-j-并行执行"><code>make -j</code>：并行执行</a></li>
-        <li><a href="#make-c-先切到别的目录再构建"><code>make -C</code>：先切到别的目录再构建</a></li>
-        <li><a href="#make-p-把-make-当前看到的规则和变量打印出来"><code>make -p</code>：把 Make 当前看到的规则和变量打印出来</a></li>
-        <li><a href="#make-warn-undefined-variables"><code>make --warn-undefined-variables</code></a></li>
+        <li><a href="#make-n-只看会执行什么-不真正执行"><span class="toc-link-label"><code>make -n</code>：只看会执行什么，不真正执行</span></a></li>
+        <li><a href="#make-b-强制全部重建"><span class="toc-link-label"><code>make -B</code>：强制全部重建</span></a></li>
+        <li><a href="#make-d-和-make-trace-排查-make-到底在想什么"><span class="toc-link-label"><code>make -d</code> 和 <code>make --trace</code>：排查 Make 到底在想什么</span></a></li>
+        <li><a href="#make-j-并行执行"><span class="toc-link-label"><code>make -j</code>：并行执行</span></a></li>
+        <li><a href="#make-c-先切到别的目录再构建"><span class="toc-link-label"><code>make -C</code>：先切到别的目录再构建</span></a></li>
+        <li><a href="#make-p-把-make-当前看到的规则和变量打印出来"><span class="toc-link-label"><code>make -p</code>：把 Make 当前看到的规则和变量打印出来</span></a></li>
+        <li><a href="#make-warn-undefined-variables"><span class="toc-link-label"><code>make --warn-undefined-variables</code></span></a></li>
       </ul>
     </li>
-    <li><a href="#include-把别的-makefile-片段读进来"><code>include</code>：把别的 Makefile 片段读进来</a></li>
-    <li><a href="#从-单文件示例-走向-项目骨架">从“单文件示例”走向“项目骨架”</a></li>
-    <li><a href="#只显示命令结果-不显示命令本身"><code>@</code>：只显示命令结果，不显示命令本身</a></li>
-    <li><a href="#make-在-makefile-里再调用-make"><code>$(MAKE)</code>：在 Makefile 里再调用 make</a></li>
-    <li><a href="#define-定义多行变量或预制配方"><code>define</code>：定义多行变量或预制配方</a></li>
-    <li><a href="#条件判断-按场景切换构建逻辑">条件判断：按场景切换构建逻辑</a></li>
-    <li><a href="#常见函数-makefile-开始-像编程-的地方">常见函数：Makefile 开始“像编程”的地方</a>
+    <li><a href="#include-把别的-makefile-片段读进来"><span class="toc-link-label"><code>include</code>：把别的 Makefile 片段读进来</span></a></li>
+    <li><a href="#从-单文件示例-走向-项目骨架"><span class="toc-link-label">从“单文件示例”走向“项目骨架”</span></a></li>
+    <li><a href="#只显示命令结果-不显示命令本身"><span class="toc-link-label"><code>@</code>：只显示命令结果，不显示命令本身</span></a></li>
+    <li><a href="#make-在-makefile-里再调用-make"><span class="toc-link-label"><code>$(MAKE)</code>：在 Makefile 里再调用 make</span></a></li>
+    <li><a href="#define-定义多行变量或预制配方"><span class="toc-link-label"><code>define</code>：定义多行变量或预制配方</span></a></li>
+    <li><a href="#条件判断-按场景切换构建逻辑"><span class="toc-link-label">条件判断：按场景切换构建逻辑</span></a></li>
+    <li><a href="#常见函数-makefile-开始-像编程-的地方"><span class="toc-link-label">常见函数：Makefile 开始“像编程”的地方</span></a>
       <ul>
-        <li><a href="#patsubst"><code>patsubst</code></a></li>
-        <li><a href="#filter"><code>filter</code></a></li>
-        <li><a href="#addprefix-和-addsuffix"><code>addprefix</code> 和 <code>addsuffix</code></a></li>
-        <li><a href="#foreach"><code>foreach</code></a></li>
-        <li><a href="#call"><code>call</code></a></li>
-        <li><a href="#shell"><code>shell</code></a></li>
-        <li><a href="#eval"><code>eval</code></a></li>
+        <li><a href="#patsubst"><span class="toc-link-label"><code>patsubst</code></span></a></li>
+        <li><a href="#filter"><span class="toc-link-label"><code>filter</code></span></a></li>
+        <li><a href="#addprefix-和-addsuffix"><span class="toc-link-label"><code>addprefix</code> 和 <code>addsuffix</code></span></a></li>
+        <li><a href="#foreach"><span class="toc-link-label"><code>foreach</code></span></a></li>
+        <li><a href="#call"><span class="toc-link-label"><code>call</code></span></a></li>
+        <li><a href="#shell"><span class="toc-link-label"><code>shell</code></span></a></li>
+        <li><a href="#eval"><span class="toc-link-label"><code>eval</code></span></a></li>
       </ul>
     </li>
-    <li><a href="#自动生成头文件依赖">自动生成头文件依赖</a></li>
-    <li><a href="#一个带条件和自动依赖的稍微完整版本">一个带条件和自动依赖的稍微完整版本</a></li>
-    <li><a href="#secondexpansion-先知道它在干什么"><code>.SECONDEXPANSION</code>：先知道它在干什么</a></li>
-    <li><a href="#一个从零开始比较顺手的学习顺序">一个从零开始比较顺手的学习顺序</a></li>
-    <li><a href="#快速手册">快速手册</a>
+    <li><a href="#自动生成头文件依赖"><span class="toc-link-label">自动生成头文件依赖</span></a></li>
+    <li><a href="#一个带条件和自动依赖的稍微完整版本"><span class="toc-link-label">一个带条件和自动依赖的稍微完整版本</span></a></li>
+    <li><a href="#secondexpansion-先知道它在干什么"><span class="toc-link-label"><code>.SECONDEXPANSION</code>：先知道它在干什么</span></a></li>
+    <li><a href="#一个从零开始比较顺手的学习顺序"><span class="toc-link-label">一个从零开始比较顺手的学习顺序</span></a></li>
+    <li><a href="#快速手册"><span class="toc-link-label">快速手册</span></a>
       <ul>
-        <li><a href="#最基本的规则">最基本的规则</a></li>
-        <li><a href="#常用命令">常用命令</a></li>
-        <li><a href="#常见变量写法">常见变量写法</a></li>
-        <li><a href="#条件判断">条件判断</a></li>
-        <li><a href="#常见自动变量">常见自动变量</a></li>
-        <li><a href="#最常见的模式规则">最常见的模式规则</a></li>
-        <li><a href="#伪目标">伪目标</a></li>
-        <li><a href="#变量替换">变量替换</a></li>
-        <li><a href="#通配符函数">通配符函数</a></li>
-        <li><a href="#常见函数">常见函数</a></li>
-        <li><a href="#命令行覆盖变量">命令行覆盖变量</a></li>
-        <li><a href="#安静执行一条命令">安静执行一条命令</a></li>
-        <li><a href="#仅顺序依赖">仅顺序依赖</a></li>
-        <li><a href="#自动依赖">自动依赖</a></li>
+        <li><a href="#最基本的规则"><span class="toc-link-label">最基本的规则</span></a></li>
+        <li><a href="#常用命令"><span class="toc-link-label">常用命令</span></a></li>
+        <li><a href="#常见变量写法"><span class="toc-link-label">常见变量写法</span></a></li>
+        <li><a href="#条件判断"><span class="toc-link-label">条件判断</span></a></li>
+        <li><a href="#常见自动变量"><span class="toc-link-label">常见自动变量</span></a></li>
+        <li><a href="#最常见的模式规则"><span class="toc-link-label">最常见的模式规则</span></a></li>
+        <li><a href="#伪目标"><span class="toc-link-label">伪目标</span></a></li>
+        <li><a href="#变量替换"><span class="toc-link-label">变量替换</span></a></li>
+        <li><a href="#通配符函数"><span class="toc-link-label">通配符函数</span></a></li>
+        <li><a href="#常见函数"><span class="toc-link-label">常见函数</span></a></li>
+        <li><a href="#命令行覆盖变量"><span class="toc-link-label">命令行覆盖变量</span></a></li>
+        <li><a href="#安静执行一条命令"><span class="toc-link-label">安静执行一条命令</span></a></li>
+        <li><a href="#仅顺序依赖"><span class="toc-link-label">仅顺序依赖</span></a></li>
+        <li><a href="#自动依赖"><span class="toc-link-label">自动依赖</span></a></li>
       </ul>
     </li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -1285,19 +1289,6 @@ DEPS := $(OBJS:.o=.d)
 <li>本文主要参考了你提供的本地资料：<code>GNU_Make中文手册v3.8.pdf</code>、<code>make.md</code>、<code>make_notes.md</code>、<code>/home/yuangod/project/c/test/make.man</code></li>
 <li>其中函数、条件判断、自动依赖、二次展开等部分，主要整理自 <code>make_notes.md</code> 和 GNU Make 官方手册对应章节</li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/">Zephyr学习记录(1)：环境安装与点灯</a></span>

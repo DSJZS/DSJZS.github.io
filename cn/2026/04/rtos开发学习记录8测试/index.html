@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>RTOS开发学习记录(8)：测试 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="RTOS开发学习记录(8)：测试 - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">RTOS开发学习记录(8)：测试</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-22</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-22</span><span class="meta-sep"> / </span>
 <span class="word-count">约 1755 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 4 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,16 +104,15 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#测试平台">测试平台</a></li>
-    <li><a href="#资源占用">资源占用</a></li>
-    <li><a href="#初步测试方法">初步测试方法</a></li>
-    <li><a href="#检查思路">检查思路</a></li>
-    <li><a href="#最终结果">最终结果</a></li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#测试平台"><span class="toc-link-label">测试平台</span></a></li>
+    <li><a href="#资源占用"><span class="toc-link-label">资源占用</span></a></li>
+    <li><a href="#初步测试方法"><span class="toc-link-label">初步测试方法</span></a></li>
+    <li><a href="#检查思路"><span class="toc-link-label">检查思路</span></a></li>
+    <li><a href="#最终结果"><span class="toc-link-label">最终结果</span></a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -259,19 +263,6 @@ queue 4 lines=8508  jumps=0 last_count=42540000 last_receive=42540000
 <p>目前 Yuan RTOS 的初步测试主要覆盖了资源占用和队列长时间运行。</p>
 <p>资源占用方面，内核本身增量较小，当前长测 BSP 的 RAM 占用主要来自任务栈和队列缓冲区。</p>
 <p>功能测试方面，队列长时间运行接近 12 小时，最终没有发现数据错位、跳变、复位或异常日志。这个结果不能代表完全可靠，但至少说明当前实现已经具备继续扩展和继续测试的基础。</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/">RTOS开发学习记录(9)：移植</a></span>

@@ -7,8 +7,8 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Mon, 20 Jul 2026 23:09:18 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/categories/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Daily</title>
       <link>https://masterji.top/categories/daily/</link>
@@ -16,6 +16,7 @@
       <guid>https://masterji.top/categories/daily/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>教程</title>
       <link>https://masterji.top/categories/%E6%95%99%E7%A8%8B/</link>
@@ -23,6 +24,7 @@
       <guid>https://masterji.top/categories/%E6%95%99%E7%A8%8B/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>日常</title>
       <link>https://masterji.top/categories/%E6%97%A5%E5%B8%B8/</link>
@@ -30,6 +32,7 @@
       <guid>https://masterji.top/categories/%E6%97%A5%E5%B8%B8/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>站务</title>
       <link>https://masterji.top/categories/%E7%AB%99%E5%8A%A1/</link>
@@ -37,6 +40,7 @@
       <guid>https://masterji.top/categories/%E7%AB%99%E5%8A%A1/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>笔记</title>
       <link>https://masterji.top/categories/%E7%AC%94%E8%AE%B0/</link>
@@ -44,6 +48,7 @@
       <guid>https://masterji.top/categories/%E7%AC%94%E8%AE%B0/</guid>
       <description></description>
     </item>
+    
     <item>
       <title>随笔</title>
       <link>https://masterji.top/categories/%E9%9A%8F%E7%AC%94/</link>
@@ -51,5 +56,6 @@
       <guid>https://masterji.top/categories/%E9%9A%8F%E7%AC%94/</guid>
       <description></description>
     </item>
+    
   </channel>
 </rss>

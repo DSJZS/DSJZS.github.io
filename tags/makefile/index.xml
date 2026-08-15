@@ -8,6 +8,7 @@
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/tags/makefile/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Makefile学习记录(1)：GNU Make入门</title>
       <link>https://masterji.top/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</link>
@@ -15,6 +16,7 @@
       <guid>https://masterji.top/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前用了很久 GNU Make，但一直没有仔细整理，这篇文章整理一下相关内容。&lt;/p&gt;&#xA;&lt;p&gt;这篇会尽量同时满足两种阅读方式：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;如果是刚开始接触 Makefile，可以从头顺着看&lt;/li&gt;&#xA;&lt;li&gt;如果已经写过一些 Makefile，也可以把它当一份入门向的快速手册&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;这一篇先只讲 &lt;strong&gt;GNU Make 的基础部分&lt;/strong&gt;，重点放在：&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
@@ -22,5 +24,6 @@
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

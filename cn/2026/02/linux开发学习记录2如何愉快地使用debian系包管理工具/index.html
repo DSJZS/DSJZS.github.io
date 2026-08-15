@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具 - Yuan&#39;s Blog">
     
@@ -43,6 +44,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -52,7 +55,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -64,32 +70,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-02-17</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-02-17</span><span class="meta-sep"> / </span>
 <span class="word-count">约 7823 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 16 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/dpkg/" class="term-tag">Dpkg</a><span>, </span><a href="/tags/apt/" class="term-tag">Apt</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/dpkg/" class="term-tag">Dpkg</a><span>, </span><a href="/tags/apt/" class="term-tag">Apt</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -100,92 +105,91 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#deb">.deb</a></li>
-    <li><a href="#dpkg">dpkg</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#deb"><span class="toc-link-label">.deb</span></a></li>
+    <li><a href="#dpkg"><span class="toc-link-label">dpkg</span></a>
       <ul>
-        <li><a href="#工具介绍">工具介绍</a></li>
-        <li><a href="#主要功能">主要功能</a>
+        <li><a href="#工具介绍"><span class="toc-link-label">工具介绍</span></a></li>
+        <li><a href="#主要功能"><span class="toc-link-label">主要功能</span></a>
           <ul>
-            <li><a href="#安装软件包">安装软件包</a></li>
-            <li><a href="#卸载软件包">卸载软件包</a></li>
-            <li><a href="#修复损坏的软件包">修复损坏的软件包</a></li>
+            <li><a href="#安装软件包"><span class="toc-link-label">安装软件包</span></a></li>
+            <li><a href="#卸载软件包"><span class="toc-link-label">卸载软件包</span></a></li>
+            <li><a href="#修复损坏的软件包"><span class="toc-link-label">修复损坏的软件包</span></a></li>
           </ul>
         </li>
-        <li><a href="#调用后端工具">调用后端工具</a></li>
+        <li><a href="#调用后端工具"><span class="toc-link-label">调用后端工具</span></a></li>
       </ul>
     </li>
-    <li><a href="#dpkg-deb">dpkg-deb</a>
+    <li><a href="#dpkg-deb"><span class="toc-link-label">dpkg-deb</span></a>
       <ul>
-        <li><a href="#工具介绍-1">工具介绍</a></li>
-        <li><a href="#主要功能-1">主要功能</a>
+        <li><a href="#工具介绍-1"><span class="toc-link-label">工具介绍</span></a></li>
+        <li><a href="#主要功能-1"><span class="toc-link-label">主要功能</span></a>
           <ul>
-            <li><a href="#查询-deb-软件包的信息">查询 .deb 软件包的信息</a></li>
-            <li><a href="#提取-deb-软件包中的文件">提取 .deb 软件包中的文件</a></li>
-            <li><a href="#创建新的-deb-软件包">创建新的 .deb 软件包</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-    <li><a href="#dpkg-query">dpkg-query</a>
-      <ul>
-        <li><a href="#工具介绍-2">工具介绍</a></li>
-        <li><a href="#主要功能-2">主要功能</a>
-          <ul>
-            <li><a href="#查询-dpkg-数据库中已知软件包的信息">查询 dpkg 数据库中已知软件包的信息</a></li>
-            <li><a href="#查询文件归属">查询文件归属</a></li>
+            <li><a href="#查询-deb-软件包的信息"><span class="toc-link-label">查询 .deb 软件包的信息</span></a></li>
+            <li><a href="#提取-deb-软件包中的文件"><span class="toc-link-label">提取 .deb 软件包中的文件</span></a></li>
+            <li><a href="#创建新的-deb-软件包"><span class="toc-link-label">创建新的 .deb 软件包</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#apt">apt</a>
+    <li><a href="#dpkg-query"><span class="toc-link-label">dpkg-query</span></a>
       <ul>
-        <li><a href="#工具介绍-3">工具介绍</a></li>
-        <li><a href="#apt-仓库">apt 仓库</a></li>
-        <li><a href="#主要功能-3">主要功能</a>
+        <li><a href="#工具介绍-2"><span class="toc-link-label">工具介绍</span></a></li>
+        <li><a href="#主要功能-2"><span class="toc-link-label">主要功能</span></a>
           <ul>
-            <li><a href="#通过仓库获取最新的软件包信息">通过仓库获取最新的软件包信息</a></li>
-            <li><a href="#列出所有可用的软件包">列出所有可用的软件包</a></li>
-            <li><a href="#搜索指定的软件包">搜索指定的软件包</a></li>
-            <li><a href="#查看指定软件包的信息">查看指定软件包的信息</a></li>
-            <li><a href="#通过仓库-或者本地-安装软件包">通过仓库(或者本地)安装软件包</a></li>
-            <li><a href="#通过仓库更新软件">通过仓库更新软件</a></li>
-            <li><a href="#卸载软件包-1">卸载软件包</a></li>
+            <li><a href="#查询-dpkg-数据库中已知软件包的信息"><span class="toc-link-label">查询 dpkg 数据库中已知软件包的信息</span></a></li>
+            <li><a href="#查询文件归属"><span class="toc-link-label">查询文件归属</span></a></li>
           </ul>
         </li>
-        <li><a href="#彩蛋">彩蛋</a></li>
       </ul>
     </li>
-    <li><a href="#aptitude">aptitude</a>
+    <li><a href="#apt"><span class="toc-link-label">apt</span></a>
       <ul>
-        <li><a href="#工具介绍-4">工具介绍</a></li>
-        <li><a href="#可视化模式">可视化模式</a></li>
-        <li><a href="#search-patterns">Search patterns</a></li>
-        <li><a href="#主要选项">主要选项</a>
+        <li><a href="#工具介绍-3"><span class="toc-link-label">工具介绍</span></a></li>
+        <li><a href="#apt-仓库"><span class="toc-link-label">apt 仓库</span></a></li>
+        <li><a href="#主要功能-3"><span class="toc-link-label">主要功能</span></a>
           <ul>
-            <li><a href="#指定输出格式">指定输出格式</a></li>
+            <li><a href="#通过仓库获取最新的软件包信息"><span class="toc-link-label">通过仓库获取最新的软件包信息</span></a></li>
+            <li><a href="#列出所有可用的软件包"><span class="toc-link-label">列出所有可用的软件包</span></a></li>
+            <li><a href="#搜索指定的软件包"><span class="toc-link-label">搜索指定的软件包</span></a></li>
+            <li><a href="#查看指定软件包的信息"><span class="toc-link-label">查看指定软件包的信息</span></a></li>
+            <li><a href="#通过仓库-或者本地-安装软件包"><span class="toc-link-label">通过仓库(或者本地)安装软件包</span></a></li>
+            <li><a href="#通过仓库更新软件"><span class="toc-link-label">通过仓库更新软件</span></a></li>
+            <li><a href="#卸载软件包-1"><span class="toc-link-label">卸载软件包</span></a></li>
           </ul>
         </li>
-        <li><a href="#主要操作">主要操作</a>
+        <li><a href="#彩蛋"><span class="toc-link-label">彩蛋</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#aptitude"><span class="toc-link-label">aptitude</span></a>
+      <ul>
+        <li><a href="#工具介绍-4"><span class="toc-link-label">工具介绍</span></a></li>
+        <li><a href="#可视化模式"><span class="toc-link-label">可视化模式</span></a></li>
+        <li><a href="#search-patterns"><span class="toc-link-label">Search patterns</span></a></li>
+        <li><a href="#主要选项"><span class="toc-link-label">主要选项</span></a>
           <ul>
-            <li><a href="#搜索指定的软件包-1">搜索指定的软件包</a></li>
-            <li><a href="#列出指定软件包的版本">列出指定软件包的版本</a></li>
+            <li><a href="#指定输出格式"><span class="toc-link-label">指定输出格式</span></a></li>
           </ul>
         </li>
-        <li><a href="#待补充">待补充</a></li>
-        <li><a href="#彩蛋-1">彩蛋</a></li>
+        <li><a href="#主要操作"><span class="toc-link-label">主要操作</span></a>
+          <ul>
+            <li><a href="#搜索指定的软件包-1"><span class="toc-link-label">搜索指定的软件包</span></a></li>
+            <li><a href="#列出指定软件包的版本"><span class="toc-link-label">列出指定软件包的版本</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#待补充"><span class="toc-link-label">待补充</span></a></li>
+        <li><a href="#彩蛋-1"><span class="toc-link-label">彩蛋</span></a></li>
       </ul>
     </li>
-    <li><a href="#备注">备注</a>
+    <li><a href="#备注"><span class="toc-link-label">备注</span></a>
       <ul>
-        <li><a href="#演示用的-deb-包">演示用的 .deb 包</a></li>
-        <li><a href="#debian系统包管理工具思维导图">Debian系统包管理工具思维导图</a></li>
+        <li><a href="#演示用的-deb-包"><span class="toc-link-label">演示用的 .deb 包</span></a></li>
+        <li><a href="#debian系统包管理工具思维导图"><span class="toc-link-label">Debian系统包管理工具思维导图</span></a></li>
       </ul>
     </li>
-    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#参考文章"><span class="toc-link-label">参考文章</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -842,19 +846,6 @@ p   1:2.43.0-1ubuntu7.3                                            noble-securit
 <li><a href="https://www.debian.org/doc/manuals/maint-guide/dreq.zh-cn.html">debian 目录中的必需内容</a></li>
 <li><a href="https://www.debian.org/doc/manuals/aptitude/">aptitude user&#39;s manual</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/">Linux开发学习记录(3)：如何愉快(?)地使用Makefile</a></span>

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Linux开发学习记录(8)：Linux 驱动的分离与分层思想 - Yuan&#39;s Blog">
     
@@ -40,6 +41,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -49,7 +52,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -61,32 +67,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Linux开发学习记录(8)：Linux 驱动的分离与分层思想</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-03-22</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-03-22</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2841 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 6 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/device-tree/" class="term-tag">Device Tree</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/device-tree/" class="term-tag">Device Tree</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -97,20 +102,19 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#linux驱动的分隔与分离思想">Linux驱动的分隔与分离思想</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#linux驱动的分隔与分离思想"><span class="toc-link-label">Linux驱动的分隔与分离思想</span></a>
       <ul>
-        <li><a href="#驱动与驱动的分隔">驱动与驱动的分隔</a></li>
-        <li><a href="#驱动与板级硬件描述的分离">驱动与板级硬件描述的分离</a></li>
-        <li><a href="#小结">小结</a></li>
+        <li><a href="#驱动与驱动的分隔"><span class="toc-link-label">驱动与驱动的分隔</span></a></li>
+        <li><a href="#驱动与板级硬件描述的分离"><span class="toc-link-label">驱动与板级硬件描述的分离</span></a></li>
+        <li><a href="#小结"><span class="toc-link-label">小结</span></a></li>
       </ul>
     </li>
-    <li><a href="#linux驱动的分层思想">Linux驱动的分层思想</a></li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#linux驱动的分层思想"><span class="toc-link-label">Linux驱动的分层思想</span></a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+    <li><a href="#参考文章"><span class="toc-link-label">参考文章</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -258,19 +262,6 @@
 <li><a href="https://luyoung0001.github.io/2025/10/22/Linux%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0(2)/">Linux 驱动开发学习日记：分离的思想和总线设备驱动模型</a></li>
 <li>【正点原子】I.MX6U嵌入式Linux驱动开发指南V2.0.1</li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/">Linux开发学习记录(9)：构建嵌入式Linux系统</a></span>

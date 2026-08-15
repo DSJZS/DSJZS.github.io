@@ -8,6 +8,7 @@
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/tags/ai-coding/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/</link>
@@ -15,6 +16,7 @@
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前面几章提到过，上下文和提示词十分关键。你要提供足够多的信息，AI Agent 才能理解你的需求，并知道该如何完成它。&lt;/p&gt;&#xA;&lt;p&gt;你不能在完全没有提供使用场景、安全边界和其他限制的情况下，直接对它说：&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>AI Coding开发学习记录(3)：Codex 常用功能指南</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/</link>
@@ -22,6 +24,7 @@
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前的&lt;a href=&#34;https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/&#34;&gt;Agentic Engineering&lt;/a&gt;博客提到了 Subagent 等技术。&lt;/p&gt;&#xA;&lt;p&gt;这篇博客主要讲这些 AI Agent 的一些常用功能该怎么用。因为我主要用 Codex，而且主要用的是 IDE 插件和 CLI，所以这篇文章的实际操作内容也会以 Codex CLI 和 Codex IDE 插件为主。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>AI Coding开发学习记录(2)：Agentic Engineering</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/</link>
@@ -29,6 +32,7 @@
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;del&gt;今天台风登陆了，外面风刮得好大，明天周一还能上班吗&amp;hellip;&amp;hellip;&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;这篇文章紧接上一篇文章&lt;a href=&#34;https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/#agentic-engineering&#34;&gt;挖的坑&lt;/a&gt;，详细说一下 Agentic Engineering。&lt;/p&gt;&#xA;&lt;p&gt;本文主要还是介绍与提供思路，填上一篇博客的坑。不会完整的讲述如何在 AI Agent，比如 Codex 中如何配置，那是下一篇博客的任务。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>AI Coding开发学习记录(1)：提问到协作</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</link>
@@ -36,5 +40,6 @@
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;&lt;del&gt;唉，今天澡卡弄丢了，很烦。&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;大约在 2023 年，也就是所谓的 AI 元年，我就开始接触 AI 编程了。当时和大多数人一样，我觉得它没什么用。事实上，那时的 AI 对编程来说确实帮不上什么忙，只能在 ChatGPT 这类网页聊天框里，你说一句，它回一句，编程能力也比较有限。后来之所以觉得好用，我感觉除了 AI 模型本身越来越强之外，更关键的是出现了 AI 编程代理（AI Coding Agent）这类工具。&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA - Yuan&#39;s Blog</title>
     <meta property="og:title" content="MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA - Yuan&#39;s Blog">
     
@@ -41,6 +42,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -50,7 +53,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -62,32 +68,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-04</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-04</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2471 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 5 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/bootloader/" class="term-tag">Bootloader</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span>, </span><a href="/tags/ota/" class="term-tag">OTA</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/gd32/" class="term-tag">GD32</a><span>, </span><a href="/tags/stm32/" class="term-tag">STM32</a><span>, </span><a href="/tags/bootloader/" class="term-tag">Bootloader</a><span>, </span><a href="/tags/mcu/" class="term-tag">MCU</a><span>, </span><a href="/tags/ota/" class="term-tag">OTA</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -98,26 +103,25 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#bootloader-简介">BootLoader 简介</a></li>
-    <li><a href="#为什么mcu要有-bootloader">为什么MCU要有 BootLoader?</a></li>
-    <li><a href="#stm32的内置bootloader-isp程序">STM32的内置BootLoader(ISP程序)</a></li>
-    <li><a href="#自定义-bootloader">自定义 BootLoader</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#bootloader-简介"><span class="toc-link-label">BootLoader 简介</span></a></li>
+    <li><a href="#为什么mcu要有-bootloader"><span class="toc-link-label">为什么MCU要有 BootLoader?</span></a></li>
+    <li><a href="#stm32的内置bootloader-isp程序"><span class="toc-link-label">STM32的内置BootLoader(ISP程序)</span></a></li>
+    <li><a href="#自定义-bootloader"><span class="toc-link-label">自定义 BootLoader</span></a>
       <ul>
-        <li><a href="#固件管理">固件管理</a>
+        <li><a href="#固件管理"><span class="toc-link-label">固件管理</span></a>
           <ul>
-            <li><a href="#串口下载固件功能">串口下载固件功能</a></li>
-            <li><a href="#ota下载固件功能">OTA下载固件功能</a></li>
-            <li><a href="#固件保存功能">固件保存功能</a></li>
+            <li><a href="#串口下载固件功能"><span class="toc-link-label">串口下载固件功能</span></a></li>
+            <li><a href="#ota下载固件功能"><span class="toc-link-label">OTA下载固件功能</span></a></li>
+            <li><a href="#固件保存功能"><span class="toc-link-label">固件保存功能</span></a></li>
           </ul>
         </li>
-        <li><a href="#命令行交互">命令行交互</a></li>
-        <li><a href="#跳转到用户程序">跳转到用户程序</a></li>
+        <li><a href="#命令行交互"><span class="toc-link-label">命令行交互</span></a></li>
+        <li><a href="#跳转到用户程序"><span class="toc-link-label">跳转到用户程序</span></a></li>
       </ul>
     </li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -240,19 +244,6 @@ void STM32_BOOT_LOAD_USER_PROGRAM(uint32_t address) {
     }
 }
 </code></pre>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/">MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</a></span>

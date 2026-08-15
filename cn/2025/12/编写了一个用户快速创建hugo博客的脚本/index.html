@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>编写了一个用户快速创建Hugo博客的脚本 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="编写了一个用户快速创建Hugo博客的脚本 - Yuan&#39;s Blog">
     
@@ -40,6 +41,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -49,7 +52,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -61,32 +67,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">编写了一个用户快速创建Hugo博客的脚本</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2025-12-24</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2025-12-24</span><span class="meta-sep"> / </span>
 <span class="word-count">约 641 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 2 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/hugo/" class="term-tag">Hugo</a><span>, </span><a href="/tags/shell/" class="term-tag">Shell</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/hugo/" class="term-tag">Hugo</a><span>, </span><a href="/tags/shell/" class="term-tag">Shell</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -97,14 +102,13 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#脚本介绍">脚本介绍</a></li>
-    <li><a href="#主要功能">主要功能</a></li>
-    <li><a href="#使用方法">使用方法</a></li>
-    <li><a href="#脚本获取">脚本获取</a></li>
-    <li><a href="#结语">结语</a></li>
+    <li><a href="#脚本介绍"><span class="toc-link-label">脚本介绍</span></a></li>
+    <li><a href="#主要功能"><span class="toc-link-label">主要功能</span></a></li>
+    <li><a href="#使用方法"><span class="toc-link-label">使用方法</span></a></li>
+    <li><a href="#脚本获取"><span class="toc-link-label">脚本获取</span></a></li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="脚本介绍">脚本介绍</h2>
@@ -167,19 +171,6 @@ alias develop_blogs='hugo_blog -p $MY_BLOG_ROOT_DIR_PATH -t'
 </code></pre>
 <h2 id="结语">结语</h2>
 <p><strong>如果你有更好的想法，欢迎交流！</strong></p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2025/12/%E5%85%B3%E4%BA%8Ehugo%E6%A1%86%E6%9E%B6%E8%AE%BE%E7%BD%AE%E7%9A%84%E5%90%90%E6%A7%BD/">关于Hugo框架设置的吐槽</a></span>

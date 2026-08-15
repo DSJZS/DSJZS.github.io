@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>RTOS开发学习记录(9)：移植 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="RTOS开发学习记录(9)：移植 - Yuan&#39;s Blog">
     
@@ -41,6 +42,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -50,7 +53,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -62,32 +68,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">RTOS开发学习记录(9)：移植</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-22</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-22</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2804 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 6 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -98,22 +103,21 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#为什么需要移植层">为什么需要移植层</a></li>
-    <li><a href="#移植层接口">移植层接口</a></li>
-    <li><a href="#目录组织">目录组织</a></li>
-    <li><a href="#中断开关">中断开关</a></li>
-    <li><a href="#初始化任务栈">初始化任务栈</a></li>
-    <li><a href="#启动第一个任务">启动第一个任务</a></li>
-    <li><a href="#任务切换">任务切换</a></li>
-    <li><a href="#位图查找">位图查找</a></li>
-    <li><a href="#提供系统-tick">提供系统 tick</a></li>
-    <li><a href="#接入构建系统">接入构建系统</a></li>
-    <li><a href="#移植时的检查清单">移植时的检查清单</a></li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#为什么需要移植层"><span class="toc-link-label">为什么需要移植层</span></a></li>
+    <li><a href="#移植层接口"><span class="toc-link-label">移植层接口</span></a></li>
+    <li><a href="#目录组织"><span class="toc-link-label">目录组织</span></a></li>
+    <li><a href="#中断开关"><span class="toc-link-label">中断开关</span></a></li>
+    <li><a href="#初始化任务栈"><span class="toc-link-label">初始化任务栈</span></a></li>
+    <li><a href="#启动第一个任务"><span class="toc-link-label">启动第一个任务</span></a></li>
+    <li><a href="#任务切换"><span class="toc-link-label">任务切换</span></a></li>
+    <li><a href="#位图查找"><span class="toc-link-label">位图查找</span></a></li>
+    <li><a href="#提供系统-tick"><span class="toc-link-label">提供系统 tick</span></a></li>
+    <li><a href="#接入构建系统"><span class="toc-link-label">接入构建系统</span></a></li>
+    <li><a href="#移植时的检查清单"><span class="toc-link-label">移植时的检查清单</span></a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -356,19 +360,6 @@ msr     psp, r1
 </ul>
 <p>当前 Cortex-M3 + GCC 版本利用了 Cortex-M 的 SVC、PendSV、PSP/MSP 和异常自动压栈机制，因此任务切换实现相对清晰。</p>
 <p>如果移植到其它架构，最关键的仍然是两点：第一，要能构造任务第一次运行所需的初始上下文；第二，要能在任务切换时保存旧任务上下文并恢复新任务上下文。只要这两点可靠，调度器、定时器和 IPC 这些通用代码就有机会正常运行起来。</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/">OSOC学习记录(1)：F阶段总结</a></span>

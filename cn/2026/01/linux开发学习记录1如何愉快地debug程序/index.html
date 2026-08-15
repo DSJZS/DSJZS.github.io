@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Linux开发学习记录(1)：如何愉快(?)地Debug程序 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Linux开发学习记录(1)：如何愉快(?)地Debug程序 - Yuan&#39;s Blog">
     
@@ -43,6 +44,8 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -52,7 +55,10 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -64,32 +70,31 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Linux开发学习记录(1)：如何愉快(?)地Debug程序</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-01-11</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-01-11</span><span class="meta-sep"> / </span>
 <span class="word-count">约 6829 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 14 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/gdb/" class="term-tag">GDB</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/c/" class="term-tag">C</a><span>, </span><a href="/tags/gdb/" class="term-tag">GDB</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -100,54 +105,53 @@ Core Dump 是程序崩溃时，内核将进程的内存镜像、寄存器状态�
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#core-dump-介绍">Core dump 介绍</a></li>
-    <li><a href="#systemd-coredump-介绍">systemd-coredump 介绍</a></li>
-    <li><a href="#gdb-介绍">GDB 介绍</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#core-dump-介绍"><span class="toc-link-label">Core dump 介绍</span></a></li>
+    <li><a href="#systemd-coredump-介绍"><span class="toc-link-label">systemd-coredump 介绍</span></a></li>
+    <li><a href="#gdb-介绍"><span class="toc-link-label">GDB 介绍</span></a>
       <ul>
-        <li><a href="#gdb初始化文件">GDB初始化文件</a></li>
-        <li><a href="#常用的gdb命令">常用的GDB命令</a>
+        <li><a href="#gdb初始化文件"><span class="toc-link-label">GDB初始化文件</span></a></li>
+        <li><a href="#常用的gdb命令"><span class="toc-link-label">常用的GDB命令</span></a>
           <ul>
-            <li><a href="#举例演示的补充说明">举例演示的补充说明</a></li>
-            <li><a href="#info-inf-i-信息">info inf i 信息</a></li>
-            <li><a href="#sharedlibrary-share-手动添加共享库-动态库">sharedlibrary share 手动添加共享库(动态库)</a></li>
-            <li><a href="#break-brea-bre-br-b-断点">break brea bre br b 断点</a></li>
-            <li><a href="#hbreak-tbreak-thbreak-其它断点">hbreak tbreak thbreak 其它断点</a></li>
-            <li><a href="#clear-cl-清除断点">clear cl 清除断点</a></li>
-            <li><a href="#enable-en-disable-disa-dis-启用-禁用断点">enable en / disable disa dis 启用/禁用断点</a></li>
-            <li><a href="#conditon-断点条件的添加-替换-与删除">conditon 断点条件的添加(替换)与删除</a></li>
-            <li><a href="#run-r-运行">run r 运行</a></li>
-            <li><a href="#start-开始">start   开始</a></li>
-            <li><a href="#backtrace-bt-where-显示栈帧">backtrace bt where 显示栈帧</a></li>
-            <li><a href="#print-p-显示变量">print p 显示变量</a></li>
-            <li><a href="#x-显示内存">x   显示内存</a></li>
-            <li><a href="#disassemble-disas-反汇编">disassemble disas 反汇编</a></li>
-            <li><a href="#next-n-单步-不进入函数内部">next n 单步(不进入函数内部)</a></li>
-            <li><a href="#step-s-单步-进入函数内部">step s 单步(进入函数内部)</a></li>
-            <li><a href="#ignore-忽略断点-监视点-捕获点">ignore   忽略断点、监视点、捕获点</a></li>
-            <li><a href="#continue-c-fg-继续运行">continue c fg 继续运行</a></li>
-            <li><a href="#finish-fin-执行完当前函数">finish fin 执行完当前函数</a></li>
-            <li><a href="#until-u-运行到某一位置">until u 运行到某一位置</a></li>
-            <li><a href="#watch-awatch-rwatch-监视点">watch awatch rwatch 监视点</a></li>
-            <li><a href="#delete-d-del-删除断点和监视点">delete d del 删除断点和监视点</a></li>
-            <li><a href="#set-设置值">set 设置值</a></li>
-            <li><a href="#generate-core-file-gcore-生成core-dump文件">generate-core-file gcore 生成Core dump文件</a></li>
-            <li><a href="#attach-detach-调试-附加到-和脱离已启动进程">attach detach 调试(附加到)和脱离已启动进程</a></li>
-            <li><a href="#commands-断点命令">commands   断点命令</a></li>
-            <li><a href="#list-l-显示函数或行">list l 显示函数或行</a></li>
-            <li><a href="#help-h-帮助文档">help h 帮助文档</a></li>
-            <li><a href="#show-显示数据">show   显示数据</a></li>
-            <li><a href="#define-命令定义-document-命令说明">define 命令定义 / document 命令说明</a></li>
-            <li><a href="#source-引入初始化文件">source   引入初始化文件</a></li>
+            <li><a href="#举例演示的补充说明"><span class="toc-link-label">举例演示的补充说明</span></a></li>
+            <li><a href="#info-inf-i-信息"><span class="toc-link-label">info inf i 信息</span></a></li>
+            <li><a href="#sharedlibrary-share-手动添加共享库-动态库"><span class="toc-link-label">sharedlibrary share 手动添加共享库(动态库)</span></a></li>
+            <li><a href="#break-brea-bre-br-b-断点"><span class="toc-link-label">break brea bre br b 断点</span></a></li>
+            <li><a href="#hbreak-tbreak-thbreak-其它断点"><span class="toc-link-label">hbreak tbreak thbreak 其它断点</span></a></li>
+            <li><a href="#clear-cl-清除断点"><span class="toc-link-label">clear cl 清除断点</span></a></li>
+            <li><a href="#enable-en-disable-disa-dis-启用-禁用断点"><span class="toc-link-label">enable en / disable disa dis 启用/禁用断点</span></a></li>
+            <li><a href="#conditon-断点条件的添加-替换-与删除"><span class="toc-link-label">conditon 断点条件的添加(替换)与删除</span></a></li>
+            <li><a href="#run-r-运行"><span class="toc-link-label">run r 运行</span></a></li>
+            <li><a href="#start-开始"><span class="toc-link-label">start   开始</span></a></li>
+            <li><a href="#backtrace-bt-where-显示栈帧"><span class="toc-link-label">backtrace bt where 显示栈帧</span></a></li>
+            <li><a href="#print-p-显示变量"><span class="toc-link-label">print p 显示变量</span></a></li>
+            <li><a href="#x-显示内存"><span class="toc-link-label">x   显示内存</span></a></li>
+            <li><a href="#disassemble-disas-反汇编"><span class="toc-link-label">disassemble disas 反汇编</span></a></li>
+            <li><a href="#next-n-单步-不进入函数内部"><span class="toc-link-label">next n 单步(不进入函数内部)</span></a></li>
+            <li><a href="#step-s-单步-进入函数内部"><span class="toc-link-label">step s 单步(进入函数内部)</span></a></li>
+            <li><a href="#ignore-忽略断点-监视点-捕获点"><span class="toc-link-label">ignore   忽略断点、监视点、捕获点</span></a></li>
+            <li><a href="#continue-c-fg-继续运行"><span class="toc-link-label">continue c fg 继续运行</span></a></li>
+            <li><a href="#finish-fin-执行完当前函数"><span class="toc-link-label">finish fin 执行完当前函数</span></a></li>
+            <li><a href="#until-u-运行到某一位置"><span class="toc-link-label">until u 运行到某一位置</span></a></li>
+            <li><a href="#watch-awatch-rwatch-监视点"><span class="toc-link-label">watch awatch rwatch 监视点</span></a></li>
+            <li><a href="#delete-d-del-删除断点和监视点"><span class="toc-link-label">delete d del 删除断点和监视点</span></a></li>
+            <li><a href="#set-设置值"><span class="toc-link-label">set 设置值</span></a></li>
+            <li><a href="#generate-core-file-gcore-生成core-dump文件"><span class="toc-link-label">generate-core-file gcore 生成Core dump文件</span></a></li>
+            <li><a href="#attach-detach-调试-附加到-和脱离已启动进程"><span class="toc-link-label">attach detach 调试(附加到)和脱离已启动进程</span></a></li>
+            <li><a href="#commands-断点命令"><span class="toc-link-label">commands   断点命令</span></a></li>
+            <li><a href="#list-l-显示函数或行"><span class="toc-link-label">list l 显示函数或行</span></a></li>
+            <li><a href="#help-h-帮助文档"><span class="toc-link-label">help h 帮助文档</span></a></li>
+            <li><a href="#show-显示数据"><span class="toc-link-label">show   显示数据</span></a></li>
+            <li><a href="#define-命令定义-document-命令说明"><span class="toc-link-label">define 命令定义 / document 命令说明</span></a></li>
+            <li><a href="#source-引入初始化文件"><span class="toc-link-label">source   引入初始化文件</span></a></li>
           </ul>
         </li>
-        <li><a href="#远程调试">远程调试</a></li>
+        <li><a href="#远程调试"><span class="toc-link-label">远程调试</span></a></li>
       </ul>
     </li>
-    <li><a href="#参考文章">参考文章</a></li>
+    <li><a href="#参考文章"><span class="toc-link-label">参考文章</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -1350,22 +1354,9 @@ Breakpoint 1, main (argc=1, argv=0x7efffd74) at gdbtest.c:6
 <li>Debug Hacks中文版</li>
 </ul>
 
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
-
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/">屋里食研(1)：炒面</a></span>
-  <span><a href="/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</a> &rarr;</span>
+  <span><a href="/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置</a> &rarr;</span>
 </nav>
 <hr>
 <div class="giscus-comments fullwidth">

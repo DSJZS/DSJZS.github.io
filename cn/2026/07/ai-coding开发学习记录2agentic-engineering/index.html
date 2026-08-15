@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>AI Coding开发学习记录(2)：Agentic Engineering - Yuan&#39;s Blog</title>
     <meta property="og:title" content="AI Coding开发学习记录(2)：Agentic Engineering - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">AI Coding开发学习记录(2)：Agentic Engineering</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-07-12</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-07-12</span><span class="meta-sep"> / </span>
 <span class="word-count">约 7317 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 15 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/ai-coding/" class="term-tag">AI Coding</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,35 +104,34 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#agentic-engineering-是什么">Agentic Engineering 是什么</a></li>
-    <li><a href="#为什么提出-agentic-engineering">为什么提出 Agentic Engineering</a></li>
-    <li><a href="#怎么实现-agentic-engineering">怎么实现 Agentic Engineering</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#agentic-engineering-是什么"><span class="toc-link-label">Agentic Engineering 是什么</span></a></li>
+    <li><a href="#为什么提出-agentic-engineering"><span class="toc-link-label">为什么提出 Agentic Engineering</span></a></li>
+    <li><a href="#怎么实现-agentic-engineering"><span class="toc-link-label">怎么实现 Agentic Engineering</span></a>
       <ul>
-        <li><a href="#agentic-engineering-的基本流程">Agentic Engineering 的基本流程</a></li>
-        <li><a href="#需要准备哪些上下文">需要准备哪些上下文</a></li>
-        <li><a href="#为-agent-提供工具">为 Agent 提供工具</a></li>
-        <li><a href="#使用-subagent-处理复杂任务">使用 Subagent 处理复杂任务</a>
+        <li><a href="#agentic-engineering-的基本流程"><span class="toc-link-label">Agentic Engineering 的基本流程</span></a></li>
+        <li><a href="#需要准备哪些上下文"><span class="toc-link-label">需要准备哪些上下文</span></a></li>
+        <li><a href="#为-agent-提供工具"><span class="toc-link-label">为 Agent 提供工具</span></a></li>
+        <li><a href="#使用-subagent-处理复杂任务"><span class="toc-link-label">使用 Subagent 处理复杂任务</span></a>
           <ul>
-            <li><a href="#为什么需要-subagent">为什么需要 Subagent</a></li>
-            <li><a href="#怎样设计-subagent">怎样设计 Subagent</a></li>
-            <li><a href="#main-agent-怎么把任务交给-subagent">Main Agent 怎么把任务交给 Subagent</a></li>
-            <li><a href="#例一-电商项目的-agent-团队">例一：电商项目的 Agent 团队</a></li>
-            <li><a href="#例二-使用-agent-团队管理博客">例二：使用 Agent 团队管理博客</a></li>
+            <li><a href="#为什么需要-subagent"><span class="toc-link-label">为什么需要 Subagent</span></a></li>
+            <li><a href="#怎样设计-subagent"><span class="toc-link-label">怎样设计 Subagent</span></a></li>
+            <li><a href="#main-agent-怎么把任务交给-subagent"><span class="toc-link-label">Main Agent 怎么把任务交给 Subagent</span></a></li>
+            <li><a href="#例一-电商项目的-agent-团队"><span class="toc-link-label">例一：电商项目的 Agent 团队</span></a></li>
+            <li><a href="#例二-使用-agent-团队管理博客"><span class="toc-link-label">例二：使用 Agent 团队管理博客</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考资料">参考资料</a></li>
-    <li><a href="#附录">附录</a>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
+    <li><a href="#附录"><span class="toc-link-label">附录</span></a>
       <ul>
-        <li><a href="#agents-md-模板">AGENTS.md 模板</a></li>
+        <li><a href="#agents-md-模板"><span class="toc-link-label">AGENTS.md 模板</span></a></li>
       </ul>
     </li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -814,19 +818,6 @@ Main Agent 始终负责：
 - 不要为了优化而擅自改变用户明确表达的需求、观点或意图。
 - 当任务已经满足完成标准时，应停止继续扩展。
 </code></pre>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-08-02</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/">AI Coding开发学习记录(3)：Codex 常用功能指南</a></span>

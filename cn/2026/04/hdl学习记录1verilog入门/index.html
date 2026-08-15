@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>HDL学习记录(1)：Verilog入门 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="HDL学习记录(1)：Verilog入门 - Yuan&#39;s Blog">
     
@@ -40,6 +41,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -49,7 +52,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -61,32 +67,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">HDL学习记录(1)：Verilog入门</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-23</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-23</span><span class="meta-sep"> / </span>
 <span class="word-count">约 8269 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 17 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/hdl/" class="term-tag">HDL</a><span>, </span><a href="/tags/verilog/" class="term-tag">Verilog</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/hdl/" class="term-tag">HDL</a><span>, </span><a href="/tags/verilog/" class="term-tag">Verilog</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -97,107 +102,106 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#基本观念">基本观念</a></li>
-    <li><a href="#module">Module</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#基本观念"><span class="toc-link-label">基本观念</span></a></li>
+    <li><a href="#module"><span class="toc-link-label">Module</span></a>
       <ul>
-        <li><a href="#参数-parameter-与-localparam">参数 Parameter 与 Localparam</a></li>
-        <li><a href="#状态机里什么时候用">状态机里什么时候用</a></li>
+        <li><a href="#参数-parameter-与-localparam"><span class="toc-link-label">参数 Parameter 与 Localparam</span></a></li>
+        <li><a href="#状态机里什么时候用"><span class="toc-link-label">状态机里什么时候用</span></a></li>
       </ul>
     </li>
-    <li><a href="#信号类型">信号类型</a>
+    <li><a href="#信号类型"><span class="toc-link-label">信号类型</span></a>
       <ul>
-        <li><a href="#wire">Wire</a></li>
-        <li><a href="#reg">Reg</a></li>
-        <li><a href="#隐式-wire">隐式 Wire</a></li>
-        <li><a href="#4-态逻辑-0-1-x-z">4 态逻辑：0、1、x、z</a></li>
+        <li><a href="#wire"><span class="toc-link-label">Wire</span></a></li>
+        <li><a href="#reg"><span class="toc-link-label">Reg</span></a></li>
+        <li><a href="#隐式-wire"><span class="toc-link-label">隐式 Wire</span></a></li>
+        <li><a href="#4-态逻辑-0-1-x-z"><span class="toc-link-label">4 态逻辑：0、1、x、z</span></a></li>
       </ul>
     </li>
-    <li><a href="#常量">常量</a></li>
-    <li><a href="#连续赋值">连续赋值</a></li>
-    <li><a href="#运算符">运算符</a>
+    <li><a href="#常量"><span class="toc-link-label">常量</span></a></li>
+    <li><a href="#连续赋值"><span class="toc-link-label">连续赋值</span></a></li>
+    <li><a href="#运算符"><span class="toc-link-label">运算符</span></a>
       <ul>
-        <li><a href="#位运算">位运算</a></li>
-        <li><a href="#逻辑运算">逻辑运算</a></li>
-        <li><a href="#reduction-operator">Reduction Operator</a></li>
-        <li><a href="#三目条件运算符">三目条件运算符</a></li>
-        <li><a href="#比较运算符">比较运算符</a></li>
-        <li><a href="#移位运算符">移位运算符</a></li>
+        <li><a href="#位运算"><span class="toc-link-label">位运算</span></a></li>
+        <li><a href="#逻辑运算"><span class="toc-link-label">逻辑运算</span></a></li>
+        <li><a href="#reduction-operator"><span class="toc-link-label">Reduction Operator</span></a></li>
+        <li><a href="#三目条件运算符"><span class="toc-link-label">三目条件运算符</span></a></li>
+        <li><a href="#比较运算符"><span class="toc-link-label">比较运算符</span></a></li>
+        <li><a href="#移位运算符"><span class="toc-link-label">移位运算符</span></a></li>
       </ul>
     </li>
-    <li><a href="#vector">Vector</a>
+    <li><a href="#vector"><span class="toc-link-label">Vector</span></a>
       <ul>
-        <li><a href="#取位与取段">取位与取段</a></li>
-        <li><a href="#indexed-part-select">Indexed Part-Select</a></li>
-        <li><a href="#拼接">拼接</a></li>
-        <li><a href="#重复拼接">重复拼接</a></li>
+        <li><a href="#取位与取段"><span class="toc-link-label">取位与取段</span></a></li>
+        <li><a href="#indexed-part-select"><span class="toc-link-label">Indexed Part-Select</span></a></li>
+        <li><a href="#拼接"><span class="toc-link-label">拼接</span></a></li>
+        <li><a href="#重复拼接"><span class="toc-link-label">重复拼接</span></a></li>
       </ul>
     </li>
-    <li><a href="#procedure-always">Procedure: Always</a>
+    <li><a href="#procedure-always"><span class="toc-link-label">Procedure: Always</span></a>
       <ul>
-        <li><a href="#组合-always">组合 Always</a></li>
-        <li><a href="#时序-always">时序 Always</a></li>
-        <li><a href="#同步复位与异步复位">同步复位与异步复位</a></li>
-        <li><a href="#latch-flip-flop-与组合逻辑">Latch、Flip-Flop 与组合逻辑</a></li>
-        <li><a href="#阻塞与非阻塞赋值">阻塞与非阻塞赋值</a></li>
+        <li><a href="#组合-always"><span class="toc-link-label">组合 Always</span></a></li>
+        <li><a href="#时序-always"><span class="toc-link-label">时序 Always</span></a></li>
+        <li><a href="#同步复位与异步复位"><span class="toc-link-label">同步复位与异步复位</span></a></li>
+        <li><a href="#latch-flip-flop-与组合逻辑"><span class="toc-link-label">Latch、Flip-Flop 与组合逻辑</span></a></li>
+        <li><a href="#阻塞与非阻塞赋值"><span class="toc-link-label">阻塞与非阻塞赋值</span></a></li>
       </ul>
     </li>
-    <li><a href="#if-与-case">If 与 Case</a>
+    <li><a href="#if-与-case"><span class="toc-link-label">If 与 Case</span></a>
       <ul>
-        <li><a href="#if">If</a></li>
-        <li><a href="#case">Case</a></li>
-        <li><a href="#casez">Casez</a></li>
+        <li><a href="#if"><span class="toc-link-label">If</span></a></li>
+        <li><a href="#case"><span class="toc-link-label">Case</span></a></li>
+        <li><a href="#casez"><span class="toc-link-label">Casez</span></a></li>
       </ul>
     </li>
-    <li><a href="#模块层次">模块层次</a>
+    <li><a href="#模块层次"><span class="toc-link-label">模块层次</span></a>
       <ul>
-        <li><a href="#端口连接方式">端口连接方式</a></li>
-        <li><a href="#模块之间的连线">模块之间的连线</a></li>
-        <li><a href="#例子-32-bit-加法器">例子：32 bit 加法器</a></li>
+        <li><a href="#端口连接方式"><span class="toc-link-label">端口连接方式</span></a></li>
+        <li><a href="#模块之间的连线"><span class="toc-link-label">模块之间的连线</span></a></li>
+        <li><a href="#例子-32-bit-加法器"><span class="toc-link-label">例子：32 bit 加法器</span></a></li>
       </ul>
     </li>
-    <li><a href="#for-与-generate">For 与 Generate</a>
+    <li><a href="#for-与-generate"><span class="toc-link-label">For 与 Generate</span></a>
       <ul>
-        <li><a href="#always-里的-for">Always 里的 For</a></li>
-        <li><a href="#generate-for">Generate For</a></li>
-        <li><a href="#always-与-generate-怎么选">Always 与 Generate 怎么选</a></li>
+        <li><a href="#always-里的-for"><span class="toc-link-label">Always 里的 For</span></a></li>
+        <li><a href="#generate-for"><span class="toc-link-label">Generate For</span></a></li>
+        <li><a href="#always-与-generate-怎么选"><span class="toc-link-label">Always 与 Generate 怎么选</span></a></li>
       </ul>
     </li>
-    <li><a href="#仿真与-testbench">仿真与 Testbench</a>
+    <li><a href="#仿真与-testbench"><span class="toc-link-label">仿真与 Testbench</span></a>
       <ul>
-        <li><a href="#testbench-基本结构">Testbench 基本结构</a></li>
-        <li><a href="#initial">Initial</a></li>
-        <li><a href="#延时语句">延时语句</a></li>
-        <li><a href="#forever-与时钟产生">Forever 与时钟产生</a></li>
-        <li><a href="#display">Display</a></li>
-        <li><a href="#自检测试">自检测试</a></li>
-        <li><a href="#readmemb-与测试向量">Readmemb 与测试向量</a></li>
-        <li><a href="#哪些更偏仿真专用">哪些更偏仿真专用</a></li>
+        <li><a href="#testbench-基本结构"><span class="toc-link-label">Testbench 基本结构</span></a></li>
+        <li><a href="#initial"><span class="toc-link-label">Initial</span></a></li>
+        <li><a href="#延时语句"><span class="toc-link-label">延时语句</span></a></li>
+        <li><a href="#forever-与时钟产生"><span class="toc-link-label">Forever 与时钟产生</span></a></li>
+        <li><a href="#display"><span class="toc-link-label">Display</span></a></li>
+        <li><a href="#自检测试"><span class="toc-link-label">自检测试</span></a></li>
+        <li><a href="#readmemb-与测试向量"><span class="toc-link-label">Readmemb 与测试向量</span></a></li>
+        <li><a href="#哪些更偏仿真专用"><span class="toc-link-label">哪些更偏仿真专用</span></a></li>
       </ul>
     </li>
-    <li><a href="#从电路题补充的常用写法">从电路题补充的常用写法</a>
+    <li><a href="#从电路题补充的常用写法"><span class="toc-link-label">从电路题补充的常用写法</span></a>
       <ul>
-        <li><a href="#边沿检测">边沿检测</a></li>
-        <li><a href="#计数器模板">计数器模板</a></li>
-        <li><a href="#移位寄存器模板">移位寄存器模板</a></li>
-        <li><a href="#状态机常用结构">状态机常用结构</a></li>
-        <li><a href="#热独码-one-hot">热独码 One-Hot</a></li>
+        <li><a href="#边沿检测"><span class="toc-link-label">边沿检测</span></a></li>
+        <li><a href="#计数器模板"><span class="toc-link-label">计数器模板</span></a></li>
+        <li><a href="#移位寄存器模板"><span class="toc-link-label">移位寄存器模板</span></a></li>
+        <li><a href="#状态机常用结构"><span class="toc-link-label">状态机常用结构</span></a></li>
+        <li><a href="#热独码-one-hot"><span class="toc-link-label">热独码 One-Hot</span></a></li>
       </ul>
     </li>
-    <li><a href="#常见模板">常见模板</a>
+    <li><a href="#常见模板"><span class="toc-link-label">常见模板</span></a>
       <ul>
-        <li><a href="#简单组合逻辑">简单组合逻辑</a></li>
-        <li><a href="#复杂组合逻辑">复杂组合逻辑</a></li>
-        <li><a href="#d-触发器">D 触发器</a></li>
-        <li><a href="#加减法器">加减法器</a></li>
+        <li><a href="#简单组合逻辑"><span class="toc-link-label">简单组合逻辑</span></a></li>
+        <li><a href="#复杂组合逻辑"><span class="toc-link-label">复杂组合逻辑</span></a></li>
+        <li><a href="#d-触发器"><span class="toc-link-label">D 触发器</span></a></li>
+        <li><a href="#加减法器"><span class="toc-link-label">加减法器</span></a></li>
       </ul>
     </li>
-    <li><a href="#易错点速查">易错点速查</a></li>
-    <li><a href="#小结">小结</a></li>
-    <li><a href="#参考资料">参考资料</a></li>
+    <li><a href="#易错点速查"><span class="toc-link-label">易错点速查</span></a></li>
+    <li><a href="#小结"><span class="toc-link-label">小结</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -1341,19 +1345,6 @@ endmodule
 <li><a href="https://hdlbits.01xz.net/wiki/Reduction">HDLBits: Reduction operators</a></li>
 <li><a href="https://hdlbits.01xz.net/wiki/Adder100i">HDLBits: Generate for-loop: 100-bit binary adder 2</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/">HDL学习记录(2)：Verilog常见电路实现</a></span>

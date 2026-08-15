@@ -7,8 +7,8 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Mon, 20 Jul 2026 23:09:18 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/categories/daily/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Hello World</title>
       <link>https://masterji.top/en/2025/12/hello-world/</link>
@@ -16,5 +16,6 @@
       <guid>https://masterji.top/en/2025/12/hello-world/</guid>
       <description>&lt;p&gt;Hi, this is my very first blog post. Welcome to my website!&lt;/p&gt;&#xA;&lt;p&gt;I&amp;#39;m guessing you came across one of my great posts and couldn&amp;#39;t wait to find the very first one I published, right? 😎&lt;/p&gt;&#xA;&lt;p&gt;Either way, leave a comment! Let me know you were here 😉.&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

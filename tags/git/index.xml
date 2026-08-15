@@ -7,8 +7,8 @@
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <lastBuildDate>Wed, 08 Jul 2026 18:39:50 +0800</lastBuildDate>
     <atom:link href="https://masterji.top/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Git学习记录(1)：Git入门</title>
       <link>https://masterji.top/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</link>
@@ -16,5 +16,6 @@
       <guid>https://masterji.top/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近开始比较认真地用 Git 了。以前虽然也会 &lt;code&gt;clone&lt;/code&gt;、&lt;code&gt;add&lt;/code&gt;、&lt;code&gt;commit&lt;/code&gt;、&lt;code&gt;push&lt;/code&gt; 这些命令，但很多时候其实是“会敲，不算真懂”。尤其是遇到 &lt;code&gt;branch&lt;/code&gt;、&lt;code&gt;checkout&lt;/code&gt;、&lt;code&gt;reset&lt;/code&gt;、&lt;code&gt;rebase&lt;/code&gt; 这些命令时，脑子里经常会冒出一个问题：&lt;strong&gt;这条命令到底改了什么？改的是文件、分支，还是提交历史？&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

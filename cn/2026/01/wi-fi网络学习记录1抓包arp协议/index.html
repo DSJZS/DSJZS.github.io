@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Wi-Fi网络学习记录(1)：抓包ARP协议 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Wi-Fi网络学习记录(1)：抓包ARP协议 - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Wi-Fi网络学习记录(1)：抓包ARP协议</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-01-05</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-01-05</span><span class="meta-sep"> / </span>
 <span class="word-count">约 1871 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 4 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span>, </span><a href="/tags/wireshark/" class="term-tag">Wireshark</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span>, </span><a href="/tags/wireshark/" class="term-tag">Wireshark</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,33 +104,32 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#arp协议简介">ARP协议简介</a>
+    <li><a href="#简介"><span class="toc-link-label">简介</span></a></li>
+    <li><a href="#arp协议简介"><span class="toc-link-label">ARP协议简介</span></a>
       <ul>
-        <li><a href="#功能介绍">功能介绍</a></li>
-        <li><a href="#arp帧格式">ARP帧格式</a></li>
-        <li><a href="#arp缓存表">ARP缓存表</a></li>
+        <li><a href="#功能介绍"><span class="toc-link-label">功能介绍</span></a></li>
+        <li><a href="#arp帧格式"><span class="toc-link-label">ARP帧格式</span></a></li>
+        <li><a href="#arp缓存表"><span class="toc-link-label">ARP缓存表</span></a></li>
       </ul>
     </li>
-    <li><a href="#wireshark抓包流程">Wireshark抓包流程</a>
+    <li><a href="#wireshark抓包流程"><span class="toc-link-label">Wireshark抓包流程</span></a>
       <ul>
-        <li><a href="#准备网络环境">准备网络环境</a></li>
-        <li><a href="#检查arp缓存表">检查ARP缓存表</a></li>
-        <li><a href="#查询另一台设备的ipv4地址">查询另一台设备的IPv4地址</a></li>
-        <li><a href="#打开wireshark并抓包">打开Wireshark并抓包</a></li>
+        <li><a href="#准备网络环境"><span class="toc-link-label">准备网络环境</span></a></li>
+        <li><a href="#检查arp缓存表"><span class="toc-link-label">检查ARP缓存表</span></a></li>
+        <li><a href="#查询另一台设备的ipv4地址"><span class="toc-link-label">查询另一台设备的IPv4地址</span></a></li>
+        <li><a href="#打开wireshark并抓包"><span class="toc-link-label">打开Wireshark并抓包</span></a></li>
       </ul>
     </li>
-    <li><a href="#wireshark抓包内容解析">Wireshark抓包内容解析</a>
+    <li><a href="#wireshark抓包内容解析"><span class="toc-link-label">Wireshark抓包内容解析</span></a>
       <ul>
-        <li><a href="#第一个arp帧">第一个ARP帧</a></li>
-        <li><a href="#第二个arp帧">第二个ARP帧</a></li>
-        <li><a href="#第三个和第四个arp帧">第三个和第四个ARP帧</a></li>
+        <li><a href="#第一个arp帧"><span class="toc-link-label">第一个ARP帧</span></a></li>
+        <li><a href="#第二个arp帧"><span class="toc-link-label">第二个ARP帧</span></a></li>
+        <li><a href="#第三个和第四个arp帧"><span class="toc-link-label">第三个和第四个ARP帧</span></a></li>
       </ul>
     </li>
-    <li><a href="#结语">结语</a></li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="简介">简介</h2>
@@ -212,21 +216,8 @@ ARP协议内容：</li>
 <h2 id="结语">结语</h2>
 <p>ARP协议算是比较简单的协议了，Wireshark抓包还是比较容易的，快去亲手试试吧🫵。</p>
 
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
-
 <nav class="post-nav fullwidth">
-  <span>&larr; <a href="/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</a></span>
+  <span>&larr; <a href="/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/">Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置</a></span>
   <span><a href="/cn/2025/12/2025%E5%B9%B4%E6%80%BB%E7%BB%93/">2025年总结🥳</a> &rarr;</span>
 </nav>
 <hr>

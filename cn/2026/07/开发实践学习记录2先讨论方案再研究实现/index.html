@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>开发实践学习记录(2)：先讨论方案，再研究实现 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="开发实践学习记录(2)：先讨论方案，再研究实现 - Yuan&#39;s Blog">
     
@@ -44,6 +45,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -53,7 +56,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -65,32 +71,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">开发实践学习记录(2)：先讨论方案，再研究实现</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-07-28</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-07-28</span><span class="meta-sep"> / </span>
 <span class="word-count">约 1367 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 3 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/mcu/" class="term-tag">MCU</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -101,13 +106,12 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#问题出在哪里">问题出在哪里？</a></li>
-    <li><a href="#应该怎么做">应该怎么做？</a></li>
-    <li><a href="#总结">总结</a></li>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#问题出在哪里"><span class="toc-link-label">问题出在哪里？</span></a></li>
+    <li><a href="#应该怎么做"><span class="toc-link-label">应该怎么做？</span></a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -170,19 +174,6 @@
 <p>如果一开始就投入大量时间完成全部逻辑，后期很可能因为各种原因进行大改，甚至整套推翻重做。</p>
 <p>先讨论，再验证，最后才是完整实现。</p>
 <p>这样或许不能保证一次就选对方案，但至少可以少做一些无用功。</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-29</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/">开发实践学习记录(3)：功能的更新</a></span>

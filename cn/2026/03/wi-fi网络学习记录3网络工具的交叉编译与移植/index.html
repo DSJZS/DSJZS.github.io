@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植 - Yuan&#39;s Blog">
     
@@ -40,6 +41,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -49,7 +52,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -61,32 +67,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-03-23</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-03-23</span><span class="meta-sep"> / </span>
 <span class="word-count">约 1274 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 3 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -97,14 +102,13 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#移植-iw">移植 iw</a></li>
-    <li><a href="#移植-wpa-supplicant">移植 wpa_supplicant</a></li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#参考文件">参考文件</a></li>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#移植-iw"><span class="toc-link-label">移植 iw</span></a></li>
+    <li><a href="#移植-wpa-supplicant"><span class="toc-link-label">移植 wpa_supplicant</span></a></li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+    <li><a href="#参考文件"><span class="toc-link-label">参考文件</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -236,19 +240,6 @@ CONFIG_CTRL_IFACE_DBUS_INTRO=y
 <li><a href="https://akichen891.github.io/2025/04/17/LinuxWifi%E9%A9%B1%E5%8A%A8%E8%B0%83%E8%AF%95/">Linux RTL8188EUS Wifi驱动调试</a></li>
 <li><a href="https://blog.csdn.net/m0_61320035/article/details/140298343?spm=1001.2014.3001.5506">正点原子I.MAX6ULL kernel6.6移植遇到的问题</a></li>
 </ul>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/">Linux开发学习记录(10)：如何阅读设备树绑定文档</a></span>

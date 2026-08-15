@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <title>Wi Fi网络学习记录(2)：Linux无线网络STA模式配置 - Yuan&#39;s Blog</title>
-    <meta property="og:title" content="Wi Fi网络学习记录(2)：Linux无线网络STA模式配置 - Yuan&#39;s Blog">
+    
+    <title>Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置 - Yuan&#39;s Blog">
     
     
       
@@ -41,6 +42,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -50,7 +53,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -62,32 +68,31 @@
 
 
 
-
 <div class="article-meta">
-<h1 class="title">Wi Fi网络学习记录(2)：Linux无线网络STA模式配置</h1>
+<h1 class="title">Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-01-07</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-01-07</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2095 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 5 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span>, </span><a href="/tags/wi-fi/" class="term-tag">Wi-Fi</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -98,25 +103,24 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#简介">简介</a></li>
-    <li><a href="#观前需知">观前需知</a></li>
-    <li><a href="#废键盘的操作方式">废键盘的操作方式💥⌨</a>
+    <li><a href="#简介"><span class="toc-link-label">简介</span></a></li>
+    <li><a href="#观前需知"><span class="toc-link-label">观前需知</span></a></li>
+    <li><a href="#废键盘的操作方式"><span class="toc-link-label">废键盘的操作方式💥⌨</span></a>
       <ul>
-        <li><a href="#添加无线网卡接口并打开">添加无线网卡接口并打开</a></li>
-        <li><a href="#让网卡接口连接到接入点-ap">让网卡接口连接到接入点(AP)</a></li>
-        <li><a href="#获取dhcp服务">获取DHCP服务</a></li>
+        <li><a href="#添加无线网卡接口并打开"><span class="toc-link-label">添加无线网卡接口并打开</span></a></li>
+        <li><a href="#让网卡接口连接到接入点-ap"><span class="toc-link-label">让网卡接口连接到接入点(AP)</span></a></li>
+        <li><a href="#获取dhcp服务"><span class="toc-link-label">获取DHCP服务</span></a></li>
       </ul>
     </li>
-    <li><a href="#一些自动配置工具">一些自动配置工具</a>
+    <li><a href="#一些自动配置工具"><span class="toc-link-label">一些自动配置工具</span></a>
       <ul>
-        <li><a href="#systemd-networkd">systemd-networkd</a></li>
-        <li><a href="#systemd">systemd</a></li>
-        <li><a href="#待更新">待更新</a></li>
+        <li><a href="#systemd-networkd"><span class="toc-link-label">systemd-networkd</span></a></li>
+        <li><a href="#systemd"><span class="toc-link-label">systemd</span></a></li>
+        <li><a href="#待更新"><span class="toc-link-label">待更新</span></a></li>
       </ul>
     </li>
   </ul>
 </nav>
-
 
 
 <h2 id="简介">简介</h2>
@@ -317,19 +321,6 @@ sudo systemctl enable wpa-wlan1.service
 如果你同时使用了 <a href="#systemd-networkd">systemd-networkd</a> ，链路层连接成功后会自动获取DHCP等服务。</p>
 <h3 id="待更新">待更新</h3>
 <p>等待更新中&hellip;&hellip;</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/">Linux开发学习记录(1)：如何愉快(?)地Debug程序</a></span>

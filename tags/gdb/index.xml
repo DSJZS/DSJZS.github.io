@@ -8,6 +8,7 @@
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/tags/gdb/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>Linux开发学习记录(1)：如何愉快(?)地Debug程序</title>
       <link>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</link>
@@ -15,5 +16,6 @@
       <guid>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;又一个新系列(&lt;del&gt;坑&lt;/del&gt;)开始了！这个系列我会发布一些自己学习Linux开发过程中写下的笔记。&lt;br&gt;&#xA;第一篇笔记便是如何愉快(?)的在Linux环境下进行Debug工作(以C语言举例)。&lt;br&gt;&#xA;使用的主要工具为 systemd-coredump、GDB。&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

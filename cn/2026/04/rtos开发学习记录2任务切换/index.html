@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>RTOS开发学习记录(2)：任务切换 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="RTOS开发学习记录(2)：任务切换 - Yuan&#39;s Blog">
     
@@ -43,6 +44,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -52,7 +55,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -64,32 +70,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">RTOS开发学习记录(2)：任务切换</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-04-11</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-04-11</span><span class="meta-sep"> / </span>
 <span class="word-count">约 2979 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 6 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/rtos/" class="term-tag">RTOS</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -100,19 +105,18 @@
 
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#任务切换的原理">任务切换的原理</a></li>
-    <li><a href="#cortex-m-系列内核下的任务切换">Cortex-M 系列内核下的任务切换</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#任务切换的原理"><span class="toc-link-label">任务切换的原理</span></a></li>
+    <li><a href="#cortex-m-系列内核下的任务切换"><span class="toc-link-label">Cortex-M 系列内核下的任务切换</span></a>
       <ul>
-        <li><a href="#初始化任务">初始化任务</a></li>
-        <li><a href="#切换到第一个任务">切换到第一个任务</a></li>
-        <li><a href="#任务间的切换">任务间的切换</a></li>
+        <li><a href="#初始化任务"><span class="toc-link-label">初始化任务</span></a></li>
+        <li><a href="#切换到第一个任务"><span class="toc-link-label">切换到第一个任务</span></a></li>
+        <li><a href="#任务间的切换"><span class="toc-link-label">任务间的切换</span></a></li>
       </ul>
     </li>
-    <li><a href="#qingkev4-内核下的任务切换">QingKeV4 内核下的任务切换</a></li>
+    <li><a href="#qingkev4-内核下的任务切换"><span class="toc-link-label">QingKeV4 内核下的任务切换</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -327,19 +331,6 @@ pendsv_exit:
 <h2 id="qingkev4-内核下的任务切换">QingKeV4 内核下的任务切换</h2>
 <p>QingKeV4 内核相比于 Cortex-M 系列内核来说，实现任务切换功能较为麻烦。</p>
 <p><strong>与 Cortex-M 系列相比，QingKeV4 没有 MSP 与 PSP 之分，因此异常栈与任务栈之间的切换需要用户自己在中断中自行实现</strong>，这导致中断服务函数即使使用了栈切换函数，如果不使用汇编编写总会占用一部分的任务栈(编译器编译C语言代码时一般在执行栈切换函数之前会添加压栈指令，这是几乎是无法避免的)。<strong>与此同时还要防止中断嵌套破坏栈切换&quot;一进一出&quot;的顺序</strong>，一般而言，要么直接关闭中断嵌套(这可能破坏了一些基于中断的功能的实时性)，要么原子地设置一个标志位来判断是否进行了切换。</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">RTOS开发学习记录(3)：任务调度</a></span>

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    
     <title>Linux开发学习记录(6)：常见的设备接口与总线 - Yuan&#39;s Blog</title>
     <meta property="og:title" content="Linux开发学习记录(6)：常见的设备接口与总线 - Yuan&#39;s Blog">
     
@@ -42,6 +43,8 @@
     <nav class="nav-top small">
     <div class="logo">
     
+      
+      
       <a href="/">
       
       <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
@@ -51,7 +54,10 @@
     </div>
     <div class="menu"><span><a href="/">首页</a></span>
       <span><a href="/cn/about/">关于</a></span>
-      <span class="active"><a href="/cn/">日志</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
       <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
       <span><a href="/cn/search/">搜索</a></span>
       <span><a href="/cn/todo/">TODO</a></span>
@@ -63,32 +69,31 @@
 
 
 
-
 <div class="article-meta">
 <h1 class="title">Linux开发学习记录(6)：常见的设备接口与总线</h1>
 
-<h3 class="meta-line">
+
+<h3 class="meta-line post-meta-line">
   <span>
   
-  
 
 
 
 
 
 
-
-<span class="date">2026-03-21</span>
+<span class="author">成元</span>
 <span class="meta-sep"> / </span>
+<span class="date">2026-03-21</span><span class="meta-sep"> / </span>
 <span class="word-count">约 3001 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 6 分钟</span>
 
 
-  
   </span>
-  <span class="term"><span>{ </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> }</span> <span class="term-sep">•</span> <span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span> ]</span></span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/linux/" class="term-tag">Linux</a><span> ]</span></span>
 </h3>
+
 </div>
 
 <div class="main">
@@ -99,49 +104,48 @@
 
 <nav class="fullwidth twocolumn" id="TableOfContents">
   <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#iic">IIC</a>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#iic"><span class="toc-link-label">IIC</span></a>
       <ul>
-        <li><a href="#介绍">介绍</a></li>
-        <li><a href="#i2c总线协议">I2C总线协议</a>
+        <li><a href="#介绍"><span class="toc-link-label">介绍</span></a></li>
+        <li><a href="#i2c总线协议"><span class="toc-link-label">I2C总线协议</span></a>
           <ul>
-            <li><a href="#连线结构图">连线结构图</a></li>
-            <li><a href="#时序图">时序图</a></li>
+            <li><a href="#连线结构图"><span class="toc-link-label">连线结构图</span></a></li>
+            <li><a href="#时序图"><span class="toc-link-label">时序图</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#spi">SPI</a>
+    <li><a href="#spi"><span class="toc-link-label">SPI</span></a>
       <ul>
-        <li><a href="#介绍-1">介绍</a></li>
-        <li><a href="#spi总线协议">SPI总线协议</a>
+        <li><a href="#介绍-1"><span class="toc-link-label">介绍</span></a></li>
+        <li><a href="#spi总线协议"><span class="toc-link-label">SPI总线协议</span></a>
           <ul>
-            <li><a href="#连线结构图-1">连线结构图</a></li>
-            <li><a href="#工作模式">工作模式</a></li>
-            <li><a href="#时序图-1">时序图</a></li>
+            <li><a href="#连线结构图-1"><span class="toc-link-label">连线结构图</span></a></li>
+            <li><a href="#工作模式"><span class="toc-link-label">工作模式</span></a></li>
+            <li><a href="#时序图-1"><span class="toc-link-label">时序图</span></a></li>
           </ul>
         </li>
       </ul>
     </li>
-    <li><a href="#uart">UART</a>
+    <li><a href="#uart"><span class="toc-link-label">UART</span></a>
       <ul>
-        <li><a href="#介绍-2">介绍</a></li>
-        <li><a href="#时序">时序</a></li>
-        <li><a href="#uart波特率">UART波特率</a></li>
-        <li><a href="#电平标准">电平标准</a></li>
+        <li><a href="#介绍-2"><span class="toc-link-label">介绍</span></a></li>
+        <li><a href="#时序"><span class="toc-link-label">时序</span></a></li>
+        <li><a href="#uart波特率"><span class="toc-link-label">UART波特率</span></a></li>
+        <li><a href="#电平标准"><span class="toc-link-label">电平标准</span></a></li>
       </ul>
     </li>
-    <li><a href="#can">CAN</a></li>
-    <li><a href="#usb">USB</a>
+    <li><a href="#can"><span class="toc-link-label">CAN</span></a></li>
+    <li><a href="#usb"><span class="toc-link-label">USB</span></a>
       <ul>
-        <li><a href="#物理接口">物理接口</a></li>
-        <li><a href="#通信协议">通信协议</a></li>
+        <li><a href="#物理接口"><span class="toc-link-label">物理接口</span></a></li>
+        <li><a href="#通信协议"><span class="toc-link-label">通信协议</span></a></li>
       </ul>
     </li>
-    <li><a href="#以太网">以太网</a></li>
+    <li><a href="#以太网"><span class="toc-link-label">以太网</span></a></li>
   </ul>
 </nav>
-
 
 
 <h2 id="前言">前言</h2>
@@ -289,19 +293,6 @@
 <p>#待补充</p>
 <h2 id="以太网">以太网</h2>
 <p>以太网说实话也不是一个博客能讲完的，要深入理解还是需要阅读《TCP/IP详解 卷1：协议》、《计算机网络》以及 IEEE 802 项目各个小组制定的标准(<strong>尤其是 802.3</strong> )。</p>
-
-
-
-
-
-
-
-<hr>
-<div class="post-tailnote small">
-  <p>文章作者：成元<br>上次更新：2026-07-08</p>
-</div>
-
-
 
 <nav class="post-nav fullwidth">
   <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">Linux开发学习记录(7)：设备树基础语法</a></span>

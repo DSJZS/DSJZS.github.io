@@ -8,6 +8,7 @@
     <language>zh-cn</language>
     <copyright>成元</copyright>
     <atom:link href="https://masterji.top/tags/verilog/index.xml" rel="self" type="application/rss+xml" />
+    
     <item>
       <title>HDL学习记录(2)：Verilog常见电路实现</title>
       <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</link>
@@ -15,6 +16,7 @@
       <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇不再整理 Verilog 语法本身，而是总结一些在 HDLBits 里反复出现、也比较有代表性的电路实现套路。&lt;/p&gt;&#xA;&lt;p&gt;目标不是把题目抄一遍，而是记住这些问题通常该怎么拆、代码一般长什么样、哪些地方最容易犯错。以后如果再碰到类似题型，应该能更快想到做法。&lt;/p&gt;</description>
     </item>
+    
     <item>
       <title>HDL学习记录(1)：Verilog入门</title>
       <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</link>
@@ -22,5 +24,6 @@
       <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近开始学习 Verilog 了。刚开始看的时候会觉得它和 C 语言有点像，但写了一些练习后发现，这种像主要停留在语法表面：C 更像是在描述“程序如何一步一步执行”，&lt;strong&gt;Verilog 更像是在描述“一张电路如何连接、何时更新”&lt;/strong&gt;。&lt;/p&gt;</description>
     </item>
+    
   </channel>
 </rss>

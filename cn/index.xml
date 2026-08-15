@@ -10,6 +10,14 @@
     <atom:link href="https://masterji.top/cn/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>博客开发记录(6)：导航栏的更新</title>
+      <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%956%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%9A%84%E6%9B%B4%E6%96%B0/</link>
+      <pubDate>Sat, 15 Aug 2026 21:28:28 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%956%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%9A%84%E6%9B%B4%E6%96%B0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近我觉得将所有内容都混在“日志”里有点难以浏览。一堆标题放在一起，很难快速找到自己想看的内容。&lt;/p&gt;&#xA;&lt;p&gt;有时我想找一篇技术博客，却要先翻过一堆生活博客。有时又想看看自己已经写了哪些系列，混在一起同样很难找。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Android应用开发学习记录(2)：Kotlin 语法入门</title>
       <link>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Wed, 12 Aug 2026 10:35:02 +0800</pubDate>

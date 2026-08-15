@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>博客开发记录(6)：导航栏的更新 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="博客开发记录(6)：导航栏的更新 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近我觉得将所有内容都混在“日志”里有点难以浏览。一堆标题放在一起，很难快速找到自己想看的内容。
+[&amp;hellip;] 有时我想找一篇技术博客，却要先翻过一堆生活博客。有时又想看看自己已经写了哪些系列，混在一起同样很难找。
+[&amp;hellip;] 因此，我将“日志”导航页改成了“归档”，并添加了“系列”“技术”和“生活”三个导航页。
+[&amp;hellip;] 这是之前的导航栏：
+[&amp;hellip;] 本 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">博客开发记录(6)：导航栏的更新</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-08-15</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1517 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 4 分钟</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E7%AB%99%E5%8A%A1/" class="term-cat">站务</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/blog/" class="term-tag">Blog</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#导航栏的变化"><span class="toc-link-label">导航栏的变化</span></a>
+      <ul>
+        <li><a href="#归档"><span class="toc-link-label">归档</span></a></li>
+        <li><a href="#系列"><span class="toc-link-label">系列</span></a></li>
+        <li><a href="#技术"><span class="toc-link-label">技术</span></a></li>
+        <li><a href="#生活"><span class="toc-link-label">生活</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#其他相关调整"><span class="toc-link-label">其他相关调整</span></a>
+      <ul>
+        <li><a href="#文章的元信息"><span class="toc-link-label">文章的元信息</span></a></li>
+        <li><a href="#英文页面"><span class="toc-link-label">英文页面</span></a></li>
+        <li><a href="#目录的悬浮动画"><span class="toc-link-label">目录的悬浮动画</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>最近我觉得将所有内容都混在“日志”里有点难以浏览。一堆标题放在一起，很难快速找到自己想看的内容。</p>
+<p>有时我想找一篇技术博客，却要先翻过一堆生活博客。有时又想看看自己已经写了哪些系列，混在一起同样很难找。</p>
+<p>因此，我将“日志”导航页改成了“归档”，并添加了“系列”“技术”和“生活”三个导航页。</p>
+<p>这是之前的导航栏：</p>
+<p><img class="markdown-image" src="./%e6%9c%ac%e6%ac%a1%e6%9b%b4%e6%96%b0%e5%89%8d%e7%9a%84%e5%af%bc%e8%88%aa%e6%a0%8f.png" alt="本次更新前的导航栏" loading="lazy" decoding="async"><span class="image-caption" hidden>本次更新前的导航栏</span></p>
+<p>这是现在的导航栏：</p>
+<p><img class="markdown-image" src="./%e6%9c%ac%e6%ac%a1%e6%9b%b4%e6%96%b0%e5%90%8e%e7%9a%84%e5%af%bc%e8%88%aa%e6%a0%8f.png" alt="本次更新后的导航栏" loading="lazy" decoding="async"><span class="image-caption" hidden>本次更新后的导航栏</span></p>
+<p>目前中文导航栏的顺序为：</p>
+<p><code>首页 / 关于 / 系列 / 技术 / 生活 / 归档 / 分类&amp;标签 / 搜索 / TODO / EN</code></p>
+<p>英文页面也同步添加了对应的导航项。</p>
+<h2 id="导航栏的变化">导航栏的变化</h2>
+<h3 id="归档">归档</h3>
+<p>“归档”就是之前的“日志”导航页。</p>
+<p>之前这个页面其实已经起到了归档的作用，只是我一直懒得改名。现在博客多起来以后，再叫“日志”感觉不太准确，于是干脆改成了“归档”。</p>
+<p>页面仍然按照年份列出所有文章，并在底部统计年份、文章数量、字数和字符数。只是原来的“篇日志”改成了“篇文章”。</p>
+<h3 id="系列">系列</h3>
+<p>“系列”页面用于集中列出所有系列内容。</p>
+<p>桌面端每行显示两个系列，屏幕宽度不够时自动变成单列。同一行的两个系列卡片高度相同，内容较少的卡片会在下方留白。</p>
+<p>系列按照英文名称或中文拼音从 A 到 Z 排列。每张卡片会显示系列名、文章数量，以及序号最高的五个位置。卡片内使用短标题，因为上面已经显示了系列名，不需要再重复一遍。</p>
+<p>如果一个系列的文章已经全部发布，就直接显示文章数量。例如发布到了第 5 篇，就显示 <code>5</code>。如果第 1、2、4、5 篇已经发布，第 3 篇还没有发布，则显示 <code>(4/5)</code>。</p>
+<p>尚未发布的文章也会占用卡片中的一个位置，并显示“（尚未发布）”。如果系列超过五个序号，卡片底部会显示 <code>更多 &gt;&gt;</code>。点击系列名或者 <code>更多 &gt;&gt;</code>，都可以进入该系列的详情页面。</p>
+<p>系列详情页的显示方式和分类详情页基本一致。序号越大的文章越靠上，已经发布的文章会显示日期和完整标题，空出的序号会显示“未知”和“（尚未发布）”。</p>
+<h3 id="技术">技术</h3>
+<p>“技术”页面主要列出没有 <code>Life</code> 标签的博客，用于快速查找技术文章和其他与生活记录无关的内容。</p>
+<p>它的显示方式和归档页面一致，同样按照年份列出文章，并显示文章数量和字数等统计信息。</p>
+<h3 id="生活">生活</h3>
+<p>“生活”页面主要列出具有 <code>Life</code> 标签的博客，用于快速查找生活记录、随笔和其他日常内容。</p>
+<p>它同样沿用了归档页面的显示方式。带有 <code>Life</code> 标签的文章会显示在“生活”页面，没有 <code>Life</code> 标签的文章则会显示在“技术”页面。</p>
+<h2 id="其他相关调整">其他相关调整</h2>
+<h3 id="文章的元信息">文章的元信息</h3>
+<p>文章标题下方的元信息也重新整理了一下。</p>
+<p>左侧现在依次显示作者、创建日期、字数和预计阅读时间，右侧显示所有分类和标签。例如：</p>
+<pre><code class="language-text">成元 / 2026-08-15 / 约 1000 字 / 预计阅读 3 分钟    &lt; 站务 &gt; • [ Blog ]
+</code></pre>
+<p>原来文章末尾自动显示的作者和最新修改日期已经去掉了，只保留标题下方的创建信息。这样页面更干净，也不会让读者误以为文章正文又更新了。</p>
+<p>“关于”页面会显示这行元信息，“搜索”和“TODO”页面则不会显示。元信息的字体和字号也参考了原主题的显示方式，避免它比正文大太多或者小太多。</p>
+<h3 id="英文页面">英文页面</h3>
+<p>中文、英文内容页面以及“分类&amp;标签”总览页现在使用对应的导航栏。英文页面同步添加了 <code>Series</code>、<code>Tech</code>、<code>Life</code> 和 <code>Archive</code>，没有内容时的提示也改成了英文。</p>
+<h3 id="目录的悬浮动画">目录的悬浮动画</h3>
+<p>原主题的目录链接在鼠标悬浮时会轻微移动。这个效果本身挺有意思，但目录标题一多，鼠标悬浮时就会反复乱跳。</p>
+<p>现在仍然保留这个轻微移动的动画，同时让目录保持稳定。</p>
+<h2 id="总结">总结</h2>
+<p>这次不只是给导航栏增加了几个入口，还顺便重新整理了文章分类、系列页面和文章元信息。</p>
+<p>以前所有文章都堆在“日志”页面里，确实有点太暴力了。现在可以按照“技术”“生活”和“系列”分别查找，想看全部内容时再进入“归档”，应该会方便不少。</p>
+<p>总之，这次更新的主要目的还是方便阅读，也方便以后继续维护博客。</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/">Android应用开发学习记录(2)：Kotlin 语法入门</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/alt-title.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="/js/image-caption.js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

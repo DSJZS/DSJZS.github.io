@@ -10,6 +10,22 @@
     <atom:link href="https://masterji.top/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>开发实践学习记录(5)：瓶颈来源的诊断</title>
+      <link>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E7%93%B6%E9%A2%88%E6%9D%A5%E6%BA%90%E7%9A%84%E8%AF%8A%E6%96%AD/</link>
+      <pubDate>Mon, 17 Aug 2026 13:36:56 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E7%93%B6%E9%A2%88%E6%9D%A5%E6%BA%90%E7%9A%84%E8%AF%8A%E6%96%AD/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近在折腾一个电子手表客户端与手机服务器之间传输延迟的问题。总结一下查找瓶颈的方法。&lt;/p&gt;&#xA;&lt;p&gt;下面说的方法不限定系统，客户端和服务器只是两端，换成别的场景，思路也差不多。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>开发实践学习记录(4)：在虚拟化环境下配置开发环境</title>
+      <link>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%9C%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link>
+      <pubDate>Mon, 17 Aug 2026 09:57:55 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%9C%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇文章要讲的内容和标题一样，就是怎么在虚拟化环境下配置开发环境。经过实习期间大大小小的开发环境配置，以及诸多的炸机体验，我认为在虚拟化环境下配置开发环境比较好。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>Android应用开发学习记录(2)：Kotlin 语法入门</title>
       <link>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Wed, 12 Aug 2026 10:35:02 +0800</pubDate>

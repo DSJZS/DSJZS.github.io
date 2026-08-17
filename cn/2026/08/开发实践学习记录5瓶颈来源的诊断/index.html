@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>开发实践学习记录(5)：瓶颈来源的诊断 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="开发实践学习记录(5)：瓶颈来源的诊断 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近在折腾一个电子手表客户端与手机服务器之间传输延迟的问题。总结一下查找瓶颈的方法。
+[&amp;hellip;] 下面说的方法不限定系统，客户端和服务器只是两端，换成别的场景，思路也差不多。
+[&amp;hellip;] 首先主要就是看日志，任何猜测都要建立在日志的基础上，或者其它能反映运行状态的输出上，比如示波器、某个 GPIO 的开关、LED 的亮灭等。
+[&amp;hellip;] 日志至少要带上时间戳，最好能记 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">开发实践学习记录(5)：瓶颈来源的诊断</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-08-17</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1571 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 4 分钟</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/" class="term-tag">开发实践</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#方法"><span class="toc-link-label">方法</span></a>
+      <ul>
+        <li><a href="#先看日志-别靠猜"><span class="toc-link-label">先看日志，别靠猜</span></a></li>
+        <li><a href="#时间戳与时钟不同步"><span class="toc-link-label">时间戳与时钟不同步</span></a></li>
+        <li><a href="#缓冲区是重点"><span class="toc-link-label">缓冲区是重点</span></a></li>
+        <li><a href="#算不过来的地方-考虑交给硬件"><span class="toc-link-label">算不过来的地方，考虑交给硬件</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>最近在折腾一个电子手表客户端与手机服务器之间传输延迟的问题。总结一下查找瓶颈的方法。</p>
+<p>下面说的方法不限定系统，客户端和服务器只是两端，换成别的场景，思路也差不多。</p>
+<h2 id="方法">方法</h2>
+<h3 id="先看日志-别靠猜">先看日志，别靠猜</h3>
+<p>首先主要就是看日志，任何猜测都要建立在日志的基础上，或者其它能反映运行状态的输出上，比如示波器、某个 GPIO 的开关、LED 的亮灭等。</p>
+<p>日志至少要带上时间戳，最好能记录清楚是谁、在什么时间、做了什么、结果是什么。不然排查的时候，根本不知道当时发生了什么。</p>
+<p>看日志的时候，还要算出每一段花了多少时间。比如在数据进入缓冲区之前、离开缓冲区之后各打一个时间戳，相减就是这一段的耗时。把所有段落的耗时加起来，基本就是一次完整传输的耗时。</p>
+<h3 id="时间戳与时钟不同步">时间戳与时钟不同步</h3>
+<p>这里有一个容易踩的坑，就是数据包自带的时间戳并不一定能直接拿来对比。</p>
+<p>包里的时间戳是发送方用自己的时钟记下的时间。如果客户端和服务器没有做过时间同步，两边的绝对时间戳没有可比性，直接相减得到的不是真实耗时，里面混着两边时钟的偏差，也就是时钟偏移。</p>
+<p>所以实践中更可靠的做法，是只基于请求方自己的时间戳。请求方发出请求前记下 t1，收到响应后记下 t2，t2 减 t1 就是一次完整往返的耗时，也就是 RTT（往返时间）。</p>
+<p>两个时间戳来自同一台设备的同一个时钟，相减的时候时钟偏移会抵消掉，完全不需要两端同步。</p>
+<p>如果请求本身很短，服务器处理时间可以忽略，那么 RTT 基本就是数据来回的传输时间，可以粗略认为单程大约是 RTT 的一半。不过这只是近似，误差主要来自两个方面。一个是服务器处理时间并不是零；另一个是来回路径不一定对称，RTT 测的是来回两条路加在一起的结果。</p>
+<p>如果想精确测单程耗时，比如“客户端发出去，服务器到底多久才收到”，那就必须先让两端时钟同步，比如用 NTP（网络时间协议），否则算出来的单程延迟没有意义。</p>
+<p>抓包也是一样的道理。抓包时间戳是抓包机器自己记录的时间，只在请求方一侧抓包、用本地时间戳算 RTT 没问题；但把两端抓包文件里的时间戳直接相减来算单程，同样会被时钟不同步影响。</p>
+<h3 id="缓冲区是重点">缓冲区是重点</h3>
+<p>那么重点记录哪一部分的耗时呢？我认为就是各个缓冲区的输入和输出，瓶颈一般都卡在这些地方。</p>
+<p>缓冲区本身不产生数据也不消耗数据，只负责中转。生产者往里放数据，消费者从里面取数据。满了，说明输出侧取走得太慢；空了，说明输入侧送来得太慢。所以判断依据是：</p>
+<ul>
+<li>输入侧老是警告“缓冲区已满，需要等待”，瓶颈在输出侧</li>
+<li>输出侧老是警告“缓冲区为空，需要等待”，瓶颈在输入侧</li>
+</ul>
+<p>拿客户端到服务器的一次传输举例，链路大致是这样的：</p>
+<blockquote>
+<p>客户端应用 -&gt; 客户端发送缓冲区 -&gt; 传输通道 -&gt; 服务器接收缓冲区 -&gt; 服务器应用</p>
+</blockquote>
+<p>如果客户端一直报“发送缓冲区满”，说明服务器那边消费得慢，可能是接收缓冲区在堆积，也可能是服务器应用处理不过来，问题在下游。</p>
+<p>如果服务器应用一直报“接收缓冲区空”，说明数据送来得慢，问题在上游，可能是客户端发送慢，也可能是传输通道本身慢。</p>
+<p>观察缓冲区状态的方式因系统而异。有的系统能直接看到缓冲区占用长度或者水位，就盯着水位看；看不到的系统，只能靠日志里的满/空警告。不管哪种方式，判断逻辑都是一样的。</p>
+<h3 id="算不过来的地方-考虑交给硬件">算不过来的地方，考虑交给硬件</h3>
+<p>除了缓冲区，一些软件计算密集的地方也要看耗时，看看能不能用硬件替代。</p>
+<p>比如内存复制，数据量大的时候，CPU 一点一点 <code>memcpy</code> 很占时间。如果硬件支持 DMA，可以让外设直接读写内存，CPU 只需要发起传输和收尾，搬运过程基本不占 CPU。</p>
+<p>再比如图形计算，GPU 有大量的并行计算单元和高内存带宽，天生适合渲染这类并行任务。不过也不是什么都能换成硬件，GPU 显存有限，复杂的逻辑还是 CPU 更灵活，具体能不能换，要结合场景实测。</p>
+<h2 id="结语">结语</h2>
+<p>总结一下，排查传输瓶颈的时候，先看日志和运行状态，别靠猜；测两端耗时，优先用请求方时间戳算 RTT；再盯缓冲区，看它是满还是空；最后看看有没有计算密集的地方可以交给硬件。</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%9C%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">开发实践学习记录(4)：在虚拟化环境下配置开发环境</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

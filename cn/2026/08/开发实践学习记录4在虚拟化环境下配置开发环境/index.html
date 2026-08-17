@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>开发实践学习记录(4)：在虚拟化环境下配置开发环境 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="开发实践学习记录(4)：在虚拟化环境下配置开发环境 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="这篇文章要讲的内容和标题一样，就是怎么在虚拟化环境下配置开发环境。经过实习期间大大小小的开发环境配置，以及诸多的炸机体验，我认为在虚拟化环境下配置开发环境比较好。
+[&amp;hellip;] 简单来说，就是把开发环境放在虚拟机或者 Docker 里，和日常使用的系统隔离开。这样就算环境被装坏、配置被搞乱，也能随时恢复或者重新搭建，不影响宿主机。
+[&amp;hellip;] 其实我也是在不断摸索，可能几个月后我 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">开发实践学习记录(4)：在虚拟化环境下配置开发环境</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-08-17</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1261 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 3 分钟</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/" class="term-tag">开发实践</a><span>, </span><a href="/tags/vm/" class="term-tag">VM</a><span>, </span><a href="/tags/docker/" class="term-tag">Docker</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#缘由"><span class="toc-link-label">缘由</span></a></li>
+    <li><a href="#方法"><span class="toc-link-label">方法</span></a>
+      <ul>
+        <li><a href="#虚拟机"><span class="toc-link-label">虚拟机</span></a></li>
+        <li><a href="#docker"><span class="toc-link-label">Docker</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>这篇文章要讲的内容和标题一样，就是怎么在虚拟化环境下配置开发环境。经过实习期间大大小小的开发环境配置，以及诸多的炸机体验，我认为在虚拟化环境下配置开发环境比较好。</p>
+<p>简单来说，就是把开发环境放在虚拟机或者 Docker 里，和日常使用的系统隔离开。这样就算环境被装坏、配置被搞乱，也能随时恢复或者重新搭建，不影响宿主机。</p>
+<p><del>其实我也是在不断摸索，可能几个月后我了解到了更多的技术，知晓了更好的办法</del></p>
+<p><del>所以这篇文章可能随时会改，只能说做下参考，欢迎你们评论说说你们的方法</del></p>
+<h2 id="缘由">缘由</h2>
+<p>我第一次冒出这个想法，是刚开始实习、在公司分配的电脑上安装开发环境的时候。</p>
+<p>编译工具链之类的软件都是客户发过来的，是一个 Windows 上的 *.exe 安装程序。我想着应该也没什么问题，于是就直接运行了安装程序。然后 Windows 要求重启，这也没问题，很多软件安装完也都会要求重启，于是我就重启了。然后就坏了。</p>
+<p>后来查到客户发过来的安装程序里带有病毒脚本，会破坏电脑上所有软件的链接，导致电脑开不了机。就算用安全模式之类的办法勉强进入系统，也打不开任何软件。</p>
+<p>最后无奈用 U 盘重装系统，重新安装环境。好在刚实习的时候电脑里没什么重要的数据，大部分数据我也都保存了。</p>
+<h2 id="方法">方法</h2>
+<p>后来再配置开发环境，我就不直接在主机上装了，而是放到虚拟化环境里。我目前用到的虚拟化方式主要有两种：虚拟机和 Docker。</p>
+<h3 id="虚拟机">虚拟机</h3>
+<p>虚拟机，也就是 VM（virtual machine），简单来说就是用软件模拟出一台完整的电脑，可以在里面安装一个独立的操作系统，和宿主机隔离开。</p>
+<p>如果你需要使用桌面端环境进行开发、编译、烧录，或者使用调试器、串口这类外部接口，那么我推荐你使用虚拟机。虚拟机有完整的图形界面，串口、USB 这类设备也能直接映射进去，用起来和真实电脑差不多。</p>
+<p>虚拟机管理软件一般都有一个很有用的功能，就是快照。在安装不熟悉的软件之前，可以先给虚拟机拍个快照。如果像上文那样，某个安装程序有 Bug，甚至把系统搞坏了，也能直接把虚拟机恢复到安装前的状态，不用重装系统。</p>
+<p><del>奇怪的是，客户给的安装程序在虚拟机里执行就正常，在主机里执行就会破坏系统，真是奇怪</del></p>
+<h3 id="docker">Docker</h3>
+<p>Docker 是操作系统级别的虚拟化。更准确地说，Docker 就是利用 Linux 容器技术，给应用程序封装一个独立的运行环境，<strong>每个运行环境就是一个独立的容器</strong>。和虚拟机不一样，Docker 不需要完整模拟一台电脑，它和宿主机共享内核，所以更轻量。</p>
+<p>Docker 主要用于不需要桌面，但希望系统环境、安装的工具能够固定下来的情况。比如把编译工具链和依赖都放进镜像里，以后拿到同一个镜像，就能得到一模一样的编译环境。我之前在<a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">交叉编译的博客</a>里就用了这个思路。</p>
+<p>相比虚拟机，Docker 轻量得多，启动也快。</p>
+<p>简单来说，需要桌面环境、外部设备和完整系统的时候用虚拟机；只需要一个干净、固定的命令行环境时用 Docker。这样就算安装的软件有问题，遭殃的也只是虚拟机或者容器，不会影响日常使用的电脑。</p>
+<h2 id="结语">结语</h2>
+<p>**不熟悉的第三方软件，一定不要直接安装在主机（宿主机）上，要先在虚拟环境里测试，或者至少提前准备好快照，方便恢复系统。**这是我电脑多次炸机得到的教训 😭</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E7%93%B6%E9%A2%88%E6%9D%A5%E6%BA%90%E7%9A%84%E8%AF%8A%E6%96%AD/">开发实践学习记录(5)：瓶颈来源的诊断</a></span>
+  <span><a href="/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%956%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%9A%84%E6%9B%B4%E6%96%B0/">博客开发记录(6)：导航栏的更新</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

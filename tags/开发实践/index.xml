@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>开发实践 on Yuan&#39;s Blog</title>
+    <link>https://masterji.top/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/</link>
+    <description>Recent content in 开发实践 on Yuan&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>成元</copyright>
+    <atom:link href="https://masterji.top/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>开发实践学习记录(3)：功能的更新</title>
+      <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</link>
+      <pubDate>Wed, 29 Jul 2026 14:52:46 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近实习中，经常需要基于某个开发板增加或者更新一些功能。&lt;/p&gt;&#xA;&lt;p&gt;真实项目中的开发逻辑，和自己写个人项目时其实有很大的不同。&lt;/p&gt;&#xA;&lt;p&gt;个人项目一般比较随心所欲，项目规模也不会特别大。想改一个功能时，很多时候觉得哪里不顺手就直接改了，甚至顺手把周围的代码一起重构掉。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>开发实践学习记录(2)：先讨论方案，再研究实现</title>
+      <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Tue, 28 Jul 2026 09:36:40 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近做了很多无用功，因此写一篇博客记录一下，也算是给自己一个教训。&lt;/p&gt;&#xA;&lt;p&gt;前段时间，我被要求实现一个效果 C，同时拿到了一个 Demo 作为参考。&lt;/p&gt;&#xA;&lt;p&gt;Demo 中采用的方案是：&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>开发实践学习记录(1)：文档的价值</title>
+      <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</link>
+      <pubDate>Wed, 22 Jul 2026 15:53:12 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近经常被要求写文档。&lt;/p&gt;&#xA;&lt;p&gt;比如新增了一个功能，或者对原有功能进行了比较大的修改，往往都需要补一份对应的文档。&lt;/p&gt;&#xA;&lt;p&gt;我一开始其实不太理解这种文档到底应该写什么，就直接把它当成了更新日志来写。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

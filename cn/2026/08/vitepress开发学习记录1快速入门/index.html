@@ -11,8 +11,9 @@
     
     
       
-      <meta name="description" content="最近整理之前的个人项目，比如 yuan-rtos 等。要给他们写文档，但是我觉得直接写一堆 Markdown 甩仓库里很难看，于是就开始找有没有什么比较好用的技术文档框架，最后找到了 VitePress。今天学习并实际搭建了一个 VitePress 网站，部署到 GitHub Pages 后感觉效果还不错，挺方便的，于是写这篇博客记录一下过程。
-[&amp;hellip;] VitePress 是 Vue &amp;hellip;">
+      <meta name="description" content="最近整理之前的个人项目，比如 yuan-rtos 等，打算给他们写一些文档，详细描述它们有什么功能以及我是怎么实现的。
+[&amp;hellip;] 但是我觉得直接写一堆 Markdown 甩仓库里很难看，于是就开始找有没有什么比较好用的技术文档框架，最后找到了 VitePress。
+[&amp;hellip;] 学习并实际搭建了一个 VitePress 网站，接着部署到 GitHub Pages 后，我感觉效果 &amp;hellip;">
       
     
 
@@ -83,9 +84,9 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-08-19</span><span class="meta-sep"> / </span>
-<span class="word-count">约 3499 字</span>
+<span class="word-count">约 3536 字</span>
 <span class="meta-sep"> / </span>
-<span class="reading-time">预计阅读 7 分钟</span>
+<span class="reading-time">预计阅读 8 分钟</span>
 
 
   </span>
@@ -129,7 +130,7 @@
     </li>
     <li><a href="#其他实用配置"><span class="toc-link-label">其他实用配置</span></a>
       <ul>
-        <li><a href="#显示-最后更新于"><span class="toc-link-label">显示“最后更新于”</span></a></li>
+        <li><a href="#显示最后更新事件"><span class="toc-link-label">显示最后更新事件</span></a></li>
         <li><a href="#编辑链接"><span class="toc-link-label">编辑链接</span></a></li>
         <li><a href="#本地搜索"><span class="toc-link-label">本地搜索</span></a></li>
       </ul>
@@ -141,7 +142,9 @@
 
 
 <h2 id="前言">前言</h2>
-<p>最近整理之前的个人项目，比如 <a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a> 等。要给他们写文档，但是我觉得直接写一堆 Markdown 甩仓库里很难看，于是就开始找有没有什么比较好用的技术文档框架，最后找到了 VitePress。今天学习并实际搭建了一个 VitePress 网站，部署到 GitHub Pages 后感觉效果还不错，挺方便的，于是写这篇博客记录一下过程。</p>
+<p>最近整理之前的个人项目，比如 <a href="https://github.com/DSJZS/yuan-rtos">yuan-rtos</a> 等，打算给他们写一些文档，详细描述它们有什么功能以及我是怎么实现的。</p>
+<p>但是我觉得直接写一堆 Markdown 甩仓库里很难看，于是就开始找有没有什么比较好用的技术文档框架，最后找到了 VitePress。</p>
+<p>学习并实际搭建了一个 VitePress 网站，接着部署到 GitHub Pages 后，我感觉效果还不错，写文档挺方便的，用起来也很省事。于是写这篇博客记录一下过程。</p>
 <h2 id="快速入门">快速入门</h2>
 <h3 id="vitepress-是什么">VitePress 是什么？</h3>
 <p>VitePress 是 Vue 官方推出的静态站点生成器，基于 Vue 3 和 Vite 构建。核心思路很简单，<strong>用 Markdown 写内容，框架帮你生成一个文档网站</strong>。</p>
@@ -397,7 +400,7 @@ export default {
 </code></pre>
 <h2 id="其他实用配置">其他实用配置</h2>
 <p>都是 VitePress 提供的一些功能，浏览官方手册的<a href="https://vitepress.dev/zh/reference/site-config">配置与 API 参考</a>可以找到更多。</p>
-<h3 id="显示-最后更新于">显示“最后更新于”</h3>
+<h3 id="显示最后更新事件">显示最后更新事件</h3>
 <p>根级开启 <code>lastUpdated: true</code>，再在 <code>themeConfig</code> 里自定义文案和格式：</p>
 <pre><code class="language-ts">export default defineConfig({
   lastUpdated: true,
@@ -436,7 +439,7 @@ export default {
 <p>到这里，一个完整的 VitePress 文档站就搭好了，包括本地开发、导航侧边栏配置、GitHub Pages 自动部署、giscus 评论，以及最后更新时间和编辑链接这些小细节。整个过程没有引入任何复杂的构建工具，Markdown 写内容，配置文件调样式，剩下的交给 VitePress 和 GitHub Actions。</p>
 <h2 id="参考资料">参考资料</h2>
 <ul>
-<li><a href="https://vitepress.dev/zh">官方文档(中文)</a></li>
+<li><a href="https://vitepress.dev/zh">VitePress 官方文档(中文)</a></li>
 <li><a href="https://giscus.app/zh-CN">giscus</a></li>
 <li><a href="https://github.com/apps/giscus">giscus app</a></li>
 </ul>

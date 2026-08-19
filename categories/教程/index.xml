@@ -10,6 +10,14 @@
     <atom:link href="https://masterji.top/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>VitePress开发学习记录(1)：快速入门</title>
+      <link>https://masterji.top/cn/2026/08/vitepress%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
+      <pubDate>Wed, 19 Aug 2026 14:36:21 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/vitepress%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近整理之前的个人项目，比如 &lt;a href=&#34;https://github.com/DSJZS/yuan-rtos&#34;&gt;yuan-rtos&lt;/a&gt; 等。要给他们写文档，但是我觉得直接写一堆 Markdown 甩仓库里很难看，于是就开始找有没有什么比较好用的技术文档框架，最后找到了 VitePress。今天学习并实际搭建了一个 VitePress 网站，部署到 GitHub Pages 后感觉效果还不错，挺方便的，于是写这篇博客记录一下过程。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>开发实践学习记录(5)：瓶颈来源的诊断</title>
       <link>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E7%93%B6%E9%A2%88%E6%9D%A5%E6%BA%90%E7%9A%84%E8%AF%8A%E6%96%AD/</link>
       <pubDate>Mon, 17 Aug 2026 13:36:56 +0800</pubDate>

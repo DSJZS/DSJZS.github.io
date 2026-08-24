@@ -1,6 +1,18 @@
 body {
   font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", "SimSun", serif;
 }
+
+.single .article-meta,
+.single .main {
+  font-size: 110%;
+}
+
+@media (min-width: 768px) {
+  .single .main {
+    width: 90%;
+  }
+}
+
 .nav-top .menu {
   font-family: Jost, Optima, Candara, sans-serif;
 }

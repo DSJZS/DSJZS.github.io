@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>软件工程(2)：接口与实现 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="软件工程(2)：接口与实现 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="继续阅读《C Interfaces and Implementations》的第二章。这一章讲的是“接口与实现”。作为有一定 C 语言基础的读者，我觉得还好，没什么难的，无非就是接口写在头文件里、实现写在源文件里那一套，快速阅读即可。
+[&amp;hellip;] 可以简单地将耦合理解为下面这句话：
+[&amp;hellip;] 耦合 = 一段代码对另一段代码“知道得有多少、依赖得有多深”。
+[&amp;hellip;] &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">软件工程(2)：接口与实现</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-08-28</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1841 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 4 分钟</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/c/" class="term-tag">C</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#耦合"><span class="toc-link-label">耦合</span></a></li>
+    <li><a href="#模块"><span class="toc-link-label">模块</span></a>
+      <ul>
+        <li><a href="#接口"><span class="toc-link-label">接口</span></a>
+          <ul>
+            <li><a href="#命名规范"><span class="toc-link-label">命名规范</span></a></li>
+            <li><a href="#语义规范"><span class="toc-link-label">语义规范</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#实现"><span class="toc-link-label">实现</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#应用举例"><span class="toc-link-label">应用举例</span></a>
+      <ul>
+        <li><a href="#adt"><span class="toc-link-label">ADT</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>继续阅读《C Interfaces and Implementations》的第二章。这一章讲的是“接口与实现”。作为有一定 C 语言基础的读者，我觉得还好，没什么难的，无非就是接口写在头文件里、实现写在源文件里那一套，快速阅读即可。</p>
+<h2 id="耦合">耦合</h2>
+<p>可以简单地将耦合理解为下面这句话：</p>
+<blockquote>
+<p>耦合 = 一段代码对另一段代码“知道得有多少、依赖得有多深”。</p>
+</blockquote>
+<p>如果模块 A 知道模块 B 的内部实现，甚至直接依赖或修改其内部逻辑，那么两者之间就可能存在耦合问题。模块 B 一旦改动，模块 A 很可能也要跟着改。</p>
+<p>比如有一个 <code>stack</code> 模块。正常情况下，调用者只应该知道：</p>
+<pre><code class="language-c">Stack *stack_new(void);
+void stack_push(Stack *s, int value);
+int stack_pop(Stack *s);
+</code></pre>
+<p>调用者只依赖这些接口，耦合就比较低。</p>
+<p>但如果调用者还知道：</p>
+<pre><code class="language-c">struct Stack {
+    int data[100];
+    int top;
+};
+</code></pre>
+<p>然后绕过模块提供的接口，直接写：</p>
+<pre><code class="language-c">s-&gt;data[s-&gt;top++] = 10;
+</code></pre>
+<p>耦合就会变得很高。后续如果更改 <code>Stack</code> 的内部实现，所有直接访问这些成员的模块都可能要跟着修改。</p>
+<p>问题在于，调用者不仅知道“怎么使用栈”，还知道栈的内部实现。很多时候，最好只让调用者知道它需要知道的内容，避免调用者依赖或者猜测内部实现。</p>
+<h2 id="模块">模块</h2>
+<p>一个模块由两部分组成：接口和实现。</p>
+<p>接口指明模块要做什么，它声明了使用该模块的代码可以使用的标识符、类型和函数；实现则指明模块如何完成接口声明的目标。</p>
+<p>一个模块通常只有一个接口，但是可以有多个实现。每个实现可能使用不同的算法和数据结构，不过都必须符合接口给出的使用说明。</p>
+<h3 id="接口">接口</h3>
+<p>对于 C 而言，接口通常写在头文件 <code>*.h</code> 中。</p>
+<h4 id="命名规范">命名规范</h4>
+<p>对于一个名叫 <code>yr</code> 的模块，其接口最好都带有 <code>yr_</code> 或类似的前缀。因为 C 语言没有提供很好用的模块级命名空间，多个模块很可能具有相同的功能，并且不约而同地取了同一个名字，最终导致命名冲突。因此，以模块名作为前缀是一个避免命名冲突的好办法。</p>
+<h4 id="语义规范">语义规范</h4>
+<p><strong>一个接口可以有多种实现，但是对外行为要保持一致。接口的用户不应该对各种实现之间未说明的差异负责，否则就是耦合过重。</strong></p>
+<p>比如有一个用于取余的接口：</p>
+<pre><code class="language-c">int my_mod(int x, int y);
+</code></pre>
+<p>那么就要规定好它在各种情况下的结果。有人可能会问，C 语言不是有对应的 <code>%</code> 运算符吗？</p>
+<pre><code class="language-c">printf(&quot;-1 %% 5 = %d\n&quot;, -1 % 5); // 输出 -1
+</code></pre>
+<p>是的，我们可以约定 <code>my_mod</code> 的行为就是 <code>return x % y</code>。但是对于 <code>x % y</code>，早期的 C 语言程序员却不敢直接假定它的结果。</p>
+<p>在 C89/C90 中，负整数除法的舍入方向没有完全统一。假设 <code>i</code> 和 <code>N</code> 都是 <code>int</code>，对于 <code>(i - 1) % N</code>，当 <code>i == 0</code>、<code>N &gt; 1</code> 时，根据平台的不同，结果可能是 <code>-1</code>，也可能是 <code>N - 1</code>。</p>
+<p>C99 及之后的标准统一规定整数除法向零截断，因此现在的 <code>-1 % 5</code> 会固定得到 <code>-1</code>。如果 <code>my_mod</code> 只是对 <code>%</code> 的简单包装，那么现在看来确实没有什么用；但在当时，它可以明确规定取余的语义，避免用户对结果作出隐含假设。</p>
+<h3 id="实现">实现</h3>
+<p>对于 C 而言，实现通常写在源文件 <code>*.c</code> 中。</p>
+<p>在 C 语言中，一个实现可以由一个或多个 <code>.c</code> 文件提供。实现必须提供其导出接口所指定的功能。</p>
+<p>实现文件应该包含自己的接口头文件，以保证函数定义与接口声明一致。不过除此之外，C 语言不会自动检查实现是否满足接口规定的完整行为。</p>
+<h2 id="应用举例">应用举例</h2>
+<p>下面用 ADT 举个例子。</p>
+<h3 id="adt">ADT</h3>
+<p>ADT 即抽象数据类型。</p>
+<p>C 标准库本身没有直接提供栈、链表等数据类型。如果需要这些数据类型，就要使用结构体和函数封装出相应的接口。</p>
+<p>如果你用 C 语言写过 CLI 工具等，那么大概率见过标准库 <code>stdio.h</code> 提供的 ADT，也就是 <code>FILE</code> 以及相关的文件操作。</p>
+<p>原书建议只提供 ADT 的结构体指针和接口函数，不公开 ADT 结构体的具体实现：</p>
+<pre><code class="language-c">#ifndef STACK_INCLUDED
+#define STACK_INCLUDED
+
+typedef struct Stack_T *Stack_T;
+
+extern Stack_T Stack_new(void);
+extern int Stack_empty(Stack_T stk);
+extern void Stack_push(Stack_T stk, void *x);
+extern void *Stack_pop(Stack_T stk);
+extern void Stack_free(Stack_T *stk);
+
+#endif
+</code></pre>
+<p>这种方式更适合通过接口动态获取对象。但在嵌入式领域，因为各种限制，很多时候需要<strong>静态定义</strong>一个数据结构，而不是通过 <code>Stack_new</code> 之类的接口动态获取。</p>
+<p>如果调用者需要直接静态定义对象，编译器就必须知道这个数据结构的大小和内存布局。只在头文件中提供结构体指针，而不提供完整定义，调用者就无法直接定义这个对象。</p>
+<p>当然，也不是完全没有办法，只是不够优雅。例如可以在头文件中预留一块存储空间：</p>
+<pre><code class="language-c">typedef struct {
+    uint32_t storage[16];
+} Queue;
+</code></pre>
+<p>然后在源文件中定义真正使用的数据结构：</p>
+<pre><code class="language-c">typedef struct {
+    uint8_t *buffer;
+    size_t head;
+    size_t tail;
+    size_t capacity;
+} QueueImpl;
+</code></pre>
+<p>具体实现时，再将 <code>Queue</code> 的地址强制转换为 <code>QueueImpl *</code>：</p>
+<pre><code class="language-c">static QueueImpl *queue_impl(Queue *queue)
+{
+    return (QueueImpl *)(void *)queue;
+}
+</code></pre>
+<p>但是这种方式十分麻烦。后续维护不仅涉及指针的强制转换，还要处理存储空间大小、内存对齐和类型访问等问题。而且它仍然暴露了部分信息，用户可能继续猜测内部的内存布局，最终造成耦合。</p>
+<p>所以一般不会这么做，而是直接写明完整的数据结构定义，再通过注释说明哪些成员是 internal 的。Zephyr RTOS 中就能看到这种做法。</p>
+<h2 id="结语">结语</h2>
+<p>除了加深了对耦合的理解，这一章我感觉没有学到什么新东西。作者写这本书时，C 语言还没有现在这么完善，其中一些例子放到今天已经不怎么适用了，不过接口与实现的思想还是可以参考的。这里就不多说了。</p>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/">数据结构(1)：原子表</a></span>
+  <span><a href="/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B1%E5%AF%B9%E6%95%88%E7%8E%87%E6%8F%90%E9%AB%98%E7%9A%84%E8%AF%AF%E8%A7%A3/">软件工程(1)：对效率提高的误解</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

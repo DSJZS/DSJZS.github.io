@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile - Yuan&#39;s Blog</title>
-    <meta property="og:title" content="Linux开发学习记录(3)：如何愉快(?)地使用Makefile - Yuan&#39;s Blog">
+    <title>Linux 开发(3)：如何愉快(?)地使用Makefile - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Linux 开发(3)：如何愉快(?)地使用Makefile - Yuan&#39;s Blog">
     
     
       
-      <meta name="description" content="本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。
-[&amp;hellip;] 由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。">
+      <meta name="description" content="本来打算在这个文章里写的，但是拖更了好久，打算不在 Linux 开发系列里完成这篇文章，而是开一个单独的 Makefile 系列。
+[&amp;hellip;] 由于这个文章已经占了一个 Linux 开发系列的序号，所以不删除了，留一个跳转链接好了。">
       
     
 
@@ -68,7 +68,7 @@
 
 
 <div class="article-meta">
-<h1 class="title">Linux开发学习记录(3)：如何愉快(?)地使用Makefile</h1>
+<h1 class="title">Linux 开发(3)：如何愉快(?)地使用Makefile</h1>
 
 
 <h3 class="meta-line post-meta-line">
@@ -83,7 +83,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-02-19</span><span class="meta-sep"> / </span>
-<span class="word-count">约 112 字</span>
+<span class="word-count">约 90 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 1 分钟</span>
 
@@ -99,12 +99,12 @@
 
 
 <h2 id="前言">前言</h2>
-<p>本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。</p>
-<p>由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。</p>
+<p>本来打算在这个文章里写的，但是拖更了好久，打算不在 Linux 开发系列里完成这篇文章，而是开一个单独的 Makefile 系列。</p>
+<p>由于这个文章已经占了一个 Linux 开发系列的序号，所以不删除了，留一个跳转链接好了。</p>
 
 <nav class="post-nav fullwidth">
-  <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Linux开发学习记录(4)：如何愉快(?)地交叉编译</a></span>
-  <span><a href="/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具</a> &rarr;</span>
+  <span>&larr; <a href="/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/">Linux 开发(4)：如何愉快(?)地交叉编译</a></span>
+  <span><a href="/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/">Linux 开发(2)：如何愉快(?)地使用Debian系包管理工具</a> &rarr;</span>
 </nav>
 <hr>
 <div class="giscus-comments fullwidth">

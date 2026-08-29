@@ -10,7 +10,7 @@
     <atom:link href="https://masterji.top/tags/blog/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>博客开发记录(6)：导航栏的更新</title>
+      <title>博客开发(6)：导航栏的更新</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%956%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%9A%84%E6%9B%B4%E6%96%B0/</link>
       <pubDate>Sat, 15 Aug 2026 21:28:28 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%956%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%9A%84%E6%9B%B4%E6%96%B0/</guid>
@@ -18,7 +18,7 @@
     </item>
     
     <item>
-      <title>博客开发记录(5)：获取 RSS 以订阅博客</title>
+      <title>博客开发(5)：获取 RSS 以订阅博客</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Tue, 11 Aug 2026 10:39:51 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</guid>
@@ -26,7 +26,7 @@
     </item>
     
     <item>
-      <title>博客开发记录(4)：利用 AI 辅助写作</title>
+      <title>博客开发(4)：利用 AI 辅助写作</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</link>
       <pubDate>Sun, 09 Aug 2026 19:26:36 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</guid>
@@ -42,11 +42,11 @@
     </item>
     
     <item>
-      <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>
+      <title>博客开发(2)：域名的购买与托管以及搜索引擎收录</title>
       <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
       <pubDate>Tue, 07 Jul 2026 14:01:34 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -54,15 +54,15 @@
       <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E6%9B%B4%E6%94%B9%E5%90%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</link>
       <pubDate>Mon, 06 Jul 2026 13:53:28 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E6%9B%B4%E6%94%B9%E5%90%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。这次站点更新了不少东西，具体变化见&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E6%9B%B4%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/&#34;&gt;博客开发记录&lt;/a&gt;，这里就说说关于这次更新我的一些想法。&lt;/p&gt;&#xA;&lt;h2 id=&#34;变化的缘由&#34;&gt;变化的缘由&lt;/h2&gt;&#xA;&lt;p&gt;先说一下站点的变化吧，如果你之前来过我的博客，你会看到这样的主页：&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。这次站点更新了不少东西，具体变化见&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E6%9B%B4%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/&#34;&gt;博客开发&lt;/a&gt;，这里就说说关于这次更新我的一些想法。&lt;/p&gt;&#xA;&lt;h2 id=&#34;变化的缘由&#34;&gt;变化的缘由&lt;/h2&gt;&#xA;&lt;p&gt;先说一下站点的变化吧，如果你之前来过我的博客，你会看到这样的主页：&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>博客开发记录(1)：主题的更改以及功能的更新</title>
+      <title>博客开发(1)：主题的更改以及功能的更新</title>
       <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E6%9B%B4%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</link>
       <pubDate>Mon, 06 Jul 2026 12:53:28 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E6%9B%B4%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;近几天有空，正好更新一下站点，说说有什么变化的地方。&lt;/p&gt;&#xA;&lt;p&gt;对于&lt;strong&gt;博客开发记录&lt;/strong&gt;这个新系列，我也说不准它到底算教程、站点更新日志，还是单纯对自己网站的吐槽——可能都有吧。也许今天这篇只是记录，下一篇就成了教程呢。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;近几天有空，正好更新一下站点，说说有什么变化的地方。&lt;/p&gt;&#xA;&lt;p&gt;对于&lt;strong&gt;博客开发&lt;/strong&gt;这个新系列，我也说不准它到底算教程、站点更新日志，还是单纯对自己网站的吐槽——可能都有吧。也许今天这篇只是记录，下一篇就成了教程呢。&lt;/p&gt;</description>
     </item>
     
   </channel>

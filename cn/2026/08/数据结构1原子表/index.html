@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>数据结构(1)：原子表 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="数据结构(1)：原子表 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="在阅读《C Interfaces and Implementations》的第三章时，我了解了原子表这一概念，因此写一篇博客记录一下。
+[&amp;hellip;] 要了解原子表，首先要明白原子是什么。这里的“原子”和“原子操作”中的原子没有关系。
+[&amp;hellip;] 原子是一个指针，它指向由零个或多个任意字节组成的唯一且不可改变的字节序列。在同一个原子表中，一个字节序列只对应一个原子。 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">数据结构(1)：原子表</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-08-29</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1049 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 3 分钟</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/data-structure/" class="term-tag">Data Structure</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#原子"><span class="toc-link-label">原子</span></a></li>
+    <li><a href="#原子表"><span class="toc-link-label">原子表</span></a></li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>在阅读《C Interfaces and Implementations》的第三章时，我了解了原子表这一概念，因此写一篇博客记录一下。</p>
+<h2 id="原子">原子</h2>
+<p>要了解原子表，首先要明白原子是什么。这里的“原子”和“原子操作”中的原子没有关系。</p>
+<p>原子是一个指针，它指向由零个或多个任意字节组成的唯一且不可改变的字节序列。在同一个原子表中，一个字节序列只对应一个原子。</p>
+<p>原子有几个特征：</p>
+<ul>
+<li>原子本身是一个<strong>指针</strong>。</li>
+<li>原子指向的字节序列不可改变。</li>
+<li>在同一个原子表中，一个字节序列只对应一个原子。</li>
+</ul>
+<p>这使得原子具有几个特点：</p>
+<ul>
+<li>重复获取同一个字节序列对应的原子，得到的是同一个指针。</li>
+<li>比较两个原子是否相等，就能知道它们对应的字节序列是否相等。</li>
+<li>相同且不可改变的字节序列只需要保存一份。</li>
+</ul>
+<p>值得注意的是，原子指向的字节序列不能修改，这是原子接口作出的约定，并不是 C 语言能够从语法层面完全强制保证的。毕竟指针操作是万能的（笑），<code>const</code> 也只能限制用户通过当前指针修改，真要强制转换，它也无能为力啊。</p>
+<p>因此，实际使用时，原子保存的大多是不需要修改的字符串。尤其是字符串字面量，它由编译器生成，程序不能安全地修改，用户一般也不会去修改它。</p>
+<p>比如有一个根据字节序列创建并返回原子的函数 <code>Atom_New</code>：</p>
+<pre><code class="language-c">extern const uint8_t *Atom_New(const uint8_t *buffer, int len);
+
+const char *a = (char*)Atom_New((uint8_t*)&quot;hello&quot;, strlen(&quot;hello&quot;));
+const char *b = (char*)Atom_New((uint8_t*)&quot;hello&quot;, strlen(&quot;hello&quot;));
+</code></pre>
+<p>对于同一个字节序列 <code>&quot;hello&quot;</code>，<code>Atom_New</code> 返回的原子 <code>a</code> 和 <code>b</code> 相同，也就是 <code>a == b</code>。它们都指向原子表保存的同一份 <code>&quot;hello&quot;</code> 字节序列。</p>
+<h2 id="原子表">原子表</h2>
+<p>为什么 <code>Atom_New</code> 能根据字节序列创建并返回原子？重复输入 <code>&quot;hello&quot;</code> 时，为什么返回的原子相同？这就用到了原子表。</p>
+<p>原子表用于保存已经创建的原子，并保证同一个字节序列只对应一个原子。</p>
+<p>原子表本质上完成的是：</p>
+<pre><code class="language-text">输入字节序列
+    ↓
+是否已经存在相同的字节序列？
+ ├─ 是 → 返回已有原子
+ └─ 否 → 创建并保存新的原子
+</code></pre>
+<p>基于这个需求，原子表通常使用散列表实现。</p>
+<p>如果使用线性表在 <code>n</code> 个原子中查找一个字节序列，平均时间复杂度是 <code>O(n)</code>。在哈希分布较好、散列表大小合适的情况下，平均查找时间复杂度可以达到 <code>O(1)</code>。</p>
+<p>不过，计算哈希值时仍然需要遍历输入的字节序列。</p>
+<p>通常的实现是先计算输入字节序列的哈希值，找到可能存放原子的位置，再比较字节序列是否相同。</p>
+<p>如果已经存在相同的字节序列，就直接返回对应的原子；如果不存在，就申请或者预留空间，复制输入的字节序列，再返回指向它的指针，也就是新的原子。</p>
+<h2 id="结语">结语</h2>
+<p>这个数据结构我之前了解得不多。我感觉它是一种节省内存的数据结构，不过它要求字节序列不可改变，我认为大部分程序都用不上。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>《C Interfaces and Implementations》第三章</li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B2%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0/">软件工程(2)：接口与实现</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

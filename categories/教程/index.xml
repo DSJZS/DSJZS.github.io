@@ -10,7 +10,31 @@
     <atom:link href="https://masterji.top/categories/%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>VitePress开发学习记录(1)：快速入门</title>
+      <title>数据结构(1)：原子表</title>
+      <link>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/</link>
+      <pubDate>Sat, 29 Aug 2026 18:18:59 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在阅读《C Interfaces and Implementations》的第三章时，我了解了原子表这一概念，因此写一篇博客记录一下。&lt;/p&gt;&#xA;&lt;h2 id=&#34;原子&#34;&gt;原子&lt;/h2&gt;&#xA;&lt;p&gt;要了解原子表，首先要明白原子是什么。这里的“原子”和“原子操作”中的原子没有关系。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>软件工程(2)：接口与实现</title>
+      <link>https://masterji.top/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B2%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0/</link>
+      <pubDate>Fri, 28 Aug 2026 19:55:29 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B2%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;继续阅读《C Interfaces and Implementations》的第二章。这一章讲的是“接口与实现”。作为有一定 C 语言基础的读者，我觉得还好，没什么难的，无非就是接口写在头文件里、实现写在源文件里那一套，快速阅读即可。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>软件工程(1)：对效率提高的误解</title>
+      <link>https://masterji.top/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B1%E5%AF%B9%E6%95%88%E7%8E%87%E6%8F%90%E9%AB%98%E7%9A%84%E8%AF%AF%E8%A7%A3/</link>
+      <pubDate>Fri, 28 Aug 2026 19:21:39 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B1%E5%AF%B9%E6%95%88%E7%8E%87%E6%8F%90%E9%AB%98%E7%9A%84%E8%AF%AF%E8%A7%A3/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近为了锻炼自己的耐心、提高知识水平，也顺便推进英语学习计划，我打算读几本古法编程书籍。&lt;/p&gt;&#xA;&lt;p&gt;今天阅读了《C Interfaces and Implementations》的 1.3 小节。虽然这本书已经出版几十年了，但里面的道理放到现在还是很有用。于是我结合之前实习时的经历，写一下对“效率提高”这件事情的看法。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>VitePress(1)：快速入门</title>
       <link>https://masterji.top/cn/2026/08/vitepress%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</link>
       <pubDate>Wed, 19 Aug 2026 14:36:21 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/vitepress%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/</guid>
@@ -18,7 +42,7 @@
     </item>
     
     <item>
-      <title>开发实践学习记录(5)：瓶颈来源的诊断</title>
+      <title>开发实践(5)：瓶颈来源的诊断</title>
       <link>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E7%93%B6%E9%A2%88%E6%9D%A5%E6%BA%90%E7%9A%84%E8%AF%8A%E6%96%AD/</link>
       <pubDate>Mon, 17 Aug 2026 13:36:56 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955%E7%93%B6%E9%A2%88%E6%9D%A5%E6%BA%90%E7%9A%84%E8%AF%8A%E6%96%AD/</guid>
@@ -26,7 +50,7 @@
     </item>
     
     <item>
-      <title>开发实践学习记录(4)：在虚拟化环境下配置开发环境</title>
+      <title>开发实践(4)：在虚拟化环境下配置开发环境</title>
       <link>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%9C%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</link>
       <pubDate>Mon, 17 Aug 2026 09:57:55 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%9C%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E7%8E%AF%E5%A2%83%E4%B8%8B%E9%85%8D%E7%BD%AE%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/</guid>
@@ -34,7 +58,7 @@
     </item>
     
     <item>
-      <title>Android应用开发学习记录(2)：Kotlin 语法入门</title>
+      <title>Android 开发(2)：Kotlin 语法入门</title>
       <link>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Wed, 12 Aug 2026 10:35:02 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952kotlin-%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
@@ -42,7 +66,7 @@
     </item>
     
     <item>
-      <title>Android应用开发学习记录(1)：相关概念初步了解</title>
+      <title>Android 开发(1)：相关概念初步了解</title>
       <link>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/</link>
       <pubDate>Wed, 12 Aug 2026 10:34:42 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/android%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/</guid>
@@ -50,7 +74,7 @@
     </item>
     
     <item>
-      <title>博客开发记录(5)：获取 RSS 以订阅博客</title>
+      <title>博客开发(5)：获取 RSS 以订阅博客</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Tue, 11 Aug 2026 10:39:51 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%955%E8%8E%B7%E5%8F%96-rss-%E4%BB%A5%E8%AE%A2%E9%98%85%E5%8D%9A%E5%AE%A2/</guid>
@@ -58,7 +82,7 @@
     </item>
     
     <item>
-      <title>博客开发记录(4)：利用 AI 辅助写作</title>
+      <title>博客开发(4)：利用 AI 辅助写作</title>
       <link>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</link>
       <pubDate>Sun, 09 Aug 2026 19:26:36 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/08/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%954%E5%88%A9%E7%94%A8-ai-%E8%BE%85%E5%8A%A9%E5%86%99%E4%BD%9C/</guid>
@@ -74,7 +98,7 @@
     </item>
     
     <item>
-      <title>开发实践学习记录(3)：功能的更新</title>
+      <title>开发实践(3)：功能的更新</title>
       <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</link>
       <pubDate>Wed, 29 Jul 2026 14:52:46 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/</guid>
@@ -82,7 +106,7 @@
     </item>
     
     <item>
-      <title>开发实践学习记录(2)：先讨论方案，再研究实现</title>
+      <title>开发实践(2)：先讨论方案，再研究实现</title>
       <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Tue, 28 Jul 2026 09:36:40 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%85%88%E8%AE%A8%E8%AE%BA%E6%96%B9%E6%A1%88%E5%86%8D%E7%A0%94%E7%A9%B6%E5%AE%9E%E7%8E%B0/</guid>
@@ -90,7 +114,7 @@
     </item>
     
     <item>
-      <title>AI Coding开发学习记录(4)：遇到陌生需求，怎么向 AI 问方案？</title>
+      <title>AI Coding(4)：遇到陌生需求，怎么向 AI 问方案？</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/</link>
       <pubDate>Sun, 26 Jul 2026 22:11:16 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E9%81%87%E5%88%B0%E9%99%8C%E7%94%9F%E9%9C%80%E6%B1%82%E6%80%8E%E4%B9%88%E5%90%91-ai-%E9%97%AE%E6%96%B9%E6%A1%88/</guid>
@@ -98,7 +122,7 @@
     </item>
     
     <item>
-      <title>Markdown学习记录(1)：基础语法</title>
+      <title>Markdown(1)：基础语法</title>
       <link>https://masterji.top/cn/2026/07/markdown%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Fri, 24 Jul 2026 16:02:33 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/markdown%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
@@ -114,7 +138,7 @@
     </item>
     
     <item>
-      <title>开发实践学习记录(1)：文档的价值</title>
+      <title>开发实践(1)：文档的价值</title>
       <link>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</link>
       <pubDate>Wed, 22 Jul 2026 15:53:12 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%96%87%E6%A1%A3%E7%9A%84%E4%BB%B7%E5%80%BC/</guid>
@@ -122,7 +146,7 @@
     </item>
     
     <item>
-      <title>MCU开发学习记录(3)：崩溃的调试</title>
+      <title>MCU 开发(3)：崩溃的调试</title>
       <link>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%B4%A9%E6%BA%83%E7%9A%84%E8%B0%83%E8%AF%95/</link>
       <pubDate>Wed, 22 Jul 2026 10:20:38 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%B4%A9%E6%BA%83%E7%9A%84%E8%B0%83%E8%AF%95/</guid>
@@ -130,7 +154,7 @@
     </item>
     
     <item>
-      <title>C&#43;&#43;学习记录(1)：常用 STL 汇总</title>
+      <title>C&#43;&#43;(1)：常用 STL 汇总</title>
       <link>https://masterji.top/cn/2026/07/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%B8%B8%E7%94%A8-stl-%E6%B1%87%E6%80%BB/</link>
       <pubDate>Mon, 20 Jul 2026 00:00:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%B8%B8%E7%94%A8-stl-%E6%B1%87%E6%80%BB/</guid>
@@ -138,7 +162,7 @@
     </item>
     
     <item>
-      <title>AI Coding开发学习记录(3)：Codex 常用功能指南</title>
+      <title>AI Coding(3)：Codex 常用功能指南</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/</link>
       <pubDate>Mon, 13 Jul 2026 10:39:31 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953codex-%E5%B8%B8%E7%94%A8%E5%8A%9F%E8%83%BD%E6%8C%87%E5%8D%97/</guid>
@@ -146,7 +170,7 @@
     </item>
     
     <item>
-      <title>AI Coding开发学习记录(2)：Agentic Engineering</title>
+      <title>AI Coding(2)：Agentic Engineering</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/</link>
       <pubDate>Sun, 12 Jul 2026 19:11:43 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952agentic-engineering/</guid>
@@ -154,15 +178,15 @@
     </item>
     
     <item>
-      <title>博客开发记录(2)：域名的购买与托管以及搜索引擎收录</title>
+      <title>博客开发(2)：域名的购买与托管以及搜索引擎收录</title>
       <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</link>
       <pubDate>Tue, 07 Jul 2026 14:01:34 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%952%E5%9F%9F%E5%90%8D%E7%9A%84%E8%B4%AD%E4%B9%B0%E4%B8%8E%E6%89%98%E7%AE%A1%E4%BB%A5%E5%8F%8A%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%94%B6%E5%BD%95/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发记录(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;今天整了个域名 &lt;code&gt;masterji.top&lt;/code&gt; 给博客做自定义域名了。&lt;/p&gt;&#xA;&lt;p&gt;为什么非要整个域名了？我在&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8E%E5%8A%9F%E8%83%BD%E5%A2%9E%E5%8A%A0/#%E6%96%B0%E5%A2%9E%E4%B8%8E%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9&#34;&gt;博客开发(1)&lt;/a&gt;中有提到过，因为 Google Search Console 貌似无法抓取 &lt;code&gt;https://dsjzs.github.io/sitemap.xml&lt;/code&gt; 之类的站点地图，一定要买个域名然后抓取 &lt;code&gt;https://masterji.top/sitemap.xml&lt;/code&gt; 之类的才行，所以我就整了个域名。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>AI Coding开发学习记录(1)：提问到协作</title>
+      <title>AI Coding(1)：提问到协作</title>
       <link>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</link>
       <pubDate>Mon, 06 Jul 2026 16:14:34 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/07/ai-coding%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8F%90%E9%97%AE%E5%88%B0%E5%8D%8F%E4%BD%9C/</guid>
@@ -170,7 +194,7 @@
     </item>
     
     <item>
-      <title>Zephyr学习记录(4)：用vscode进行项目开发</title>
+      <title>Zephyr(4)：用vscode进行项目开发</title>
       <link>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</link>
       <pubDate>Sun, 03 May 2026 14:13:29 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E7%94%A8vscode%E8%BF%9B%E8%A1%8C%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/</guid>
@@ -178,7 +202,7 @@
     </item>
     
     <item>
-      <title>Zephyr学习记录(3)：项目结构与配置</title>
+      <title>Zephyr(3)：项目结构与配置</title>
       <link>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Fri, 01 May 2026 23:58:45 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/05/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E9%85%8D%E7%BD%AE/</guid>
@@ -186,7 +210,7 @@
     </item>
     
     <item>
-      <title>Zephyr学习记录(2)：west 工具与 Manifest</title>
+      <title>Zephyr(2)：west 工具与 Manifest</title>
       <link>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</link>
       <pubDate>Thu, 30 Apr 2026 14:35:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952west-%E5%B7%A5%E5%85%B7%E4%B8%8E-manifest/</guid>
@@ -194,7 +218,7 @@
     </item>
     
     <item>
-      <title>Zephyr学习记录(1)：环境安装与点灯</title>
+      <title>Zephyr(1)：环境安装与点灯</title>
       <link>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</link>
       <pubDate>Thu, 30 Apr 2026 13:56:02 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/zephyr%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85%E4%B8%8E%E7%82%B9%E7%81%AF/</guid>
@@ -202,7 +226,7 @@
     </item>
     
     <item>
-      <title>Makefile学习记录(1)：GNU Make入门</title>
+      <title>Makefile(1)：GNU Make入门</title>
       <link>https://masterji.top/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</link>
       <pubDate>Tue, 28 Apr 2026 12:18:50 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/makefile%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gnu-make%E5%85%A5%E9%97%A8/</guid>
@@ -210,7 +234,7 @@
     </item>
     
     <item>
-      <title>Git学习记录(1)：Git入门</title>
+      <title>Git(1)：Git入门</title>
       <link>https://masterji.top/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</link>
       <pubDate>Mon, 27 Apr 2026 19:05:23 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/git%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951git%E5%85%A5%E9%97%A8/</guid>
@@ -218,7 +242,7 @@
     </item>
     
     <item>
-      <title>Scala学习记录(1)：语法入门</title>
+      <title>Scala(1)：语法入门</title>
       <link>https://masterji.top/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</link>
       <pubDate>Mon, 27 Apr 2026 12:05:07 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/scala%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E8%AF%AD%E6%B3%95%E5%85%A5%E9%97%A8/</guid>
@@ -226,7 +250,7 @@
     </item>
     
     <item>
-      <title>HDL学习记录(2)：Verilog常见电路实现</title>
+      <title>HDL(2)：Verilog常见电路实现</title>
       <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</guid>
@@ -234,7 +258,7 @@
     </item>
     
     <item>
-      <title>HDL学习记录(1)：Verilog入门</title>
+      <title>HDL(1)：Verilog入门</title>
       <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</link>
       <pubDate>Thu, 23 Apr 2026 17:47:27 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</guid>
@@ -242,7 +266,7 @@
     </item>
     
     <item>
-      <title>OSOC学习记录(1)：F阶段总结</title>
+      <title>OSOC(1)：F阶段总结</title>
       <link>https://masterji.top/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</link>
       <pubDate>Wed, 22 Apr 2026 18:06:29 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/osoc%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951f%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93/</guid>
@@ -250,7 +274,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(9)：移植</title>
+      <title>RTOS 开发(9)：移植</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Wed, 22 Apr 2026 11:00:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E7%A7%BB%E6%A4%8D/</guid>
@@ -258,7 +282,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(8)：测试</title>
+      <title>RTOS 开发(8)：测试</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</link>
       <pubDate>Wed, 22 Apr 2026 10:50:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958%E6%B5%8B%E8%AF%95/</guid>
@@ -266,7 +290,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(7)：队列</title>
+      <title>RTOS 开发(7)：队列</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</link>
       <pubDate>Wed, 22 Apr 2026 10:40:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E9%98%9F%E5%88%97/</guid>
@@ -274,7 +298,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(6)：信号量与互斥量</title>
+      <title>RTOS 开发(6)：信号量与互斥量</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</link>
       <pubDate>Wed, 22 Apr 2026 10:30:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8E%E4%BA%92%E6%96%A5%E9%87%8F/</guid>
@@ -282,7 +306,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(5)：IPC基础</title>
+      <title>RTOS 开发(5)：IPC基础</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Wed, 22 Apr 2026 10:20:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955ipc%E5%9F%BA%E7%A1%80/</guid>
@@ -290,7 +314,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(4)：软件定时器</title>
+      <title>RTOS 开发(4)：软件定时器</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</link>
       <pubDate>Wed, 22 Apr 2026 10:10:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E8%BD%AF%E4%BB%B6%E5%AE%9A%E6%97%B6%E5%99%A8/</guid>
@@ -298,7 +322,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(3)：任务调度</title>
+      <title>RTOS 开发(3)：任务调度</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</link>
       <pubDate>Wed, 22 Apr 2026 10:00:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</guid>
@@ -306,7 +330,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(2)：任务切换</title>
+      <title>RTOS 开发(2)：任务切换</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</link>
       <pubDate>Sat, 11 Apr 2026 23:46:40 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E4%BB%BB%E5%8A%A1%E5%88%87%E6%8D%A2/</guid>
@@ -314,7 +338,7 @@
     </item>
     
     <item>
-      <title>RTOS开发学习记录(1)：程序结构</title>
+      <title>RTOS 开发(1)：程序结构</title>
       <link>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</link>
       <pubDate>Sat, 11 Apr 2026 18:17:01 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/</guid>
@@ -322,7 +346,7 @@
     </item>
     
     <item>
-      <title>MCU开发学习记录(2)：Cortex-M3 的内核寄存器组</title>
+      <title>MCU 开发(2)：Cortex-M3 的内核寄存器组</title>
       <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</link>
       <pubDate>Sat, 11 Apr 2026 12:31:59 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952cortex-m3-%E7%9A%84%E5%86%85%E6%A0%B8%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84/</guid>
@@ -330,7 +354,7 @@
     </item>
     
     <item>
-      <title>MCU开发学习记录(1)：GD32与STM32的BootLoader与OTA</title>
+      <title>MCU 开发(1)：GD32与STM32的BootLoader与OTA</title>
       <link>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</link>
       <pubDate>Sat, 04 Apr 2026 13:06:14 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/</guid>
@@ -338,7 +362,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(10)：如何阅读设备树绑定文档</title>
+      <title>Linux 开发(10)：如何阅读设备树绑定文档</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
       <pubDate>Mon, 30 Mar 2026 12:23:24 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
@@ -346,7 +370,7 @@
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</title>
+      <title>Wi-Fi 网络(3)：网络工具的交叉编译与移植</title>
       <link>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Mon, 23 Mar 2026 18:24:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</guid>
@@ -354,7 +378,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(9)：构建嵌入式Linux系统</title>
+      <title>Linux 开发(9)：构建嵌入式Linux系统</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Mon, 23 Mar 2026 17:03:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</guid>
@@ -362,7 +386,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想</title>
+      <title>Linux 开发(8)：Linux 驱动的分离与分层思想</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
       <pubDate>Sun, 22 Mar 2026 20:37:11 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
@@ -370,7 +394,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(7)：设备树基础语法</title>
+      <title>Linux 开发(7)：设备树基础语法</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Sat, 21 Mar 2026 23:07:12 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
@@ -378,7 +402,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(6)：常见的设备接口与总线</title>
+      <title>Linux 开发(6)：常见的设备接口与总线</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Sat, 21 Mar 2026 23:06:14 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</guid>
@@ -386,7 +410,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动</title>
+      <title>Linux 开发(5)：I/O多路复用技术与信号驱动</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
       <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
@@ -394,7 +418,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(4)：如何愉快(?)地交叉编译</title>
+      <title>Linux 开发(4)：如何愉快(?)地交叉编译</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
@@ -402,15 +426,15 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile</title>
+      <title>Linux 开发(3)：如何愉快(?)地使用Makefile</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
       <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好久，打算不在 Linux 开发系列里完成这篇文章，而是开一个单独的 Makefile 系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个 Linux 开发系列的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具</title>
+      <title>Linux 开发(2)：如何愉快(?)地使用Debian系包管理工具</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Tue, 17 Feb 2026 14:04:55 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
@@ -434,7 +458,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(1)：如何愉快(?)地Debug程序</title>
+      <title>Linux 开发(1)：如何愉快(?)地Debug程序</title>
       <link>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</link>
       <pubDate>Sun, 11 Jan 2026 18:52:26 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</guid>
@@ -442,19 +466,19 @@
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置</title>
+      <title>Wi-Fi 网络(2)：Linux无线网络STA模式配置</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 07 Jan 2026 22:00:03 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是 Wi-Fi 网络系列的第二篇，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
+      <title>Wi-Fi 网络(1)：抓包ARP协议</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
       <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是 Wi-Fi 网络系列的第一篇，简单地设计一个 ARP 协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
     </item>
     
     <item>

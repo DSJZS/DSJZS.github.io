@@ -10,7 +10,7 @@
     <atom:link href="https://masterji.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Linux开发学习记录(10)：如何阅读设备树绑定文档</title>
+      <title>Linux 开发(10)：如何阅读设备树绑定文档</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
       <pubDate>Mon, 30 Mar 2026 12:23:24 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
@@ -18,7 +18,7 @@
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</title>
+      <title>Wi-Fi 网络(3)：网络工具的交叉编译与移植</title>
       <link>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Mon, 23 Mar 2026 18:24:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</guid>
@@ -26,7 +26,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(9)：构建嵌入式Linux系统</title>
+      <title>Linux 开发(9)：构建嵌入式Linux系统</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Mon, 23 Mar 2026 17:03:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</guid>
@@ -34,7 +34,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(8)：Linux 驱动的分离与分层思想</title>
+      <title>Linux 开发(8)：Linux 驱动的分离与分层思想</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
       <pubDate>Sun, 22 Mar 2026 20:37:11 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
@@ -42,7 +42,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(7)：设备树基础语法</title>
+      <title>Linux 开发(7)：设备树基础语法</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Sat, 21 Mar 2026 23:07:12 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
@@ -50,7 +50,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(6)：常见的设备接口与总线</title>
+      <title>Linux 开发(6)：常见的设备接口与总线</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Sat, 21 Mar 2026 23:06:14 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</guid>
@@ -58,7 +58,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(5)：I/O多路复用技术与信号驱动</title>
+      <title>Linux 开发(5)：I/O多路复用技术与信号驱动</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
       <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
@@ -66,7 +66,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(4)：如何愉快(?)地交叉编译</title>
+      <title>Linux 开发(4)：如何愉快(?)地交叉编译</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
@@ -74,15 +74,15 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(3)：如何愉快(?)地使用Makefile</title>
+      <title>Linux 开发(3)：如何愉快(?)地使用Makefile</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
       <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好就，打算不在Linux开发系列里完成这个篇文章，而是开一个单独的Makefile学习记录系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个Linux开发学习记录的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;本来打算在这个文章里写的，但是拖更了好久，打算不在 Linux 开发系列里完成这篇文章，而是开一个单独的 Makefile 系列。&lt;/p&gt;&#xA;&lt;p&gt;由于这个文章已经占了一个 Linux 开发系列的序号，所以不删除了，留一个跳转链接好了。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>Linux开发学习记录(2)：如何愉快(?)地使用Debian系包管理工具</title>
+      <title>Linux 开发(2)：如何愉快(?)地使用Debian系包管理工具</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Tue, 17 Feb 2026 14:04:55 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
@@ -90,7 +90,7 @@
     </item>
     
     <item>
-      <title>Linux开发学习记录(1)：如何愉快(?)地Debug程序</title>
+      <title>Linux 开发(1)：如何愉快(?)地Debug程序</title>
       <link>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</link>
       <pubDate>Sun, 11 Jan 2026 18:52:26 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</guid>
@@ -98,19 +98,19 @@
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置</title>
+      <title>Wi-Fi 网络(2)：Linux无线网络STA模式配置</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 07 Jan 2026 22:00:03 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是 Wi-Fi 网络系列的第二篇，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
+      <title>Wi-Fi 网络(1)：抓包ARP协议</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
       <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是 Wi-Fi 网络系列的第一篇，简单地设计一个 ARP 协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
     </item>
     
     <item>

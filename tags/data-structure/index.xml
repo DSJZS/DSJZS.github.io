@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Data Structure on Yuan&#39;s Blog</title>
+    <link>https://masterji.top/tags/data-structure/</link>
+    <description>Recent content in Data Structure on Yuan&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <copyright>成元</copyright>
+    <atom:link href="https://masterji.top/tags/data-structure/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>数据结构(1)：原子表</title>
+      <link>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/</link>
+      <pubDate>Sat, 29 Aug 2026 18:18:59 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;在阅读《C Interfaces and Implementations》的第三章时，我了解了原子表这一概念，因此写一篇博客记录一下。&lt;/p&gt;&#xA;&lt;h2 id=&#34;原子&#34;&gt;原子&lt;/h2&gt;&#xA;&lt;p&gt;要了解原子表，首先要明白原子是什么。这里的“原子”和“原子操作”中的原子没有关系。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

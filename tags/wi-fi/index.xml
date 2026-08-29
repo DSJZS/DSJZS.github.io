@@ -10,7 +10,7 @@
     <atom:link href="https://masterji.top/tags/wi-fi/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Wi-Fi网络学习记录(3)：网络工具的交叉编译与移植</title>
+      <title>Wi-Fi 网络(3)：网络工具的交叉编译与移植</title>
       <link>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Mon, 23 Mar 2026 18:24:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</guid>
@@ -18,19 +18,19 @@
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(2)：Linux无线网络STA模式配置</title>
+      <title>Wi-Fi 网络(2)：Linux无线网络STA模式配置</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 07 Jan 2026 22:00:03 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第二篇Wi-Fi学习记录，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是 Wi-Fi 网络系列的第二篇，本篇介绍了如何利用常见的网络工具配置无线网络，连接上网络进行🏄活动。&lt;/p&gt;&#xA;&lt;h2 id=&#34;观前需知&#34;&gt;观前需知&lt;/h2&gt;&#xA;&lt;p&gt;① 本文演示设备安装的系统为 Ubuntu Server，具体如下。&lt;/p&gt;</description>
     </item>
     
     <item>
-      <title>Wi-Fi网络学习记录(1)：抓包ARP协议</title>
+      <title>Wi-Fi 网络(1)：抓包ARP协议</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
       <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>
-      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;第一篇Wi-Fi网络学习记录，简单的设计一个ARP协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介&lt;/h2&gt;&#xA;&lt;p&gt;这是 Wi-Fi 网络系列的第一篇，简单地设计一个 ARP 协议抓包实验，并对结果进行分析。&lt;br&gt;&#xA;适合了解了ARP协议的人观看🤓。&lt;/p&gt;&#xA;&lt;h2 id=&#34;arp协议简介&#34;&gt;ARP协议简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;功能介绍&#34;&gt;功能介绍&lt;/h3&gt;&#xA;&lt;p&gt;ARP的中文名称为地址解析协议。对于TCP/IP网络，ARP协议提供了一种建立某个主机接口IPv4地址与其MAC地址之间映射的方法（换句话说，&lt;strong&gt;可以通过某个主机的IPv4地址找到它的MAC地址&lt;/strong&gt;）。&lt;br&gt;&#xA;之所以强调IPv4地址，是因为&lt;strong&gt;ARP仅用于IPv4&lt;/strong&gt;，IPv6使用邻居发现协议。&lt;br&gt;&#xA;与之相反的协议为RARP，不过其几乎已经不再被使用。&lt;/p&gt;</description>
     </item>
     
   </channel>

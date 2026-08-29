@@ -10,7 +10,7 @@
     <atom:link href="https://masterji.top/tags/hdl/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>HDL学习记录(2)：Verilog常见电路实现</title>
+      <title>HDL(2)：Verilog常见电路实现</title>
       <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</link>
       <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952verilog%E5%B8%B8%E8%A7%81%E7%94%B5%E8%B7%AF%E5%AE%9E%E7%8E%B0/</guid>
@@ -18,7 +18,7 @@
     </item>
     
     <item>
-      <title>HDL学习记录(1)：Verilog入门</title>
+      <title>HDL(1)：Verilog入门</title>
       <link>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</link>
       <pubDate>Thu, 23 Apr 2026 17:47:27 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/04/hdl%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951verilog%E5%85%A5%E9%97%A8/</guid>

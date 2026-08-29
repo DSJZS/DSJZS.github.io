@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    <title>RTOS开发学习记录(2)：任务切换 - Yuan&#39;s Blog</title>
-    <meta property="og:title" content="RTOS开发学习记录(2)：任务切换 - Yuan&#39;s Blog">
+    <title>RTOS 开发(2)：任务切换 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="RTOS 开发(2)：任务切换 - Yuan&#39;s Blog">
     
     
       
@@ -71,7 +71,7 @@
 
 
 <div class="article-meta">
-<h1 class="title">RTOS开发学习记录(2)：任务切换</h1>
+<h1 class="title">RTOS 开发(2)：任务切换</h1>
 
 
 <h3 class="meta-line post-meta-line">
@@ -333,8 +333,8 @@ pendsv_exit:
 <p><strong>与 Cortex-M 系列相比，QingKeV4 没有 MSP 与 PSP 之分，因此异常栈与任务栈之间的切换需要用户自己在中断中自行实现</strong>，这导致中断服务函数即使使用了栈切换函数，如果不使用汇编编写总会占用一部分的任务栈(编译器编译C语言代码时一般在执行栈切换函数之前会添加压栈指令，这是几乎是无法避免的)。<strong>与此同时还要防止中断嵌套破坏栈切换&quot;一进一出&quot;的顺序</strong>，一般而言，要么直接关闭中断嵌套(这可能破坏了一些基于中断的功能的实时性)，要么原子地设置一个标志位来判断是否进行了切换。</p>
 
 <nav class="post-nav fullwidth">
-  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">RTOS开发学习记录(3)：任务调度</a></span>
-  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">RTOS开发学习记录(1)：程序结构</a> &rarr;</span>
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">RTOS 开发(3)：任务调度</a></span>
+  <span><a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">RTOS 开发(1)：程序结构</a> &rarr;</span>
 </nav>
 <hr>
 <div class="giscus-comments fullwidth">

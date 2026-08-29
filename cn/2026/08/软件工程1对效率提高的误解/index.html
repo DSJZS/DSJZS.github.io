@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>软件工程(1)：对效率提高的误解 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="软件工程(1)：对效率提高的误解 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近为了锻炼自己的耐心、提高知识水平，也顺便推进英语学习计划，我打算读几本古法编程书籍。
+[&amp;hellip;] 今天阅读了《C Interfaces and Implementations》的 1.3 小节。虽然这本书已经出版几十年了，但里面的道理放到现在还是很有用。于是我结合之前实习时的经历，写一下对“效率提高”这件事情的看法。
+[&amp;hellip;] 很多程序员想当然地觉得某个地方效率不高，于是 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">软件工程(1)：对效率提高的误解</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-08-28</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1195 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 3 分钟</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#什么时候才需要提高效率"><span class="toc-link-label">什么时候才需要提高效率？</span></a></li>
+    <li><a href="#优先提高哪里的效率"><span class="toc-link-label">优先提高哪里的效率？</span></a></li>
+    <li><a href="#怎么优化"><span class="toc-link-label">怎么优化？</span></a></li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>最近为了锻炼自己的耐心、提高知识水平，也顺便推进英语学习计划，我打算读几本古法编程书籍。</p>
+<p>今天阅读了《C Interfaces and Implementations》的 1.3 小节。虽然这本书已经出版几十年了，但里面的道理放到现在还是很有用。于是我结合之前实习时的经历，写一下对“效率提高”这件事情的看法。</p>
+<h2 id="什么时候才需要提高效率">什么时候才需要提高效率？</h2>
+<p>很多程序员想当然地觉得某个地方效率不高，于是花费大量时间进行改进，但这些改进往往没有什么用。程序到底快不快，不是“两眼一瞪”就能看出来的，而要通过实际测量判断。</p>
+<p>所谓“太慢”也得看需求：到底是响应慢，还是吞吐量、并发能力或资源占用没有达标？如果测量结果没有说明性能不够，就算某段代码看起来不够“快”，也不要只为了性能去改它。至于正确性、安全性和可维护性，那是另外一回事。</p>
+<p>即使效率真的提高了，也要考虑它是否带来了很大的复杂度。很多时候，程序足够快比一味追求最快更好。针对某个地方做的专门优化越多，后续越容易出现 Bug，维护者接手这部分代码或增加新功能时也会更加困难。</p>
+<p>可靠性和正确性比单纯追求速度更重要。一个程序即使很快，但经常崩溃或产生错误结果，也没有什么用。足够快，并且能够稳定、正确地完成任务就行了。</p>
+<h2 id="优先提高哪里的效率">优先提高哪里的效率？</h2>
+<p>找出瓶颈的唯一方法就是度量程序的各个环节。</p>
+<p>测完以后，先改最拖后腿、又确实能改的地方。假设工作负载和其他部分没有明显变化，如果某个环节只占很少时间，即使把它优化得再快，对整体性能的帮助也很有限。</p>
+<p>比如我之前处理过一个实时翻译卡顿的问题，最后发现就是 I/O 读写跟不上，不是翻译阶段太慢。那就先处理 I/O，没必要在没有证据的情况下，先去折腾网络和翻译 API。</p>
+<p>还是那个道理，足够快就行了，并非所有地方都要优化。</p>
+<h2 id="怎么优化">怎么优化？</h2>
+<p>如果性能问题来自整体设计，局部微调通常救不了它。如果程序到处都慢，或者很多地方都卡在同一个设计问题上，就应该先检查算法、数据流和整体设计，而不是继续在某个循环里挤出几条指令。</p>
+<p>对于某个部分，直接换用更合适的算法，通常比在原有算法上缝缝补补更有效。例如，对于已经有序、需要反复查询的数组或其他适合随机访问的序列，二分查找通常比线性查找更合适。</p>
+<p>当然，实际项目中大多数时候只能硬着头皮去改，这也是没有办法的事情。这时只能尽量少改，先解决主要瓶颈；没有权限修改的地方就不要动。</p>
+<p>改完以后，还要在相同条件下再测一遍，并执行正确性和回归测试。否则得到的可能只是一个更漂亮的数字，实际问题却没有解决，甚至还用可靠性换来了速度。</p>
+<h2 id="结语">结语</h2>
+<p>在性能优化这件事情上，结论应该尽量建立在明确的目标、可复现的测量，以及修改前后的对比上，不能只靠“我寻思”就去做某件事情。</p>
+<p>为了时间、金钱以及程序员的头发，程序能够足够快地稳定完成任务就行了。盲目追求最快往往没有意义。当然，如果你是参与 FFmpeg 之类项目的大佬，手搓汇编什么的，当我没说。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>David R. Hanson：《C Interfaces and Implementations》1.3 节</li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B2%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0/">软件工程(2)：接口与实现</a></span>
+  <span><a href="/cn/2026/08/%E5%A4%A7%E4%B8%89%E6%9A%91%E5%81%87%E6%80%BB%E7%BB%93/">大三暑假总结🤔</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

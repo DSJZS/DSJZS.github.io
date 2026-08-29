@@ -84,7 +84,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-08-29</span><span class="meta-sep"> / </span>
-<span class="word-count">约 1049 字</span>
+<span class="word-count">约 1094 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 3 分钟</span>
 
@@ -138,21 +138,21 @@ const char *a = (char*)Atom_New((uint8_t*)&quot;hello&quot;, strlen(&quot;hello&
 const char *b = (char*)Atom_New((uint8_t*)&quot;hello&quot;, strlen(&quot;hello&quot;));
 </code></pre>
 <p>对于同一个字节序列 <code>&quot;hello&quot;</code>，<code>Atom_New</code> 返回的原子 <code>a</code> 和 <code>b</code> 相同，也就是 <code>a == b</code>。它们都指向原子表保存的同一份 <code>&quot;hello&quot;</code> 字节序列。</p>
+<p>为什么 <code>Atom_New</code> 能根据字节序列创建并返回原子？重复输入 <code>&quot;hello&quot;</code> 时，为什么返回的原子相同？这就用到了<a href="#%E5%8E%9F%E5%AD%90%E8%A1%A8">原子表</a>。</p>
 <h2 id="原子表">原子表</h2>
-<p>为什么 <code>Atom_New</code> 能根据字节序列创建并返回原子？重复输入 <code>&quot;hello&quot;</code> 时，为什么返回的原子相同？这就用到了原子表。</p>
-<p>原子表用于保存已经创建的原子，并保证同一个字节序列只对应一个原子。</p>
+<p>在同一个原子表中，每个字节序列只保存一份。无论重复输入多少次，原子表都会返回指向这份字节序列的同一个指针，也就是同一个原子。</p>
 <p>原子表本质上完成的是：</p>
 <pre><code class="language-text">输入字节序列
     ↓
 是否已经存在相同的字节序列？
  ├─ 是 → 返回已有原子
- └─ 否 → 创建并保存新的原子
+ └─ 否 → 申请或预留空间，复制字节序列并返回新的原子
 </code></pre>
 <p>基于这个需求，原子表通常使用散列表实现。</p>
 <p>如果使用线性表在 <code>n</code> 个原子中查找一个字节序列，平均时间复杂度是 <code>O(n)</code>。在哈希分布较好、散列表大小合适的情况下，平均查找时间复杂度可以达到 <code>O(1)</code>。</p>
 <p>不过，计算哈希值时仍然需要遍历输入的字节序列。</p>
 <p>通常的实现是先计算输入字节序列的哈希值，找到可能存放原子的位置，再比较字节序列是否相同。</p>
-<p>如果已经存在相同的字节序列，就直接返回对应的原子；如果不存在，就申请或者预留空间，复制输入的字节序列，再返回指向它的指针，也就是新的原子。</p>
+<p>如果已经存在相同的字节序列，就直接返回对应的原子；如果不存在，就申请或预留空间，复制输入的字节序列，再返回指向这份字节序列的指针，也就是新的原子。</p>
 <h2 id="结语">结语</h2>
 <p>这个数据结构我之前了解得不多。我感觉它是一种节省内存的数据结构，不过它要求字节序列不可改变，我认为大部分程序都用不上。</p>
 <h2 id="参考资料">参考资料</h2>

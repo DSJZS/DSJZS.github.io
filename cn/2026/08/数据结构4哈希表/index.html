@@ -85,7 +85,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-08-29</span><span class="meta-sep"> / </span>
-<span class="word-count">约 775 字</span>
+<span class="word-count">约 788 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 2 分钟</span>
 
@@ -130,6 +130,14 @@
 <p>使用桶数组 + 链表的方式进行组织，如下：</p>
 <pre><code class="language-c">struct Entry *buckets[2048];
 </code></pre>
+<p>每个 Entry 就是一个键值记录或者其它的东西，如下：</p>
+<pre><code class="language-c">struct Entry {
+    const void *key;
+    void *value;
+    struct Entry *next;
+};
+</code></pre>
+<p>在内存中的布局示意图如下：</p>
 <pre><code class="language-text">┌───────┐
 │ [0] ──────&gt; Entry -&gt; Entry -&gt; ...
 │ [1] ──────&gt; Entry -&gt; ...
@@ -138,13 +146,6 @@
 | ...
 | [n] ──────&gt; Entry -&gt; Entry -&gt; ...
 └───────┘
-</code></pre>
-<p>每个 Entry 就是一个键值记录或者其它的东西，如下：</p>
-<pre><code class="language-c">struct Entry {
-    const void *key;
-    void *value;
-    struct Entry *next;
-};
 </code></pre>
 <p>每当要插入或者寻找一个键值对时，会对输入的 key 计算哈希值，然后对哈希表的 buckets 长度取模，如下：</p>
 <pre><code class="language-c">siza_t h = hash(key) % NELEMS(buckets);

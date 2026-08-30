@@ -18,6 +18,14 @@
     </item>
     
     <item>
+      <title>数据结构(4)：哈希表</title>
+      <link>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%844%E5%93%88%E5%B8%8C%E8%A1%A8/</link>
+      <pubDate>Sat, 29 Aug 2026 22:08:57 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%844%E5%93%88%E5%B8%8C%E8%A1%A8/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;有时也翻译为散列表。之前介绍&lt;a href=&#34;https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/&#34;&gt;原子表&lt;/a&gt;的时候提到过这个数据结构。&lt;/p&gt;&#xA;&lt;p&gt;使用线性表逐个查找时，平均查找复杂度为 &lt;code&gt;O(n)&lt;/code&gt;。在不考虑计算哈希值本身开销的情况下，一个工作良好的哈希表平均查找复杂度为 &lt;code&gt;O(1)&lt;/code&gt;。这也是我们使用哈希表的主要原因。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>数据结构(1)：原子表</title>
       <link>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/</link>
       <pubDate>Sat, 29 Aug 2026 18:18:59 +0800</pubDate>

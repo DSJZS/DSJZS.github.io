@@ -85,7 +85,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-08-29</span><span class="meta-sep"> / </span>
-<span class="word-count">约 788 字</span>
+<span class="word-count">约 812 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 2 分钟</span>
 
@@ -165,7 +165,12 @@
     return h;
 }
 </code></pre>
-<p>这里 scatter 为一个数组，具有 256 个 size_t 随机值元素。</p>
+<p>这里 scatter 为一个数组，具有 256 个非负整数随机值元素，比如：</p>
+<pre><code class="language-c">static unsigned long scatter[256] = {
+    // 这里省略 256 个随机值
+    ...
+};
+</code></pre>
 <p>实验表明，这种简单的方法有助于生成分布更加均匀的哈希值。</p>
 <h3 id="开放寻址">开放寻址</h3>
 <p>这个我暂时还没了解，先按下不表。</p>

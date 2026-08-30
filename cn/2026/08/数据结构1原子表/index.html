@@ -84,7 +84,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-08-29</span><span class="meta-sep"> / </span>
-<span class="word-count">约 1094 字</span>
+<span class="word-count">约 1102 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 3 分钟</span>
 
@@ -148,8 +148,8 @@ const char *b = (char*)Atom_New((uint8_t*)&quot;hello&quot;, strlen(&quot;hello&
  ├─ 是 → 返回已有原子
  └─ 否 → 申请或预留空间，复制字节序列并返回新的原子
 </code></pre>
-<p>基于这个需求，原子表通常使用散列表实现。</p>
-<p>如果使用线性表在 <code>n</code> 个原子中查找一个字节序列，平均时间复杂度是 <code>O(n)</code>。在哈希分布较好、散列表大小合适的情况下，平均查找时间复杂度可以达到 <code>O(1)</code>。</p>
+<p>基于这个需求，原子表通常为一个基于<a href="/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%844%E5%93%88%E5%B8%8C%E8%A1%A8/">哈希表</a>实现的哈希集合。</p>
+<p>如果使用线性表在 <code>n</code> 个原子中查找一个字节序列，平均时间复杂度是 <code>O(n)</code>。在哈希分布较好、哈希表大小合适的情况下，平均查找时间复杂度可以达到 <code>O(1)</code>。</p>
 <p>不过，计算哈希值时仍然需要遍历输入的字节序列。</p>
 <p>通常的实现是先计算输入字节序列的哈希值，找到可能存放原子的位置，再比较字节序列是否相同。</p>
 <p>如果已经存在相同的字节序列，就直接返回对应的原子；如果不存在，就申请或预留空间，复制输入的字节序列，再返回指向这份字节序列的指针，也就是新的原子。</p>
@@ -161,7 +161,7 @@ const char *b = (char*)Atom_New((uint8_t*)&quot;hello&quot;, strlen(&quot;hello&
 </ul>
 
 <nav class="post-nav fullwidth">
-  <span></span>
+  <span>&larr; <a href="/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%847%E5%AD%97%E7%AC%A6%E4%B8%B2/">数据结构(7)：字符串</a></span>
   <span><a href="/cn/2026/08/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B2%E6%8E%A5%E5%8F%A3%E4%B8%8E%E5%AE%9E%E7%8E%B0/">软件工程(2)：接口与实现</a> &rarr;</span>
 </nav>
 <hr>

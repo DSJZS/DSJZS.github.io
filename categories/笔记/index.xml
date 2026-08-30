@@ -10,6 +10,14 @@
     <atom:link href="https://masterji.top/categories/%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>数据结构(7)：字符串</title>
+      <link>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%847%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+      <pubDate>Sun, 30 Aug 2026 00:06:04 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%847%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;字符串顾名思义，就是一串字符，常用于保存和处理文本，比如用户输入、日志和界面上显示的信息。&lt;/p&gt;&#xA;&lt;p&gt;几乎每种主流编程语言都有处理字符串的方式，比如我们常见的 C 语言。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>数据结构(1)：原子表</title>
       <link>https://masterji.top/cn/2026/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%841%E5%8E%9F%E5%AD%90%E8%A1%A8/</link>
       <pubDate>Sat, 29 Aug 2026 18:18:59 +0800</pubDate>

@@ -13,7 +13,42 @@
       
       <meta name="description" content="最近开始抽事件刷 Hot 100 了。
 [&amp;hellip;] 后续我会逐步完善题型导航。
-[&amp;hellip;] 总结就等到我把 Hot 100 全部刷完再写吧。">
+[&amp;hellip;] 枚举
+模拟
+排序
+哈希
+前缀和
+前后缀
+原地置换
+矩阵
+双指针
+滑动窗口
+二分查找
+中心扩展
+快慢指针
+递归
+分治
+回溯
+深度优先搜索
+广度优先搜索
+栈
+单调栈
+队列
+单调队列
+堆
+链表
+二叉树
+二叉搜索树
+图
+拓扑排序
+并查集
+字典树
+贪心
+动态规划
+记忆化搜索
+快速选择
+摩尔投票
+位 &amp;hellip;">
       
     
 
@@ -84,7 +119,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-07-24</span><span class="meta-sep"> / </span>
-<span class="word-count">约 93 字</span>
+<span class="word-count">约 474 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 1 分钟</span>
 
@@ -105,6 +140,7 @@
   <ul>
     <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
     <li><a href="#题型导航"><span class="toc-link-label">题型导航</span></a></li>
+    <li><a href="#知识点"><span class="toc-link-label">知识点</span></a></li>
     <li><a href="#总结"><span class="toc-link-label">总结</span></a></li>
   </ul>
 </nav>
@@ -119,27 +155,120 @@
       <tr>
           <th>题目</th>
           <th>解法</th>
+          <th>个人理解</th>
       </tr>
   </thead>
   <tbody>
       <tr>
           <td><a href="https://leetcode.cn/problems/longest-palindromic-substring/">5. 最长回文子串</a></td>
           <td>动态规划</td>
+          <td></td>
       </tr>
       <tr>
           <td><a href="https://leetcode.cn/problems/container-with-most-water/">11. 盛最多水的容器</a></td>
           <td>双指针 + 贪心</td>
+          <td></td>
       </tr>
       <tr>
           <td><a href="https://leetcode.cn/problems/generate-parentheses/">22. 括号生成</a></td>
           <td>回溯</td>
+          <td></td>
       </tr>
       <tr>
           <td><a href="https://leetcode.cn/problems/combination-sum/">39. 组合总和</a></td>
           <td>回溯</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/permutations/">46. 全排列</a></td>
+          <td>回溯</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/jump-game/">55. 跳跃游戏</a></td>
+          <td>贪心/动态规划</td>
+          <td>一开始使用动态规划，通过后发现贪心更快</td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/merge-intervals/">56. 合并区间</a></td>
+          <td>快速排序(等较快的排序)</td>
+          <td>先根据各个边界的左端点排序，然后再合并</td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/unique-paths/">62. 不同路径</a></td>
+          <td>动态规划</td>
+          <td>貌似有数学上的解，更快，但是懒得看</td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/minimum-path-sum/">64. 最小路径和</a></td>
+          <td>动态规划</td>
+          <td>到 (i,j) 的最小路径和取决于 (i-1,j) 和 (i,j-1)</td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/sort-colors/">75. 颜色分类</a></td>
+          <td>快速排序(三路)</td>
+          <td>这题因为有大量重复项，使用三路快排比较好</td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/binary-tree-level-order-traversal/">102. 二叉树的层序遍历</a></td>
+          <td>BFS</td>
+          <td>几乎就是纯 BFS，不过要额外记录每层元素个数而已</td>
+      </tr>
+      <tr>
+          <td><a href="leetcode.cn/problems/coin-change/">279. 完全平方数</a></td>
+          <td>动态规划</td>
+          <td>参考零钱兑换，假设硬币都是完全平方数</td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/coin-change/">322. 零钱兑换</a></td>
+          <td>动态规划</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td><a href="https://leetcode.cn/problems/evaluate-division/">399. 除法求值</a></td>
+          <td>图(邻接表) + BFS/DFS</td>
+          <td>邻接表记录权值，然后从一个端点搜索到另一个</td>
       </tr>
   </tbody>
 </table>
+<h2 id="知识点">知识点</h2>
+<p>枚举<br>
+模拟<br>
+排序<br>
+哈希<br>
+前缀和<br>
+前后缀<br>
+原地置换<br>
+矩阵<br>
+双指针<br>
+滑动窗口<br>
+二分查找<br>
+中心扩展<br>
+快慢指针<br>
+递归<br>
+分治<br>
+回溯<br>
+深度优先搜索<br>
+广度优先搜索<br>
+栈<br>
+单调栈<br>
+队列<br>
+单调队列<br>
+堆<br>
+链表<br>
+二叉树<br>
+二叉搜索树<br>
+图<br>
+拓扑排序<br>
+并查集<br>
+字典树<br>
+贪心<br>
+动态规划<br>
+记忆化搜索<br>
+快速选择<br>
+摩尔投票<br>
+位运算<br>
+数学</p>
 <h2 id="总结">总结</h2>
 <p>总结就等到我把 Hot 100 全部刷完再写吧。</p>
 

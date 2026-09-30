@@ -18,6 +18,7 @@ body {
 }
 .article-meta .post-meta-line {
   align-items: baseline;
+  font-size: 1.17rem;
   flex-wrap: wrap;
 }
 h1.title {
@@ -29,6 +30,12 @@ h1.title::before {
 
 .single .main h3 {
   font-variant: normal;
+}
+.single .main h3,
+.single .main h4,
+.single .main h5,
+.single .main h6 {
+  text-align: center;
 }
 .logo img {
   display: inline-block;

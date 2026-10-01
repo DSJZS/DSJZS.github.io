@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>SQLite(3)：操作数据库中的表 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="SQLite(3)：操作数据库中的表 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="上一篇简单介绍了 SQLite 中对数据库的一些常见操作，这一节继续说一下数据库中表的一些常见操作。
+[&amp;hellip;] 对表的操作一般使用 SQL 语句。
+[&amp;hellip;] 只需要明白数据库（Database）包含多张表（Table），表包含多行（Row），每一行又由多个列（Column）组成即可。
+[&amp;hellip;] 可以用 CREATE TABLE 语句在数据库中新增一个表。使用单列 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">SQLite(3)：操作数据库中的表</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-09-28</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1657 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 4 分钟</span>
+<span class="meta-sep"> / </span>
+<span class="page-views"><span id="vercount_value_page_pv">—</span> 次浏览</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/sql/" class="term-tag">SQL</a><span>, </span><a href="/tags/sqlite/" class="term-tag">SQLite</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#sqlite-数据库中表的存储"><span class="toc-link-label">SQLite 数据库中表的存储</span></a></li>
+    <li><a href="#创建表"><span class="toc-link-label">创建表</span></a></li>
+    <li><a href="#删除表"><span class="toc-link-label">删除表</span></a></li>
+    <li><a href="#修改表"><span class="toc-link-label">修改表</span></a></li>
+    <li><a href="#查看表"><span class="toc-link-label">查看表</span></a></li>
+    <li><a href="#表内数据的增删改查"><span class="toc-link-label">表内数据的增删改查</span></a>
+      <ul>
+        <li><a href="#增"><span class="toc-link-label">增</span></a></li>
+        <li><a href="#删"><span class="toc-link-label">删</span></a></li>
+        <li><a href="#改"><span class="toc-link-label">改</span></a></li>
+        <li><a href="#查"><span class="toc-link-label">查</span></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>上一篇简单介绍了 SQLite 中对数据库的一些常见操作，这一节继续说一下数据库中表的一些常见操作。</p>
+<p>对表的操作一般使用 SQL 语句。</p>
+<h2 id="sqlite-数据库中表的存储">SQLite 数据库中表的存储</h2>
+<p>只需要明白<strong>数据库（Database）包含多张表（Table），表包含多行（Row），每一行又由多个列（Column）组成</strong>即可。</p>
+<h2 id="创建表">创建表</h2>
+<p>可以用 <code>CREATE TABLE</code> 语句在数据库中新增一个表。使用单列主键时，它的 SQL 语法如下：</p>
+<pre><code class="language-sql">CREATE TABLE table_name (
+   column1 datatype PRIMARY KEY,
+   column2 datatype,
+   column3 datatype
+);
+</code></pre>
+<p>如果主键由多个列组成，需要在所有列定义之后声明：</p>
+<pre><code class="language-sql">CREATE TABLE table_name (
+   column1 datatype,
+   column2 datatype,
+   PRIMARY KEY (column1, column2)
+);
+</code></pre>
+<p>比如，我要在数据库中创建一个记录学生信息的表，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; CREATE TABLE stu(
+   ...&gt; id INTEGER PRIMARY KEY,
+   ...&gt; name TEXT,
+   ...&gt; city TEXT,
+   ...&gt; score INTEGER
+   ...&gt; );
+</code></pre>
+<p>可以看到，这个表叫 <code>stu</code>，有四列数据，分别是：</p>
+<ul>
+<li>id - 整数，用于记录 ID<br><code>id</code> 还被设置为 <code>PRIMARY KEY</code>，也就是主键<br><strong>每个表最多有一个主键，但这个主键可以由一列或多列组成</strong><br><strong>在这个例子中，<code>id</code> 是 <code>INTEGER PRIMARY KEY</code>，因此它的值不会重复</strong></li>
+<li>name - 文本，用于记录名字</li>
+<li>city - 文本，用于记录城市</li>
+<li>score - 整数，用于记录成绩</li>
+</ul>
+<h2 id="删除表">删除表</h2>
+<p>可以用 <code>DROP TABLE</code> 语句删除数据库中的表。它的 SQL 语法如下：</p>
+<pre><code class="language-sql">DROP TABLE database_name.table_name;
+</code></pre>
+<blockquote class="alert alert-warn">
+    <p>使用此命令时要特别注意，因为表一旦被删除，其中的所有信息也会永远丢失。</p></blockquote>
+
+<p>比如，我想删除一个名为 <code>teacher</code> 的表，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; DROP TABLE teacher;
+</code></pre>
+<h2 id="修改表">修改表</h2>
+<p>可以用 <code>ALTER TABLE</code> 语句修改数据库中已有的表。这里介绍重命名表和添加列这两种操作。</p>
+<p>重命名表的 SQL 语法如下：</p>
+<pre><code class="language-sql">ALTER TABLE database_name.table_name RENAME TO new_table_name;
+</code></pre>
+<p>向已有的表中添加新列的 SQL 语法如下：</p>
+<pre><code class="language-sql">ALTER TABLE database_name.table_name ADD COLUMN column_def...;
+</code></pre>
+<p>比如，有一个存储学生信息的表 <code>stu</code>，我想将其改名为 <code>student</code>，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; ALTER TABLE stu RENAME TO student;
+</code></pre>
+<p>此外，如果想向 <code>student</code> 表中添加一个表示年龄的列，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; ALTER TABLE student ADD age INTEGER;
+</code></pre>
+<h2 id="查看表">查看表</h2>
+<p><code>sqlite3</code> CLI 工具提供了一些用于查看用户所创建表的点命令：</p>
+<ul>
+<li><code>.tables ?TABLE?</code><br>列出符合模式的表和视图</li>
+<li><code>.schema ?PATTERN?</code><br>列出符合模式的数据库对象的 <code>CREATE</code> 语句</li>
+</ul>
+<p><code>.tables</code> 一般用于显示表和视图的名字。<code>.schema</code> 显示的信息更完整，它会直接显示表、索引、视图和触发器等数据库对象的 <code>CREATE</code> 语句，能够清楚地看出数据库的结构。</p>
+<h2 id="表内数据的增删改查">表内数据的增删改查</h2>
+<h3 id="增">增</h3>
+<p>可以用 <code>INSERT INTO</code> 语句向数据库中的表插入新数据。它的 SQL 语法如下：</p>
+<pre><code class="language-sql">INSERT INTO TABLE_NAME [(column1, column2, column3,...columnN)]  
+VALUES (value1, value2, value3,...valueN);
+</code></pre>
+<p><strong>在这里，column1, column2,&hellip;columnN 是要插入数据的表中的列的名称</strong>。</p>
+<p><strong>如果要为表中的所有列添加值，您也可以不需要在 SQLite 查询中指定列名称。但要确保值的顺序与列在表中的顺序一致</strong>。</p>
+<p>比如，当前数据库中有这样一个表：</p>
+<pre><code class="language-cli">sqlite&gt; .schema
+CREATE TABLE stu(
+id INTEGER PRIMARY KEY,
+name TEXT,
+city TEXT,
+score INTEGER
+);
+</code></pre>
+<p>我想向其中插入三个新同学的信息，可以输入以下语句：</p>
+<pre><code class="language-sql">-- 写明白所有列
+sqlite&gt; INSERT INTO stu
+   ...&gt; VALUES (0, 'Wang', 'Beijing', 50);
+
+-- 不写 city 列
+sqlite&gt; INSERT INTO stu (id, name, score)
+   ...&gt; VALUES (1, 'Li', 60);
+
+-- 不写 score 列
+sqlite&gt; INSERT INTO stu (id, name, city)
+   ...&gt; VALUES (2, 'Zhao', 'Wuhan');
+</code></pre>
+<p>使用 <a href="#%E6%9F%A5"><code>SELECT</code> 语句</a>即可查看表中的新数据：</p>
+<pre><code class="language-sql">sqlite&gt; SELECT * from stu;
+id  name  city     score
+--  ----  -------  -----
+0   Wang  Beijing  50   
+1   Li             60   
+2   Zhao  Wuhan         
+</code></pre>
+<h3 id="删">删</h3>
+<p>可以用 <code>DELETE</code> 语句删除数据库表中已有的记录。它的 SQL 语法如下：</p>
+<pre><code class="language-sql">DELETE FROM table_name
+WHERE [condition];
+</code></pre>
+<p>这里需要用到 <code>WHERE</code> 语句来确定要删除哪一行的信息。</p>
+<p>关于 <code>WHERE</code> 语句，具体用法可以查看介绍匹配语句的博客 <a href="/cn/2026/10/sqlite4%E5%8C%B9%E9%85%8D%E8%AF%AD%E5%8F%A5/">SQLite(4)：匹配语句</a>。</p>
+<p>比如，有一个 <code>stu</code> 表，表中有以下信息：</p>
+<pre><code class="language-sql">sqlite&gt; SELECT * from stu;
+id  name  city     score
+--  ----  -------  -----
+0   Wang  Beijing  50   
+1   Li             60   
+2   Zhao  Wuhan         
+</code></pre>
+<p>如果想删除 <code>Li</code> 同学的数据，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; DELETE FROM stu
+   ...&gt; WHERE name = 'Li';
+</code></pre>
+<p>再次查看表中的数据，可以看到：</p>
+<pre><code class="language-sql">sqlite&gt; SELECT * from stu;
+id  name  city     score
+--  ----  -------  -----
+0   Wang  Beijing  50   
+2   Zhao  Wuhan  
+</code></pre>
+<h3 id="改">改</h3>
+<p>可以用 <code>UPDATE</code> 语句修改数据库表中已有的记录。它的 SQL 语法如下：</p>
+<pre><code class="language-sql">UPDATE table_name
+SET column1 = value1, column2 = value2...., columnN = valueN
+WHERE [condition];
+</code></pre>
+<p>这里需要用到 <code>WHERE</code> 语句来确定要修改哪一行的信息。</p>
+<p>关于 <code>WHERE</code> 语句，具体用法可以查看介绍匹配语句的博客 <a href="/cn/2026/10/sqlite4%E5%8C%B9%E9%85%8D%E8%AF%AD%E5%8F%A5/">SQLite(4)：匹配语句</a>。</p>
+<p>比如，有一个 <code>stu</code> 表，表中有以下信息：</p>
+<pre><code class="language-sql">sqlite&gt; SELECT * from stu;
+id  name  city     score
+--  ----  -------  -----
+0   Wang  Beijing  50   
+1   Li             60   
+2   Zhao  Wuhan         
+</code></pre>
+<p>如果想修改 <code>Li</code> 同学的 <code>city</code> 与 <code>score</code> 列，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; UPDATE stu
+   ...&gt; SET city = 'Tianjin', score = 80
+   ...&gt; WHERE name = 'Li';
+</code></pre>
+<p>再次查看表中的数据，可以看到：</p>
+<pre><code class="language-sql">sqlite&gt; SELECT * from stu;
+id  name  city     score
+--  ----  -------  -----
+0   Wang  Beijing  50   
+1   Li    Tianjin  80   
+2   Zhao  Wuhan
+</code></pre>
+<h3 id="查">查</h3>
+<p>可以用 <code>SELECT</code> 语句获取数据库表中已有的数据，并以结果表的形式返回。这些结果表也被称为结果集。</p>
+<p>其 SQL 语法如下：</p>
+<pre><code class="language-sql">SELECT column1, column2, columnN FROM table_name;
+</code></pre>
+<p>在这里，column1、column2……是表中的字段，它们的值就是要获取的数据。如果想获取所有字段，可以使用下面的语法：</p>
+<pre><code class="language-sql">SELECT * FROM table_name;
+</code></pre>
+<p>比如，有一个 <code>stu</code> 表，我要查看它的所有列，可以输入以下语句：</p>
+<pre><code class="language-sql">sqlite&gt; SELECT * from stu;
+id  name  city     score
+--  ----  -------  -----
+0   Wang  Beijing  50   
+1   Li    Tianjin  80   
+2   Zhao  Wuhan
+</code></pre>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/09/sqlite2%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/">SQLite(2)：操作数据库</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="https://events.vercount.one/js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

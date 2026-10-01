@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>SQLite(1)：初步了解 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="SQLite(1)：初步了解 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近复习项目，十分的无趣。我这个人还是喜欢搞些新玩意。
+[&amp;hellip;] 于是以类似“奖励自己”的形式每天给自己留一点时间，这点时间可以随便学一点东西。最近打算学一下 SQLite。
+[&amp;hellip;] 为什么打算学习 SQLite？因为我最近投递简历时，发现很多嵌入式岗位都要求掌握数据库知识，恰巧我也对数据这一块感兴趣。通过查寻，SQLite 是一个嵌入式关系型数据库引擎(也可以说关系型数 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">SQLite(1)：初步了解</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-09-28</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1893 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 4 分钟</span>
+<span class="meta-sep"> / </span>
+<span class="page-views"><span id="vercount_value_page_pv">—</span> 次浏览</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E6%95%99%E7%A8%8B/" class="term-cat">教程</a><span>, </span><a href="/categories/%E7%AC%94%E8%AE%B0/" class="term-cat">笔记</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/sql/" class="term-tag">SQL</a><span>, </span><a href="/tags/sqlite/" class="term-tag">SQLite</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#sqlite-介绍"><span class="toc-link-label">SQLite 介绍</span></a>
+      <ul>
+        <li><a href="#sqlite-cli"><span class="toc-link-label">SQLite CLI</span></a></li>
+        <li><a href="#sqlite-点命令"><span class="toc-link-label">SQLite 点命令</span></a></li>
+        <li><a href="#sql-语句"><span class="toc-link-label">SQL 语句</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#工具安装"><span class="toc-link-label">工具安装</span></a>
+      <ul>
+        <li><a href="#cli-工具"><span class="toc-link-label">CLI 工具</span></a></li>
+        <li><a href="#图形化工具"><span class="toc-link-label">图形化工具</span></a></li>
+      </ul>
+    </li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>最近复习项目，十分的无趣。我这个人还是喜欢搞些新玩意。</p>
+<p>于是以类似“奖励自己”的形式每天给自己留一点时间，这点时间可以随便学一点东西。最近打算学一下 SQLite。</p>
+<p>为什么打算学习 SQLite？因为我最近投递简历时，发现很多嵌入式岗位都要求掌握数据库知识，恰巧我也对数据这一块感兴趣。通过查寻，SQLite 是一个嵌入式关系型数据库引擎(也可以说关系型数据库管理系统)，而且装机量巨大，可以说是世界上部署最广泛的软件之一了。因此我打算从 SQLite 开始入门数据库。</p>
+<p>至于 SQLite 学了后我要用它来干什么之类的我还没想好，毕竟是出于兴趣而学，而非项目需要。就这样吧。</p>
+<h2 id="sqlite-介绍">SQLite 介绍</h2>
+<p>SQLite 是一个进程内的库，实现了自包含、无服务器、零配置、支持事务的 SQL 数据库引擎。简单来说，SQLite 是一个嵌入式关系型数据库引擎。</p>
+<p>我刚看到这几个词时，感觉有些绕，但重点其实是“进程内的库”。SQLite 数据库引擎不是一个独立运行的服务，而是和应用程序运行在同一个进程中。应用程序调用 SQLite 库后，由 SQLite 直接读取和修改数据库文件。</p>
+<p>这也就是所谓的“无服务器”和“零配置”。使用 SQLite 时，不需要另外启动、配置和维护一个数据库服务器，也不需要通过网络把操作请求发送给数据库服务器。这里的“零配置”并不是说不需要安装任何软件，而是使用数据库引擎前不需要配置一个独立的数据库服务。</p>
+<p>通常情况下，SQLite 会把数据库保存在一个磁盘文件中。文件名和扩展名可以自己决定，<code>*.db</code> 只是一种常见写法。事务处理过程中还可能出现日志等辅助文件，这里暂时不展开。</p>
+<p>这里主要先说一下 <a href="#sqlite-cli">CLI</a>、<a href="#sqlite-%E7%82%B9%E5%91%BD%E4%BB%A4">点命令</a>和 <a href="#sql-%E8%AF%AD%E5%8F%A5">SQL 语句</a>。我前几天刚学习的时候就把他们弄混了。</p>
+<h3 id="sqlite-cli">SQLite CLI</h3>
+<p>SQLite CLI，也就是 SQLite 的命令行界面，是官方提供的一个命令行程序，程序名为 <code>sqlite3</code>。在终端中输入 <code>sqlite3</code>，就是在启动这个程序。</p>
+<p>CLI 本身不是 SQLite 数据库引擎。它接收用户输入，再调用底层的 SQLite 库完成数据库操作。通过 CLI，可以打开数据库、输入 SQL 语句，也可以执行 CLI 自己提供的<a href="#sqlite-%E7%82%B9%E5%91%BD%E4%BB%A4">点命令</a>。</p>
+<p>简单来说，SQLite 库负责实际的数据库操作，CLI 则提供了一个供人使用的命令行界面。</p>
+<h3 id="sqlite-点命令">SQLite 点命令</h3>
+<p>在 SQLite CLI 中，以 <code>.</code> 开头的命令叫作点命令，例如：</p>
+<pre><code class="language-text">.help
+.open
+.tables
+.quit
+</code></pre>
+<p>点命令由 CLI 自己处理，不会作为 SQL 交给 SQLite 库解析，因此它们不属于 SQL。点命令必须从一行的开头开始，并完整写在一行中，平时也不需要像 SQL 语句那样以分号结束。</p>
+<p>例如，后面会用到的 <code>.quit</code>，就是用来退出 CLI 的点命令。</p>
+<p>更多的点命令可以在 CLI 启动后输入 <code>.help</code> 点命令来查寻：</p>
+<pre><code class="language-console">sqlite&gt; .help
+</code></pre>
+<h3 id="sql-语句">SQL 语句</h3>
+<p>SQL 是一种用于操作关系型数据库的语言，主要描述“我要对关系型数据做什么”。注意 SQL 不规定数据库管理系统底层必须如何部署、如何保存数据，这些是数据库管理系统操心的。</p>
+<p>很多关系型数据库管理系统都实现并支持 SQL 语言，比如本文说的 SQLite 就使用 SQL 作为主要的数据库操作语言。</p>
+<p>在 SQLite CLI 中输入 SQL 语句后，CLI 会把它交给 SQLite 库执行。以后通过 C/C++、Python 等语言使用 SQLite 时，也可以通过相应的接口把 SQL 语句交给 SQLite 库执行。</p>
+<p>SQL 语句可以用于创建表、查询数据以及增加、修改和删除数据。在 CLI 中，一条完整的 SQL 语句通常需要以分号结束。</p>
+<p>我现在先这样区分它们：</p>
+<ul>
+<li>CLI 是供人使用的命令行程序</li>
+<li>点命令用于控制 CLI</li>
+<li>SQL 语句则交给 SQLite 数据库引擎执行</li>
+</ul>
+<p>这篇文章先不学习具体的 SQL 语法。</p>
+<h2 id="工具安装">工具安装</h2>
+<p>我的主力机和学习机使用的都是 Ubuntu 或其他 Debian 系 Linux 发行版，因此这里就只记录一下在 Debian 系 Linux 下的安装方式。</p>
+<h3 id="cli-工具">CLI 工具</h3>
+<p>直接在终端中输入：</p>
+<pre><code class="language-shell">sudo apt install sqlite3
+</code></pre>
+<p>APT 包管理器会自动完成安装。如果提示找不到软件包，或者本地的软件包信息已经过期，可以先更新软件包信息再重新安装：</p>
+<pre><code class="language-shell">sudo apt update
+sudo apt install sqlite3
+</code></pre>
+<p>如果还是安装失败，就需要根据终端中的具体错误继续排查。如果确实需要从源码安装，可以到 SQLite 的<a href="https://www.sqlite.org/download.html">下载页面</a>获取源码，然后在本地编译并安装：</p>
+<pre><code class="language-shell">$ tar xvzf sqlite-autoconf-3530400.tar.gz
+$ cd sqlite-autoconf-3530400
+$ ./configure --prefix=/usr/local
+$ make
+$ make install
+</code></pre>
+<p>具体请参考官方的<a href="https://www.sqlite.org/howtocompile.html">编译文档</a>。</p>
+<p>安装后，可以先查看 SQLite CLI 的版本：</p>
+<pre><code class="language-shell">sqlite3 --version
+</code></pre>
+<p>也可以直接在终端中输入 <code>sqlite3</code> 启动 CLI。</p>
+<p>安装成功后，启动时会看到类似下面的内容，版本号可能和我的不一样：</p>
+<pre><code class="language-console">$ sqlite3
+SQLite version 3.45.1 2024-01-30 16:01:20
+Enter &quot;.help&quot; for usage hints.
+Connected to a transient in-memory database.
+Use &quot;.open FILENAME&quot; to reopen on a persistent database.
+sqlite&gt;
+</code></pre>
+<p>这说明 SQLite CLI 已经能正常启动。如果想退出，可以输入前面提到的 <code>.quit</code> 点命令：</p>
+<pre><code class="language-console">sqlite&gt; .quit
+</code></pre>
+<h3 id="图形化工具">图形化工具</h3>
+<p>如果不喜欢使用 CLI 软件，也有图形化工具可供使用。我推荐的是开源软件 DB Broswer for SDLite。</p>
+<p>其 Github 仓库见：<code>https://github.com/sqlitebrowser/sqlitebrowser</code></p>
+<p>官方下载链接见：<code>https://sqlitebrowser.org/dl/</code></p>
+<p>这里提一下，在 Debian 系 Linux 下可以直接使用 APT 安装：</p>
+<pre><code class="language-shell">sudo apt install sqlitebrowser
+</code></pre>
+<p>不过官方也提到：</p>
+<pre><code class="language-text">Note that Debian focuses more on stability rather than newest features. 
+
+Therefore packages will typically contain some older version, compared to the latest release.
+</code></pre>
+<p>对我而言没有影响就是了，由相关需求的注意一下。</p>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://www.runoob.com/sqlite/sqlite-tutorial.html">SQLite 教程 | 菜鸟教程</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span>&larr; <a href="/cn/2026/09/sqlite2%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93/">SQLite(2)：操作数据库</a></span>
+  <span><a href="/cn/2026/09/2026%E5%B9%B4%E4%B8%AD%E7%A7%8B%E6%9D%82%E8%B0%88/">2026年中秋杂谈</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/key-buttons.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/key-buttons.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="https://events.vercount.one/js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

@@ -25,5 +25,13 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;上一篇简单介绍了 SQLite 的相关概念，这一节继续说一下 SQLite 中对数据库的一些常见操作。&lt;/p&gt;&#xA;&lt;h2 id=&#34;sqlite-数据库的存储形式&#34;&gt;SQLite 数据库的存储形式&lt;/h2&gt;&#xA;&lt;p&gt;SQLite 数据库的主要内容通常保存在一个普通文件中。SQLite 对数据库文件的扩展名没有强制要求，不过一般将这个文件命名为 &lt;code&gt;*.db&lt;/code&gt;。执行事务或使用 WAL 模式时，还可能产生回滚日志或 WAL 文件等辅助文件。&lt;/p&gt;</description>
     </item>
     
+    <item>
+      <title>SQLite(1)：初步了解</title>
+      <link>https://masterji.top/cn/2026/09/sqlite1%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/</link>
+      <pubDate>Mon, 28 Sep 2026 14:37:17 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/09/sqlite1%E5%88%9D%E6%AD%A5%E4%BA%86%E8%A7%A3/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近复习项目，十分的无趣。我这个人还是喜欢搞些新玩意。&lt;/p&gt;&#xA;&lt;p&gt;于是以类似“奖励自己”的形式每天给自己留一点时间，这点时间可以随便学一点东西。最近打算学一下 SQLite。&lt;/p&gt;</description>
+    </item>
+    
   </channel>
 </rss>

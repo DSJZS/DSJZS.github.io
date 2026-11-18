@@ -14,7 +14,7 @@
       <meta name="description" content="最近在深入理解 RTOS 的原理并尝试写一个轻量化的 RTOS，再进行一定程度的了解后，发现任务切换等机制与ISA息息相关，于是写一篇文章记录 Cortex-M3 处理器的寄存器组介绍
 [&amp;hellip;] Cortex-M3寄存器组
 [&amp;hellip;] 均为 32 位的通用寄存器(GPR)，用于数据操作。其中：
-[&amp;hellip;] 为栈指针，Cortex-M3 物理上拥有两个堆栈指针，任一时 &amp;hellip;">
+[&amp;hellip;] 根据 AAPCS32，有如下的函数调用规定： &amp;hellip;">
       
     
 
@@ -85,7 +85,7 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-04-11</span><span class="meta-sep"> / </span>
-<span class="word-count">约 2035 字</span>
+<span class="word-count">约 2302 字</span>
 <span class="meta-sep"> / </span>
 <span class="reading-time">预计阅读 5 分钟</span>
 <span class="meta-sep"> / </span>
@@ -142,6 +142,19 @@
 <li>R0~R7为低组寄存器，所有的指令都可以访问。</li>
 <li>R8~R12为高组寄存器，只有32位Thumb2指令和很少的16位Thumb指令能访问。</li>
 </ul>
+<p>根据 AAPCS32，有如下的函数调用规定：</p>
+<ul>
+<li>函数的前四个形数依次放在 R0~R4 上，后续的形参放到栈上。</li>
+<li>返回值通常放在 r0；如果返回 64 位整数（如 long long），则使用 r0 和 r1。</li>
+<li>对于结构体的传值调用，如果寄存器不够，结构体的内容可能全部或部分放到栈上。</li>
+<li>对于结构体的传值返回，分两种情况
+<ol>
+<li>如果结构体大小 ≤ 4字节。和普通的返回值一样，通过 r0 返回。</li>
+<li>否则，函数调用时，结构体存储空间的首地址会做为一个隐式参数赋值给 r0 做为第一个参数。<br>无论这快空间来自于栈或者其它地方，都要这么做。</li>
+</ol>
+</li>
+<li>对于浮点数，如果处理器支持 FPU，且程序采用硬浮点调用约定，浮点形参和返回值通常通过浮点寄存器传递。</li>
+</ul>
 <h4 id="r13-sp">R13(SP)</h4>
 <p>为栈指针，<strong>Cortex-M3 物理上拥有两个堆栈指针，任一时刻只能使用其中的一个</strong>：</p>
 <ul>
@@ -161,9 +174,9 @@
 <p>在 ARM 架构里，历史上有两种执行状态：</p>
 <ul>
 <li>ARM state：执行 ARM 指令</li>
-<li>Thumb state：执行 Thumb 指令
-它们的区别本质上是“CPU 用哪套指令编码规则解码当前内存里的机器码”。</li>
+<li>Thumb state：执行 Thumb 指令</li>
 </ul>
+<p>它们的区别本质上是“CPU 用哪套指令编码规则解码当前内存里的机器码”。</p>
 <p>对 Cortex-M 来说，最关键的一点是：
 Cortex-M 只支持 Thumb 状态，不支持传统 ARM state。</p>
 <p>所以在 Cortex-M3 上你可以直接理解为：</p>
@@ -253,7 +266,7 @@ MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ; 写通用寄存器的值到特殊功�
 <p><img class="markdown-image" src="PSRs.jpg" alt="PSRs" loading="lazy" decoding="async"><span class="image-caption" hidden>PSRs</span></p>
 <p>xPSR：</p>
 <p><img class="markdown-image" src="xPSR.jpg" alt="xPSR" loading="lazy" decoding="async"><span class="image-caption" hidden>xPSR</span></p>
-<p>通过MRS/MSR指令，这3个PSRs即可以单独访问，也可以组合访问（2个组合，3个组合都可以）。<br>
+<p>通过 MRS/MSR 指令，这3个 PSRs 既可以单独访问，也可以组合访问（2个组合，3个组合都可以）。<br>
 当使用三合一的方式访问时，应使用名字“xPSR”或者“PSR”。</p>
 <h2 id="参考文章">参考文章</h2>
 <ul>
@@ -296,6 +309,7 @@ MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ; 写通用寄存器的值到特殊功�
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/ol-id.min.js" defer></script>
 <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
 <script src="/js/image-caption.js" defer></script><script src="https://events.vercount.one/js" defer></script>
   

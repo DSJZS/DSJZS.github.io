@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>人生总是这样 - 命运的荒诞性  - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="人生总是这样 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="本来这篇文章是发在朋友圈里的，但是作为一个从小到大不得不看别人脸色生活的湖北人，发完朋友圈后总是会胡思乱想。比如别人看到后会怎么想我？会不会有什么语病？标点都用对了吗？别人都发美食、美景，我发的是不是过于消极了？
+[&amp;hellip;] 果然还是写成博客发出来比较好。所以就把朋友圈里的那一个动态删了，在原有的文本上补充了一下，然后添加了背景音乐并发到了这里。
+[&amp;hellip;] 前天，一个下着大雪 &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">人生总是这样</h1>
+<h2 class="subtitle">命运的荒诞性</h2>
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-11-22</span><span class="meta-sep"> / </span>
+<span class="word-count">约 1223 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 3 分钟</span>
+<span class="meta-sep"> / </span>
+<span class="page-views"><span id="vercount_value_page_pv">—</span> 次浏览</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E9%9A%8F%E7%AC%94/" class="term-cat">随笔</a><span>, </span><a href="/categories/%E6%97%A5%E5%B8%B8/" class="term-cat">日常</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/life/" class="term-tag">Life</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#雪中的一些指导"><span class="toc-link-label">雪中的一些指导</span></a></li>
+    <li><a href="#人生总是这样"><span class="toc-link-label">人生总是这样</span></a></li>
+    <li><a href="#结语"><span class="toc-link-label">结语</span></a></li>
+  </ul>
+</nav>
+
+
+<br>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+
+<div class="music-player" data-id="28710392" data-server="kuwo" data-type="song" data-autoplay="auto" data-list-max-height="140"></div>
+<script>
+(() => {
+  const container = document.currentScript.previousElementSibling;
+  const { id, server, type, autoplay, listMaxHeight } = container.dataset;
+  const apiUrl = new URL(server === "kuwo"
+    ? "https://musicpay.kuwo.cn/music.pay"
+    : "https://api.i-meto.com/meting/api");
+  if (server === "kuwo") {
+    apiUrl.searchParams.set("op", "query");
+    apiUrl.searchParams.set("action", "download");
+    apiUrl.searchParams.set("ids", id);
+  } else {
+    apiUrl.searchParams.set("server", server);
+    apiUrl.searchParams.set("type", type);
+    apiUrl.searchParams.set("id", id);
+  }
+
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) throw new Error(`Music metadata: HTTP ${response.status}`);
+      return response.json();
+    })
+    .then(result => server === "kuwo" ? result.songs : result)
+    .then(songs => {
+      if (!Array.isArray(songs) || !songs.length) throw new Error("Music metadata is empty");
+      const audio = songs.map(song => {
+        if (server === "kuwo") {
+          if (String(song.id) !== id || !song.name || song.payInfo?.cannotOnlinePlay) {
+            throw new Error("Kuwo song is unavailable");
+          }
+          const cover = song.albumPic || song.musicPic || "";
+          return {
+            name: song.name,
+            artist: song.artist || "未知歌手",
+            url: "https://antiserver.kuwo.cn/anti.s?type=convert_url&rid=MUSIC_" + encodeURIComponent(id) + "&format=mp3&response=res",
+            cover: cover.replace(/^http:/, "https:"),
+            lrc: ""
+          };
+        }
+        const trackId = new URL(song.url).searchParams.get("id");
+        return {
+          name: song.title,
+          artist: song.author,
+          url: trackId
+            ? `https://music.163.com/song/media/outer/url?id=${encodeURIComponent(trackId)}.mp3`
+            : song.url,
+          cover: song.pic,
+          lrc: song.lrc
+        };
+      });
+      const player = new APlayer({
+        container,
+        autoplay: autoplay === "true",
+        listMaxHeight,
+        lrcType: audio.some(song => song.lrc) ? 3 : 0,
+        audio
+      });
+
+      
+      const bar = player.template.barWrap;
+      const progress = event => {
+        const point = event.changedTouches?.[0] || event.touches?.[0] || event;
+        const rect = bar.getBoundingClientRect();
+        return Math.max(0, Math.min(1, (point.clientX - rect.left) / rect.width));
+      };
+      const preview = event => {
+        const fraction = progress(event);
+        const time = fraction * player.duration;
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        player.bar.set("played", fraction, "width");
+        player.template.ptime.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        player.lrc?.update(time);
+        return time;
+      };
+      const startSeek = event => {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        player.disableTimeupdate = true;
+        preview(event);
+        const touch = event.type === "touchstart";
+        const moveEvent = touch ? "touchmove" : "mousemove";
+        const endEvent = touch ? "touchend" : "mouseup";
+        const move = e => {
+          if (e.cancelable) e.preventDefault();
+          preview(e);
+        };
+        const end = e => {
+          document.removeEventListener(moveEvent, move);
+          document.removeEventListener(endEvent, end);
+          if (touch) document.removeEventListener("touchcancel", cancel);
+          player.seek(preview(e));
+          player.disableTimeupdate = false;
+        };
+        const cancel = () => {
+          document.removeEventListener(moveEvent, move);
+          document.removeEventListener(endEvent, end);
+          document.removeEventListener("touchcancel", cancel);
+          player.disableTimeupdate = false;
+        };
+        document.addEventListener(moveEvent, move, { passive: false });
+        document.addEventListener(endEvent, end);
+        if (touch) document.addEventListener("touchcancel", cancel);
+      };
+      bar.addEventListener("mousedown", startSeek, true);
+      bar.addEventListener("touchstart", startSeek, { capture: true, passive: false });
+    })
+    .catch(error => {
+      console.error(error);
+      container.textContent = "音乐加载失败，请稍后重试。";
+    });
+})();
+</script>
+
+<h2 id="前言">前言</h2>
+<p>本来这篇文章是发在朋友圈里的，但是作为一个从小到大不得不看别人脸色生活的湖北人，发完朋友圈后总是会胡思乱想。比如别人看到后会怎么想我？会不会有什么语病？标点都用对了吗？别人都发美食、美景，我发的是不是过于消极了？</p>
+<p>果然还是写成博客发出来比较好。所以就把朋友圈里的那一个动态删了，在原有的文本上补充了一下，然后添加了背景音乐并发到了这里。</p>
+<h2 id="雪中的一些指导">雪中的一些指导</h2>
+<p>前天，一个下着大雪的夜晚，差不多八点了，我正在赶路回宿舍，突然收到一条微信消息。</p>
+<p>计算机学院的一位老师突然联系我，说是计院有一个大一学弟对机电感兴趣（后来问清楚了，其实就是想学嵌入式软件），然后把他的微信推给了我，说是要我帮助他规划一下。</p>
+<p>收到这个信息后，我感觉十分荒诞，因为作为计院的一个老师，指导帮你干活的学生入门嵌入式软件应该不算跨专业吧？我觉得计算机专业的人比我这个自动化专业的更适合指导别人入门嵌入式软件，毕竟后面还会涉及 RTOS 原理、Linux 内核啥的。不假思索地把学弟推给我这个机电院的学生，真的合适吗？现在的老师都这么水了吗&hellip;&hellip;再说了，在校期间我也没有什么亮眼的成绩，而且 AI 时代来临后，我自己都不好找工作，拿什么指导学弟呢？</p>
+<p>学弟或许就和我大一的时候一样吧，觉得学长学姐和老师都是对的，只要询问他们，肯定不会走弯路。但是很多老师就没有调研过当前的就业环境，没有了解当前毕业生的就业压力，而包括我在内的学长学姐很多都是普通人，自顾不暇，连半年后的事情都说不准，怎么帮他规划大学四年的事情呢？我也没法保证学了 xxx 就一定能找到工作啊，说不定在学弟毕业的时候，脑力工作已经完全被 AI 取代了，大家都失业了。</p>
+<p>最后我的回复和我大一时学长对这个问题的回答差不多，是一个情理之中、不会犯错的答案 “先去跟着江科大学下 STM32，学完后有疑问再和我联系吧。”</p>
+<p>其实有点愧疚感，也很想和他说“问我还不如问 AI 了”，但是碍于面子又没有说出口。现在有点理解学长了，当初大一大二的时候，我也抱怨学长啥也不教，什么也不会，只能靠我自己学习。现在换我教别人，才发现自己其实也没多少知识，也没有义务，更没有精力教别人。自己照顾自己都不容易了，更别说帮助别人了。纯粹是靠爱好或者某种没必要的责任感支撑着。</p>
+<h2 id="人生总是这样">人生总是这样</h2>
+<p>“人生总是这样” 和 “结果是好的”，这是我最近经常说的两句话。</p>
+<p>有时有人向我倾诉或者倾泻了一大堆话，接着等我的“读后感”，这时我可能就会从这两句中选一句用来回复。</p>
+<p>其实我对“单方面向我输出一大堆话”这件事完全没有什么意见，我也挺喜欢听别人说话的。但我的头脑转得不够快，脑中的知识储备也不多。所以在对方讲完之后，如果我的脑中没能生成出合适的答复（这概率并不低），而对方又在用沉默来期盼我的回应，我就会回一句 “人生总是这样” 或者 “结果是好的”。</p>
+<h2 id="结语">结语</h2>
+<p><img class="markdown-image" src="zombie-eating.gif" alt="只是一只路过的脏比" loading="lazy" decoding="async"><span class="image-caption" hidden>只是一只路过的脏比</span></p>
+<p>前面写了这么多，大抵像我之前的博客一样，是需要一个结语的。</p>
+<p>但是啊，我不知道该写些什么。</p>
+<p>大概人生总是这样吧&hellip;&hellip;</p>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/09/sqlite3%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E8%A1%A8/">SQLite(3)：操作数据库中的表</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/alt-title.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="/js/image-caption.js" defer></script><script src="https://events.vercount.one/js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

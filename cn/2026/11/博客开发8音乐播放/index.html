@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>博客开发(8)：音乐播放 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="博客开发(8)：音乐播放 - Yuan&#39;s Blog">
+    
+    
+      
+      <meta name="description" content="最近有了一个在文章中添加音乐播放器的需求，于是搜了一下资料，发现还是比较简单的。
+[&amp;hellip;] 现在有 AI 工具了，干啥都方便。让 Codex 阅读提供的参考资料添加对应的支持就行了，没有什么可以说的。
+[&amp;hellip;] 配置好后如果想播放《Happy》，仿照下面的语句写就行了。
+[&amp;hellip;] {{&amp;lt; music server=&amp;quot;netease&amp;quot; &amp;hellip;">
+      
+    
+
+    
+
+    
+
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="/css/fonts.css">
+    
+    <link rel="stylesheet" href="/css/custom.css">
+    
+    <link rel="icon" href="/img/favicon.ico">
+<link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css">
+
+  </head>
+
+  
+  
+  
+  
+  <body class="single cn">
+    <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
+    <nav class="nav-top small">
+    <div class="logo">
+    
+      
+      
+      <a href="/">
+      
+      <img src="/img/avatar.png" alt="Yuan&#39;s Blog" />
+      
+      </a>
+    
+    </div>
+    <div class="menu"><span><a href="/">首页</a></span>
+      <span><a href="/cn/about/">关于</a></span>
+      <span><a href="/cn/series/">系列</a></span>
+      <span><a href="/cn/tech/">技术</a></span>
+      <span><a href="/cn/life/">生活</a></span>
+      <span class="active"><a href="/cn/">归档</a></span>
+      <span><a href="/cn/categories-tags/">分类&amp;标签</a></span>
+      <span><a href="/cn/search/">搜索</a></span>
+      <span><a href="/cn/todo/">TODO</a></span>
+      <span class="optional"><a href="/en/about/">EN</a></span>
+      
+    </div>
+    </nav>
+
+
+
+
+<div class="article-meta">
+<h1 class="title">博客开发(8)：音乐播放</h1>
+
+
+<h3 class="meta-line post-meta-line">
+  <span>
+  
+
+
+
+
+
+
+<span class="author">成元</span>
+<span class="meta-sep"> / </span>
+<span class="date">2026-11-23</span><span class="meta-sep"> / </span>
+<span class="word-count">约 153 字</span>
+<span class="meta-sep"> / </span>
+<span class="reading-time">预计阅读 1 分钟</span>
+<span class="meta-sep"> / </span>
+<span class="page-views"><span id="vercount_value_page_pv">—</span> 次浏览</span>
+
+
+  </span>
+  <span class="term"><span>&lt; </span><a href="/categories/%E7%AB%99%E5%8A%A1/" class="term-cat">站务</a><span> &gt;</span><span class="term-sep"> • </span><span>[ </span><a href="/tags/blog/" class="term-tag">Blog</a><span> ]</span></span>
+</h3>
+
+</div>
+
+<div class="main">
+
+
+
+
+
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言"><span class="toc-link-label">前言</span></a></li>
+    <li><a href="#音乐播放"><span class="toc-link-label">音乐播放</span></a></li>
+    <li><a href="#参考资料"><span class="toc-link-label">参考资料</span></a></li>
+  </ul>
+</nav>
+
+
+<h2 id="前言">前言</h2>
+<p>最近有了一个在文章中添加音乐播放器的需求，于是搜了一下资料，发现还是比较简单的。</p>
+<h2 id="音乐播放">音乐播放</h2>
+<p>现在有 AI 工具了，干啥都方便。让 Codex 阅读提供的<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a>添加对应的支持就行了，没有什么可以说的。</p>
+<p>配置好后如果想播放《Happy》，仿照下面的语句写就行了。</p>
+<pre><code class="language-text">{{&lt; music server=&quot;netease&quot; type=&quot;song&quot; id=&quot;26548584&quot; autoplay=&quot;false&quot; list-max-height=&quot;140&quot; &gt;}}
+</code></pre>
+<p>效果如下：</p>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+
+<div class="music-player" data-id="26548584" data-server="netease" data-type="song" data-autoplay="false" data-loop="all" data-list-max-height="140"></div>
+<script>
+(() => {
+  const container = document.currentScript.previousElementSibling;
+  const { id, server, type, autoplay, loop, listMaxHeight } = container.dataset;
+  const apiUrl = new URL(server === "kuwo"
+    ? "https://musicpay.kuwo.cn/music.pay"
+    : "https://api.i-meto.com/meting/api");
+  if (server === "kuwo") {
+    apiUrl.searchParams.set("op", "query");
+    apiUrl.searchParams.set("action", "download");
+    apiUrl.searchParams.set("ids", id);
+  } else {
+    apiUrl.searchParams.set("server", server);
+    apiUrl.searchParams.set("type", type);
+    apiUrl.searchParams.set("id", id);
+  }
+
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) throw new Error(`Music metadata: HTTP ${response.status}`);
+      return response.json();
+    })
+    .then(result => server === "kuwo" ? result.songs : result)
+    .then(songs => {
+      if (!Array.isArray(songs) || !songs.length) throw new Error("Music metadata is empty");
+      const audio = songs.map(song => {
+        if (server === "kuwo") {
+          if (String(song.id) !== id || !song.name || song.payInfo?.cannotOnlinePlay) {
+            throw new Error("Kuwo song is unavailable");
+          }
+          const cover = song.albumPic || song.musicPic || "";
+          return {
+            name: song.name,
+            artist: song.artist || "未知歌手",
+            url: "https://antiserver.kuwo.cn/anti.s?type=convert_url&rid=MUSIC_" + encodeURIComponent(id) + "&format=mp3&response=res",
+            cover: cover.replace(/^http:/, "https:"),
+            lrc: ""
+          };
+        }
+        const trackId = new URL(song.url).searchParams.get("id");
+        return {
+          name: song.title,
+          artist: song.author,
+          url: trackId
+            ? `https://music.163.com/song/media/outer/url?id=${encodeURIComponent(trackId)}.mp3`
+            : song.url,
+          cover: song.pic,
+          lrc: song.lrc
+        };
+      });
+      const player = new APlayer({
+        container,
+        autoplay: autoplay === "true",
+        loop,
+        listMaxHeight,
+        lrcType: audio.some(song => song.lrc) ? 3 : 0,
+        audio
+      });
+
+      
+      const bar = player.template.barWrap;
+      const progress = event => {
+        const point = event.changedTouches?.[0] || event.touches?.[0] || event;
+        const rect = bar.getBoundingClientRect();
+        return Math.max(0, Math.min(1, (point.clientX - rect.left) / rect.width));
+      };
+      const preview = event => {
+        const fraction = progress(event);
+        const time = fraction * player.duration;
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        player.bar.set("played", fraction, "width");
+        player.template.ptime.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        player.lrc?.update(time);
+        return time;
+      };
+      const startSeek = event => {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        player.disableTimeupdate = true;
+        preview(event);
+        const touch = event.type === "touchstart";
+        const moveEvent = touch ? "touchmove" : "mousemove";
+        const endEvent = touch ? "touchend" : "mouseup";
+        const move = e => {
+          if (e.cancelable) e.preventDefault();
+          preview(e);
+        };
+        const end = e => {
+          document.removeEventListener(moveEvent, move);
+          document.removeEventListener(endEvent, end);
+          if (touch) document.removeEventListener("touchcancel", cancel);
+          player.seek(preview(e));
+          player.disableTimeupdate = false;
+        };
+        const cancel = () => {
+          document.removeEventListener(moveEvent, move);
+          document.removeEventListener(endEvent, end);
+          document.removeEventListener("touchcancel", cancel);
+          player.disableTimeupdate = false;
+        };
+        document.addEventListener(moveEvent, move, { passive: false });
+        document.addEventListener(endEvent, end);
+        if (touch) document.addEventListener("touchcancel", cancel);
+      };
+      bar.addEventListener("mousedown", startSeek, true);
+      bar.addEventListener("touchstart", startSeek, { capture: true, passive: false });
+
+      const volumeBar = player.template.volumeBar;
+      const volumeWrap = player.template.volumeBarWrap;
+      const setVolume = event => {
+        const point = event.changedTouches?.[0] || event.touches?.[0] || event;
+        const rect = volumeBar.getBoundingClientRect();
+        player.volume(Math.max(0, Math.min(1, (rect.bottom - point.clientY) / rect.height)));
+      };
+      const startVolume = event => {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        volumeWrap.classList.add("aplayer-volume-bar-wrap-active");
+        setVolume(event);
+        const touch = event.type === "touchstart";
+        const moveEvent = touch ? "touchmove" : "mousemove";
+        const endEvent = touch ? "touchend" : "mouseup";
+        const move = e => {
+          if (e.cancelable) e.preventDefault();
+          setVolume(e);
+        };
+        const end = e => {
+          document.removeEventListener(moveEvent, move);
+          document.removeEventListener(endEvent, end);
+          if (touch) document.removeEventListener("touchcancel", cancel);
+          volumeWrap.classList.remove("aplayer-volume-bar-wrap-active");
+          setVolume(e);
+        };
+        const cancel = () => {
+          document.removeEventListener(moveEvent, move);
+          document.removeEventListener(endEvent, end);
+          document.removeEventListener("touchcancel", cancel);
+          volumeWrap.classList.remove("aplayer-volume-bar-wrap-active");
+        };
+        document.addEventListener(moveEvent, move, { passive: false });
+        document.addEventListener(endEvent, end);
+        if (touch) document.addEventListener("touchcancel", cancel);
+      };
+      volumeWrap.addEventListener("mousedown", startVolume, true);
+      volumeWrap.addEventListener("touchstart", startVolume, { capture: true, passive: false });
+    })
+    .catch(error => {
+      console.error(error);
+      container.textContent = "音乐加载失败，请稍后重试。";
+    });
+})();
+</script>
+
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li><a href="https://lisenhui.cn/blog/add-music-shortcode-support.html">新增音乐短代码功能支持 | 凡梦星尘</a></li>
+</ul>
+
+<nav class="post-nav fullwidth">
+  <span></span>
+  <span><a href="/cn/2026/11/%E4%BA%BA%E7%94%9F%E6%80%BB%E6%98%AF%E8%BF%99%E6%A0%B7/">人生总是这样</a> &rarr;</span>
+</nav>
+<hr>
+<div class="giscus-comments fullwidth">
+<script src="https://giscus.app/client.js"
+  data-repo="DSJZS/DSJZS.github.io"
+  data-repo-id="R_kgDOQuMMVg"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOQuMMVs4C0OeT"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="preferred_color_scheme"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async>
+</script>
+</div>
+
+</div>
+  <footer class="small">
+  <script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fix-toc.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/prism-xcode.min.css">
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/copy-button.min.js" defer></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@xiee/utils/css/copy-button.min.css">
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/heading-anchor.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/external-link.min.js" defer></script>
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/fullwidth.min.js" defer></script>
+<script src="https://events.vercount.one/js" defer></script>
+  
+  
+  <hr/>
+  
+  <p class="nav-bottom">
+    <span>© Yuan Cheng 2025 - 2026</span>
+    <span class="menu-bottom">
+<a href="/categories/">Categories</a> <a href="/tags/">Tags</a>
+
+<a href="/cn/index.xml" type="application/rss+xml" title="RSS feed">Subscribe</a>
+
+<a href="#">Back to Top</a>
+
+</span>
+  </p>
+  
+  </footer>
+  </body>
+</html>
+

@@ -10,6 +10,14 @@
     <atom:link href="https://masterji.top/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>博客开发(8)：音乐播放</title>
+      <link>https://masterji.top/cn/2026/11/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%918%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE/</link>
+      <pubDate>Mon, 23 Nov 2026 16:27:26 +0800</pubDate>
+      <guid>https://masterji.top/cn/2026/11/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%918%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近有了一个在文章中添加音乐播放器的需求，于是搜了一下资料，发现还是比较简单的。&lt;/p&gt;&#xA;&lt;h2 id=&#34;音乐播放&#34;&gt;音乐播放&lt;/h2&gt;&#xA;&lt;p&gt;现在有 AI 工具了，干啥都方便。让 Codex 阅读提供的&lt;a href=&#34;#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99&#34;&gt;参考资料&lt;/a&gt;添加对应的支持就行了，没有什么可以说的。&lt;/p&gt;&#xA;&lt;p&gt;配置好后如果想播放《Happy》，仿照下面的语句写就行了。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>人生总是这样</title>
       <link>https://masterji.top/cn/2026/11/%E4%BA%BA%E7%94%9F%E6%80%BB%E6%98%AF%E8%BF%99%E6%A0%B7/</link>
       <pubDate>Sun, 22 Nov 2026 20:12:48 +0800</pubDate>

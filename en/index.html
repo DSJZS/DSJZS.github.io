@@ -35,7 +35,7 @@
   
   
   
-  <body class="en">
+  <body class="en single">
     <div class="crop-h"></div><div class="crop-v"></div><div class="crop-c"></div>
     <nav class="nav-top small">
     <div class="logo">
@@ -55,8 +55,6 @@
       <span><a href="/en/tech/">Tech</a></span>
       <span><a href="/en/life/">Life</a></span>
       <span class="active"><a href="/en/">Archive</a></span>
-      <span><a href="/en/categories-tags/">Categories&amp;Tags</a></span>
-      <span><a href="/en/search/">Search</a></span>
       <span><a href="/cn/about/">中文</a></span>
       
     </div>
@@ -64,14 +62,269 @@
 
 <h1 class="title">Archive</h1>
 
-<div class="main archive log-list">
+<div class="main archive">
 
 
 
 
 
+<nav id="TableOfContents" aria-label="Archive sections">
+  <ul>
+    <li><a href="#search"><span class="toc-link-label">Search</span></a></li>
+    <li><a href="#categories"><span class="toc-link-label">Categories</span></a></li>
+    <li><a href="#tags"><span class="toc-link-label">Tags</span></a></li>
+    <li><a href="#years"><span class="toc-link-label">Years</span></a>
+      <ul>
+        
+        <li><a href="#year-2025"><span class="toc-link-label">2025</span></a></li>
+        
+      </ul>
+    </li>
+  </ul>
+</nav>
 
-<h2>2025</h2>
+<section id="search" class="archive-search">
+<h2>Search</h2>
+<p>Search is powered by fuse.js. A space means AND, <code>|</code> means OR, and double quotes can be used to match an exact phrase.</p>
+<input type="search" id="search-input" aria-label="Search posts" data-index-url="/en/index.json">
+<div class="search-results">
+<section>
+<h2 class="toc-line"><a target="_blank"></a><span class="dots"></span><span class="page-num small"></span></h2>
+<div class="search-preview"></div>
+</section>
+</div>
+</section>
+
+<h2 id="categories">Categories</h2>
+<ul class="terms taxonomy-list">
+
+  
+  
+  
+<li><a href="/categories/daily/">Daily</a> <span class="small">(1)</span></li>
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+</ul>
+
+<h2 id="tags">Tags</h2>
+<ul class="terms taxonomy-list">
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+<li><a href="/tags/life/">Life</a> <span class="small">(1)</span></li>
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+</ul>
+
+
+<h2 id="years">Years</h2>
+<div class="log-list archive-years">
+
+
+
+<h3 id="year-2025">2025</h3>
+
 <ul>
 
 <li><span class="log-date">2025-12-24</span> <a href="/en/2025/12/hello-world/">Hello World</a></li>
@@ -81,8 +334,11 @@
 
 <div class="stats">Subtotal: 1 years · 1 posts · 47 words · 244 characters</div>
 
+</div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@xiee/utils/js/fuse-search.min.js" defer></script>
   <footer class="small">
   
   

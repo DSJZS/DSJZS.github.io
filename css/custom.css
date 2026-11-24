@@ -111,11 +111,28 @@ blockquote.alert-error {
 .archive > h2 {
   text-align: initial;
 }
+.single .archive-years > h3 {
+  text-align: initial;
+}
 .taxonomy-list {
   padding-left: 0;
 }
 .taxonomy-list li {
   list-style: none;
+}
+.archive-search #search-input {
+  width: 100%;
+  font-size: 1.2em;
+  padding: .5em;
+}
+.archive-search .search-results b {
+  background-color: yellow;
+}
+.archive-search .search-preview {
+  margin-left: 2em;
+}
+.single .archive-search .search-results .toc-line {
+  border-bottom: none;
 }
 .search-results .toc-line > a {
   font-style: normal;

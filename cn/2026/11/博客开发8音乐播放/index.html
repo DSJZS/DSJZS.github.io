@@ -139,13 +139,49 @@
     apiUrl.searchParams.set("id", id);
   }
 
-  fetch(apiUrl)
+  const songsRequest = fetch(apiUrl)
     .then(response => {
       if (!response.ok) throw new Error(`Music metadata: HTTP ${response.status}`);
       return response.json();
     })
-    .then(result => server === "kuwo" ? result.songs : result)
-    .then(songs => {
+    .then(result => server === "kuwo" ? result.songs : result);
+
+  const lyricsRequest = server === "kuwo" ? (() => {
+    const lyricPaths = [
+      "https://www.kuwo.cn/newh5/singles/songinfoandlrc",
+      "https://m.kuwo.cn/newh5/singles/songinfoandlrc"
+    ];
+    const getLyrics = async path => {
+      const lyricApiUrl = new URL(path);
+      lyricApiUrl.searchParams.set("musicId", id);
+      const response = await fetch(lyricApiUrl);
+      if (!response.ok) throw new Error(`Kuwo lyrics: HTTP ${response.status}`);
+      const result = await response.json();
+      const lines = result?.data?.lrclist;
+      if (result?.status !== 200 || !Array.isArray(lines) || !lines.length) {
+        throw new Error(`Kuwo lyrics: API status ${result?.status}`);
+      }
+      return lines.map(({ time, lineLyric }) => {
+        const centiseconds = Math.round(Number(time) * 100);
+        if (!Number.isFinite(centiseconds) || centiseconds < 0 || typeof lineLyric !== "string") return "";
+        const minutes = String(Math.floor(centiseconds / 6000)).padStart(2, "0");
+        const seconds = String(Math.floor(centiseconds % 6000 / 100)).padStart(2, "0");
+        const fraction = String(centiseconds % 100).padStart(2, "0");
+        return `[${minutes}:${seconds}.${fraction}]${lineLyric}`;
+      }).filter(Boolean).join("\n");
+    };
+    return Promise.race([
+      Promise.any(lyricPaths.map(getLyrics))
+        .catch(error => {
+          console.warn("Kuwo lyrics unavailable:", error);
+          return "[00:00.00]歌词暂不可用";
+        }),
+      new Promise(resolve => setTimeout(() => resolve("[00:00.00]歌词加载超时"), 5000))
+    ]);
+  })() : Promise.resolve("");
+
+  Promise.all([songsRequest, lyricsRequest])
+    .then(([songs, kuwoLrc]) => {
       if (!Array.isArray(songs) || !songs.length) throw new Error("Music metadata is empty");
       const audio = songs.map(song => {
         if (server === "kuwo") {
@@ -158,7 +194,7 @@
             artist: song.artist || "未知歌手",
             url: "https://antiserver.kuwo.cn/anti.s?type=convert_url&rid=MUSIC_" + encodeURIComponent(id) + "&format=mp3&response=res",
             cover: cover.replace(/^http:/, "https:"),
-            lrc: ""
+            lrc: kuwoLrc
           };
         }
         const trackId = new URL(song.url).searchParams.get("id");
@@ -177,7 +213,7 @@
         autoplay: autoplay === "true",
         loop,
         listMaxHeight,
-        lrcType: audio.some(song => song.lrc) ? 3 : 0,
+        lrcType: server === "kuwo" ? 1 : (audio.some(song => song.lrc) ? 3 : 0),
         audio
       });
 

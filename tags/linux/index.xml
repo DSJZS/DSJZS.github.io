@@ -10,7 +10,7 @@
     <atom:link href="https://masterji.top/tags/linux/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Linux 开发(10)：如何阅读设备树绑定文档</title>
+      <title>如何阅读设备树绑定文档</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</link>
       <pubDate>Mon, 30 Mar 2026 12:23:24 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%9510%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E8%AE%BE%E5%A4%87%E6%A0%91%E7%BB%91%E5%AE%9A%E6%96%87%E6%A1%A3/</guid>
@@ -18,7 +18,7 @@
     </item>
     
     <item>
-      <title>Wi-Fi 网络(3)：网络工具的交叉编译与移植</title>
+      <title>网络工具的交叉编译与移植</title>
       <link>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</link>
       <pubDate>Mon, 23 Mar 2026 18:24:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E4%B8%8E%E7%A7%BB%E6%A4%8D/</guid>
@@ -26,7 +26,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(9)：构建嵌入式Linux系统</title>
+      <title>构建嵌入式Linux系统</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Mon, 23 Mar 2026 17:03:06 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%959%E6%9E%84%E5%BB%BA%E5%B5%8C%E5%85%A5%E5%BC%8Flinux%E7%B3%BB%E7%BB%9F/</guid>
@@ -34,7 +34,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(8)：Linux 驱动的分离与分层思想</title>
+      <title>Linux 驱动的分离与分层思想</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</link>
       <pubDate>Sun, 22 Mar 2026 20:37:11 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%958linux-%E9%A9%B1%E5%8A%A8%E7%9A%84%E5%88%86%E7%A6%BB%E4%B8%8E%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3/</guid>
@@ -42,7 +42,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(7)：设备树基础语法</title>
+      <title>设备树基础语法</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</link>
       <pubDate>Sat, 21 Mar 2026 23:07:12 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%957%E8%AE%BE%E5%A4%87%E6%A0%91%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</guid>
@@ -50,7 +50,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(6)：常见的设备接口与总线</title>
+      <title>常见的设备接口与总线</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</link>
       <pubDate>Sat, 21 Mar 2026 23:06:14 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%956%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3%E4%B8%8E%E6%80%BB%E7%BA%BF/</guid>
@@ -58,7 +58,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(5)：I/O多路复用技术与信号驱动</title>
+      <title>I/O多路复用技术与信号驱动</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</link>
       <pubDate>Tue, 17 Mar 2026 20:01:28 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%955i/o%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF%E4%B8%8E%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8/</guid>
@@ -66,7 +66,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(4)：如何愉快(?)地交叉编译</title>
+      <title>如何愉快(?)地交叉编译</title>
       <link>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</link>
       <pubDate>Tue, 03 Mar 2026 13:32:00 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/03/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%954%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91/</guid>
@@ -74,7 +74,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(3)：如何愉快(?)地使用Makefile</title>
+      <title>如何愉快(?)地使用Makefile</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</link>
       <pubDate>Thu, 19 Feb 2026 11:41:51 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%953%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8makefile/</guid>
@@ -82,7 +82,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(2)：如何愉快(?)地使用Debian系包管理工具</title>
+      <title>如何愉快(?)地使用Debian系包管理工具</title>
       <link>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</link>
       <pubDate>Tue, 17 Feb 2026 14:04:55 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/02/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E4%BD%BF%E7%94%A8debian%E7%B3%BB%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/</guid>
@@ -90,7 +90,7 @@
     </item>
     
     <item>
-      <title>Linux 开发(1)：如何愉快(?)地Debug程序</title>
+      <title>如何愉快(?)地Debug程序</title>
       <link>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</link>
       <pubDate>Sun, 11 Jan 2026 18:52:26 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/linux%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0debug%E7%A8%8B%E5%BA%8F/</guid>
@@ -98,7 +98,7 @@
     </item>
     
     <item>
-      <title>Wi-Fi 网络(2)：Linux无线网络STA模式配置</title>
+      <title>Linux无线网络STA模式配置</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</link>
       <pubDate>Wed, 07 Jan 2026 22:00:03 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%952linux%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9Csta%E6%A8%A1%E5%BC%8F%E9%85%8D%E7%BD%AE/</guid>
@@ -106,7 +106,7 @@
     </item>
     
     <item>
-      <title>Wi-Fi 网络(1)：抓包ARP协议</title>
+      <title>抓包ARP协议</title>
       <link>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</link>
       <pubDate>Mon, 05 Jan 2026 18:16:41 +0800</pubDate>
       <guid>https://masterji.top/cn/2026/01/wi-fi%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E6%8A%93%E5%8C%85arp%E5%8D%8F%E8%AE%AE/</guid>

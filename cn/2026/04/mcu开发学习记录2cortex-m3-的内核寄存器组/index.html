@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    <title>MCU 开发(2)：Cortex-M3 的内核寄存器组 - Yuan&#39;s Blog</title>
-    <meta property="og:title" content="MCU 开发(2)：Cortex-M3 的内核寄存器组 - Yuan&#39;s Blog">
+    <title>Cortex-M3 的内核寄存器组 - Yuan&#39;s Blog</title>
+    <meta property="og:title" content="Cortex-M3 的内核寄存器组 - Yuan&#39;s Blog">
     
     
       
@@ -67,7 +67,7 @@
 
 
 <div class="article-meta">
-<h1 class="title">MCU 开发(2)：Cortex-M3 的内核寄存器组</h1>
+<h1 class="title">Cortex-M3 的内核寄存器组</h1>
 
 
 <h3 class="meta-line post-meta-line">
@@ -82,9 +82,9 @@
 <span class="author">成元</span>
 <span class="meta-sep"> / </span>
 <span class="date">2026-04-11</span><span class="meta-sep"> / </span>
-<span class="word-count">约 2302 字</span>
+<span class="word-count">约 2558 字</span>
 <span class="meta-sep"> / </span>
-<span class="reading-time">预计阅读 5 分钟</span>
+<span class="reading-time">预计阅读 6 分钟</span>
 <span class="meta-sep"> / </span>
 <span class="page-views"><span id="vercount_value_page_pv">—</span> 次浏览</span>
 
@@ -165,7 +165,38 @@
 <p>为连接寄存器，用于在调用子程序时存储返回地址。</p>
 <p>比如使用 BL 指令( 分支变连接，Branch and Link )调用一个函数，那么函数的返回地址(BL指令的下一个指令的地址)就会自动写入 LR 寄存器。值得注意的是多层函数调用会涉及 LR 被覆盖的问题，需要将每层函数的返回地址保存到一个指定的空间。</p>
 <p>在异常处理期间，LR 也会被自动更新为特殊的 EXC_RETURN（异常返回）数值，之后该数值会在异常处理结束时触发异常返回，从而实现从异常处理返回到正确的用户程序中 。</p>
-<p>需要注意的是，尽管 Cortex-M 处理器中的返回地址总是偶数（由于指令会对齐到半字地址上，因此，最低位即第 0 位为 0），LR 的第 0 位是可读可写的，有些跳转/调用操作需要将 LR（或正在使用的任何寄存器）的第 0 位置 1 来表示当前处理器处于 Thumb 状态。</p>
+<table>
+  <thead>
+      <tr>
+          <th>EXC_RETURN 各 Bit 位</th>
+          <th>Cortex-M3 中的含义</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>[31:4]</td>
+          <td>固定为 0xFFFFFFF，使处理器能识别这是 EXC_RETURN</td>
+      </tr>
+      <tr>
+          <td>[3]</td>
+          <td>0：返回 Handler 模式；1：返回 Thread 模式</td>
+      </tr>
+      <tr>
+          <td>[2]</td>
+          <td>0：从 MSP 恢复现场；1：从 PSP 恢复现场</td>
+      </tr>
+      <tr>
+          <td>[1]</td>
+          <td>固定为 0</td>
+      </tr>
+      <tr>
+          <td>[0]</td>
+          <td>固定为 1</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>进入异常时填写的 EXC_RETURN 默认保持 Handler/Thread 模式和 MSP/PSP 不变</strong>。</p>
+<p>需要注意的是，在普通函数(也就是非异常)调用中，Cortex-M 处理器中 LR 的第 0 位不用来表示实际地址，一般会固定为 1。因为 Cortex-M 不支持 ARM 指令集，而仅支持 Thumb 指令集，因此需要把最低位置 1 来表示跳转后按 Thumb 状态执行。同时，这也造成 LR 指向的返回地址总是偶数的，或者说为某个半字的地址。对于 BL 值令，其会在写入 LR 时硬件完成置 1。对于 BX 值令，指定读取的寄存器最低位要保证为 1。</p>
 <blockquote>
 <p>Thumb 状态 指的是：处理器当前按 Thumb 指令集来解释和执行指令。</p>
 <p>在 ARM 架构里，历史上有两种执行状态：</p>
@@ -270,10 +301,17 @@ MSR &lt;special_reg&gt;, &lt;gp_reg&gt; ; 写通用寄存器的值到特殊功�
 <li><a href="https://www.cnblogs.com/utank/p/11238218.html">Cortex-M3 R0~R15寄存器组 &amp; 特殊功能寄存器组</a></li>
 <li><a href="https://blog.csdn.net/tilblackout/article/details/128191341">ARM基础(1)：Cortex-M3的核心寄存器和特殊寄存器</a></li>
 </ul>
+<p>#TODO：阅读一遍下面博主的文章加深理解</p>
+<p>博主 <a href="https://www.cnblogs.com/utank">utank</a> 2019 年有很多篇关于 Cortex-M3 内核的文章，下面是其中几个。</p>
+<ul>
+<li><a href="https://www.cnblogs.com/utank/p/11251721.html">Cortex-M3 异常中断响应与返回</a></li>
+<li><a href="https://www.cnblogs.com/utank/p/11263073.html">Cortex-M3 异常返回值EXC_RETURN</a></li>
+<li><a href="https://www.cnblogs.com/utank/p/11264175.html">Cortex-M3 双堆栈指针（MSP&amp;PSP）</a></li>
+</ul>
 
 <nav class="post-nav fullwidth">
-  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">RTOS 开发(1)：程序结构</a></span>
-  <span><a href="/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/">MCU 开发(1)：GD32与STM32的BootLoader与OTA</a> &rarr;</span>
+  <span>&larr; <a href="/cn/2026/04/rtos%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">RTOS 入门之程序结构</a></span>
+  <span><a href="/cn/2026/04/mcu%E5%BC%80%E5%8F%91%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%951gd32%E4%B8%8Estm32%E7%9A%84bootloader%E4%B8%8Eota/">GD32与STM32的BootLoader与OTA</a> &rarr;</span>
 </nav>
 <hr>
 <div class="giscus-comments fullwidth">

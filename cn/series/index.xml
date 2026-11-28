@@ -2,12 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>系列 on Yuan&#39;s Blog</title>
-    <link>https://masterji.top/cn/series/</link>
+    <link>https://blog.oyuanzi.top/cn/series/</link>
     <description>Recent content in 系列 on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://masterji.top/cn/series/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.oyuanzi.top/cn/series/index.xml" rel="self" type="application/rss+xml" />
     
   </channel>
 </rss>

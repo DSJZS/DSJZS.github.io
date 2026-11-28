@@ -2,434 +2,434 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Yuan&#39;s Blog</title>
-    <link>https://masterji.top/tags/</link>
+    <link>https://blog.oyuanzi.top/tags/</link>
     <description>Recent content in Tags on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://masterji.top/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.oyuanzi.top/tags/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>SQL</title>
-      <link>https://masterji.top/tags/sql/</link>
+      <link>https://blog.oyuanzi.top/tags/sql/</link>
       <pubDate>Mon, 28 Sep 2026 20:57:16 +0800</pubDate>
-      <guid>https://masterji.top/tags/sql/</guid>
+      <guid>https://blog.oyuanzi.top/tags/sql/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SQLite</title>
-      <link>https://masterji.top/tags/sqlite/</link>
+      <link>https://blog.oyuanzi.top/tags/sqlite/</link>
       <pubDate>Mon, 28 Sep 2026 20:57:16 +0800</pubDate>
-      <guid>https://masterji.top/tags/sqlite/</guid>
+      <guid>https://blog.oyuanzi.top/tags/sqlite/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>https://masterji.top/tags/git/</link>
+      <link>https://blog.oyuanzi.top/tags/git/</link>
       <pubDate>Mon, 27 Apr 2026 19:05:23 +0800</pubDate>
-      <guid>https://masterji.top/tags/git/</guid>
+      <guid>https://blog.oyuanzi.top/tags/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>FSM</title>
-      <link>https://masterji.top/tags/fsm/</link>
+      <link>https://blog.oyuanzi.top/tags/fsm/</link>
       <pubDate>Sat, 25 Apr 2026 12:00:00 +0800</pubDate>
-      <guid>https://masterji.top/tags/fsm/</guid>
+      <guid>https://blog.oyuanzi.top/tags/fsm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>前端</title>
-      <link>https://masterji.top/tags/%E5%89%8D%E7%AB%AF/</link>
+      <link>https://blog.oyuanzi.top/tags/%E5%89%8D%E7%AB%AF/</link>
       <pubDate>Sun, 28 Dec 2025 18:25:03 +0800</pubDate>
-      <guid>https://masterji.top/tags/%E5%89%8D%E7%AB%AF/</guid>
+      <guid>https://blog.oyuanzi.top/tags/%E5%89%8D%E7%AB%AF/</guid>
       <description></description>
     </item>
     
     <item>
       <title>AI Coding</title>
-      <link>https://masterji.top/tags/ai-coding/</link>
+      <link>https://blog.oyuanzi.top/tags/ai-coding/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/ai-coding/</guid>
+      <guid>https://blog.oyuanzi.top/tags/ai-coding/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Algorithm</title>
-      <link>https://masterji.top/tags/algorithm/</link>
+      <link>https://blog.oyuanzi.top/tags/algorithm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/algorithm/</guid>
+      <guid>https://blog.oyuanzi.top/tags/algorithm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Android</title>
-      <link>https://masterji.top/tags/android/</link>
+      <link>https://blog.oyuanzi.top/tags/android/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/android/</guid>
+      <guid>https://blog.oyuanzi.top/tags/android/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Apt</title>
-      <link>https://masterji.top/tags/apt/</link>
+      <link>https://blog.oyuanzi.top/tags/apt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/apt/</guid>
+      <guid>https://blog.oyuanzi.top/tags/apt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Blog</title>
-      <link>https://masterji.top/tags/blog/</link>
+      <link>https://blog.oyuanzi.top/tags/blog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/blog/</guid>
+      <guid>https://blog.oyuanzi.top/tags/blog/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bluetooth</title>
-      <link>https://masterji.top/tags/bluetooth/</link>
+      <link>https://blog.oyuanzi.top/tags/bluetooth/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/bluetooth/</guid>
+      <guid>https://blog.oyuanzi.top/tags/bluetooth/</guid>
       <description></description>
     </item>
     
     <item>
       <title>BootLoader</title>
-      <link>https://masterji.top/tags/bootloader/</link>
+      <link>https://blog.oyuanzi.top/tags/bootloader/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/bootloader/</guid>
+      <guid>https://blog.oyuanzi.top/tags/bootloader/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C</title>
-      <link>https://masterji.top/tags/c/</link>
+      <link>https://blog.oyuanzi.top/tags/c/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/c/</guid>
+      <guid>https://blog.oyuanzi.top/tags/c/</guid>
       <description></description>
     </item>
     
     <item>
       <title>C&#43;&#43;</title>
-      <link>https://masterji.top/tags/c&#43;&#43;/</link>
+      <link>https://blog.oyuanzi.top/tags/c&#43;&#43;/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/c&#43;&#43;/</guid>
+      <guid>https://blog.oyuanzi.top/tags/c&#43;&#43;/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Codex</title>
-      <link>https://masterji.top/tags/codex/</link>
+      <link>https://blog.oyuanzi.top/tags/codex/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/codex/</guid>
+      <guid>https://blog.oyuanzi.top/tags/codex/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Structure</title>
-      <link>https://masterji.top/tags/data-structure/</link>
+      <link>https://blog.oyuanzi.top/tags/data-structure/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/data-structure/</guid>
+      <guid>https://blog.oyuanzi.top/tags/data-structure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Device Tree</title>
-      <link>https://masterji.top/tags/device-tree/</link>
+      <link>https://blog.oyuanzi.top/tags/device-tree/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/device-tree/</guid>
+      <guid>https://blog.oyuanzi.top/tags/device-tree/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Docker</title>
-      <link>https://masterji.top/tags/docker/</link>
+      <link>https://blog.oyuanzi.top/tags/docker/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/docker/</guid>
+      <guid>https://blog.oyuanzi.top/tags/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Dpkg</title>
-      <link>https://masterji.top/tags/dpkg/</link>
+      <link>https://blog.oyuanzi.top/tags/dpkg/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/dpkg/</guid>
+      <guid>https://blog.oyuanzi.top/tags/dpkg/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Drink</title>
-      <link>https://masterji.top/tags/drink/</link>
+      <link>https://blog.oyuanzi.top/tags/drink/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/drink/</guid>
+      <guid>https://blog.oyuanzi.top/tags/drink/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ECS</title>
-      <link>https://masterji.top/tags/ecs/</link>
+      <link>https://blog.oyuanzi.top/tags/ecs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/ecs/</guid>
+      <guid>https://blog.oyuanzi.top/tags/ecs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ESP32</title>
-      <link>https://masterji.top/tags/esp32/</link>
+      <link>https://blog.oyuanzi.top/tags/esp32/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/esp32/</guid>
+      <guid>https://blog.oyuanzi.top/tags/esp32/</guid>
       <description></description>
     </item>
     
     <item>
       <title>FFmpeg</title>
-      <link>https://masterji.top/tags/ffmpeg/</link>
+      <link>https://blog.oyuanzi.top/tags/ffmpeg/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/ffmpeg/</guid>
+      <guid>https://blog.oyuanzi.top/tags/ffmpeg/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Food</title>
-      <link>https://masterji.top/tags/food/</link>
+      <link>https://blog.oyuanzi.top/tags/food/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/food/</guid>
+      <guid>https://blog.oyuanzi.top/tags/food/</guid>
       <description></description>
     </item>
     
     <item>
       <title>GCC</title>
-      <link>https://masterji.top/tags/gcc/</link>
+      <link>https://blog.oyuanzi.top/tags/gcc/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/gcc/</guid>
+      <guid>https://blog.oyuanzi.top/tags/gcc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>GD32</title>
-      <link>https://masterji.top/tags/gd32/</link>
+      <link>https://blog.oyuanzi.top/tags/gd32/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/gd32/</guid>
+      <guid>https://blog.oyuanzi.top/tags/gd32/</guid>
       <description></description>
     </item>
     
     <item>
       <title>GDB</title>
-      <link>https://masterji.top/tags/gdb/</link>
+      <link>https://blog.oyuanzi.top/tags/gdb/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/gdb/</guid>
+      <guid>https://blog.oyuanzi.top/tags/gdb/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HDL</title>
-      <link>https://masterji.top/tags/hdl/</link>
+      <link>https://blog.oyuanzi.top/tags/hdl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/hdl/</guid>
+      <guid>https://blog.oyuanzi.top/tags/hdl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Hugo</title>
-      <link>https://masterji.top/tags/hugo/</link>
+      <link>https://blog.oyuanzi.top/tags/hugo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/hugo/</guid>
+      <guid>https://blog.oyuanzi.top/tags/hugo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Kotlin</title>
-      <link>https://masterji.top/tags/kotlin/</link>
+      <link>https://blog.oyuanzi.top/tags/kotlin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/kotlin/</guid>
+      <guid>https://blog.oyuanzi.top/tags/kotlin/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Life</title>
-      <link>https://masterji.top/tags/life/</link>
+      <link>https://blog.oyuanzi.top/tags/life/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/life/</guid>
+      <guid>https://blog.oyuanzi.top/tags/life/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>https://masterji.top/tags/linux/</link>
+      <link>https://blog.oyuanzi.top/tags/linux/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/linux/</guid>
+      <guid>https://blog.oyuanzi.top/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Makefile</title>
-      <link>https://masterji.top/tags/makefile/</link>
+      <link>https://blog.oyuanzi.top/tags/makefile/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/makefile/</guid>
+      <guid>https://blog.oyuanzi.top/tags/makefile/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Markdown</title>
-      <link>https://masterji.top/tags/markdown/</link>
+      <link>https://blog.oyuanzi.top/tags/markdown/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/markdown/</guid>
+      <guid>https://blog.oyuanzi.top/tags/markdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>MCU</title>
-      <link>https://masterji.top/tags/mcu/</link>
+      <link>https://blog.oyuanzi.top/tags/mcu/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/mcu/</guid>
+      <guid>https://blog.oyuanzi.top/tags/mcu/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Music</title>
-      <link>https://masterji.top/tags/music/</link>
+      <link>https://blog.oyuanzi.top/tags/music/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/music/</guid>
+      <guid>https://blog.oyuanzi.top/tags/music/</guid>
       <description></description>
     </item>
     
     <item>
       <title>OTA</title>
-      <link>https://masterji.top/tags/ota/</link>
+      <link>https://blog.oyuanzi.top/tags/ota/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/ota/</guid>
+      <guid>https://blog.oyuanzi.top/tags/ota/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Poem</title>
-      <link>https://masterji.top/tags/poem/</link>
+      <link>https://blog.oyuanzi.top/tags/poem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/poem/</guid>
+      <guid>https://blog.oyuanzi.top/tags/poem/</guid>
       <description></description>
     </item>
     
     <item>
       <title>RTOS</title>
-      <link>https://masterji.top/tags/rtos/</link>
+      <link>https://blog.oyuanzi.top/tags/rtos/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/rtos/</guid>
+      <guid>https://blog.oyuanzi.top/tags/rtos/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Scala</title>
-      <link>https://masterji.top/tags/scala/</link>
+      <link>https://blog.oyuanzi.top/tags/scala/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/scala/</guid>
+      <guid>https://blog.oyuanzi.top/tags/scala/</guid>
       <description></description>
     </item>
     
     <item>
       <title>SDL</title>
-      <link>https://masterji.top/tags/sdl/</link>
+      <link>https://blog.oyuanzi.top/tags/sdl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/sdl/</guid>
+      <guid>https://blog.oyuanzi.top/tags/sdl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Shell</title>
-      <link>https://masterji.top/tags/shell/</link>
+      <link>https://blog.oyuanzi.top/tags/shell/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/shell/</guid>
+      <guid>https://blog.oyuanzi.top/tags/shell/</guid>
       <description></description>
     </item>
     
     <item>
       <title>STL</title>
-      <link>https://masterji.top/tags/stl/</link>
+      <link>https://blog.oyuanzi.top/tags/stl/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/stl/</guid>
+      <guid>https://blog.oyuanzi.top/tags/stl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>STM32</title>
-      <link>https://masterji.top/tags/stm32/</link>
+      <link>https://blog.oyuanzi.top/tags/stm32/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/stm32/</guid>
+      <guid>https://blog.oyuanzi.top/tags/stm32/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Verilog</title>
-      <link>https://masterji.top/tags/verilog/</link>
+      <link>https://blog.oyuanzi.top/tags/verilog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/verilog/</guid>
+      <guid>https://blog.oyuanzi.top/tags/verilog/</guid>
       <description></description>
     </item>
     
     <item>
       <title>VitePress</title>
-      <link>https://masterji.top/tags/vitepress/</link>
+      <link>https://blog.oyuanzi.top/tags/vitepress/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/vitepress/</guid>
+      <guid>https://blog.oyuanzi.top/tags/vitepress/</guid>
       <description></description>
     </item>
     
     <item>
       <title>VM</title>
-      <link>https://masterji.top/tags/vm/</link>
+      <link>https://blog.oyuanzi.top/tags/vm/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/vm/</guid>
+      <guid>https://blog.oyuanzi.top/tags/vm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wi-Fi</title>
-      <link>https://masterji.top/tags/wi-fi/</link>
+      <link>https://blog.oyuanzi.top/tags/wi-fi/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/wi-fi/</guid>
+      <guid>https://blog.oyuanzi.top/tags/wi-fi/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wireshark</title>
-      <link>https://masterji.top/tags/wireshark/</link>
+      <link>https://blog.oyuanzi.top/tags/wireshark/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/wireshark/</guid>
+      <guid>https://blog.oyuanzi.top/tags/wireshark/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Zephyr</title>
-      <link>https://masterji.top/tags/zephyr/</link>
+      <link>https://blog.oyuanzi.top/tags/zephyr/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/zephyr/</guid>
+      <guid>https://blog.oyuanzi.top/tags/zephyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>前端</title>
-      <link>https://masterji.top/tags/front/</link>
+      <link>https://blog.oyuanzi.top/tags/front/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/front/</guid>
+      <guid>https://blog.oyuanzi.top/tags/front/</guid>
       <description></description>
     </item>
     
     <item>
       <title>并发编程</title>
-      <link>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <link>https://blog.oyuanzi.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://blog.oyuanzi.top/tags/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
       <description></description>
     </item>
     
     <item>
       <title>开发实践</title>
-      <link>https://masterji.top/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/</link>
+      <link>https://blog.oyuanzi.top/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://masterji.top/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/</guid>
+      <guid>https://blog.oyuanzi.top/tags/%E5%BC%80%E5%8F%91%E5%AE%9E%E8%B7%B5/</guid>
       <description></description>
     </item>
     

@@ -2,146 +2,146 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Life on Yuan&#39;s Blog</title>
-    <link>https://masterji.top/tags/life/</link>
+    <link>https://blog.oyuanzi.top/tags/life/</link>
     <description>Recent content in Life on Yuan&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <copyright>成元</copyright>
-    <atom:link href="https://masterji.top/tags/life/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://blog.oyuanzi.top/tags/life/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>人生总是这样</title>
-      <link>https://masterji.top/cn/2026/11/%E4%BA%BA%E7%94%9F%E6%80%BB%E6%98%AF%E8%BF%99%E6%A0%B7/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/11/%E4%BA%BA%E7%94%9F%E6%80%BB%E6%98%AF%E8%BF%99%E6%A0%B7/</link>
       <pubDate>Sun, 22 Nov 2026 20:12:48 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/11/%E4%BA%BA%E7%94%9F%E6%80%BB%E6%98%AF%E8%BF%99%E6%A0%B7/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/11/%E4%BA%BA%E7%94%9F%E6%80%BB%E6%98%AF%E8%BF%99%E6%A0%B7/</guid>
       <description>&lt;br&gt;&#xA;&lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css&#34;&gt;&#xA;&lt;script src=&#34;https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js&#34;&gt;&lt;/script&gt;&#xA;&#xA;&lt;div class=&#34;music-player&#34; data-id=&#34;28710392&#34; data-server=&#34;kuwo&#34; data-type=&#34;song&#34; data-autoplay=&#34;true&#34; data-loop=&#34;all&#34; data-list-max-height=&#34;140&#34;&gt;&lt;/div&gt;&#xA;&lt;script&gt;&#xA;(() =&gt; {&#xA;  const container = document.currentScript.previousElementSibling;&#xA;  const { id, server, type, autoplay, loop, listMaxHeight } = container.dataset;&#xA;  const apiUrl = new URL(server === &#34;kuwo&#34;&#xA;    ? &#34;https://musicpay.kuwo.cn/music.pay&#34;&#xA;    : &#34;https://api.i-meto.com/meting/api&#34;);&#xA;  if (server === &#34;kuwo&#34;) {&#xA;    apiUrl.searchParams.set(&#34;op&#34;, &#34;query&#34;);&#xA;    apiUrl.searchParams.set(&#34;action&#34;, &#34;download&#34;);&#xA;    apiUrl.searchParams.set(&#34;ids&#34;, id);&#xA;  } else {&#xA;    apiUrl.searchParams.set(&#34;server&#34;, server);&#xA;    apiUrl.searchParams.set(&#34;type&#34;, type);&#xA;    apiUrl.searchParams.set(&#34;id&#34;, id);&#xA;  }&#xA;&#xA;  const songsRequest = fetch(apiUrl)&#xA;    .then(response =&gt; {&#xA;      if (!response.ok) throw new Error(`Music metadata: HTTP ${response.status}`);&#xA;      return response.json();&#xA;    })&#xA;    .then(result =&gt; server === &#34;kuwo&#34; ? result.songs : result);&#xA;&#xA;  const lyricsRequest = server === &#34;kuwo&#34; ? (() =&gt; {&#xA;    const lyricPaths = [&#xA;      &#34;https://www.kuwo.cn/newh5/singles/songinfoandlrc&#34;,&#xA;      &#34;https://m.kuwo.cn/newh5/singles/songinfoandlrc&#34;&#xA;    ];&#xA;    const getLyrics = async path =&gt; {&#xA;      const lyricApiUrl = new URL(path);&#xA;      lyricApiUrl.searchParams.set(&#34;musicId&#34;, id);&#xA;      const response = await fetch(lyricApiUrl);&#xA;      if (!response.ok) throw new Error(`Kuwo lyrics: HTTP ${response.status}`);&#xA;      const result = await response.json();&#xA;      const lines = result?.data?.lrclist;&#xA;      if (result?.status !== 200 || !Array.isArray(lines) || !lines.length) {&#xA;        throw new Error(`Kuwo lyrics: API status ${result?.status}`);&#xA;      }&#xA;      return lines.map(({ time, lineLyric }) =&gt; {&#xA;        const centiseconds = Math.round(Number(time) * 100);&#xA;        if (!Number.isFinite(centiseconds) || centiseconds &lt; 0 || typeof lineLyric !== &#34;string&#34;) return &#34;&#34;;&#xA;        const minutes = String(Math.floor(centiseconds / 6000)).padStart(2, &#34;0&#34;);&#xA;        const seconds = String(Math.floor(centiseconds % 6000 / 100)).padStart(2, &#34;0&#34;);&#xA;        const fraction = String(centiseconds % 100).padStart(2, &#34;0&#34;);&#xA;        return `[${minutes}:${seconds}.${fraction}]${lineLyric}`;&#xA;      }).filter(Boolean).join(&#34;\n&#34;);&#xA;    };&#xA;    return Promise.race([&#xA;      Promise.any(lyricPaths.map(getLyrics))&#xA;        .catch(error =&gt; {&#xA;          console.warn(&#34;Kuwo lyrics unavailable:&#34;, error);&#xA;          return &#34;[00:00.00]歌词暂不可用&#34;;&#xA;        }),&#xA;      new Promise(resolve =&gt; setTimeout(() =&gt; resolve(&#34;[00:00.00]歌词加载超时&#34;), 5000))&#xA;    ]);&#xA;  })() : Promise.resolve(&#34;&#34;);&#xA;&#xA;  Promise.all([songsRequest, lyricsRequest])&#xA;    .then(([songs, kuwoLrc]) =&gt; {&#xA;      if (!Array.isArray(songs) || !songs.length) throw new Error(&#34;Music metadata is empty&#34;);&#xA;      const audio = songs.map(song =&gt; {&#xA;        if (server === &#34;kuwo&#34;) {&#xA;          if (String(song.id) !== id || !song.name || song.payInfo?.cannotOnlinePlay) {&#xA;            throw new Error(&#34;Kuwo song is unavailable&#34;);&#xA;          }&#xA;          const cover = song.albumPic || song.musicPic || &#34;&#34;;&#xA;          return {&#xA;            name: song.name,&#xA;            artist: song.artist || &#34;未知歌手&#34;,&#xA;            url: &#34;https://antiserver.kuwo.cn/anti.s?type=convert_url&amp;rid=MUSIC_&#34; + encodeURIComponent(id) + &#34;&amp;format=mp3&amp;response=res&#34;,&#xA;            cover: cover.replace(/^http:/, &#34;https:&#34;),&#xA;            lrc: kuwoLrc&#xA;          };&#xA;        }&#xA;        const trackId = new URL(song.url).searchParams.get(&#34;id&#34;);&#xA;        return {&#xA;          name: song.title,&#xA;          artist: song.author,&#xA;          url: trackId&#xA;            ? `https://music.163.com/song/media/outer/url?id=${encodeURIComponent(trackId)}.mp3`&#xA;            : song.url,&#xA;          cover: song.pic,&#xA;          lrc: song.lrc&#xA;        };&#xA;      });&#xA;      const player = new APlayer({&#xA;        container,&#xA;        autoplay: autoplay === &#34;true&#34;,&#xA;        loop,&#xA;        listMaxHeight,&#xA;        lrcType: server === &#34;kuwo&#34; ? 1 : (audio.some(song =&gt; song.lrc) ? 3 : 0),&#xA;        audio&#xA;      });&#xA;&#xA;      &#xA;      const bar = player.template.barWrap;&#xA;      const progress = event =&gt; {&#xA;        const point = event.changedTouches?.[0] || event.touches?.[0] || event;&#xA;        const rect = bar.getBoundingClientRect();&#xA;        return Math.max(0, Math.min(1, (point.clientX - rect.left) / rect.width));&#xA;      };&#xA;      const preview = event =&gt; {&#xA;        const fraction = progress(event);&#xA;        const time = fraction * player.duration;&#xA;        const minutes = Math.floor(time / 60);&#xA;        const seconds = Math.floor(time % 60);&#xA;        player.bar.set(&#34;played&#34;, fraction, &#34;width&#34;);&#xA;        player.template.ptime.textContent = `${String(minutes).padStart(2, &#34;0&#34;)}:${String(seconds).padStart(2, &#34;0&#34;)}`;&#xA;        player.lrc?.update(time);&#xA;        return time;&#xA;      };&#xA;      const startSeek = event =&gt; {&#xA;        event.stopImmediatePropagation();&#xA;        event.preventDefault();&#xA;        player.disableTimeupdate = true;&#xA;        preview(event);&#xA;        const touch = event.type === &#34;touchstart&#34;;&#xA;        const moveEvent = touch ? &#34;touchmove&#34; : &#34;mousemove&#34;;&#xA;        const endEvent = touch ? &#34;touchend&#34; : &#34;mouseup&#34;;&#xA;        const move = e =&gt; {&#xA;          if (e.cancelable) e.preventDefault();&#xA;          preview(e);&#xA;        };&#xA;        const end = e =&gt; {&#xA;          document.removeEventListener(moveEvent, move);&#xA;          document.removeEventListener(endEvent, end);&#xA;          if (touch) document.removeEventListener(&#34;touchcancel&#34;, cancel);&#xA;          player.seek(preview(e));&#xA;          player.disableTimeupdate = false;&#xA;        };&#xA;        const cancel = () =&gt; {&#xA;          document.removeEventListener(moveEvent, move);&#xA;          document.removeEventListener(endEvent, end);&#xA;          document.removeEventListener(&#34;touchcancel&#34;, cancel);&#xA;          player.disableTimeupdate = false;&#xA;        };&#xA;        document.addEventListener(moveEvent, move, { passive: false });&#xA;        document.addEventListener(endEvent, end);&#xA;        if (touch) document.addEventListener(&#34;touchcancel&#34;, cancel);&#xA;      };&#xA;      bar.addEventListener(&#34;mousedown&#34;, startSeek, true);&#xA;      bar.addEventListener(&#34;touchstart&#34;, startSeek, { capture: true, passive: false });&#xA;&#xA;      const volumeBar = player.template.volumeBar;&#xA;      const volumeWrap = player.template.volumeBarWrap;&#xA;      const setVolume = event =&gt; {&#xA;        const point = event.changedTouches?.[0] || event.touches?.[0] || event;&#xA;        const rect = volumeBar.getBoundingClientRect();&#xA;        player.volume(Math.max(0, Math.min(1, (rect.bottom - point.clientY) / rect.height)));&#xA;      };&#xA;      const startVolume = event =&gt; {&#xA;        event.stopImmediatePropagation();&#xA;        event.preventDefault();&#xA;        volumeWrap.classList.add(&#34;aplayer-volume-bar-wrap-active&#34;);&#xA;        setVolume(event);&#xA;        const touch = event.type === &#34;touchstart&#34;;&#xA;        const moveEvent = touch ? &#34;touchmove&#34; : &#34;mousemove&#34;;&#xA;        const endEvent = touch ? &#34;touchend&#34; : &#34;mouseup&#34;;&#xA;        const move = e =&gt; {&#xA;          if (e.cancelable) e.preventDefault();&#xA;          setVolume(e);&#xA;        };&#xA;        const end = e =&gt; {&#xA;          document.removeEventListener(moveEvent, move);&#xA;          document.removeEventListener(endEvent, end);&#xA;          if (touch) document.removeEventListener(&#34;touchcancel&#34;, cancel);&#xA;          volumeWrap.classList.remove(&#34;aplayer-volume-bar-wrap-active&#34;);&#xA;          setVolume(e);&#xA;        };&#xA;        const cancel = () =&gt; {&#xA;          document.removeEventListener(moveEvent, move);&#xA;          document.removeEventListener(endEvent, end);&#xA;          document.removeEventListener(&#34;touchcancel&#34;, cancel);&#xA;          volumeWrap.classList.remove(&#34;aplayer-volume-bar-wrap-active&#34;);&#xA;        };&#xA;        document.addEventListener(moveEvent, move, { passive: false });&#xA;        document.addEventListener(endEvent, end);&#xA;        if (touch) document.addEventListener(&#34;touchcancel&#34;, cancel);&#xA;      };&#xA;      volumeWrap.addEventListener(&#34;mousedown&#34;, startVolume, true);&#xA;      volumeWrap.addEventListener(&#34;touchstart&#34;, startVolume, { capture: true, passive: false });&#xA;    })&#xA;    .catch(error =&gt; {&#xA;      console.error(error);&#xA;      container.textContent = &#34;音乐加载失败，请稍后重试。&#34;;&#xA;    });&#xA;})();&#xA;&lt;/script&gt;&#xA;&#xA;&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇文章本来是发在朋友圈里的。但作为一个从小到大不得不看别人脸色生活的湖北人，发完后，我总是会胡思乱想。别人看到后会怎么想我？会不会有什么语病？标点都用对了吗？别人都发美食、美景，我发的是不是过于消极了？&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>2026年中秋杂谈</title>
-      <link>https://masterji.top/cn/2026/09/2026%E5%B9%B4%E4%B8%AD%E7%A7%8B%E6%9D%82%E8%B0%88/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/09/2026%E5%B9%B4%E4%B8%AD%E7%A7%8B%E6%9D%82%E8%B0%88/</link>
       <pubDate>Fri, 25 Sep 2026 22:34:38 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/09/2026%E5%B9%B4%E4%B8%AD%E7%A7%8B%E6%9D%82%E8%B0%88/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/09/2026%E5%B9%B4%E4%B8%AD%E7%A7%8B%E6%9D%82%E8%B0%88/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这大概是我在学校待的最后一个中秋节了吧，毕竟我似乎没有考研的打算。&lt;/p&gt;&#xA;&lt;p&gt;放假闲着无事（大概），于是写一下我的想法吧。&lt;/p&gt;&#xA;&lt;h2 id=&#34;正文&#34;&gt;正文&lt;/h2&gt;&#xA;&lt;p&gt;就不起什么奇怪的小节名字，直接叫“正文”好了，毕竟只是随便说说而已。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>人与人之间的剪切线</title>
-      <link>https://masterji.top/cn/2026/08/%E4%BA%BA%E4%B8%8E%E4%BA%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%89%AA%E5%88%87%E7%BA%BF/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/08/%E4%BA%BA%E4%B8%8E%E4%BA%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%89%AA%E5%88%87%E7%BA%BF/</link>
       <pubDate>Sun, 30 Aug 2026 21:10:35 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/08/%E4%BA%BA%E4%B8%8E%E4%BA%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%89%AA%E5%88%87%E7%BA%BF/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/08/%E4%BA%BA%E4%B8%8E%E4%BA%BA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%89%AA%E5%88%87%E7%BA%BF/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近返校后，我总是有一种焦虑感，也不知道怎么了。总感觉和很多朋友相处起来都变累了，无论是大学交的，还是之前交的。或许是我没有用心维护，一直在做自己的事情，还是有其他原因呢？&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>大三暑假总结🤔</title>
-      <link>https://masterji.top/cn/2026/08/%E5%A4%A7%E4%B8%89%E6%9A%91%E5%81%87%E6%80%BB%E7%BB%93/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/08/%E5%A4%A7%E4%B8%89%E6%9A%91%E5%81%87%E6%80%BB%E7%BB%93/</link>
       <pubDate>Sun, 23 Aug 2026 23:15:38 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/08/%E5%A4%A7%E4%B8%89%E6%9A%91%E5%81%87%E6%80%BB%E7%BB%93/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/08/%E5%A4%A7%E4%B8%89%E6%9A%91%E5%81%87%E6%80%BB%E7%BB%93/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;顾名思义，这篇文章是对大三暑假的一次总结，主要写写这个暑假里我做过的事情。&lt;/p&gt;&#xA;&lt;p&gt;这篇文章并不是一次写完的。最早的一部分写于 7 月 30 日凌晨，也就是“&lt;a href=&#34;#%E6%B5%8F%E8%A7%88%E5%89%8D%E8%BE%88%E5%8D%9A%E5%AE%A2%E5%90%8E%E7%9A%84%E6%84%9F%E6%82%9F&#34;&gt;浏览前辈博客后的感悟&lt;/a&gt;”一节下的三个小节。另有一些段落摘自 8 月 14 日的草稿，其余主体则集中写于 8 月 21 日至 23 日。为了避免时间混乱，后文会尽量写明具体日期。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>为什么有电脑，我还是更想玩手机？</title>
-      <link>https://masterji.top/cn/2026/08/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E7%94%B5%E8%84%91%E6%88%91%E8%BF%98%E6%98%AF%E6%9B%B4%E6%83%B3%E7%8E%A9%E6%89%8B%E6%9C%BA/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/08/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E7%94%B5%E8%84%91%E6%88%91%E8%BF%98%E6%98%AF%E6%9B%B4%E6%83%B3%E7%8E%A9%E6%89%8B%E6%9C%BA/</link>
       <pubDate>Thu, 20 Aug 2026 10:23:22 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/08/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E7%94%B5%E8%84%91%E6%88%91%E8%BF%98%E6%98%AF%E6%9B%B4%E6%83%B3%E7%8E%A9%E6%89%8B%E6%9C%BA/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/08/%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E7%94%B5%E8%84%91%E6%88%91%E8%BF%98%E6%98%AF%E6%9B%B4%E6%83%B3%E7%8E%A9%E6%89%8B%E6%9C%BA/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;最近被推荐了一个 App，也就是谜底科技的 OffScreen。这个软件可以记录用户每天使用手机的时长，还内置了很多挑战、数据统计和专注功能，帮助用户减少手机使用，缓解“手机上瘾”的问题。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>胃病、糖水与压力</title>
-      <link>https://masterji.top/cn/2026/08/%E8%83%83%E7%97%85%E7%B3%96%E6%B0%B4%E4%B8%8E%E5%8E%8B%E5%8A%9B/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/08/%E8%83%83%E7%97%85%E7%B3%96%E6%B0%B4%E4%B8%8E%E5%8E%8B%E5%8A%9B/</link>
       <pubDate>Sat, 08 Aug 2026 15:55:23 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/08/%E8%83%83%E7%97%85%E7%B3%96%E6%B0%B4%E4%B8%8E%E5%8E%8B%E5%8A%9B/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/08/%E8%83%83%E7%97%85%E7%B3%96%E6%B0%B4%E4%B8%8E%E5%8E%8B%E5%8A%9B/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;昨天是周五，下班后和同事一起去 K*C 吃饭。不知道吃什么，于是点了一份最基础的套餐。出餐后拿到手一看，一个鸡肉堡、一个红豆派，以及一杯可乐。量很少，一会儿就吃完了，于是和同事告别回家了。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>正计时专注法</title>
-      <link>https://masterji.top/cn/2026/08/%E6%AD%A3%E8%AE%A1%E6%97%B6%E4%B8%93%E6%B3%A8%E6%B3%95/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/08/%E6%AD%A3%E8%AE%A1%E6%97%B6%E4%B8%93%E6%B3%A8%E6%B3%95/</link>
       <pubDate>Sat, 01 Aug 2026 23:19:27 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/08/%E6%AD%A3%E8%AE%A1%E6%97%B6%E4%B8%93%E6%B3%A8%E6%B3%95/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/08/%E6%AD%A3%E8%AE%A1%E6%97%B6%E4%B8%93%E6%B3%A8%E6%B3%95/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;之前，我一直使用番茄钟来帮助自己学习和工作。&lt;/p&gt;&#xA;&lt;p&gt;但是，番茄钟是基于倒计时的。经常是我还没有做完一件事情，或者还没有休息好，计时器就突然响了。&lt;/p&gt;&#xA;&lt;p&gt;因此我最近打算换一个让我保持专注的方法。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>谈谈小圈子里别人对我的“刻板印象”</title>
-      <link>https://masterji.top/cn/2026/07/%E8%B0%88%E8%B0%88%E5%B0%8F%E5%9C%88%E5%AD%90%E9%87%8C%E5%88%AB%E4%BA%BA%E5%AF%B9%E6%88%91%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/07/%E8%B0%88%E8%B0%88%E5%B0%8F%E5%9C%88%E5%AD%90%E9%87%8C%E5%88%AB%E4%BA%BA%E5%AF%B9%E6%88%91%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</link>
       <pubDate>Thu, 16 Jul 2026 00:52:28 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E8%B0%88%E8%B0%88%E5%B0%8F%E5%9C%88%E5%AD%90%E9%87%8C%E5%88%AB%E4%BA%BA%E5%AF%B9%E6%88%91%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/07/%E8%B0%88%E8%B0%88%E5%B0%8F%E5%9C%88%E5%AD%90%E9%87%8C%E5%88%AB%E4%BA%BA%E5%AF%B9%E6%88%91%E7%9A%84%E5%88%BB%E6%9D%BF%E5%8D%B0%E8%B1%A1/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;从小到大，尤其是在上学的时候，我一直长期和同一群人待在一起，时间久了，也没觉得这有什么特别的。&lt;/p&gt;&#xA;&lt;p&gt;但是开始实习以后，周围的环境变了，我的感受也变得很不一样。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>一边努力，一边觉得自己“碌碌无为”</title>
-      <link>https://masterji.top/cn/2026/07/%E4%B8%80%E8%BE%B9%E5%8A%AA%E5%8A%9B%E4%B8%80%E8%BE%B9%E8%A7%89%E5%BE%97%E8%87%AA%E5%B7%B1%E7%A2%8C%E7%A2%8C%E6%97%A0%E4%B8%BA/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/07/%E4%B8%80%E8%BE%B9%E5%8A%AA%E5%8A%9B%E4%B8%80%E8%BE%B9%E8%A7%89%E5%BE%97%E8%87%AA%E5%B7%B1%E7%A2%8C%E7%A2%8C%E6%97%A0%E4%B8%BA/</link>
       <pubDate>Wed, 15 Jul 2026 23:00:16 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E4%B8%80%E8%BE%B9%E5%8A%AA%E5%8A%9B%E4%B8%80%E8%BE%B9%E8%A7%89%E5%BE%97%E8%87%AA%E5%B7%B1%E7%A2%8C%E7%A2%8C%E6%97%A0%E4%B8%BA/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/07/%E4%B8%80%E8%BE%B9%E5%8A%AA%E5%8A%9B%E4%B8%80%E8%BE%B9%E8%A7%89%E5%BE%97%E8%87%AA%E5%B7%B1%E7%A2%8C%E7%A2%8C%E6%97%A0%E4%B8%BA/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;看到标题，你应该也能感觉到，这很矛盾，对吧？&lt;/p&gt;&#xA;&lt;p&gt;一个人怎么会一边努力，一边又觉得自己碌碌无为呢？是不是哪里搞错了？&lt;/p&gt;&#xA;&lt;p&gt;比如，他只是表面上一套、背地里一套，实际上根本没有自己表现出来的那么努力？&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>我为什么写博客？</title>
-      <link>https://masterji.top/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Sat, 11 Jul 2026 16:55:33 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇说说我为什么写博客吧。&lt;/p&gt;&#xA;&lt;p&gt;其实在 &lt;a href=&#34;https://masterji.top/cn/2025/12/hello-world/&#34;&gt;Hello World&lt;/a&gt; 那篇或者其后的几篇博客就应该说了。&lt;/p&gt;&#xA;&lt;p&gt;只不过那段时间比较混乱，心也静不下来，留不出时间去写这些。&lt;/p&gt;&#xA;&lt;p&gt;现在稍微好了点，有时间静下心来写博客了。&lt;/p&gt;</description>
+      <guid>https://blog.oyuanzi.top/cn/2026/07/%E6%88%91%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%99%E5%8D%9A%E5%AE%A2/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;这篇说说我为什么写博客吧。&lt;/p&gt;&#xA;&lt;p&gt;其实在 &lt;a href=&#34;https://blog.oyuanzi.top/cn/2025/12/hello-world/&#34;&gt;Hello World&lt;/a&gt; 那篇或者其后的几篇博客就应该说了。&lt;/p&gt;&#xA;&lt;p&gt;只不过那段时间比较混乱，心也静不下来，留不出时间去写这些。&lt;/p&gt;&#xA;&lt;p&gt;现在稍微好了点，有时间静下心来写博客了。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>诗：雨A</title>
-      <link>https://masterji.top/cn/2026/07/%E8%AF%97%E9%9B%A8a/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/07/%E8%AF%97%E9%9B%A8a/</link>
       <pubDate>Fri, 10 Jul 2026 00:00:37 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E8%AF%97%E9%9B%A8a/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/07/%E8%AF%97%E9%9B%A8a/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;才在学校淋了暴雨，又要去南方吹台风，如果回老家说不定还会被龙卷风吹？真是多灾多难啊，去哪里都要被风吹雨打&amp;hellip;&amp;hellip;&lt;/p&gt;&#xA;&lt;p&gt;有感而发，写了一首诗，文采一般，没押韵啥的，只是写了我近期的一些感受，希望你们喜欢 🥰&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>博客主题更改后我的一些心里话</title>
-      <link>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E6%9B%B4%E6%94%B9%E5%90%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E6%9B%B4%E6%94%B9%E5%90%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</link>
       <pubDate>Mon, 06 Jul 2026 13:53:28 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E6%9B%B4%E6%94%B9%E5%90%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</guid>
-      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。这次站点更新了不少东西，具体变化见&lt;a href=&#34;https://masterji.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E6%9B%B4%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/&#34;&gt;博客开发&lt;/a&gt;，这里就说说关于这次更新我的一些想法。&lt;/p&gt;&#xA;&lt;h2 id=&#34;变化的缘由&#34;&gt;变化的缘由&lt;/h2&gt;&#xA;&lt;p&gt;先说一下站点的变化吧，如果你之前来过我的博客，你会看到这样的主页：&lt;/p&gt;</description>
+      <guid>https://blog.oyuanzi.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E4%B8%BB%E9%A2%98%E6%9B%B4%E6%94%B9%E5%90%8E%E6%88%91%E7%9A%84%E4%B8%80%E4%BA%9B%E5%BF%83%E9%87%8C%E8%AF%9D/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;也是好久没有更新博客了，最近一直比较忙，没有什么动力更新，也不知道说些什么。这次站点更新了不少东西，具体变化见&lt;a href=&#34;https://blog.oyuanzi.top/cn/2026/07/%E5%8D%9A%E5%AE%A2%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%951%E4%B8%BB%E9%A2%98%E7%9A%84%E6%9B%B4%E6%94%B9%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%9A%84%E6%9B%B4%E6%96%B0/&#34;&gt;博客开发&lt;/a&gt;，这里就说说关于这次更新我的一些想法。&lt;/p&gt;&#xA;&lt;h2 id=&#34;变化的缘由&#34;&gt;变化的缘由&lt;/h2&gt;&#xA;&lt;p&gt;先说一下站点的变化吧，如果你之前来过我的博客，你会看到这样的主页：&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>蒸饭</title>
-      <link>https://masterji.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</link>
       <pubDate>Mon, 16 Feb 2026 20:45:38 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/02/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%942%E8%92%B8%E9%A5%AD/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;前几天懒得做饭，又不想花钱点外卖，于是看网上的快速做饭方法，总结出用一套电饭煲快速做饭的方法。🧑‍🍳&lt;br&gt;&#xA;鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>炒面</title>
-      <link>https://masterji.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
+      <link>https://blog.oyuanzi.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</link>
       <pubDate>Sun, 25 Jan 2026 21:53:45 +0800</pubDate>
-      <guid>https://masterji.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2026/01/%E5%B1%8B%E9%87%8C%E9%A3%9F%E7%A0%941%E7%82%92%E9%9D%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;&#xA;&lt;p&gt;唉，元师傅你的博客不是一个技术博客吗，怎么开一个新系列教做饭了？&lt;br&gt;&#xA;也是没办法，为了提高生活质量，做饭也是程序员必须掌握的“语言”啊！🧑‍🍳&lt;br&gt;&#xA;本人也是于最近开始学做饭了，鉴于技术原因，本人提到的做法不保障读者能完全复现或者能安全食用，出问题了本人不负责并且第一个跑。🏃&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>2025 年年终总结</title>
-      <link>https://masterji.top/cn/2025/12/2025-%E5%B9%B4%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
+      <link>https://blog.oyuanzi.top/cn/2025/12/2025-%E5%B9%B4%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</link>
       <pubDate>Wed, 31 Dec 2025 23:43:52 +0800</pubDate>
-      <guid>https://masterji.top/cn/2025/12/2025-%E5%B9%B4%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2025/12/2025-%E5%B9%B4%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/</guid>
       <description>&lt;h2 id=&#34;开场白&#34;&gt;开场白&lt;/h2&gt;&#xA;&lt;p&gt;这个网站也是迎来了它的第一个元旦，可喜可贺。&lt;/p&gt;&#xA;&lt;p&gt;&lt;del&gt;虽然还没几天&lt;/del&gt;&lt;/p&gt;&#xA;&lt;p&gt;回想这一年也是经历了很多很多的事情，很难一一说清，如今就挑几件比较重要的事情来说吧。&lt;/p&gt;&#xA;&lt;h2 id=&#34;2025年的上半年&#34;&gt;2025年的上半年&lt;/h2&gt;&#xA;&lt;p&gt;上半年最印象深刻的就是电赛了。当时选的是E题，也就是激光瞄准。&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Hello World</title>
-      <link>https://masterji.top/cn/2025/12/hello-world/</link>
+      <link>https://blog.oyuanzi.top/cn/2025/12/hello-world/</link>
       <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
-      <guid>https://masterji.top/cn/2025/12/hello-world/</guid>
+      <guid>https://blog.oyuanzi.top/cn/2025/12/hello-world/</guid>
       <description>&lt;p&gt;Hi，这是我发布的第一篇博客，欢迎你们访问我的网站！&lt;/p&gt;&#xA;&lt;p&gt;我猜你肯定是看到了我的优质文章然后迫不及待的找到了我发的第一篇文章吧 😎&lt;/p&gt;&#xA;&lt;p&gt;不管是不是，留下你的评论吧！让我知道你来过 😉&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Hello World</title>
-      <link>https://masterji.top/en/2025/12/hello-world/</link>
+      <link>https://blog.oyuanzi.top/en/2025/12/hello-world/</link>
       <pubDate>Wed, 24 Dec 2025 16:38:24 +0800</pubDate>
-      <guid>https://masterji.top/en/2025/12/hello-world/</guid>
+      <guid>https://blog.oyuanzi.top/en/2025/12/hello-world/</guid>
       <description>&lt;p&gt;Hi, this is my very first blog post. Welcome to my website!&lt;/p&gt;&#xA;&lt;p&gt;I&amp;#39;m guessing you came across one of my great posts and couldn&amp;#39;t wait to find the very first one I published, right? 😎&lt;/p&gt;&#xA;&lt;p&gt;Either way, leave a comment! Let me know you were here 😉.&lt;/p&gt;</description>
     </item>
     
